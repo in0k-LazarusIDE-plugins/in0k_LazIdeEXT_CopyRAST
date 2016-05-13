@@ -4,11 +4,21 @@ unit REG;
 
 interface
 
-uses MenuIntf,  SrcEditorIntf,  PackageIntf,
+uses
+  lazExt_CopyRAST,
+
+MenuIntf,  SrcEditorIntf,  PackageIntf,
   Classes, SysUtils;
 
 procedure Register;
+
 implementation
+
+var _expert_:tLazExt_CopyRAST;
+
+ (*
+
+
 
 type
 
@@ -53,7 +63,8 @@ procedure tMyCLS.onPackage_File(f:TLazPackageFile);
 
 begin
     if not Assigned(f) then exit;
-    doEcho('-----'+F.Filename);
+    doEcho(' ');
+    doEcho(''+F.Filename);
     case f.FileType of
     pftUnit: doEcho('pftUnit');
     pftVirtualUnit: doEcho('pftVirtualUnit');
@@ -77,21 +88,35 @@ begin
         f:=Pkg.Files[i];
         onPackage_File(f);
     end;
-end;
+end;   *)
 
-procedure tMyCLS.onProjwct(Pkg:TIDEPackage);
+(*procedure tMyCLS.onProjwct(Pkg:TIDEPackage);
 begin
     if not Assigned(Pkg) then exit;
     if not (Pkg.Name='in0k_LazIdeEXT_wndInspector_FF8S') then exit;
     //---
     doEcho('------------------------------------------------------------------');
-    doEcho(Pkg.DirectoryExpanded);
-    doEcho(Pkg.Filename);
-    doEcho(Pkg.Name);
-    onPackage_Files(Pkg);
-end;
+    doEcho(Pkg.DirectoryExpanded+' DirectoryExpanded');
+    doEcho(Pkg.Filename+' Pkg.Filename');
+    doEcho(Pkg.Name+' Pkg.Name');
+    doEcho('------------------------------------------------------------------');
+    doEcho('pathSEARC='+pkg.LazCompilerOptions.SrcPath);
 
-procedure tMyCLS.StartMyTool(Sender: TObject);
+    doEcho('IncludePath='+pkg.LazCompilerOptions.IncludePath);
+    doEcho('Libraries='+pkg.LazCompilerOptions.Libraries);
+    doEcho('OtherUnitFiles='+pkg.LazCompilerOptions.OtherUnitFiles);
+    doEcho('ObjectPath='+pkg.LazCompilerOptions.ObjectPath);
+    doEcho('SrcPath='+pkg.LazCompilerOptions.SrcPath);
+    doEcho('DebugPath='+pkg.LazCompilerOptions.DebugPath);
+    doEcho('UnitOutputDirectory='+pkg.LazCompilerOptions.UnitOutputDirectory);
+    doEcho('------------------------------------------------------------------');
+
+    onPackage_Files(Pkg);
+
+
+end; *)
+
+(*procedure tMyCLS.StartMyTool(Sender: TObject);
 var Pkg:TIDEPackage;
       i:integer;
 begin
@@ -102,19 +127,33 @@ begin
 
    // writeln(PackageEditingInterface.GetPackages(i).Name);
   //...executed when menu item is clicked...   }
-end;
+end; *)
 
-var tm:tMyCLS;
+//var tm:tMyCLS;
 
 procedure Register;
 begin
-  RegisterIDEMenuCommand(itmSecondaryTools, 'MyTool','Start my tool',@(tm.StartMyTool));
+  //  RegisterIDEMenuCommand(itmSecondaryTools, 'MyTool','Start my tool',@(tm.StartMyTool));
+    if not Assigned(_expert_) then begin
+      _expert_:=tLazExt_CopyRAST.Create;
+      _expert_.Expert_SetUP;
+    end;
+
+
+//  _expert_:=
+ {
+  // register the section for saving the package
+  PkgEditMenuSectionSave:=RegisterIDEMenuSection(PackageEditorMenuRoot,'Save');
+  AParent:=PkgEditMenuSectionSave;
+  PkgEditMenuSave:=RegisterIDEMenuCommand(AParent, 'Save', lisPckEditSavePackage);
+
+   }
+
 end;
 
 Initialization
-tm:=tMyCLS.Create;
-
+  _expert_:=nil;
 Finalization
-tm.Free;
+  _expert_.Free;
 end.
 

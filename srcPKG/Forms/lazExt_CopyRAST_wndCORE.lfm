@@ -1,0 +1,21 @@
+object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
+  Left = 415
+  Height = 240
+  Top = 213
+  Width = 662
+  Caption = 'wnd_lazExt_CopyRAST_CORE'
+  ClientHeight = 240
+  ClientWidth = 662
+  OnCreate = FormCreate
+  LCLVersion = '1.6.0.4'
+  object ItemsTreeView: TTreeView
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 662
+    Align = alClient
+    DefaultItemHeight = 18
+    TabOrder = 0
+    OnDeletion = ItemsTreeViewDeletion
+  end
+end

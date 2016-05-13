@@ -1,0 +1,4 @@
+inherited wnd_lazExt_CopyRAST_Project: Twnd_lazExt_CopyRAST_Project
+  Caption = 'wnd_lazExt_CopyRAST_Project'
+  OnCreate = FormCreate
+end
