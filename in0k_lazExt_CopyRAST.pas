@@ -9,7 +9,8 @@ interface
 uses
   REG, in0k_lazIdeSRC_ExpertCORE, lazExt_CopyRAST, lazExt_CopyRAST_StrConsts, 
   lazExt_CopyRAST_wndCORE, lazExt_CopyRAST_wndPackage, 
-  lazExt_CopyRAST_wndProject, lazExt_CopyRAST_node, LazarusPackageIntf;
+  lazExt_CopyRAST_wndProject, lazExt_CopyRAST_node, lazExt_CopyRAST_node_File, 
+  lazExt_CopyRAST_node_Folder, lazExt_CopyRAST_node_ROOT, LazarusPackageIntf;
 
 implementation
 

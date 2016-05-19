@@ -4,9 +4,9 @@ unit lazExt_CopyRAST_wndPackage;
 
 interface
 
-uses lazExt_CopyRAST_wndCORE,
+uses lazExt_CopyRAST_wndCORE,lazExt_CopyRAST_node_ROOT,
      lazExt_CopyRAST_StrConsts,
-     lazExt_CopyRAST_node,
+     lazExt_CopyRAST_node, lazExt_CopyRAST_node_Folder, lazExt_CopyRAST_node_File,
   PackageIntf,
   sysutils, Classes, ComCtrls;
 
@@ -48,6 +48,7 @@ end;
 
 procedure Twnd_lazExt_CopyRAST_Package._onInit_;
 var tmp:TTreeNode;
+  asd: tCopyRAST_ROOT;
 begin
     Caption:=cRes_CopyRAST_PKG_name+' - '+ExtractFileName(_package_.Filename);
     //---
@@ -58,6 +59,14 @@ begin
     ITV_add_Pkg_Path(tmp,eCopyRAST_node_Path_Fu,_package_.LazCompilerOptions.OtherUnitFiles);
     ITV_add_Pkg_Path(tmp,eCopyRAST_node_Path_Fi,_package_.LazCompilerOptions.IncludePath);
     ITV_add_Pkg_Path(tmp,eCopyRAST_node_Path_Fl,_package_.LazCompilerOptions.Libraries);
+    //-------------------------------------
+
+    asd:=tCopyRAST_ROOT.Create('PACKAGE');
+    asd.set_BaseDIR(_package_.DirectoryExpanded);
+    //asd.Free;
+
+    ITV_SetUp(asd);
+
 end;
 
 end.

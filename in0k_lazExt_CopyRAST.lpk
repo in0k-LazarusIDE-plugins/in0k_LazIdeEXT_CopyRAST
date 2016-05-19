@@ -8,11 +8,11 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcPKG;srcPKG\Forms"/>
+        <OtherUnitFiles Value="srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcPKG;srcPKG\Forms;srcPKG\Nodes"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="8">
+    <Files Count="11">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -43,9 +43,21 @@
         <UnitName Value="lazExt_CopyRAST_wndProject"/>
       </Item7>
       <Item8>
-        <Filename Value="srcPKG\Forms\lazExt_CopyRAST_node.pas"/>
+        <Filename Value="srcPKG\Nodes\lazExt_CopyRAST_node.pas"/>
         <UnitName Value="lazExt_CopyRAST_node"/>
       </Item8>
+      <Item9>
+        <Filename Value="srcPKG\Nodes\lazExt_CopyRAST_node_File.pas"/>
+        <UnitName Value="lazExt_CopyRAST_node_File"/>
+      </Item9>
+      <Item10>
+        <Filename Value="srcPKG\Nodes\lazExt_CopyRAST_node_Folder.pas"/>
+        <UnitName Value="lazExt_CopyRAST_node_Folder"/>
+      </Item10>
+      <Item11>
+        <Filename Value="srcPKG\Nodes\lazExt_CopyRAST_node_ROOT.pas"/>
+        <UnitName Value="lazExt_CopyRAST_node_ROOT"/>
+      </Item11>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

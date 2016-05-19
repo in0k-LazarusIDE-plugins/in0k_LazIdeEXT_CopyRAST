@@ -4,8 +4,8 @@ unit lazExt_CopyRAST_wndCORE;
 
 interface
 
-uses IDEImagesIntf,
-     lazExt_CopyRAST_node,
+uses IDEImagesIntf,  lazExt_CopyRAST_node_ROOT,
+     lazExt_CopyRAST_node, lazExt_CopyRAST_node_File, lazExt_CopyRAST_node_Folder,
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ComCtrls, LazFileUtils;
 
 type
@@ -26,6 +26,9 @@ type
   protected
     function _getITV__BasePath_parentDir(const PathType:eCopyRAST_node_Path; const Paths:string):TTreeNode;
 
+  public
+    procedure _ITV_SetUp_(const TreeNode:tTreeNode);
+    procedure  ITV_SetUp (const ROOT:tCopyRAST_ROOT);
   public
     function  ITV_add_BasePath(const Path:string):TTreeNode;
     function  ITV_add_Pkg_File(const Prnt:TTreeNode; const fileName:string):TTreeNode;
@@ -228,6 +231,53 @@ begin
 
 end;
 
+
+
+
+
+procedure Twnd_lazExt_CopyRAST_CORE._ITV_SetUp_(const TreeNode:tTreeNode);
+var itm:tTreeNode;
+    tmp:tCopyRAST_node;
+begin
+    if not Assigned(TreeNode) then EXIT;
+    //---
+    tmp:=tCopyRAST_node(TreeNode.Data);
+    if not Assigned(tmp) then EXIT;
+    //---
+    tmp:=tmp.NodeCHLD;
+    while Assigned(tmp) do begin
+        itm:=ItemsTreeView.Items.AddChildObject(TreeNode,tmp.Caption,tmp);
+       _ITV_SetUp_(itm);
+        //--->
+        tmp:=tmp.NodeNEXT;
+    end;
+end;
+
+procedure Twnd_lazExt_CopyRAST_CORE.ITV_SetUp(const ROOT:tCopyRAST_ROOT);
+var tmp:tTreeNode;
+begin
+    tmp:=ItemsTreeView.Items.AddChildObjectFirst(nil,ROOT.Caption,ROOT);
+   _ITV_SetUp_(tmp);
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 end.
 
 
@@ -275,4 +325,9 @@ begin
     end;
   end;
 end;
+
+
+
+
+
 
