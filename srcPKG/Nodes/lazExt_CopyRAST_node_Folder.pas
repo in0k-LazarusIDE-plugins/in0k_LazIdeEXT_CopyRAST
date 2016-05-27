@@ -10,65 +10,119 @@ uses lazExt_CopyRAST_node, lazExt_CopyRAST_StrConsts,
 type
 
 
- tCopyRAST_node_Dir=class(tCopyRAST_node)
-  end;
+ eCopyRAST_node_SrchPath=(CopyRAST_node_SrchPTH__Fu,CopyRAST_node_SrchPTH__Fi,CopyRAST_node_SrchPTH__Fl);
+ sCopyRAST_node_SrchPath=set of eCopyRAST_node_SrchPath;
 
- tCopyRAST_node_Dir_BASE=class(tCopyRAST_node_Dir)
-  end;
 
- eCopyRAST_node_Path=(eCopyRAST_node_Path_Fu,eCopyRAST_node_Path_Fi,eCopyRAST_node_Path_Fl);
- sCopyRAST_node_Path=set of eCopyRAST_node_Path;
-
- tCopyRAST_node_Dir_Path=class(tCopyRAST_node)
+ tCopyRAST_node_Folder=class(tCopyRAST_node)
   protected
-   _PathTypes_:sCopyRAST_node_Path;
-    function _getPathNames_:string;
+   _Paths_:sCopyRAST_node_SrchPath;
+  protected
+    function _isABSOLUTE_:boolean;
     function _getCaption_:string; override;
+    function _getDirNAME_:string;
   public
-    property PathNames:string read _getPathNames_;
+    property DirNAME:string read _getDirNAME_;
+    property DirPATH:string read _nodeText_;
+    property inPATHs:sCopyRAST_node_SrchPath read _Paths_;
   public
     constructor Create(const Path:string);
-    procedure AddPathType(const PathType:eCopyRAST_node_Path);
+  public
+    procedure Add_PathType(const PathType:eCopyRAST_node_SrchPath);
+    procedure ins_ChldLast(const node:tCopyRAST_node);
+  end;
+
+ tCopyRAST_node_BaseDIR=class(tCopyRAST_node_Folder)
+  protected
+    //function _getCaption_:string; override;
+  end;
+
+
+ tCopyRAST_node_PathDIR=class(tCopyRAST_node_Folder)
+//   _PathTypes_:sCopyRAST_node_SrchPath;
+    function _getPathNames_:string;
+  public
+    //property PathNames:string read _getPathNames_;
+  public
+    constructor Create(const Path:string);
+//    procedure AddPathType(const PathType:eCopyRAST_node_SrchPath);
   end;
 
 
 //---
 
 
- tCopyRAST_node_PathPKG=class(tCopyRAST_node_Dir_Path)
+ tCopyRAST_node_PathPKG=class(tCopyRAST_node_PathDIR)
   end;
 
 
 implementation
 
-constructor tCopyRAST_node_Dir_Path.Create(const Path:string);
+constructor tCopyRAST_node_Folder.Create(const Path:string);
 begin
     inherited Create(Path);
-   _PathTypes_:=[];
+   _Paths_:=[];
 end;
 
-procedure tCopyRAST_node_Dir_Path.AddPathType(const PathType:eCopyRAST_node_Path);
+function tCopyRAST_node_Folder._getCaption_:string;
 begin
-    Include(_PathTypes_,PathType);
-end;
-
-function tCopyRAST_node_Dir_Path._getPathNames_:string;
-begin
-    result:='';
-    if _PathTypes_<>[] then begin
-        result:=result+cRes_NodeName_includeIn;
-        if eCopyRAST_node_Path_Fu in _PathTypes_ then result:=result+LineEnding+'    '+cRes_NodeName_OtherUnitFiles;
-        if eCopyRAST_node_Path_Fi in _PathTypes_ then result:=result+LineEnding+'    '+cRes_NodeName_IncFiles;
-        if eCopyRAST_node_Path_Fl in _PathTypes_ then result:=result+LineEnding+'    '+cRes_NodeName_Libraries;
-        result:=result+LineEnding;
+    result:=_getDirNAME_;
+    //---
+    if _Paths_<>[] then begin
+        result:=result+' SP';
     end;
 end;
 
-function tCopyRAST_node_Dir_Path._getCaption_:string;
+function tCopyRAST_node_Folder._getDirNAME_:string;
 begin
-    result:=ExtractFileName(_nodeText_);//   ExtractFileDir(_nodeText_);
+    if _isABSOLUTE_ then result:=ExtractFilePath(_nodeText_)
+    else result:=ExtractFileName(_nodeText_);//   ExtractFileDir(_nodeText_);
 end;
 
+function tCopyRAST_node_Folder._isABSOLUTE_:boolean;
+begin
+    result:=FilenameIsAbsolute(_nodeText_);
+end;
+
+procedure tCopyRAST_node_Folder.ins_ChldLast(const node:tCopyRAST_node);
+begin
+   _ins_ChldLast_(node);
+end;
+
+procedure tCopyRAST_node_Folder.Add_PathType(const PathType:eCopyRAST_node_SrchPath);
+begin
+    Include(_Paths_,PathType);
+end;
+
+//----
+
+{function tCopyRAST_node_BaseDIR._getCaption_:string;
+begin
+   result:=_nodeText_;
+end;}
+
+constructor tCopyRAST_node_PathDIR.Create(const Path:string);
+begin
+    inherited Create(Path);
+//   _PathTypes_:=[];
+end;
+
+{procedure tCopyRAST_node_PathDIR.AddPathType(const PathType:eCopyRAST_node_SrchPath);
+begin
+    Include(_PathTypes_,PathType);
+end;}
+
+function tCopyRAST_node_PathDIR._getPathNames_:string;
+begin
+{    result:='';
+    if _PathTypes_<>[] then begin
+        result:=result+cRes_NodeName_includeIn;
+        if CopyRAST_node_SrchPTH__Fu in _PathTypes_ then result:=result+LineEnding+'    '+cRes_NodeName_OtherUnitFiles;
+        if CopyRAST_node_SrchPTH__Fi in _PathTypes_ then result:=result+LineEnding+'    '+cRes_NodeName_IncFiles;
+        if CopyRAST_node_SrchPTH__Fl in _PathTypes_ then result:=result+LineEnding+'    '+cRes_NodeName_Libraries;
+        result:=result+LineEnding;
+    end;}
+end;
 
 
 end.

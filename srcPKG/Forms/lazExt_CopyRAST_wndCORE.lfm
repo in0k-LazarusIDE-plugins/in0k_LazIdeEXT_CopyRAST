@@ -16,6 +16,7 @@ object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
     Align = alClient
     DefaultItemHeight = 18
     TabOrder = 0
+    OnAdvancedCustomDraw = ItemsTreeViewAdvancedCustomDraw
     OnDeletion = ItemsTreeViewDeletion
   end
 end

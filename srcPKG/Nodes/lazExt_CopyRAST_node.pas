@@ -84,7 +84,7 @@ begin
     {$IfOpt D+}Assert(Assigned(node));{$endIf}
     node._prnt_:=self._prnt_;
     node._next_:=self._next_;
-    node._next_:=self;
+    self._next_:=node;
 end;
 
 procedure tCopyRAST_node._ins_ChldFrst_(const node:tCopyRAST_node);

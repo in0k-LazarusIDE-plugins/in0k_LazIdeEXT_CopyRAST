@@ -12,7 +12,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="11">
+    <Files Count="13">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -58,6 +58,14 @@
         <Filename Value="srcPKG\Nodes\lazExt_CopyRAST_node_ROOT.pas"/>
         <UnitName Value="lazExt_CopyRAST_node_ROOT"/>
       </Item11>
+      <Item12>
+        <Filename Value="srcPKG\lazExt_CopyRAST_from_IDEProcs.pas"/>
+        <UnitName Value="lazExt_CopyRAST_from_IDEProcs"/>
+      </Item12>
+      <Item13>
+        <Filename Value="srcPKG\Nodes\lazExt_CopyRAST_node_ROOT_package.pas"/>
+        <UnitName Value="lazExt_CopyRAST_node_ROOT_package"/>
+      </Item13>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

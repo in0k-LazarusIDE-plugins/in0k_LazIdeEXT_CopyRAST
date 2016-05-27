@@ -4,7 +4,12 @@ unit lazExt_CopyRAST_wndCORE;
 
 interface
 
-uses IDEImagesIntf,  lazExt_CopyRAST_node_ROOT,
+uses IDEImagesIntf,
+
+    lazExt_CopyRAST_node_ROOT,
+    lazExt_CopyRAST_node_ROOT_package,
+
+
      lazExt_CopyRAST_node, lazExt_CopyRAST_node_File, lazExt_CopyRAST_node_Folder,
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ComCtrls, LazFileUtils;
 
@@ -15,6 +20,8 @@ type
  Twnd_lazExt_CopyRAST_CORE = class(TForm)
     ItemsTreeView: TTreeView;
     procedure FormCreate(Sender: TObject);
+    procedure ItemsTreeViewAdvancedCustomDraw(Sender: TCustomTreeView;
+      const ARect: TRect; Stage: TCustomDrawStage; var DefaultDraw: Boolean);
     procedure ItemsTreeViewDeletion(Sender: TObject; Node: TTreeNode);
   protected
    _parentOBJ_:TObject;
@@ -24,15 +31,15 @@ type
   public
     procedure Init(const ParentOBJ:TObject; const ParentFRM:TCustomForm);
   protected
-    function _getITV__BasePath_parentDir(const PathType:eCopyRAST_node_Path; const Paths:string):TTreeNode;
-
+    function _ITV_getNodeImageIndex_(const TreeNode:tTreeNode):integer;
   public
-    procedure _ITV_SetUp_(const TreeNode:tTreeNode);
+    procedure _ITV_SetUp_nodeImage_(const TreeNode:tTreeNode);
+    procedure _ITV_SetUp_         (const TreeNode:tTreeNode);
     procedure  ITV_SetUp (const ROOT:tCopyRAST_ROOT);
   public
-    function  ITV_add_BasePath(const Path:string):TTreeNode;
-    function  ITV_add_Pkg_File(const Prnt:TTreeNode; const fileName:string):TTreeNode;
-    procedure ITV_add_Pkg_Path(const Prnt:TTreeNode; const PathType:eCopyRAST_node_Path; const Paths:string);
+    //function  ITV_add_BasePath(const Path:string):TTreeNode;
+    //function  ITV_add_Pkg_File(const Prnt:TTreeNode; const fileName:string):TTreeNode;
+    //procedure ITV_add_Pkg_Path(const Prnt:TTreeNode; const PathType:eCopyRAST_node_Path; const Paths:string);
   end;
 
 
@@ -42,7 +49,10 @@ var
 
   vITV_BasePath:integer;
   vITV_package :integer;
+  vITV_project :integer;
+  vITV_Folder  :integer;
   vITV_Files   :integer;
+  vITV_File    :integer;
 
 
   ImageIndexFiles: integer;
@@ -71,7 +81,10 @@ begin
     ItemsTreeView.Images:=IDEImages.Images_16;
     vITV_BasePath:= IDEImages.LoadImage(16, 'pkg_files');
     vITV_package := IDEImages.LoadImage(16, 'item_package');
+    vITV_project := IDEImages.LoadImage(16, 'item_project');
+    vITV_Folder  := IDEImages.LoadImage(16, 'folder');
     vITV_Files   := IDEImages.LoadImage(16, 'pkg_files');
+    vITV_File    := IDEImages.LoadImage(16, 'pkg_text');
 
 
     ImageIndexFiles           := IDEImages.LoadImage(16, 'pkg_files');
@@ -89,6 +102,14 @@ begin
     ImageIndexConflict        := IDEImages.LoadImage(16, 'pkg_conflict');
     ImageIndexDirectory       := IDEImages.LoadImage(16, 'pkg_files');
 
+end;
+
+procedure Twnd_lazExt_CopyRAST_CORE.ItemsTreeViewAdvancedCustomDraw(
+  Sender: TCustomTreeView; const ARect: TRect; Stage: TCustomDrawStage;
+  var DefaultDraw: Boolean);
+begin
+    sender.Canvas.Font.Color:=clRed;
+    sender.Font.Color:=clGreen;
 end;
 
 procedure Twnd_lazExt_CopyRAST_CORE.ItemsTreeViewDeletion(Sender:TObject; Node:TTreeNode);
@@ -120,118 +141,39 @@ end;
 
 //------------------------------------------------------------------------------
 
-function Twnd_lazExt_CopyRAST_CORE.ITV_add_BasePath(const Path:string):TTreeNode;
-var nodeData:tCopyRAST_node_Dir_BASE;
+function Twnd_lazExt_CopyRAST_CORE._ITV_getNodeImageIndex_(const TreeNode:tTreeNode):integer;
+var tmp:tCopyRAST_node;
 begin
-    nodeData:=tCopyRAST_node_Dir_BASE.Create(AppendPathDelim(TrimFilename(Path)));
+    result:=-1;
     //---
-   _BaseDirectory_:=ItemsTreeView.Items.AddChildObjectFirst(nil,nodeData.Caption,nodeData);
-   _BaseDirectory_.ImageIndex   :=vITV_BasePath;
-   _BaseDirectory_.SelectedIndex:=vITV_BasePath;
-    //---
-    result:=_BaseDirectory_;
-end;
-
-function Twnd_lazExt_CopyRAST_CORE.ITV_add_Pkg_File(const Prnt:TTreeNode; const fileName:string):TTreeNode;
-var nodeData:tCopyRAST_node_FilePKG;
-begin
-    nodeData:=tCopyRAST_node_FilePKG.Create(fileName);
-    //---
-    result:=ItemsTreeView.Items.AddChildObjectFirst(Prnt,nodeData.Caption,nodeData);
-    result.ImageIndex   :=vITV_package;
-    result.SelectedIndex:=vITV_package;
-end;
-
-procedure Twnd_lazExt_CopyRAST_CORE.ITV_add_Pkg_Path(const Prnt:TTreeNode; const PathType:eCopyRAST_node_Path; const Paths:string);
-var
-  CurPath: String;
-  EndPos: Integer;
-  StartPos: Integer;
-  len: Integer;
-var nodeData:tCopyRAST_node_Dir_Path;
-var TreeNode:TTreeNode;
-begin
-    EndPos:=1;
-    len:=length(Paths);
-    while EndPos<=len do begin
-        StartPos:=EndPos;
-        // skip empty paths and space chars at start
-        while (StartPos<=len) and (Paths[StartPos] in [';',#0..#32]) do inc(StartPos);
-        if StartPos>len then break;
-        EndPos:=StartPos;
-        while (EndPos<=len) and (Paths[EndPos]<>';') do inc(EndPos);
-        CurPath:=copy(Paths,StartPos,EndPos-StartPos);
-        //-----------------------
-        if CurPath<>'' then begin
-            // non empty path => expand, trim and normalize
-            //if ExpandPaths then CurPath:=TrimAndExpandDirectory(CurPath,BaseDir)
-            //    else if (BaseDir<>'') and (not FilenameIsAbsolute(CurPath)) then CurPath:=BaseDir+CurPath;
-            CurPath:=ChompPathDelim(TrimFilename(CurPath));
-            if CurPath<>'' then begin
-
-                //ShowMessage('ЫЕФКЕ='+CurPath+PathDelim+'s');
-               _getITV__BasePath_parentDir(PathType,CurPath);
-
-              {  // check if path already exists
-                nodeData:=tCopyRAST_node_Dir_Path.Create(CurPath);
-                nodeData.AddPathType(PathType);
-
-                TreeNode:=ItemsTreeView.Items.AddChildObjectFirst(Prnt,nodeData.Caption,nodeData);
-                TreeNode.ImageIndex   :=vITV_Files;
-                TreeNode.SelectedIndex:=vITV_Files;}
-            end;
+    if not Assigned(TreeNode) then EXIT;
+    tmp:=tCopyRAST_node(TreeNode.Data);
+    if not Assigned(tmp) then EXIT;
+    if tmp is tCopyRAST_node_Folder then begin
+        if tmp is tCopyRAST_node_BaseDIR then result:=vITV_BasePath
+       else begin
+            result:=vITV_Folder;
+            if tCopyRAST_node_Folder(tmp).inPATHs<>[] then result:=vITV_Files
         end;
-    end;
-end;
-
-//------------------------------------------------------------------------------
-
-function Twnd_lazExt_CopyRAST_CORE._getITV__BasePath_parentDir(const PathType:eCopyRAST_node_Path; const Paths:string):TTreeNode;
-var tmp:TTreeNode;
-    fld:string;
-begin
-    fld:=ExtractFileDir(Paths);
-    //ShowMessage('Paths='+Paths+' fld='+fld+' ExtractFileDir(Paths)='+ExtractFileDir(Paths));
-    if fld='' then begin
-        result:=_BaseDirectory_;
-        fld:=ExtractFileName(Paths);
     end
-    else begin
-        //ShowMessage('inLine find:'+'Paths='+Paths+' fld='+fld);
-        result:=_getITV__BasePath_parentDir(PathType,fld);
-        fld:=ExtractFileName(Paths);
-    end;
-
-    if Assigned(result) then begin
-        tmp:=Result.GetFirstChild;
-        while Assigned(tmp) do begin
-            if tObject(tmp.Data) is tCopyRAST_node_Dir_Path then begin
-                //ShowMessage('CMP: fld='+fld+' tmp='+tCopyRAST_node_Dir_Path(tmp.Data).Caption);
-
-                if tCopyRAST_node_Dir_Path(tmp.Data).Caption=fld then begin
-                    //ShowMessage('FIND');
-                    BREAK;
-                end;
-            end;
-            tmp:=tmp.GetNextSibling;
+   else
+    if tmp is tCopyRAST_node_File then begin
+        result:=vITV_File;
+        if tmp is tCopyRAST_node_fileMain then begin
+            result:=vITV_package;
+            if tmp is tCopyRAST_node_fileMainPKG then result:=vITV_package;
         end;
-        //---
-        if not Assigned(tmp) then begin
-            tmp:=TTreeNode(tCopyRAST_node_Dir_Path.Create(Paths));
-            result:=ItemsTreeView.Items.AddChildObject(result,tCopyRAST_node_Dir_Path(tmp).Caption,tCopyRAST_node_Dir_Path(tmp));
-            result.ImageIndex   :=vITV_Files;
-            result.SelectedIndex:=vITV_Files;
-        end
-        else begin
-            result:=tmp;
-        end;
-        //---
-        tCopyRAST_node_Dir_Path(result.Data).AddPathType(PathType);
     end;
-
 end;
 
-
+procedure Twnd_lazExt_CopyRAST_CORE._ITV_SetUp_nodeImage_(const TreeNode:tTreeNode);
+var tmp:tCopyRAST_node;
+begin
+    if not Assigned(TreeNode) then EXIT;
+    //---
+    TreeNode.SelectedIndex:=_ITV_getNodeImageIndex_(TreeNode);
+    TreeNode.ImageIndex   := TreeNode.SelectedIndex;
+end;
 
 
 
@@ -247,6 +189,7 @@ begin
     tmp:=tmp.NodeCHLD;
     while Assigned(tmp) do begin
         itm:=ItemsTreeView.Items.AddChildObject(TreeNode,tmp.Caption,tmp);
+       _ITV_SetUp_nodeImage_(itm);
        _ITV_SetUp_(itm);
         //--->
         tmp:=tmp.NodeNEXT;

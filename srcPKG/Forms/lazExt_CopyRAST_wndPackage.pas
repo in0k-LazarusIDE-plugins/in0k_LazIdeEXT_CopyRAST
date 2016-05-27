@@ -4,7 +4,10 @@ unit lazExt_CopyRAST_wndPackage;
 
 interface
 
-uses lazExt_CopyRAST_wndCORE,lazExt_CopyRAST_node_ROOT,
+uses lazExt_CopyRAST_wndCORE,
+     lazExt_CopyRAST_node_ROOT,
+     lazExt_CopyRAST_node_ROOT_package,
+
      lazExt_CopyRAST_StrConsts,
      lazExt_CopyRAST_node, lazExt_CopyRAST_node_Folder, lazExt_CopyRAST_node_File,
   PackageIntf,
@@ -47,26 +50,29 @@ end;
 //------------------------------------------------------------------------------
 
 procedure Twnd_lazExt_CopyRAST_Package._onInit_;
-var tmp:TTreeNode;
-  asd: tCopyRAST_ROOT;
+var asd:tCopyRAST_ROOT_package;
+
+    i:integer;
+    pkgFile:TLazPackageFile;
+
 begin
     Caption:=cRes_CopyRAST_PKG_name+' - '+ExtractFileName(_package_.Filename);
-    //---
-    tmp:=ITV_add_BasePath(_package_.DirectoryExpanded);
-    //---
-    ITV_add_Pkg_File(tmp,_package_.Filename);
-    //---
-    ITV_add_Pkg_Path(tmp,eCopyRAST_node_Path_Fu,_package_.LazCompilerOptions.OtherUnitFiles);
-    ITV_add_Pkg_Path(tmp,eCopyRAST_node_Path_Fi,_package_.LazCompilerOptions.IncludePath);
-    ITV_add_Pkg_Path(tmp,eCopyRAST_node_Path_Fl,_package_.LazCompilerOptions.Libraries);
     //-------------------------------------
+    asd:=tCopyRAST_ROOT_package.Create('PACKAGE');
 
-    asd:=tCopyRAST_ROOT.Create('PACKAGE');
-    asd.set_BaseDIR(_package_.DirectoryExpanded);
-    //asd.Free;
+    asd.set_DirExpanded(_package_.DirectoryExpanded);
+    asd.add_SearchPaths(_package_.LazCompilerOptions.IncludePath   ,CopyRAST_node_SrchPTH__Fi);
+    asd.add_SearchPaths(_package_.LazCompilerOptions.Libraries     ,CopyRAST_node_SrchPTH__Fl);
+    asd.add_SearchPaths(_package_.LazCompilerOptions.OtherUnitFiles,CopyRAST_node_SrchPTH__Fu);
 
+    asd.add_PackageFile(_package_.Filename);
+
+    for i:=0 to _package_.FileCount-1 do begin
+        pkgFile:=_package_.Files[i];
+        asd.add_File(pkgFile.GetFullFilename);
+    end;
+    //-------------------------------------
     ITV_SetUp(asd);
-
 end;
 
 end.
