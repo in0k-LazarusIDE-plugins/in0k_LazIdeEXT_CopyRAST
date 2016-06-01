@@ -69,7 +69,7 @@ begin
 
     for i:=0 to _package_.FileCount-1 do begin
         pkgFile:=_package_.Files[i];
-        asd.add_File(pkgFile.GetFullFilename);
+        asd.add_File(pkgFile.GetFullFilename,pkgFile.FileType);
     end;
     //-------------------------------------
     ITV_SetUp(asd);

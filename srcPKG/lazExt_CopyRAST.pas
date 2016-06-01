@@ -8,7 +8,7 @@ uses in0k_lazIdeSRC_ExpertCORE,
      lazExt_CopyRAST_StrConsts,
      lazExt_CopyRAST_wndPackage,
      lazExt_CopyRAST_wndProject,
-  MenuIntf, IDECommands, IDEWindowIntf, PackageIntf, LazIDEIntf,
+  MenuIntf, IDECommands, IDEWindowIntf, PackageIntf, LazIDEIntf, ProjectIntf,
   Classes, Controls, Forms, Menus;
 
 type
@@ -84,13 +84,24 @@ end;
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 procedure tLazExt_CopyRAST._ideCommand_copyRast_Project_onClick(Sender:TObject);
+var Prj:TLazProject;
+    Frm:TCustomForm;
+    wnd:TCustomForm;
 begin
-    //
+    Prj:=LazarusIDE.ActiveProject;
+    Frm:=_ide_GetPackageEditorForm(Sender);
+    if Assigned(Prj)and Assigned(Frm) then begin
+        wnd:=IDEWindowCreators.ShowForm(clazExt_CopyRAST_wndProject_name+'___'+Prj.Name,true);
+        if Assigned(wnd) then begin //< инициализируем окошко
+            Twnd_lazExt_CopyRAST_Project(wnd).Init(Prj,Frm);
+        end;
+    end
 end;
 
 procedure tLazExt_CopyRAST._crt_IDEWnd_copyRast_Project_(Sender:TObject; aFormName:string; var AForm:TCustomForm; DoDisableAutoSizing:boolean);
 begin
     IDEWindowCreators.CreateForm(AForm,Twnd_lazExt_CopyRAST_Project,DoDisableAutoSizing,LazarusIDE.OwningComponent);
+    AForm.Name:=aFormName;
 end;
 
 //------------------------------------------------------------------------------

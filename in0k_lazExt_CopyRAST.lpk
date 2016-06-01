@@ -8,11 +8,12 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
+        <IncludeFiles Value="srcPKG\Forms"/>
         <OtherUnitFiles Value="srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcPKG;srcPKG\Forms;srcPKG\Nodes"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="13">
+    <Files Count="15">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -66,6 +67,14 @@
         <Filename Value="srcPKG\Nodes\lazExt_CopyRAST_node_ROOT_package.pas"/>
         <UnitName Value="lazExt_CopyRAST_node_ROOT_package"/>
       </Item13>
+      <Item14>
+        <Filename Value="srcPKG\Forms\lazExt_CopyRAST_wndCORE.lfm"/>
+        <Type Value="LFM"/>
+      </Item14>
+      <Item15>
+        <Filename Value="srcPKG\Nodes\lazExt_CopyRAST_node_ROOT_project.pas"/>
+        <UnitName Value="lazExt_CopyRAST_node_ROOT_project"/>
+      </Item15>
     </Files>
     <RequiredPkgs Count="2">
       <Item1>

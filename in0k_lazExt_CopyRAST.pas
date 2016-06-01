@@ -12,7 +12,7 @@ uses
   lazExt_CopyRAST_wndProject, lazExt_CopyRAST_node, lazExt_CopyRAST_node_File, 
   lazExt_CopyRAST_node_Folder, lazExt_CopyRAST_node_ROOT, 
   lazExt_CopyRAST_from_IDEProcs, lazExt_CopyRAST_node_ROOT_package, 
-  LazarusPackageIntf;
+  lazExt_CopyRAST_node_ROOT_project, LazarusPackageIntf;
 
 implementation
 

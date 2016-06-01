@@ -4,7 +4,7 @@ unit lazExt_CopyRAST_wndCORE;
 
 interface
 
-uses IDEImagesIntf,
+uses IDEImagesIntf, PackageIntf,
 
     lazExt_CopyRAST_node_ROOT,
     lazExt_CopyRAST_node_ROOT_package,
@@ -47,12 +47,12 @@ implementation
 
 var
 
-  vITV_BasePath:integer;
-  vITV_package :integer;
-  vITV_project :integer;
-  vITV_Folder  :integer;
-  vITV_Files   :integer;
-  vITV_File    :integer;
+  vITV_BasePath:integer; // базовый путь
+  vITV_package :integer; // ГЛАВНЫЙ файл ПАКЕТА
+  vITV_project :integer; // ГЛАВНЫЙ файл ПРИЛОЖЕНИЯ
+  vITV_Folder  :integer; // Папка (директория)
+  vITV_Files   :integer; // Группа фалов
+  vITV_File    :integer; // некий файл
 
 
   ImageIndexFiles: integer;
@@ -79,11 +79,13 @@ begin
    _parentFRM_:=nil;
     //---
     ItemsTreeView.Images:=IDEImages.Images_16;
-    vITV_BasePath:= IDEImages.LoadImage(16, 'pkg_files');
+    vITV_BasePath:= IDEImages.LoadImage(16, 'folder');
     vITV_package := IDEImages.LoadImage(16, 'item_package');
     vITV_project := IDEImages.LoadImage(16, 'item_project');
     vITV_Folder  := IDEImages.LoadImage(16, 'folder');
     vITV_Files   := IDEImages.LoadImage(16, 'pkg_files');
+
+
     vITV_File    := IDEImages.LoadImage(16, 'pkg_text');
 
 
@@ -102,7 +104,13 @@ begin
     ImageIndexConflict        := IDEImages.LoadImage(16, 'pkg_conflict');
     ImageIndexDirectory       := IDEImages.LoadImage(16, 'pkg_files');
 
+
+
+
 end;
+
+
+
 
 procedure Twnd_lazExt_CopyRAST_CORE.ItemsTreeViewAdvancedCustomDraw(
   Sender: TCustomTreeView; const ARect: TRect; Stage: TCustomDrawStage;
@@ -159,9 +167,22 @@ begin
    else
     if tmp is tCopyRAST_node_File then begin
         result:=vITV_File;
-        if tmp is tCopyRAST_node_fileMain then begin
+        if tmp is tCopyRAST_node_fileMain_CORE then begin
             result:=vITV_package;
             if tmp is tCopyRAST_node_fileMainPKG then result:=vITV_package;
+        end
+        else begin
+            case tCopyRAST_node_FILE(tmp).FileTYPE of
+                pftUnit,pftVirtualUnit,pftMainUnit:
+                            Result:=ImageIndexUnit;
+                pftLFM:     Result:=ImageIndexLFM;
+                pftLRS:     Result:=ImageIndexLRS;
+                pftInclude: Result:=ImageIndexInclude;
+                pftIssues:  Result:=ImageIndexIssues;
+                pftText:    Result:=ImageIndexText;
+                pftBinary:  Result:=ImageIndexBinary;
+                else        Result:=-1;
+            end;
         end;
     end;
 end;

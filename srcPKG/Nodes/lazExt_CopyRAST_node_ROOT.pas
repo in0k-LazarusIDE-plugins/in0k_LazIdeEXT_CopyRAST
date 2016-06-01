@@ -121,7 +121,7 @@ begin
     prnt:=_get_PathDIR_(FileXXX.FilePATH);
     if not Assigned(prnt) then EXIT; //< это КАСЯК, обработать как-то надо?
     //-
-    if FileXXX is tCopyRAST_node_fileMainPKG
+    if FileXXX is tCopyRAST_node_fileMain_CORE
     then tCopyRAST_ROOT(prnt)._ins_ChldFrst_(FileXXX)
     else prnt.ins_ChldLast(FileXXX);
     //else tCopyRAST_ROOT(prnt)._ins_ChldLast_(FileXXX);
