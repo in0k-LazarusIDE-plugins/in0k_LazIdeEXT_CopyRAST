@@ -4,7 +4,7 @@ unit lazExt_CopyRAST_node_File;
 
 interface
 
-uses lazExt_CopyRAST_node,
+uses lazExt_CopyRAST_node, lazExt_CopyRAST_from_IDEProcs,
   PackageIntf,
   sysutils, LazFileUtils;
 
@@ -55,6 +55,8 @@ end;
 function tCopyRAST_node_File_CORE._getCaption_:string;
 begin
     result:=_getFileNAME_;
+
+    if FilenameIsPascalSource8HasResources(_nodeText_) then result:=result+' R'
 end;
 
 function tCopyRAST_node_File_CORE._getFileNAME_:string;

@@ -4,12 +4,14 @@ unit lazExt_CopyRAST_from_IDEProcs;
 
 interface
 
-uses LazFileUtils,
+uses LazFileUtils,LazFileCache, FileUtil,
   Classes, SysUtils;
 
 
 //!!! начинать с NextStartPos=1
 function GetNextDirectoryInSearchPath(const SearchPath: string; var NextStartPos: integer): string;
+function FilenameIsPascalSource8HasResources(const Filename:string): boolean;
+
 
 implementation
 
@@ -37,6 +39,37 @@ begin
   Result:='';
 end;
 
+
+function FilenameIsFormText(const Filename: string): boolean;
+var Ext: string;
+begin
+  Ext:=lowercase(ExtractFileExt(Filename));
+  Result:=((Ext='.lfm') or (Ext='.dfm') or (Ext='.xfm'))
+          and (ExtractFileNameOnly(Filename)<>'');
+end;
+
+
+{function FilenameIsPascalSource(const Filename: string): boolean;
+var Ext: string;
+  p: Integer;
+  AnUnitName: String;
+begin
+  AnUnitName:=ExtractFileNameOnly(Filename);
+  if (AnUnitName='') or (not IsValidIdent(AnUnitName)) then
+    exit(false);
+  Ext:=lowercase(ExtractFileExt(Filename));
+  for p:=Low(PascalFileExt) to High(PascalFileExt) do
+    if Ext=PascalFileExt[p] then
+      exit(true);
+  Result:=(Ext='.lpr') or (Ext='.dpr') or (Ext='.dpk');
+end; }
+
+
+function FilenameIsPascalSource8HasResources(const Filename:string): boolean;
+begin
+    result:=FilenameIsPascalUnit(Filename) AND
+            FileExistsCached(ChangeFileExt(Filename,'.lfm'));
+end;
 
 end.
 

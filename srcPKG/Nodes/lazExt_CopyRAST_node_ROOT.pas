@@ -4,7 +4,7 @@ unit lazExt_CopyRAST_node_ROOT;
 
 interface
 
-uses sysutils, LazFileUtils,
+uses sysutils,  FileUtil, PackageIntf, LazFileUtils,
     //Dialogs,
      lazExt_CopyRAST_from_IDEProcs,
      lazExt_CopyRAST_node,
@@ -19,6 +19,7 @@ type
     procedure _set_BaseDIR_(const BaseDIR:string);
   protected
     function  _get_PathDIR_(const PathDIR:string):tCopyRAST_node_Folder;
+    function  _fnd_fileSRC_(const Folder:tCopyRAST_node_Folder; const FileNameWithoutExt:string):tCopyRAST_node;
     procedure _add_SrchPTH_(const SrchPTH:string; const KIND:eCopyRAST_node_SrchPath);
     procedure _add_FileXXX_(const FileXXX:tCopyRAST_node_File);
   end;
@@ -90,6 +91,19 @@ begin
     end;
 end;
 
+function tCopyRAST_ROOT._fnd_fileSRC_(const Folder:tCopyRAST_node_Folder; const FileNameWithoutExt:string):tCopyRAST_node;
+begin
+    result:=Folder.NodeCHLD;
+    while Assigned(result) do begin
+        if (result is tCopyRAST_node_FILE) and
+           (0=CompareFilenames(ExtractFileNameWithoutExt(tCopyRAST_node_FILE(result).FileNAME),FileNameWithoutExt)) then begin
+            BREAK; // нашли
+        end;
+        result:=Result.NodeNEXT;
+    end;
+    if not Assigned(result) then result:=Folder;
+end;
+
 // добавить ПУТИ поиска
 procedure tCopyRAST_ROOT._add_SrchPTH_(const SrchPTH:string; const KIND:eCopyRAST_node_SrchPath);
 var StartPos:Integer;
@@ -115,6 +129,7 @@ end;
 
 procedure tCopyRAST_ROOT._add_FileXXX_(const FileXXX:tCopyRAST_node_File);
 var prnt:tCopyRAST_node_Folder;
+
 begin
     //ShowMessage('file PATH:'+FileXXX.FilePATH);
 
@@ -122,8 +137,14 @@ begin
     if not Assigned(prnt) then EXIT; //< это КАСЯК, обработать как-то надо?
     //-
     if FileXXX is tCopyRAST_node_fileMain_CORE
-    then tCopyRAST_ROOT(prnt)._ins_ChldFrst_(FileXXX)
-    else prnt.ins_ChldLast(FileXXX);
+    then tCopyRAST_ROOT(pointer(prnt))._ins_ChldFrst_(FileXXX)
+    else begin
+        if FileXXX.FileTYPE=pftLFM then begin
+           prnt:=tCopyRAST_node_Folder(_fnd_fileSRC_(prnt,ExtractFileNameWithoutExt(FileXXX.FileNAME)));
+        end;
+        prnt.ins_ChldLast(FileXXX);
+
+    end;
     //else tCopyRAST_ROOT(prnt)._ins_ChldLast_(FileXXX);
 end;
 
