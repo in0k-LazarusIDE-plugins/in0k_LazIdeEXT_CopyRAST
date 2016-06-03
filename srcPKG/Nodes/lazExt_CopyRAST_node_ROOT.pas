@@ -5,7 +5,7 @@ unit lazExt_CopyRAST_node_ROOT;
 interface
 
 uses sysutils,  FileUtil, PackageIntf, LazFileUtils, LazIDEIntf, Dialogs,
-
+                            Classes,
     CodeToolManager, CodeCache,
     //Dialogs,
      lazExt_CopyRAST_from_IDEProcs,
@@ -214,6 +214,7 @@ var
   CodeBuf: TCodeBuffer;
   CB     :TCodeBuffer;
   LinkIndex:integer;
+  str:tStrings;
 begin
   // make sure the filename is trimmed and contains a full path
   ExpandedFilename:={CleanAndExpandFilename}(FileXXX.NodeTXT);
@@ -225,16 +226,18 @@ begin
   if not Assigned(CodeBuf) then ShowMessage('CodeBuf NOT load');;
   //---
   try
-
-    LinkIndex:=0;
-
+    CodeBuf.Reload;
+    LinkIndex:=-1;
     CB:=CodeToolBoss.FindNextResourceFile(CodeBuf,LinkIndex);
     while CB<>nil do begin
-        ShowMessage(ExpandedFilename+LineEnding+CB.Filename);
+        ShowMessage(ExpandedFilename+LineEnding+CB.ToString);
         CB:=CodeToolBoss.FindNextResourceFile(CodeBuf,LinkIndex);
     end;
 
-
+    // список файлов из USES
+    str:=TStringList.Create;
+    CodeToolBoss.FindUsedUnitFiles(CodeBuf,str);
+    ShowMessage(str.Text);
 
 
   //result:=CodeToolBoss.FindLFMFileName(CodeBuf);
