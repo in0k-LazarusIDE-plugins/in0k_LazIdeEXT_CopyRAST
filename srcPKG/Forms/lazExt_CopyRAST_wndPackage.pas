@@ -61,9 +61,9 @@ begin
     asd:=tCopyRAST_ROOT_package.Create('PACKAGE');
 
     asd.set_DirExpanded(_package_.DirectoryExpanded);
+    asd.add_SearchPaths(_package_.LazCompilerOptions.OtherUnitFiles,CopyRAST_node_SrchPTH__Fu);
     asd.add_SearchPaths(_package_.LazCompilerOptions.IncludePath   ,CopyRAST_node_SrchPTH__Fi);
     asd.add_SearchPaths(_package_.LazCompilerOptions.Libraries     ,CopyRAST_node_SrchPTH__Fl);
-    asd.add_SearchPaths(_package_.LazCompilerOptions.OtherUnitFiles,CopyRAST_node_SrchPTH__Fu);
 
     asd.add_PackageFile(_package_.Filename);
 
@@ -72,6 +72,7 @@ begin
         asd.add_File(pkgFile.GetFullFilename,pkgFile.FileType);
     end;
     //-------------------------------------
+    asd.PREAPARE;
     ITV_SetUp(asd);
 end;
 

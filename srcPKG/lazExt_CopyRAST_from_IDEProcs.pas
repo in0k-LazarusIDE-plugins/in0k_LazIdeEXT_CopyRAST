@@ -10,7 +10,9 @@ uses LazFileUtils,LazFileCache, FileUtil,
 
 //!!! начинать с NextStartPos=1
 function GetNextDirectoryInSearchPath(const SearchPath: string; var NextStartPos: integer): string;
+
 function FilenameIsPascalSource8HasResources(const Filename:string): boolean;
+function FilenameIsPascalSource_getRsrc_Name(const Filename:string): string;
 
 
 implementation
@@ -64,11 +66,19 @@ begin
   Result:=(Ext='.lpr') or (Ext='.dpr') or (Ext='.dpk');
 end; }
 
+function FilenameIsPascalSource_getRsrc_Name(const Filename:string):string;
+begin
+    result:='';
+    if FilenameIsPascalUnit(Filename)
+    then begin
+        result:=ChangeFileExt(Filename,'.lfm')
+    end;
+end;
 
 function FilenameIsPascalSource8HasResources(const Filename:string): boolean;
 begin
     result:=FilenameIsPascalUnit(Filename) AND
-            FileExistsCached(ChangeFileExt(Filename,'.lfm'));
+            FileExistsCached(FilenameIsPascalSource_getRsrc_Name(Filename));
 end;
 
 end.

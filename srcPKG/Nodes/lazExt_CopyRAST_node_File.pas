@@ -55,8 +55,7 @@ end;
 function tCopyRAST_node_File_CORE._getCaption_:string;
 begin
     result:=_getFileNAME_;
-
-    if FilenameIsPascalSource8HasResources(_nodeText_) then result:=result+' R'
+    //if FilenameIsPascalSource8HasResources(_nodeText_) then result:=result+' R'
 end;
 
 function tCopyRAST_node_File_CORE._getFileNAME_:string;
@@ -68,9 +67,6 @@ function tCopyRAST_node_File_CORE._getFilePATH_:string;
 begin
     result:=ExtractFileDir(_nodeText_);
 end;
-
-//------------------------------------------------------------------------------
-
 
 //------------------------------------------------------------------------------
 

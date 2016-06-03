@@ -18,6 +18,8 @@ type
     procedure add_SearchPaths(const SrchPTH:string; const KIND:eCopyRAST_node_SrchPath);
     procedure add_PackageFile(const FullFileName:string);
     procedure add_File       (const FullFileName:string; const FileType:TPkgFileType);
+  public
+    procedure PREAPARE;
   end;
 
 
@@ -46,6 +48,11 @@ var fileXXX:tCopyRAST_node_File;
 begin
     fileXXX:=tCopyRAST_node_File.Create(FullFileName,FileType);
    _add_FileXXX_(fileXXX);
+end;
+
+procedure tCopyRAST_ROOT_package.PREAPARE;
+begin
+   _prepare_fnd8add_fileRES_4ROOT_;
 end;
 
 end.

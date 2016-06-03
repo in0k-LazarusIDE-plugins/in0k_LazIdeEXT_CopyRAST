@@ -68,9 +68,7 @@ function tCopyRAST_node_Folder._getCaption_:string;
 begin
     result:=_getDirNAME_;
     //---
-    if _Paths_<>[] then begin
-        result:=result+' SP';
-    end;
+    //if _Paths_<>[] then result:=result+' SP';
 end;
 
 function tCopyRAST_node_Folder._getDirNAME_:string;

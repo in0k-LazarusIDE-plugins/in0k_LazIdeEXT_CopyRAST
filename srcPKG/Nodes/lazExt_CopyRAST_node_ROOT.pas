@@ -4,7 +4,9 @@ unit lazExt_CopyRAST_node_ROOT;
 
 interface
 
-uses sysutils,  FileUtil, PackageIntf, LazFileUtils,
+uses sysutils,  FileUtil, PackageIntf, LazFileUtils, LazIDEIntf, Dialogs,
+
+    CodeToolManager, CodeCache,
     //Dialogs,
      lazExt_CopyRAST_from_IDEProcs,
      lazExt_CopyRAST_node,
@@ -17,6 +19,12 @@ type
   protected
     function  _get_BaseDIR_:tCopyRAST_node_BaseDIR;
     procedure _set_BaseDIR_(const BaseDIR:string);
+  protected
+    function  _tst_FileXXX_haveRES_(const FileXXX:tCopyRAST_node_File):boolean;
+    function  _getFileNameLFM      (const FileXXX:tCopyRAST_node_File):string;
+  protected
+    procedure _prepare_fnd8add_fileRES_(const Folder:tCopyRAST_node_Folder);
+    procedure _prepare_fnd8add_fileRES_4ROOT_;
   protected
     function  _get_PathDIR_(const PathDIR:string):tCopyRAST_node_Folder;
     function  _fnd_fileSRC_(const Folder:tCopyRAST_node_Folder; const FileNameWithoutExt:string):tCopyRAST_node;
@@ -126,26 +134,130 @@ begin
     end;
 end;
 
-
 procedure tCopyRAST_ROOT._add_FileXXX_(const FileXXX:tCopyRAST_node_File);
 var prnt:tCopyRAST_node_Folder;
-
 begin
-    //ShowMessage('file PATH:'+FileXXX.FilePATH);
-
     prnt:=_get_PathDIR_(FileXXX.FilePATH);
     if not Assigned(prnt) then EXIT; //< это КАСЯК, обработать как-то надо?
     //-
     if FileXXX is tCopyRAST_node_fileMain_CORE
     then tCopyRAST_ROOT(pointer(prnt))._ins_ChldFrst_(FileXXX)
     else begin
-        if FileXXX.FileTYPE=pftLFM then begin
+        if FileXXX.FileTYPE=pftLFM then begin // вставка ресурсов ОСОБЕННАЯ
            prnt:=tCopyRAST_node_Folder(_fnd_fileSRC_(prnt,ExtractFileNameWithoutExt(FileXXX.FileNAME)));
+           if NOT _tst_FileXXX_haveRES_(tCopyRAST_node_FILE(tCopyRAST_node(prnt))) then begin
+                prnt.ins_ChldLast(FileXXX);
+           end
+           else begin
+               {todo: чет надо поделать}
+           end;
+        end
+        else begin
+            prnt.ins_ChldLast(FileXXX);
         end;
-        prnt.ins_ChldLast(FileXXX);
-
     end;
-    //else tCopyRAST_ROOT(prnt)._ins_ChldLast_(FileXXX);
+end;
+
+//------------------------------------------------------------------------------
+
+function tCopyRAST_ROOT._tst_FileXXX_haveRES_(const FileXXX:tCopyRAST_node_File):boolean;
+var tmp:tCopyRAST_node;
+begin
+    result:=false;
+    tmp:=FileXXX.NodeCHLD;
+    while Assigned(tmp) do begin
+        if (tmp is tCopyRAST_node_FILE)and
+           (tCopyRAST_node_FILE(tmp).FileTYPE=pftLFM)and
+           (0=CompareFilenames(
+               ExtractFileNameWithoutExt(tCopyRAST_node_FILE(tmp).FileNAME),
+               ExtractFileNameWithoutExt(                 FileXXX.FileNAME))
+           )
+        then begin //< мда ... это файл с ресурсами
+            result:=TRUE;
+            BREAK;
+        end;
+        //--->
+        tmp:=tmp.NodeNEXT;
+    end;
+end;
+
+procedure tCopyRAST_ROOT._prepare_fnd8add_fileRES_(const Folder:tCopyRAST_node_Folder);
+var tmp:tCopyRAST_node;
+    lll:tCopyRAST_node_FILE;
+begin
+    tmp:=Folder.NodeCHLD;
+    while Assigned(tmp) do begin
+        if tmp is tCopyRAST_node_Folder then _prepare_fnd8add_fileRES_(tCopyRAST_node_Folder(tmp))
+       else
+        {if tmp is tCopyRAST_node_FILE then begin
+            if (FilenameIsPascalSource8HasResources(tmp.NodeTXT))and //< они ДОЛЖНЫ быть
+               (not _tst_FileXXX_haveRES_(tCopyRAST_node_FILE(tmp))) //< но их НЕТ
+            then begin //< ага ... в нем НИЧЕГО не лежит
+                // создадим и положим
+                lll:=tCopyRAST_node_FILE.Create(FilenameIsPascalSource_getRsrc_Name(tmp.NodeTXT),pftLFM);
+               _add_FileXXX_(lll);
+            end;
+        end;}
+        if tmp is tCopyRAST_node_FILE then begin
+           ShowMessage(tCopyRAST_node_FILE(tmp).FileNAME);
+           _getFileNameLFM(tCopyRAST_node_FILE(tmp))
+        end;
+        //--->
+        tmp:=tmp.NodeNEXT;
+    end;
+end;
+
+
+function tCopyRAST_ROOT._getFileNameLFM(const FileXXX:tCopyRAST_node_File):string;
+var
+  ExpandedFilename: String;
+  CodeBuf: TCodeBuffer;
+  CB     :TCodeBuffer;
+  LinkIndex:integer;
+begin
+  // make sure the filename is trimmed and contains a full path
+  ExpandedFilename:={CleanAndExpandFilename}(FileXXX.NodeTXT);
+  // save changes in source editor to codetools
+  LazarusIDE.SaveSourceEditorChangesToCodeCache(nil);
+  // load the file
+  CodeBuf:=CodeToolBoss.LoadFile(ExpandedFilename,true,false);
+  //---
+  if not Assigned(CodeBuf) then ShowMessage('CodeBuf NOT load');;
+  //---
+  try
+
+    LinkIndex:=0;
+
+    CB:=CodeToolBoss.FindNextResourceFile(CodeBuf,LinkIndex);
+    while CB<>nil do begin
+        ShowMessage(ExpandedFilename+LineEnding+CB.Filename);
+        CB:=CodeToolBoss.FindNextResourceFile(CodeBuf,LinkIndex);
+    end;
+
+
+
+
+  //result:=CodeToolBoss.FindLFMFileName(CodeBuf);
+    //ShowMessage(ExpandedFilename+LineEnding+result);
+  except
+    ShowMessage('ERRRR');
+  end;
+end;
+
+
+procedure tCopyRAST_ROOT._prepare_fnd8add_fileRES_4ROOT_;
+var tmp:tCopyRAST_node;
+begin
+    tmp:=NodeCHLD;
+    while Assigned(tmp) do begin
+        if tmp is tCopyRAST_node_Folder then _prepare_fnd8add_fileRES_(tCopyRAST_node_Folder(tmp));
+        //--->
+        tmp:=tmp.NodeNEXT;
+    end;
+
+
+//    CodeToolBoss.
+
 end;
 
 end.

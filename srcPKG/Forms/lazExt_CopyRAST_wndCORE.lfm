@@ -14,9 +14,11 @@ object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
     Top = 0
     Width = 662
     Align = alClient
+    AutoExpand = True
     DefaultItemHeight = 18
     TabOrder = 0
     OnAdvancedCustomDraw = ItemsTreeViewAdvancedCustomDraw
     OnDeletion = ItemsTreeViewDeletion
+    Options = [tvoAutoExpand, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
   end
 end
