@@ -4,7 +4,8 @@ unit in0k_lazIdeSRC_ExpertCORE;
 
 interface
 
-uses IDEIntf, LazIDEIntf;
+uses IDEIntf, LazIDEIntf,
+     in0k_lazIdeSRC_DEBUG;
 
 type
 
@@ -52,12 +53,12 @@ end;
 
 procedure tIn0k_lazIdeSRC_ExpertCORE.LazarusIDE_SetUP;
 begin
-
+    in0k_lazIdeSRC_DEBUG.LazarusIDE_SetUP('asdf');
 end;
 
 procedure tIn0k_lazIdeSRC_ExpertCORE.LazarusIDE_CLEAN;
 begin
-
+    in0k_lazIdeSRC_DEBUG.LazarusIDE_CLEAR;
 end;
 
 end.

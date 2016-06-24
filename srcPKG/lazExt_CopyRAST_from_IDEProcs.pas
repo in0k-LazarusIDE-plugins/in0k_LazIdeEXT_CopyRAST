@@ -11,7 +11,9 @@ uses LazFileUtils,LazFileCache, FileUtil,
 //!!! начинать с NextStartPos=1
 function GetNextDirectoryInSearchPath(const SearchPath: string; var NextStartPos: integer): string;
 
+// проверить, есть ли связанный с файлом файл ресурсов ... очень странный способ
 function FilenameIsPascalSource8HasResources(const Filename:string): boolean;
+// получить имя
 function FilenameIsPascalSource_getRsrc_Name(const Filename:string): string;
 
 
@@ -75,7 +77,7 @@ begin
     end;
 end;
 
-function FilenameIsPascalSource8HasResources(const Filename:string): boolean;
+function FilenameIsPascalSource8HasResources(const Filename:string):boolean;
 begin
     result:=FilenameIsPascalUnit(Filename) AND
             FileExistsCached(FilenameIsPascalSource_getRsrc_Name(Filename));

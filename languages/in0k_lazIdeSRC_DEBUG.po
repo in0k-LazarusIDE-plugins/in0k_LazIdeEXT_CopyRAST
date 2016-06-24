@@ -1,0 +1,45 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: in0k_lazidesrc_debug.cres_btnclear_hint
+msgid "clear"
+msgstr ""
+
+#: in0k_lazidesrc_debug.cres_btnclear_text
+msgid "Clear"
+msgstr ""
+
+#: in0k_lazidesrc_debug.cres_btnsave_hint
+msgctxt "in0k_lazidesrc_debug.cres_btnsave_hint"
+msgid "Save"
+msgstr ""
+
+#: in0k_lazidesrc_debug.cres_btnsave_text
+msgctxt "in0k_lazidesrc_debug.cres_btnsave_text"
+msgid "Save"
+msgstr ""
+
+#: in0k_lazidesrc_debug.cres_chbfreeonclose_hint
+msgctxt "in0k_lazidesrc_debug.cres_chbfreeonclose_hint"
+msgid "FREE on Close"
+msgstr ""
+
+#: in0k_lazidesrc_debug.cres_chbfreeonclose_text
+msgctxt "in0k_lazidesrc_debug.cres_chbfreeonclose_text"
+msgid "FREE on Close"
+msgstr ""
+
+#: in0k_lazidesrc_debug.cres_chbstayontop_hint
+msgctxt "in0k_lazidesrc_debug.cres_chbstayontop_hint"
+msgid "Stay on TOP"
+msgstr ""
+
+#: in0k_lazidesrc_debug.cres_chbstayontop_text
+msgctxt "in0k_lazidesrc_debug.cres_chbstayontop_text"
+msgid "Stay on TOP"
+msgstr ""
+
+#: in0k_lazidesrc_debug.cres_logmemo_hint
+msgid "a"
+msgstr ""
+

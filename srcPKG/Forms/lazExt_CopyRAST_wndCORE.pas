@@ -10,24 +10,32 @@ uses IDEImagesIntf, PackageIntf,
     lazExt_CopyRAST_node_ROOT_package,
 
 
-     lazExt_CopyRAST_node, lazExt_CopyRAST_node_File, lazExt_CopyRAST_node_Folder,
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ComCtrls, LazFileUtils;
+     lazExt_CopyRAST_node, lazExt_CopyRAST_node_File,
+     lazExt_CopyRAST_node_Folder, Classes, SysUtils, FileUtil, Forms, Controls,
+     Graphics, Dialogs, ComCtrls, ExtCtrls, StdCtrls, LazFileUtils;
 
 type
 
  { Twnd_lazExt_CopyRAST_CORE }
 
  Twnd_lazExt_CopyRAST_CORE = class(TForm)
+    Button1: TButton;
     ItemsTreeView: TTreeView;
+    Panel1: TPanel;
+    procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure ItemsTreeViewAdvancedCustomDraw(Sender: TCustomTreeView;
       const ARect: TRect; Stage: TCustomDrawStage; var DefaultDraw: Boolean);
     procedure ItemsTreeViewDeletion(Sender: TObject; Node: TTreeNode);
   protected
-   _parentOBJ_:TObject;
-   _parentFRM_:TCustomForm;
-   _BaseDirectory_:TTreeNode;
-    procedure _onInit_; virtual;
+   _parentOBJ_:TObject;        //< объект над которым работаем (LazIDE)
+   _parentFRM_:TCustomForm;    //< форма которая нас вызвала (LazIDE)
+    procedure _onInit_prtnOBJs_; virtual;
+    procedure _reInit_copyRast_;
+    function  _copyRastObj_CRT_:tCopyRAST_ROOT; virtual;
+  protected
+   _cpRastObj_:tCopyRAST_ROOT; //< объект над которым работаем
   public
     procedure Init(const ParentOBJ:TObject; const ParentFRM:TCustomForm);
   protected
@@ -40,6 +48,8 @@ type
     //function  ITV_add_BasePath(const Path:string):TTreeNode;
     //function  ITV_add_Pkg_File(const Prnt:TTreeNode; const fileName:string):TTreeNode;
     //procedure ITV_add_Pkg_Path(const Prnt:TTreeNode; const PathType:eCopyRAST_node_Path; const Paths:string);
+  public
+    constructor Create(AOwner:TComponent); override;
   end;
 
 
@@ -73,10 +83,16 @@ var
 
 {$R *.lfm}
 
-procedure Twnd_lazExt_CopyRAST_CORE.FormCreate(Sender: TObject);
+constructor Twnd_lazExt_CopyRAST_CORE.Create(AOwner:TComponent);
 begin
+    inherited Create(AOwner);
    _parentOBJ_:=nil;
    _parentFRM_:=nil;
+   _cpRastObj_:=nil;
+end;
+
+procedure Twnd_lazExt_CopyRAST_CORE.FormCreate(Sender: TObject);
+begin
     //---
     ItemsTreeView.Images:=IDEImages.Images_16;
     vITV_BasePath:= IDEImages.LoadImage(16, 'folder');
@@ -103,13 +119,21 @@ begin
     ImageIndexBinary          := IDEImages.LoadImage(16, 'pkg_binary');
     ImageIndexConflict        := IDEImages.LoadImage(16, 'pkg_conflict');
     ImageIndexDirectory       := IDEImages.LoadImage(16, 'pkg_files');
+end;
 
+procedure Twnd_lazExt_CopyRAST_CORE.Button1Click(Sender: TObject);
+begin
+   _reInit_copyRast_;
+end;
 
-
-
+procedure Twnd_lazExt_CopyRAST_CORE.FormDestroy(Sender: TObject);
+begin
+    ItemsTreeView.Items.Clear;
+    if Assigned(_cpRastObj_) then _cpRastObj_.FREE;
 end;
 
 
+//------------------------------------------------------------------------------
 
 
 procedure Twnd_lazExt_CopyRAST_CORE.ItemsTreeViewAdvancedCustomDraw(
@@ -136,15 +160,33 @@ begin
         if (_parentOBJ_<>ParentOBJ)and(_parentFRM_<>ParentFRM) then begin
            _parentOBJ_:=ParentOBJ;
            _parentFRM_:=ParentFRM;
-           _BaseDirectory_:=nil;
-           _onInit_;
+           _onInit_prtnOBJs_;
+           _reInit_copyRast_;
         end;
     end;
 end;
 
-procedure Twnd_lazExt_CopyRAST_CORE._onInit_;
+procedure Twnd_lazExt_CopyRAST_CORE._onInit_prtnOBJs_;
 begin
    //
+end;
+
+procedure Twnd_lazExt_CopyRAST_CORE._reInit_copyRast_;
+begin
+    ItemsTreeView.BeginUpdate;
+    ItemsTreeView.Items.Clear;
+    ItemsTreeView.EndUpdate;
+    //---
+    if Assigned(_cpRastObj_) then _cpRastObj_.FREE;
+   _cpRastObj_:=_copyRastObj_CRT_;
+    //---
+    if Assigned(_cpRastObj_)
+    then ITV_SetUp(_cpRastObj_);
+end;
+
+function Twnd_lazExt_CopyRAST_CORE._copyRastObj_CRT_:tCopyRAST_ROOT;
+begin
+
 end;
 
 //------------------------------------------------------------------------------

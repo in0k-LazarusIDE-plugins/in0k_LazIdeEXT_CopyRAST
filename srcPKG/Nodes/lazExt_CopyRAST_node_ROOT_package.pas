@@ -52,7 +52,8 @@ end;
 
 procedure tCopyRAST_ROOT_package.PREAPARE;
 begin
-   _prepare_fnd8add_fileRES_4ROOT_;
+   _prepare_fileUSE_fnd8add_;
+   _prepare_fileLFM_fnd8add_;
 end;
 
 end.

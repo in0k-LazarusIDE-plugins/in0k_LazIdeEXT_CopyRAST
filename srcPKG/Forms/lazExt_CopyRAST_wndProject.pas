@@ -23,7 +23,7 @@ type
   protected
     function _progect_:TLazProject; inline;
   protected
-    procedure _onInit_; override;
+    procedure _onInit_prtnOBJs_; override;
   end;
 
 implementation
@@ -35,7 +35,7 @@ begin
     result:=TLazProject(_parentOBJ_);
 end;
 
-procedure Twnd_lazExt_CopyRAST_Project._onInit_;
+procedure Twnd_lazExt_CopyRAST_Project._onInit_prtnOBJs_;
 var asd:tCopyRAST_ROOT_project;
 begin
     Caption:=cRes_CopyRAST_PRJ_name+' - '+_progect_.GetTitleOrName;

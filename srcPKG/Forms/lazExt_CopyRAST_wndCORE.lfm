@@ -7,11 +7,12 @@ object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
   ClientHeight = 240
   ClientWidth = 662
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   LCLVersion = '1.6.0.4'
   object ItemsTreeView: TTreeView
     Left = 0
-    Height = 240
-    Top = 0
+    Height = 190
+    Top = 50
     Width = 662
     Align = alClient
     AutoExpand = True
@@ -20,5 +21,25 @@ object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
     OnAdvancedCustomDraw = ItemsTreeViewAdvancedCustomDraw
     OnDeletion = ItemsTreeViewDeletion
     Options = [tvoAutoExpand, tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 50
+    Top = 0
+    Width = 662
+    Align = alTop
+    Caption = 'Panel1'
+    ClientHeight = 50
+    ClientWidth = 662
+    TabOrder = 1
+    object Button1: TButton
+      Left = 8
+      Height = 25
+      Top = 8
+      Width = 75
+      Caption = 'Button1'
+      OnClick = Button1Click
+      TabOrder = 0
+    end
   end
 end

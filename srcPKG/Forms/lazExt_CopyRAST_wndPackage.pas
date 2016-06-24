@@ -26,7 +26,9 @@ type
   protected
     function _package_:TIDEPackage; inline;
   protected
-    procedure _onInit_; override;
+    procedure _onInit_prtnOBJs_; override;
+    function  _copyRastObj_CRT_:tCopyRAST_ROOT; override;
+
   end;
 
 implementation
@@ -49,31 +51,32 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure Twnd_lazExt_CopyRAST_Package._onInit_;
-var asd:tCopyRAST_ROOT_package;
-
-    i:integer;
-    pkgFile:TLazPackageFile;
-
+procedure Twnd_lazExt_CopyRAST_Package._onInit_prtnOBJs_;
 begin
     Caption:=cRes_CopyRAST_PKG_name+' - '+ExtractFileName(_package_.Filename);
-    //-------------------------------------
-    asd:=tCopyRAST_ROOT_package.Create('PACKAGE');
+end;
 
-    asd.set_DirExpanded(_package_.DirectoryExpanded);
-    asd.add_SearchPaths(_package_.LazCompilerOptions.OtherUnitFiles,CopyRAST_node_SrchPTH__Fu);
-    asd.add_SearchPaths(_package_.LazCompilerOptions.IncludePath   ,CopyRAST_node_SrchPTH__Fi);
-    asd.add_SearchPaths(_package_.LazCompilerOptions.Libraries     ,CopyRAST_node_SrchPTH__Fl);
-
-    asd.add_PackageFile(_package_.Filename);
-
-    for i:=0 to _package_.FileCount-1 do begin
-        pkgFile:=_package_.Files[i];
-        asd.add_File(pkgFile.GetFullFilename,pkgFile.FileType);
-    end;
-    //-------------------------------------
-    asd.PREAPARE;
-    ITV_SetUp(asd);
+function Twnd_lazExt_CopyRAST_Package._copyRastObj_CRT_:tCopyRAST_ROOT;
+var root:tCopyRAST_ROOT_package;
+       i:integer;
+begin
+    result:=nil;
+    try root:=tCopyRAST_ROOT_package.Create('PACKAGE');
+        //-------------------------------------
+        root.set_DirExpanded(_package_.DirectoryExpanded);
+        root.add_SearchPaths(_package_.LazCompilerOptions.OtherUnitFiles,CopyRAST_node_SrchPTH__Fu);
+        root.add_SearchPaths(_package_.LazCompilerOptions.IncludePath   ,CopyRAST_node_SrchPTH__Fi);
+        root.add_SearchPaths(_package_.LazCompilerOptions.Libraries     ,CopyRAST_node_SrchPTH__Fl);
+        root.add_PackageFile(_package_.Filename);
+        //-------------------------------------
+        for i:=0 to _package_.FileCount-1 do begin
+            with _package_.Files[i] do root.add_File(GetFullFilename,FileType);
+        end;
+        //-------------------------------------
+        root.PREAPARE;
+        //-------------------------------------
+        result:=root;
+    except root.free; root:=nil; end;
 end;
 
 end.

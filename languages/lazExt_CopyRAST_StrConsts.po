@@ -1,0 +1,43 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: lazext_copyrast_strconsts.cres_copyrast
+msgid "CopyRAST"
+msgstr ""
+
+#: lazext_copyrast_strconsts.cres_copyrast_caption
+msgid "CopyRAST .."
+msgstr ""
+
+#: lazext_copyrast_strconsts.cres_copyrast_pkg_desc
+msgid "View CopyRAST Package Tool"
+msgstr ""
+
+#: lazext_copyrast_strconsts.cres_copyrast_pkg_name
+msgid "CopyRAST Package"
+msgstr ""
+
+#: lazext_copyrast_strconsts.cres_copyrast_prj_desc
+msgid "View CopyRAST Project Tool"
+msgstr ""
+
+#: lazext_copyrast_strconsts.cres_copyrast_prj_name
+msgid "CopyRAST Project"
+msgstr ""
+
+#: lazext_copyrast_strconsts.cres_nodename_incfiles
+msgid "Include files (-Fi)"
+msgstr ""
+
+#: lazext_copyrast_strconsts.cres_nodename_includein
+msgid "include In"
+msgstr ""
+
+#: lazext_copyrast_strconsts.cres_nodename_libraries
+msgid "Libraries (-Fl)"
+msgstr ""
+
+#: lazext_copyrast_strconsts.cres_nodename_otherunitfiles
+msgid "Other unit files (-Fu)"
+msgstr ""
+
