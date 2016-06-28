@@ -4,8 +4,13 @@ unit lazExt_CopyRAST_node_ROOT;
 
 interface
 
+{$define _DEBUG_}
+
+
 uses sysutils,  FileUtil, PackageIntf, LazFileUtils, LazIDEIntf, Dialogs,
                             Classes,
+
+in0k_lazIdeSRC_DEBUG,
     CodeToolManager, CodeCache,  CustomCodeTool,
     //Dialogs,
      lazExt_CopyRAST_from_IDEProcs,
@@ -198,9 +203,8 @@ begin
     StartPos:=1;
     singlDir:=GetNextDirectoryInSearchPath(SrchPTH,StartPos);
     while singlDir<>'' do begin
-
+        {$ifdef _DEBUG_}DEBUG('add_SrchPTH',singlDir);{$endIf}
         {todo: чет наверно как-то потестить надо}
-
         FoldrDir:=_PathFLDR_GET_(singlDir);
         if Assigned(FoldrDir) then begin
             //--- добавим найденному ТИП пути

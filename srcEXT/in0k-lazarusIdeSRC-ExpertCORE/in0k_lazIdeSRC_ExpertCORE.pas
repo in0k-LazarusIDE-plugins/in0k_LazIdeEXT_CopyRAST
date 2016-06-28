@@ -53,7 +53,7 @@ end;
 
 procedure tIn0k_lazIdeSRC_ExpertCORE.LazarusIDE_SetUP;
 begin
-    in0k_lazIdeSRC_DEBUG.LazarusIDE_SetUP('asdf');
+    in0k_lazIdeSRC_DEBUG.LazarusIDE_SetUP(Self.ClassName);
 end;
 
 procedure tIn0k_lazIdeSRC_ExpertCORE.LazarusIDE_CLEAN;

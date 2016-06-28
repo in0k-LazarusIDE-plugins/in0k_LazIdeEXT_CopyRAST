@@ -5,7 +5,7 @@ unit lazExt_CopyRAST;
 interface
 
 uses in0k_lazIdeSRC_ExpertCORE,
-
+     in0k_lazIdeSRC_DEBUG,
      lazExt_CopyRAST_StrConsts,
      lazExt_CopyRAST_wndPackage,
      lazExt_CopyRAST_wndProject,
@@ -112,6 +112,10 @@ var Cat:TIDECommandCategory;
 begin
     inherited;
     //---
+    in0k_lazIdeSRC_DEBUG.LazarusIDE_SetUP(self.ClassName);
+    in0k_lazIdeSRC_DEBUG.LazarusIDE_ShowDBG;
+    //---
+
     // add IDE commands
     Cat:=IDECommandList.FindCategoryByName(CommandCategoryCodeTools);
    _ideCommand_copyRast_Package_:=RegisterIDECommand(Cat, cRes_CopyRAST_PKG_desc,cRes_CopyRAST_PKG_desc, @_ideCommand_copyRast_Package_onClick);
@@ -131,6 +135,7 @@ end;
 procedure tLazExt_CopyRAST.LazarusIDE_CLEAN;
 begin
     inherited;
+    in0k_lazIdeSRC_DEBUG.LazarusIDE_CLEAR;
 end;
 
 end.
