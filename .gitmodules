@@ -4,3 +4,6 @@
 [submodule "srcExt/in0k-lazarusIdeSRC-wndDEBUG"]
 	path = srcExt/in0k-lazarusIdeSRC-wndDEBUG
 	url = https://github.com/in0k-LazarusIDE-soures/in0k-lazarusIdeSRC-wndDEBUG.git
+[submodule "srcExt/in0k-lazarusIdeSRC-FuckUpForm"]
+	path = srcExt/in0k-lazarusIdeSRC-FuckUpForm
+	url = https://github.com/in0k-LazarusIDE-soures/in0k-lazarusIdeSRC-FuckUpForm.git
