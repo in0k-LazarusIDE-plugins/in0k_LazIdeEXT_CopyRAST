@@ -8,11 +8,11 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcPKG;srcPKG\Forms;srcPKG\Nodes;srcEXT\in0k-lazarusIdeSRC-wndDEBUG"/>
+        <OtherUnitFiles Value="srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcPKG;srcPKG\Forms;srcPKG\Nodes;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="15">
+    <Files Count="18">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -23,16 +23,16 @@
         <UnitName Value="in0k_lazIdeSRC_ExpertCORE"/>
       </Item2>
       <Item3>
-        <Filename Value="srcPKG\lazExt_CopyRAST.pas"/>
-        <UnitName Value="lazExt_CopyRAST"/>
-      </Item3>
-      <Item4>
-        <Filename Value="srcPKG\lazExt_CopyRAST_StrConsts.pas"/>
-        <UnitName Value="lazExt_CopyRAST_StrConsts"/>
-      </Item4>
-      <Item5>
         <Filename Value="srcPKG\Forms\lazExt_CopyRAST_wndCORE.pas"/>
         <UnitName Value="lazExt_CopyRAST_wndCORE"/>
+      </Item3>
+      <Item4>
+        <Filename Value="srcPKG\lazExt_CopyRAST.pas"/>
+        <UnitName Value="lazExt_CopyRAST"/>
+      </Item4>
+      <Item5>
+        <Filename Value="srcPKG\lazExt_CopyRAST_StrConsts.pas"/>
+        <UnitName Value="lazExt_CopyRAST_StrConsts"/>
       </Item5>
       <Item6>
         <Filename Value="srcPKG\Forms\lazExt_CopyRAST_wndPackage.pas"/>
@@ -63,17 +63,29 @@
         <UnitName Value="lazExt_CopyRAST_from_IDEProcs"/>
       </Item12>
       <Item13>
-        <Filename Value="srcPKG\Nodes\lazExt_CopyRAST_node_ROOT_package.pas"/>
-        <UnitName Value="lazExt_CopyRAST_node_ROOT_package"/>
-      </Item13>
-      <Item14>
-        <Filename Value="srcPKG\Nodes\lazExt_CopyRAST_node_ROOT_project.pas"/>
-        <UnitName Value="lazExt_CopyRAST_node_ROOT_project"/>
-      </Item14>
-      <Item15>
         <Filename Value="srcEXT\in0k-lazarusIdeSRC-wndDEBUG\in0k_lazIdeSRC_DEBUG.pas"/>
         <UnitName Value="in0k_lazIdeSRC_DEBUG"/>
+      </Item13>
+      <Item14>
+        <Filename Value="srcPKG\Nodes\lazExt_CopyRAST_node_ROOT_package.pas"/>
+        <UnitName Value="lazExt_CopyRAST_node_ROOT_package"/>
+      </Item14>
+      <Item15>
+        <Filename Value="srcEXT\in0k-lazarusIdeSRC-FuckUpForm\in0k_lazIdeSRC_FuckUpForm_01.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_FuckUpForm_01"/>
       </Item15>
+      <Item16>
+        <Filename Value="srcPKG\Nodes\lazExt_CopyRAST_node_ROOT_project.pas"/>
+        <UnitName Value="lazExt_CopyRAST_node_ROOT_project"/>
+      </Item16>
+      <Item17>
+        <Filename Value="in0k_lazIdeSRC_SETTINGs.inc"/>
+        <Type Value="Binary"/>
+      </Item17>
+      <Item18>
+        <Filename Value="srcPKG\Forms\lazExt_CopyRAST_FuckUpForm.pas"/>
+        <UnitName Value="lazExt_CopyRAST_FuckUpForm"/>
+      </Item18>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>
