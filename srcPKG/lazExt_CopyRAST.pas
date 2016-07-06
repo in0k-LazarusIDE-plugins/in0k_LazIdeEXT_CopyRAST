@@ -30,7 +30,7 @@ type
     procedure LazarusIDE_CLEAN; override;
   public
     constructor Create;
-    destructor DESTROY;
+    destructor DESTROY; override;
   end;
 
 implementation
@@ -78,7 +78,7 @@ end;
 
 procedure tLazExt_CopyRAST._crt_IDEWnd_copyRast_Package_(Sender:TObject; aFormName:string; var AForm:TCustomForm; DoDisableAutoSizing:boolean);
 begin
-    IDEWindowCreators.CreateForm(AForm,Twnd_lazExt_CopyRAST_Package,DoDisableAutoSizing,LazarusIDE.OwningComponent);
+    IDEWindowCreators.CreateForm(AForm,Twnd_lazExt_CopyRAST_Package,DoDisableAutoSizing,Application{LazarusIDE.OwningComponent});
     AForm.Name:=aFormName;
 end;
 
@@ -113,7 +113,7 @@ begin
     inherited;
     //---
     in0k_lazIdeSRC_DEBUG.LazarusIDE_SetUP(self.ClassName);
-    in0k_lazIdeSRC_DEBUG.LazarusIDE_ShowDBG;
+    //in0k_lazIdeSRC_DEBUG.LazarusIDE_ShowDBG;
     //---
 
     // add IDE commands
@@ -122,10 +122,8 @@ begin
    _ideCommand_copyRast_Project_:=RegisterIDECommand(Cat, cRes_CopyRAST_PRJ_desc,cRes_CopyRAST_PRJ_desc, @_ideCommand_copyRast_Project_onClick);
     //---
     // add a menu item in the package editor
-    RegisterIDEMenuCommand(PkgEditMenuSectionSave, 'ViewCopyRastPKG',
-        cRes_CopyRAST_caption, nil,nil, _ideCommand_copyRast_Package_,'');
-    RegisterIDEMenuCommand(itmProjectSaveSection, 'ViewCopyRastPRJ',
-        cRes_CopyRAST_caption, nil,nil, _ideCommand_copyRast_Project_,'');
+    RegisterIDEMenuCommand(PkgEditMenuSectionSave, 'ViewCopyRastPKG', cRes_CopyRAST_caption, nil,nil, _ideCommand_copyRast_Package_,'');
+    RegisterIDEMenuCommand(itmProjectSaveSection,  'ViewCopyRastPRJ', cRes_CopyRAST_caption, nil,nil, _ideCommand_copyRast_Project_,'');
     //---
     // register window creator
     IDEWindowCreators.Add(clazExt_CopyRAST_wndPackage_name,nil,@_crt_IDEWnd_copyRast_Package_,'250','250','','','',alNone,true);

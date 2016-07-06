@@ -4,7 +4,16 @@ unit lazExt_CopyRAST_wndCORE;
 
 interface
 
-uses IDEImagesIntf, PackageIntf,
+{$i in0k_lazIdeSRC_SETTINGs.inc} //< настройки компанента-Расширения.
+//< Можно смело убирать, так как будеть работать только в моей специальной
+//< "системе имен и папок" `in0k_LazExt_..`.
+
+
+uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
+
+     IDEImagesIntf, PackageIntf,
+     lazExt_CopyRAST_FuckUpForm,
+
 
     lazExt_CopyRAST_node_ROOT,
     lazExt_CopyRAST_node_ROOT_package,
@@ -23,11 +32,14 @@ type
     ItemsTreeView: TTreeView;
     Panel1: TPanel;
     procedure Button1Click(Sender: TObject);
+    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure ItemsTreeViewAdvancedCustomDraw(Sender: TCustomTreeView;
       const ARect: TRect; Stage: TCustomDrawStage; var DefaultDraw: Boolean);
     procedure ItemsTreeViewDeletion(Sender: TObject; Node: TTreeNode);
+  protected
+   _FuckUpForm_:tLazExt_CopyRAST_FuckUpForm;
   protected
    _parentOBJ_:TObject;        //< объект над которым работаем (LazIDE)
    _parentFRM_:TCustomForm;    //< форма которая нас вызвала (LazIDE)
@@ -50,10 +62,22 @@ type
     //procedure ITV_add_Pkg_Path(const Prnt:TTreeNode; const PathType:eCopyRAST_node_Path; const Paths:string);
   public
     constructor Create(AOwner:TComponent); override;
+    destructor DESTROY; override;
   end;
 
 
 implementation
+
+{%region --- возня с ДЕБАГОМ -------------------------------------- /fold}
+{$if defined(in0k_lazIdeSRC_FuckUpForm___DebugLOG) AND declared(in0k_lazIde_DEBUG)}
+    // `in0k_lazIde_DEBUG` - это функция ИНДИКАТОР что используется
+    //                       моя "система имен и папок"
+    {$define _debugLOG_}     //< типа да ... можно делать ДЕБАГ отметки
+{$else}
+    {$undef _debugLOG_}
+{$endIf}
+{%endregion}
+
 
 var
 
@@ -86,10 +110,23 @@ var
 constructor Twnd_lazExt_CopyRAST_CORE.Create(AOwner:TComponent);
 begin
     inherited Create(AOwner);
+   _FuckUpForm_:=tLazExt_CopyRAST_FuckUpForm.Create(self);
    _parentOBJ_:=nil;
    _parentFRM_:=nil;
    _cpRastObj_:=nil;
 end;
+
+destructor Twnd_lazExt_CopyRAST_CORE.DESTROY;
+begin
+    if Assigned(_cpRastObj_) then _cpRastObj_.FREE;
+    //---
+   _FuckUpForm_.ParentForm_CLEAR; //< после этого, можно спокойно уничтожаться
+   _FuckUpForm_.FREE;
+    //---
+    inherited DESTROY;
+end;
+
+//------------------------------------------------------------------------------
 
 procedure Twnd_lazExt_CopyRAST_CORE.FormCreate(Sender: TObject);
 begin
@@ -121,15 +158,38 @@ begin
     ImageIndexDirectory       := IDEImages.LoadImage(16, 'pkg_files');
 end;
 
-procedure Twnd_lazExt_CopyRAST_CORE.Button1Click(Sender: TObject);
+procedure Twnd_lazExt_CopyRAST_CORE.FormClose(Sender: TObject;
+  var CloseAction: TCloseAction);
 begin
-   _reInit_copyRast_;
+    {$ifDEF _debugLOG_}
+    case CloseAction of
+        caNone: DEBUG('Twnd_lazExt_CopyRAST_CORE','FormClose - caNone');
+        caHide: DEBUG('Twnd_lazExt_CopyRAST_CORE','FormClose - caHide');
+        caFree: DEBUG('Twnd_lazExt_CopyRAST_CORE','FormClose - caFree');
+        caMinimize: DEBUG('Twnd_lazExt_CopyRAST_CORE','FormClose - caMinimize');
+    end;
+    {$endIf}
+   _FuckUpForm_.ParentForm_CLEAR; //< после этого, можно спокойно уничтожаться
+    CloseAction:=caFree;
 end;
 
 procedure Twnd_lazExt_CopyRAST_CORE.FormDestroy(Sender: TObject);
 begin
-    ItemsTreeView.Items.Clear;
-    if Assigned(_cpRastObj_) then _cpRastObj_.FREE;
+    {$ifDEF _debugLOG_}
+    DEBUG('Twnd_lazExt_CopyRAST_CORE','FormDestroy_000');
+    {$endIf}
+    //---
+    //ItemsTreeView.Items.Clear;
+    {$ifDEF _debugLOG_}
+    DEBUG('Twnd_lazExt_CopyRAST_CORE','FormDestroy_001');
+    {$endIf}
+end;
+
+//------------------------------------------------------------------------------
+
+procedure Twnd_lazExt_CopyRAST_CORE.Button1Click(Sender: TObject);
+begin
+   _reInit_copyRast_;
 end;
 
 
@@ -156,12 +216,14 @@ end;
 
 procedure Twnd_lazExt_CopyRAST_CORE.Init(const ParentOBJ:TObject; const ParentFRM:TCustomForm);
 begin
-    if Assigned(ParentOBJ) and Assigned(ParentFRM) then begin
+   if Assigned(ParentOBJ) and Assigned(ParentFRM) then begin
         if (_parentOBJ_<>ParentOBJ)and(_parentFRM_<>ParentFRM) then begin
            _parentOBJ_:=ParentOBJ;
            _parentFRM_:=ParentFRM;
-           _onInit_prtnOBJs_;
-           _reInit_copyRast_;
+        //   _onInit_prtnOBJs_;
+        //   _reInit_copyRast_;
+            //---
+           _FuckUpForm_.Form:=ParentFRM;
         end;
     end;
 end;

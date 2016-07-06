@@ -6,6 +6,7 @@ object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
   Caption = 'wnd_lazExt_CopyRAST_CORE'
   ClientHeight = 240
   ClientWidth = 662
+  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   LCLVersion = '1.6.0.4'

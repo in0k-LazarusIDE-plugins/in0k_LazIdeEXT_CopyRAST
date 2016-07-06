@@ -151,6 +151,7 @@ begin
         if not Assigned(result) then begin
             result:=tCopyRAST_node_PathDIR.Create(PathFLDR);
             prnt.ins_ChldLast(result);
+            {$ifdef _DEBUG_}DEBUG('_PathFLDR_GET_','CREATE: '+PathFLDR);{$endIf}
         end;
     end;
 end;
@@ -203,7 +204,7 @@ begin
     StartPos:=1;
     singlDir:=GetNextDirectoryInSearchPath(SrchPTH,StartPos);
     while singlDir<>'' do begin
-        {$ifdef _DEBUG_}DEBUG('add_SrchPTH',singlDir);{$endIf}
+        {$ifdef _DEBUG_}DEBUG('add_SrchPTH','{'+eCopyRAST_node_SrchPath__2__text(KIND)+'}'+singlDir);{$endIf}
         {todo: чет наверно как-то потестить надо}
         FoldrDir:=_PathFLDR_GET_(singlDir);
         if Assigned(FoldrDir) then begin
