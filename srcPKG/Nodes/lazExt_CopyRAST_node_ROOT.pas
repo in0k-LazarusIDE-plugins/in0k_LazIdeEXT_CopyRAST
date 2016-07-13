@@ -6,11 +6,15 @@ interface
 
 {$define _DEBUG_}
 
+{$i in0k_lazIdeSRC_SETTINGs.inc} //< настройки компанента-Расширения.
+//< Можно смело убирать, так как будеть работать только в моей специальной
+//< "системе имен и папок" `in0k_LazExt_..`.
 
-uses sysutils,  FileUtil, PackageIntf, LazFileUtils, LazIDEIntf, Dialogs,
+
+uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
+     sysutils,  FileUtil, PackageIntf, LazFileUtils, LazIDEIntf, Dialogs,
                             Classes,
 
-in0k_lazIdeSRC_DEBUG,
     CodeToolManager, CodeCache,  CustomCodeTool,
     //Dialogs,
      lazExt_CopyRAST_from_IDEProcs,
@@ -24,17 +28,19 @@ type
   protected
     function  _get_BaseDIR_:tCopyRAST_node_BaseDIR;
     procedure _set_BaseDIR_(const BaseDIR:string);
+    function  _get_BaseDIR_PATH_:string;
+    function  _get_rltvDIR_(const Folder:tCopyRAST_node_Folder):string;
   protected
     function  _tst_FileSRC_lfmHAVE_(const FileName:string):boolean;
     function  _tst_FileSRC_lfmNAME_(const FileName:string):string;
     function  _tst_FileXXX_haveLFM_(const FileXXX:tCopyRAST_node_File):boolean;
-    procedure _prepare_fileLFM_fnd8add_(const Folder:tCopyRAST_node_Folder);
-    procedure _prepare_fileLFM_fnd8add_;
   protected
     function _LazIDE_loadFile_(const node:tCopyRAST_node_FILE):TCodeBuffer;
 
   protected
-
+    procedure _prepare_fileLFM_fnd8add_(const Folder:tCopyRAST_node_Folder);
+    procedure _prepare_fileLFM_fnd8add_;
+  protected
     procedure _prepare_fileUSE_fnd8add_(const fullFileName:string);
     procedure _prepare_fileUSE_fnd8add_(const nameLst:TStringList);
     procedure _prepare_fileUSE_fnd8add_(const FileXXX:tCopyRAST_node_File);
@@ -53,9 +59,28 @@ type
   protected
     function  _copyRast_txt(const node:tCopyRAST_node_FILE):boolean;
     function  _copyRast_bin(const node:tCopyRAST_node_FILE):boolean;
+
+
+  protected
+    function _copyRast_prepare_Target_BaseDIR_(out   BaseDir:string; const Clear:boolean=true):boolean;
+    function _copyRast_prepare_Target_DirTREE_(const BaseDir:string; const Node:tCopyRAST_node):boolean;
+  public
+    function CopyRAST:boolean;
+
   end;
 
 implementation
+
+{%region --- возня с ДЕБАГОМ -------------------------------------- /fold}
+{$if defined(in0k_lazIdeSRC_FuckUpForm___DebugLOG) AND declared(in0k_lazIde_DEBUG)}
+    // `in0k_lazIde_DEBUG` - это функция ИНДИКАТОР что используется
+    //                       моя "система имен и папок"
+    {$define _debugLOG_}     //< типа да ... можно делать ДЕБАГ отметки
+{$else}
+    {$undef _debugLOG_}
+{$endIf}
+{%endregion}
+
 
 // поиск BaseDIR по типу
 function tCopyRAST_ROOT._get_BaseDIR_:tCopyRAST_node_BaseDIR;
@@ -77,6 +102,30 @@ begin
        _ins_ChldFrst_(tmp);
     end
     else tCopyRAST_ROOT(tmp)._nodeText_:=BaseDIR;
+end;
+
+function tCopyRAST_ROOT._get_BaseDIR_PATH_:string;
+var tmp:tCopyRAST_node_BaseDIR;
+begin
+    tmp:=_get_BaseDIR_;
+    if Assigned(tmp) then begin
+        result:=tmp.NodeTXT;
+    end;
+end;
+
+function tCopyRAST_ROOT._get_rltvDIR_(const Folder:tCopyRAST_node_Folder):string;
+var baseDir:tCopyRAST_node_BaseDIR;
+begin
+    result:='';
+    baseDir:=_get_BaseDIR_;
+    if baseDir<>Folder then begin
+        if Folder.NodePRNT=baseDir then result:=''
+        else begin
+            if Folder.NodePRNT is tCopyRAST_node_Folder then result:=_get_rltvDIR_(tCopyRAST_node_Folder(Folder.NodePRNT))
+        end;
+        result:=result+DirectorySeparator+Folder.DirNAME;
+    end
+    else result:='';
 end;
 
 //------------------------------------------------------------------------------
@@ -232,6 +281,7 @@ begin
             prnt:=tCopyRAST_node_Folder(_fnd_fileSRC_(prnt,ExtractFileNameWithoutExt(FileXXX.FileNAME)));
             if NOT _tst_FileXXX_haveLFM_(tCopyRAST_node_FILE(tCopyRAST_node(prnt))) then begin
                 prnt.ins_ChldLast(FileXXX);
+                {$ifdef _DEBUG_}DEBUG('_add_FileXXX_','{'+'LFM'+'}'+FileXXX.NodeTXT);{$endIf}
             end
             else begin
                 {todo: чет надо поделать}
@@ -242,6 +292,7 @@ begin
         end
         else begin
             prnt.ins_ChldLast(FileXXX);
+            {$ifdef _DEBUG_}DEBUG('_add_FileXXX_','{'+'}'+FileXXX.NodeTXT);{$endIf}
         end;
     end;
 end;
@@ -283,7 +334,7 @@ begin
     end;
 end;
 
-//----
+//------------------------------------------------------------------------------
 
 procedure tCopyRAST_ROOT._prepare_fileLFM_fnd8add_(const Folder:tCopyRAST_node_Folder);
 var tmp:tCopyRAST_node;
@@ -428,6 +479,75 @@ begin
         //fs.free;
     end;
 end;
+
+
+
+
+function tCopyRAST_ROOT._copyRast_prepare_Target_BaseDIR_(out BaseDir:string; const Clear:boolean=true):boolean;
+begin
+    if BaseDir='' then BaseDir:=_get_BaseDIR_PATH_+'\CopyRast';
+    {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','path: '+BaseDir);{$endIf}
+    if Clear then begin
+
+        Result:=DeleteDirectory(BaseDir,True);
+        if Result then begin
+            {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','DeleteDirectory: OK');{$endIf}
+            Result:=RemoveDirUTF8(BaseDir);
+            if result then begin
+                {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','RemoveDirUTF8: OK');{$endIf}
+            end;
+        end;
+
+        {if RemoveDirUTF8(BaseDir) then begin
+            {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','RemoveDirUTF8: OK');{$endIf}
+        end;}
+        if ForceDirectoriesUTF8(BaseDir) then begin
+            {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','ForceDirectoriesUTF8: OK');{$endIf}
+        end;
+    end
+    else begin
+        {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','Clear: FALSE');{$endIf}
+    end;
+end;
+
+function tCopyRAST_ROOT._copyRast_prepare_Target_DirTREE_(const BaseDir:string; const Node:tCopyRAST_node):boolean;
+var tmp:tCopyRAST_node;
+    str:string;
+begin // глупо и тупо рекурсией
+    tmp:=node;
+    if not Assigned(tmp) then tmp:=self;
+    //---
+    if tmp is tCopyRAST_node_Folder then begin
+        //---
+        str:=BaseDir+DirectorySeparator+_get_rltvDIR_(tCopyRAST_node_Folder(tmp));
+        if ForceDirectoriesUTF8(str) then begin
+            {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','ForceDirectoriesUTF8:'+str+' [ok]');{$endIf}
+        end
+        else begin
+            {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','ForceDirectoriesUTF8:'+str+' [ER]');{$endIf}
+        end;
+    end;
+    //---
+    tmp:=tmp.NodeCHLD;
+    while Assigned(tmp) do begin
+       _copyRast_prepare_Target_DirTREE_(BaseDir,tmp);
+        //--->
+        tmp:=tmp.NodeNEXT;
+    end;
+end;
+
+function tCopyRAST_ROOT.CopyRAST:boolean;
+var TargetDirPATH:string;
+begin
+    //
+    TargetDirPATH:='';
+   _copyRast_prepare_Target_BaseDIR_(TargetDirPATH);
+   _copyRast_prepare_Target_DirTREE_(TargetDirPATH,nil);
+end;
+
+
+
+
 
 end.
 

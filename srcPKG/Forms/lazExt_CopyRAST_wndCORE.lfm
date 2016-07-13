@@ -42,5 +42,14 @@ object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
       OnClick = Button1Click
       TabOrder = 0
     end
+    object Button2: TButton
+      Left = 121
+      Height = 25
+      Top = 11
+      Width = 75
+      Caption = 'Button2'
+      OnClick = Button2Click
+      TabOrder = 1
+    end
   end
 end

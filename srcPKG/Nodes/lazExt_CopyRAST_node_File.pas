@@ -23,6 +23,8 @@ type
     property FilePATH:string read _getFilePATH_;
     property FileTYPE:TPkgFileType read _fileType_;
   public
+    function have_SingleLFM:boolean;
+  public
     constructor Create(const FullFileName:string; const PkgFileType:TPkgFileType);
   end;
 
@@ -66,6 +68,20 @@ end;
 function tCopyRAST_node_File_CORE._getFilePATH_:string;
 begin
     result:=ExtractFileDir(_nodeText_);
+end;
+
+//------------------------------------------------------------------------------
+
+function tCopyRAST_node_File_CORE.have_SingleLFM:boolean;
+begin
+    // проверяем что есть ЕДИНСТВЕННЫЙ ребенок
+    result:=Assigned(self._chldFrst_);
+    if result then result:=NOT Assigned(tCopyRAST_node_File_CORE(self._chldFrst_)._next_);
+    // проверим что этот ребенок LFM
+    if result and (self._chldFrst_ is tCopyRAST_node_File_CORE) then begin
+        result:=tCopyRAST_node_File_CORE(self._chldFrst_)._fileType_=pftLFM;
+    end
+    else result:=FALSE;
 end;
 
 //------------------------------------------------------------------------------
