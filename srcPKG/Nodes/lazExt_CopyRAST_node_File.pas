@@ -18,10 +18,15 @@ type
     function _getCaption_ :string; override;
     function _getFileNAME_:string;
     function _getFilePATH_:string;
+    function _get_Old_PATH_:string;
+    function _get_New_PATH_:string;
   public
     property FileNAME:string read _getFileNAME_;
     property FilePATH:string read _getFilePATH_;
     property FileTYPE:TPkgFileType read _fileType_;
+  public
+    //property Old_PATH:string;
+    //property New_PATH:string;
   public
     function have_SingleLFM:boolean;
   public
@@ -68,6 +73,18 @@ end;
 function tCopyRAST_node_File_CORE._getFilePATH_:string;
 begin
     result:=ExtractFileDir(_nodeText_);
+end;
+
+//------------------------------------------------------------------------------
+
+function tCopyRAST_node_File_CORE._get_Old_PATH_:string;
+begin
+    result:=_nodeText_;
+end;
+
+function tCopyRAST_node_File_CORE._get_New_PATH_:string;
+begin
+
 end;
 
 //------------------------------------------------------------------------------

@@ -60,6 +60,10 @@ type
     function  _copyRast_txt(const node:tCopyRAST_node_FILE):boolean;
     function  _copyRast_bin(const node:tCopyRAST_node_FILE):boolean;
 
+    function  _copyRast_getOldPATH_(const node:tCopyRAST_node_FILE):string;
+    function  _copyRast_getNewPATH_(const node:tCopyRAST_node_FILE; const BaseDir:string):string;
+    function  _copyRast_COPY_FILE_ (const node:tCopyRAST_node_FILE; const BaseDir:string):boolean;
+    function  _copyRast_COPY_      (const node:tCopyRAST_node;      const BaseDir:string):boolean;
 
   protected
     function _copyRast_prepare_Target_BaseDIR_(out   BaseDir:string; const Clear:boolean=true):boolean;
@@ -481,6 +485,62 @@ begin
 end;
 
 
+//------------------------------------------------------------------------------
+
+function tCopyRAST_ROOT._copyRast_getOldPATH_(const node:tCopyRAST_node_FILE):string;
+begin
+    result:=node.NodeTXT;
+end;
+
+function tCopyRAST_ROOT._copyRast_getNewPATH_(const node:tCopyRAST_node_FILE; const BaseDir:string):string;
+var tmp:tCopyRAST_node;
+begin
+    result:='';
+    //---
+    tmp:=node.NodePRNT;
+    while Assigned(tmp) do begin
+        if tmp is tCopyRAST_node_Folder then begin
+            result:=_get_rltvDIR_(tCopyRAST_node_Folder(tmp));
+            BREAK;
+        end;
+        //---
+        tmp:=tmp.NodePRNT;
+    end;
+    //---
+    result:=BaseDir+DirectorySeparator+result+DirectorySeparator+node.FileNAME;
+end;
+
+function tCopyRAST_ROOT._copyRast_COPY_FILE_(const node:tCopyRAST_node_FILE; const BaseDir:string):boolean;
+begin
+    result:=CopyFile(_copyRast_getOldPATH_(node),_copyRast_getNewPATH_(node,BaseDir){,[cffOverwriteFile,cffPreserveTime]});
+    {$ifdef _DEBUG_}
+        if Result
+        then DEBUG(' ok :'+'_copyRast_COPY_FILE_','"'+_copyRast_getOldPATH_(node)+'"'+'->'+'"'+_copyRast_getNewPATH_(node,BaseDir)+'"')
+        else DEBUG(' ER :'+'_copyRast_COPY_FILE_','"'+_copyRast_getOldPATH_(node)+'"'+'->'+'"'+_copyRast_getNewPATH_(node,BaseDir)+'"')
+    {$endIf}
+end;
+
+function tCopyRAST_ROOT._copyRast_COPY_(const node:tCopyRAST_node; const BaseDir:string):boolean;
+var tmp:tCopyRAST_node;
+    str:string;
+begin // глупо и тупо рекурсией
+    tmp:=node;
+    if not Assigned(tmp) then tmp:=self;
+    //---
+    if tmp is tCopyRAST_node_FILE then begin
+        result:=_copyRast_COPY_FILE_(tCopyRAST_node_FILE(node),BaseDir);
+    end;
+    //---
+    tmp:=tmp.NodeCHLD;
+    while Assigned(tmp) do begin
+       _copyRast_COPY_(tmp,BaseDir);
+        //--->
+        tmp:=tmp.NodeNEXT;
+    end;
+end;
+
+
+//------------------------------------------------------------------------------
 
 
 function tCopyRAST_ROOT._copyRast_prepare_Target_BaseDIR_(out BaseDir:string; const Clear:boolean=true):boolean;
@@ -543,6 +603,7 @@ begin
     TargetDirPATH:='';
    _copyRast_prepare_Target_BaseDIR_(TargetDirPATH);
    _copyRast_prepare_Target_DirTREE_(TargetDirPATH,nil);
+   _copyRast_COPY_(nil,TargetDirPATH);
 end;
 
 
