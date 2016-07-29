@@ -8,11 +8,11 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcPKG;srcPKG\Forms;srcPKG\Nodes;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm"/>
+        <OtherUnitFiles Value="srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcPKG;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="18">
+    <Files Count="20">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -86,6 +86,14 @@
         <Filename Value="srcPKG\Forms\lazExt_CopyRAST_FuckUpForm.pas"/>
         <UnitName Value="lazExt_CopyRAST_FuckUpForm"/>
       </Item18>
+      <Item19>
+        <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_operationNode_CORE.pas"/>
+        <UnitName Value="lazExt_CopyRAST_operationNode_CORE"/>
+      </Item19>
+      <Item20>
+        <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_operation_clearTargetDir.pas"/>
+        <UnitName Value="lazExt_CopyRAST_operation_clearTargetDir"/>
+      </Item20>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

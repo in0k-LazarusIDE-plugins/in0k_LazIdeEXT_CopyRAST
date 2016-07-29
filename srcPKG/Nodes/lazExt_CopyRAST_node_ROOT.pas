@@ -14,7 +14,6 @@ interface
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
      sysutils,  FileUtil, PackageIntf, LazFileUtils, LazIDEIntf, Dialogs,
                             Classes,
-
     CodeToolManager, CodeCache,  CustomCodeTool,
     //Dialogs,
      lazExt_CopyRAST_from_IDEProcs,
@@ -23,8 +22,11 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
      lazExt_CopyRAST_node_Folder;
 
 type
+ tLazExt_CopyRAST_operation_CORE=class;
 
  tCopyRAST_ROOT=class(tCopyRAST_node)
+  protected
+   _operationList_:TList;
   protected
     function  _get_BaseDIR_:tCopyRAST_node_BaseDIR;
     procedure _set_BaseDIR_(const BaseDIR:string);
@@ -65,13 +67,75 @@ type
     function  _copyRast_COPY_FILE_ (const node:tCopyRAST_node_FILE; const BaseDir:string):boolean;
     function  _copyRast_COPY_      (const node:tCopyRAST_node;      const BaseDir:string):boolean;
 
+    function  _copyRast_FileUPDATE_File(const node:tCopyRAST_node_FILE):boolean;
+    function  _copyRast_FileUPDATE_(const node:tCopyRAST_node):boolean;
+
+
+
+    function _CopyRAST_operation_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):boolean;
+    function _CopyRAST_operations_    (const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):integer;
+
+
   protected
     function _copyRast_prepare_Target_BaseDIR_(out   BaseDir:string; const Clear:boolean=true):boolean;
     function _copyRast_prepare_Target_DirTREE_(const BaseDir:string; const Node:tCopyRAST_node):boolean;
   public
     function CopyRAST:boolean;
 
+  public
+    procedure onCreate_makeUp_operationList(const List:tList); virtual;
+  public
+    constructor Create(const nodeText:string);
+    destructor DESTROY; override;
+  public
+
   end;
+
+
+
+ tLazExt_CopyRAST_operation_CORE=class
+  protected
+   _Owner_:tCopyRAST_ROOT;
+   _Error_:string;
+  protected
+    function _getOperationName_:string; virtual;
+    function _getOperationHint_:string; virtual;
+    function _getErrorDescript_:string; virtual;
+    {$ifdef _DEBUG_}
+    function _getMessageOnSKIP_:boolean; virtual;
+    {$endIf}
+  public
+    function Is_Possible(const Node:tCopyRAST_node):boolean; virtual;
+    function doOperation(const Node:tCopyRAST_node):boolean; virtual;
+  public
+    constructor Create(const AOwner:tCopyRAST_ROOT);
+  end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 implementation
 
@@ -84,6 +148,35 @@ implementation
     {$undef _debugLOG_}
 {$endIf}
 {%endregion}
+
+
+constructor tCopyRAST_ROOT.Create(const nodeText:string);
+begin
+    inherited Create(NodeTXT);
+   _operationList_:=TList.Create;
+    onCreate_makeUp_operationList(_operationList_);
+end;
+
+destructor tCopyRAST_ROOT.DESTROY;
+var i:integer;
+  tmp:tLazExt_CopyRAST_operation_CORE;
+begin
+    for i:=0 to _operationList_.Count-1 do begin
+        tmp:=tLazExt_CopyRAST_operation_CORE(_operationList_.Items[i]);
+        if Assigned(tmp) then tmp.Free;
+    end;
+   _operationList_.Clear;
+   _operationList_.FREE;
+end;
+
+//------------------------------------------------------------------------------
+
+procedure tCopyRAST_ROOT.onCreate_makeUp_operationList(const List:tList);
+begin
+    //---
+end;
+
+//------------------------------------------------------------------------------
 
 
 // поиск BaseDIR по типу
@@ -512,7 +605,8 @@ end;
 
 function tCopyRAST_ROOT._copyRast_COPY_FILE_(const node:tCopyRAST_node_FILE; const BaseDir:string):boolean;
 begin
-    result:=CopyFile(_copyRast_getOldPATH_(node),_copyRast_getNewPATH_(node,BaseDir){,[cffOverwriteFile,cffPreserveTime]});
+    node.NewFilePATH:=_copyRast_getNewPATH_(node,BaseDir);
+    result:=CopyFile(_copyRast_getOldPATH_(node),node.NewFilePATH{,[cffOverwriteFile,cffPreserveTime]});
     {$ifdef _DEBUG_}
         if Result
         then DEBUG(' ok :'+'_copyRast_COPY_FILE_','"'+_copyRast_getOldPATH_(node)+'"'+'->'+'"'+_copyRast_getNewPATH_(node,BaseDir)+'"')
@@ -539,6 +633,98 @@ begin // глупо и тупо рекурсией
     end;
 end;
 
+//------------------------------------------------------------------------------
+
+function tCopyRAST_ROOT._copyRast_FileUPDATE_File(const node:tCopyRAST_node_FILE):boolean;
+var Code:TCodeBuffer;
+    Tool:TCodeTool;
+begin
+   DEBUG(node.NewFilePATH);
+   try
+
+
+        // Step 1: load the file and parse it
+        Code:=CodeToolBoss.LoadFile(node.NewFilePATH,true,false);
+        //if Code=nil then raise Exception.Create('loading failed '+Filename);
+        CodeToolBoss.Explore(Code,Tool,false);
+        //  if not CodeToolBoss.Explore(Code,Tool,false) then
+          //  ...;// parse error ...
+
+        // Step 2: connect the SourceChangeCache
+        CodeToolBoss.SourceChangeCache.MainScanner:=Tool.Scanner;
+
+
+
+         //Code.
+
+
+          DEBUG(' ok :'+'_copyRast_FileUPDATE_File',Tool.GetCachedSourceName);
+          result:=Tool.RenameSource('asdfasdfasdf',CodeToolBoss.SourceChangeCache);
+          if result
+          then DEBUG('OKOKOKOK')
+          else DEBUG('ERRRRRRR');
+
+
+           //CodeToolBoss.SourceChangeCache.Replace(gtNone,gtNone,1,1,'qwerqwerqwerqwerqwe');
+
+
+        //Tool.FindEmptyMethods();
+
+
+        {
+
+          // Step 3: use Replace to insert and/or delete code
+          // The first two parameters are the needed spaces in front and behind the insertion
+          // The FromPos,ToPos defines the deleted/replaced range in CleanPos positions.
+          // The NewCode is the string of new code. Use '' for a delete.
+          if not CodeToolBoss.SourceChangeCache.Replace(gtNone,gtNone,FromPos,ToPos,NewCode) then
+            exit; // e.g. source read only or a former Replace has deleted the place
+     //     ...do some more Replace...
+       //}
+          // Step 4: Apply the changes
+        //  CodeToolBoss.SourceChangeCache.Apply;
+        if not CodeToolBoss.SourceChangeCache.Apply then begin
+            {$ifdef _DEBUG_}
+                DEBUG(' ER :'+'_copyRast_FileUPDATE_File','CodeToolBoss.SourceChangeCache.Apply');
+            {$endIf}
+            result:=FALSE;
+        end;
+
+        //Code.
+
+        //CodeToolBoss.sa
+        {$ifdef _DEBUG_}
+            if Result
+            then DEBUG(' ok :'+'_copyRast_FileUPDATE_File','ghjk')
+            else DEBUG(' ER :'+'_copyRast_FileUPDATE_File','sdf')
+        {$endIf}
+    except
+        result:=FALSE;
+        {$ifdef _DEBUG_}
+            DEBUG('EXPT:'+'_copyRast_FileUPDATE_File','"'+node.NewFilePATH+'"');
+        {$endIf}
+    end;
+    Code.Save;
+end;
+
+function tCopyRAST_ROOT._copyRast_FileUPDATE_(const node:tCopyRAST_node):boolean;
+var tmp:tCopyRAST_node;
+    str:string;
+begin // глупо и тупо рекурсией
+    tmp:=node;
+    if not Assigned(tmp) then tmp:=self;
+    //---
+    if tmp is tCopyRAST_node_FILE then begin
+        result:=_copyRast_FileUPDATE_File(tCopyRAST_node_FILE(node));
+    end;
+    //---
+    tmp:=tmp.NodeCHLD;
+    while Assigned(tmp) do begin
+       _copyRast_FileUPDATE_(tmp);
+        //--->
+        tmp:=tmp.NodeNEXT;
+    end;
+end;
 
 //------------------------------------------------------------------------------
 
@@ -551,10 +737,10 @@ begin
 
         Result:=DeleteDirectory(BaseDir,True);
         if Result then begin
-            {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','DeleteDirectory: OK');{$endIf}
+            {$ifdef _DEBUG_}DEBUG(' ok :'+'_copyRast_prepare_TargetDIG_','DeleteDirectory');{$endIf}
             Result:=RemoveDirUTF8(BaseDir);
             if result then begin
-                {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','RemoveDirUTF8: OK');{$endIf}
+                {$ifdef _DEBUG_}DEBUG(' ok :'+'_copyRast_prepare_TargetDIG_','RemoveDirUTF8');{$endIf}
             end;
         end;
 
@@ -562,7 +748,7 @@ begin
             {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','RemoveDirUTF8: OK');{$endIf}
         end;}
         if ForceDirectoriesUTF8(BaseDir) then begin
-            {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','ForceDirectoriesUTF8: OK');{$endIf}
+            {$ifdef _DEBUG_}DEBUG(' ok :'+'_copyRast_prepare_TargetDIG_','ForceDirectoriesUTF8');{$endIf}
         end;
     end
     else begin
@@ -581,10 +767,10 @@ begin // глупо и тупо рекурсией
         //---
         str:=BaseDir+DirectorySeparator+_get_rltvDIR_(tCopyRAST_node_Folder(tmp));
         if ForceDirectoriesUTF8(str) then begin
-            {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','ForceDirectoriesUTF8:'+str+' [ok]');{$endIf}
+            {$ifdef _DEBUG_}DEBUG(' ok :'+'_copyRast_prepare_TargetDIG_','ForceDirectoriesUTF8'+str);{$endIf}
         end
         else begin
-            {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','ForceDirectoriesUTF8:'+str+' [ER]');{$endIf}
+            {$ifdef _DEBUG_}DEBUG(' ER :'+'_copyRast_prepare_TargetDIG_','ForceDirectoriesUTF8'+str);{$endIf}
         end;
     end;
     //---
@@ -596,19 +782,111 @@ begin // глупо и тупо рекурсией
     end;
 end;
 
+function tCopyRAST_ROOT._CopyRAST_operation_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):boolean;
+begin
+    if Operation.Is_Possible(Node) then begin
+        result:=TRUE;
+        if Operation.doOperation(node) then begin
+            {$ifdef _DEBUG_}DEBUG(' ok ','"'+node.NodeTXT+'"');{$endIf}
+        end
+        else begin
+            {$ifdef _DEBUG_}DEBUG(' ER ','"'+node.NodeTXT+'"'+' : '+Operation._getErrorDescript_);{$endIf}
+        end;
+    end
+    else begin
+        result:=FALSE;
+        {$ifdef _DEBUG_}
+            if Operation._getMessageOnSKIP_ then DEBUG('SKIP','"'+node.NodeTXT+'"');
+        {$endIf}
+    end;
+end;
+
+function tCopyRAST_ROOT._CopyRAST_operations_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):integer;
+var tmp:tCopyRAST_node;
+begin // глупо и тупо рекурсией
+    tmp:=node; if not Assigned(tmp) then tmp:=self;
+    result:=0;
+    //--- себя
+    if _CopyRAST_operation_NODE_(tmp,Operation) then result:=1;
+    //--- пошли по детям
+    tmp:=tmp.NodeCHLD;
+    while Assigned(tmp) do begin
+        result:=result+_CopyRAST_operations_(tmp,Operation);
+        //--->
+        tmp:=tmp.NodeNEXT;
+    end;
+end;
+
+
 function tCopyRAST_ROOT.CopyRAST:boolean;
 var TargetDirPATH:string;
+var i:integer;
+    r:integer;
+  tmp:tLazExt_CopyRAST_operation_CORE;
 begin
+    for i:=0 to _operationList_.Count-1 do begin
+        tmp:=tLazExt_CopyRAST_operation_CORE(_operationList_.Items[i]);
+        if Assigned(tmp) then begin
+            {$ifdef _DEBUG_}DEBUG('Operations START',tmp.ClassName);{$endIf}
+            r:=_CopyRAST_operations_(nil,tmp);
+            {$ifdef _DEBUG_}DEBUG('Operations -END-',tmp.ClassName+' '+inttostr(r)+' times was Executed');{$endIf}
+        end;
+    end;
     //
-    TargetDirPATH:='';
+{    TargetDirPATH:='';
    _copyRast_prepare_Target_BaseDIR_(TargetDirPATH);
    _copyRast_prepare_Target_DirTREE_(TargetDirPATH,nil);
    _copyRast_COPY_(nil,TargetDirPATH);
+   _copyRast_FileUPDATE_(nil);}
 end;
 
 
 
+{%region --- tLazExt_CopyRAST_operationNode_CORE ------------------ /fold}
 
+constructor tLazExt_CopyRAST_operation_CORE.Create(const AOwner:tCopyRAST_ROOT);
+begin
+   _Owner_:=AOwner;
+   _Error_:='NOT implemented';
+end;
+
+//------------------------------------------------------------------------------
+
+function tLazExt_CopyRAST_operation_CORE._getOperationName_:string;
+begin
+    result:=ClassName;
+end;
+
+function tLazExt_CopyRAST_operation_CORE._getOperationHint_:string;
+begin
+    result:=_getOperationName_;
+end;
+
+//------------------------------------------------------------------------------
+
+function tLazExt_CopyRAST_operation_CORE._getMessageOnSKIP_:boolean;
+begin
+    result:=FALSE;
+end;
+
+function tLazExt_CopyRAST_operation_CORE._getErrorDescript_:string;
+begin
+    result:=_Error_;
+end;
+
+//------------------------------------------------------------------------------
+
+function tLazExt_CopyRAST_operation_CORE.Is_Possible(const Node:tCopyRAST_node):boolean;
+begin
+    result:=FALSE;
+end;
+
+function tLazExt_CopyRAST_operation_CORE.doOperation(const Node:tCopyRAST_node):boolean;
+begin
+    result:=FALSE;
+end;
+
+{%endregion}
 
 end.
 

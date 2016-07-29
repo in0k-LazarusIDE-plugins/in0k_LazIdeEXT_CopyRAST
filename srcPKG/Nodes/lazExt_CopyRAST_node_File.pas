@@ -14,6 +14,7 @@ type
  tCopyRAST_node_File_CORE=class(tCopyRAST_node)
   protected
    _fileType_:TPkgFileType;
+   _newPATH_:string;
   protected
     function _getCaption_ :string; override;
     function _getFileNAME_:string;
@@ -24,6 +25,7 @@ type
     property FileNAME:string read _getFileNAME_;
     property FilePATH:string read _getFilePATH_;
     property FileTYPE:TPkgFileType read _fileType_;
+    property NewFilePATH:string read _newPATH_ write _newPATH_;
   public
     //property Old_PATH:string;
     //property New_PATH:string;

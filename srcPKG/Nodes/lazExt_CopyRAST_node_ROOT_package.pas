@@ -4,7 +4,7 @@ unit lazExt_CopyRAST_node_ROOT_package;
 
 interface
 
-uses //Dialogs,
+uses Classes,
     PackageIntf,
     lazExt_CopyRAST_node_File,
     lazExt_CopyRAST_node_Folder,
@@ -20,11 +20,16 @@ type
     procedure add_File       (const FullFileName:string; const FileType:TPkgFileType);
   public
     procedure PREAPARE;
+  public
+    procedure onCreate_makeUp_operationList(const List:tList); override;
   end;
 
 
 
 implementation
+
+uses lazExt_CopyRAST_operation_clearTargetDir;
+
 
 procedure tCopyRAST_ROOT_package.set_DirExpanded(const DirPath:string);
 begin
@@ -54,6 +59,13 @@ procedure tCopyRAST_ROOT_package.PREAPARE;
 begin
    _prepare_fileUSE_fnd8add_;
    _prepare_fileLFM_fnd8add_;
+end;
+
+//------------------------------------------------------------------------------
+
+procedure tCopyRAST_ROOT_package.onCreate_makeUp_operationList(const List:tList);
+begin
+    List.Add(tLazExt_CopyRAST_operation_clearTargetDir.Create(self));
 end;
 
 end.
