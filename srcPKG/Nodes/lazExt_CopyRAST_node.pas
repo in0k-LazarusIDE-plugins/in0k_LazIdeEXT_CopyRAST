@@ -34,6 +34,16 @@ type
   public
     constructor Create(const nodeText:string);
     destructor DESTROY; override;
+  public
+    function _clc_Source_dir_Name_:string
+  public
+    function Get_Source_obj_Name:string; virtual;
+    function Get_Source_dir_Name:string; virtual;
+    function Get_Target_obj_Name:string; virtual;
+    function Get_Target_dir_Name:string; virtual;
+    //---
+    function Get_Source_fullName:string; virtual;
+    function Get_Target_fullName:string; virtual;
   end;
 
 implementation
@@ -103,6 +113,43 @@ begin
     if Assigned(tmp) then tmp._ins_nodeAfte_(node)
     else self._ins_ChldFrst_(node);
 end;
+
+
+//------------------------------------------------------------------------------
+
+function Get_Source_obj_Name:string;
+begin
+    result:='';
+end;
+
+function Get_Target_obj_Name:string;
+begin
+    result:='';
+end;
+
+function Get_Source_dir_Name:string;
+begin
+    result:='';
+end;
+
+function Get_Target_dir_Name:string;
+begin
+    result:='';
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+function tCopyRAST_node.Get_Source_fullName:string;
+begin
+    result:=Get_Source_dir_Name+DirectorySeparator+Get_Source_obj_Name;
+end;
+
+function tCopyRAST_node.Get_Target_fullName:string;
+begin
+    result:=Get_Target_dir_Name+DirectorySeparator+Get_Target_obj_Name;
+end;
+
+
 
 end.
 

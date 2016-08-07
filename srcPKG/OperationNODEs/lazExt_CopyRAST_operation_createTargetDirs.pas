@@ -1,4 +1,4 @@
-unit lazExt_CopyRAST_operation_clearTargetDir;
+unit lazExt_CopyRAST_operation_createTargetDirs;
 
 {$mode objfpc}{$H+}
 
@@ -14,12 +14,12 @@ interface
 
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
   lazExt_CopyRAST_node,
-  lazExt_CopyRAST_node_ROOT,
+  lazExt_CopyRAST_node_ROOT, lazExt_CopyRAST_node_Folder,
   FileUtil;
 
 type
 
- tLazExt_CopyRAST_operation_clearTargetDir=class(tLazExt_CopyRAST_operation_CORE)
+ tLazExt_CopyRAST_operation_createTargetDirs=class(tLazExt_CopyRAST_operation_CORE)
   protected
     function _getOperationName_:string; override;
   public
@@ -29,21 +29,21 @@ type
 
 implementation
 
-function tLazExt_CopyRAST_operation_clearTargetDir._getOperationName_:string;
+function tLazExt_CopyRAST_operation_createTargetDirs._getOperationName_:string;
 begin
-    result:='clear Target Dir';
+    result:='clreate Target Dirs';
 end;
 
 //------------------------------------------------------------------------------
 
-function tLazExt_CopyRAST_operation_clearTargetDir.Is_Possible(const Node:tCopyRAST_node):boolean;
+function tLazExt_CopyRAST_operation_createTargetDirs.Is_Possible(const Node:tCopyRAST_node):boolean;
 begin
-    result:=node is tCopyRAST_ROOT;
+    result:=(node is tCopyRAST_ROOT)or(node is tCopyRAST_node_Folder);
 end;
 
-function tLazExt_CopyRAST_operation_clearTargetDir.doOperation(const Node:tCopyRAST_node):boolean;
+function tLazExt_CopyRAST_operation_createTargetDirs.doOperation(const Node:tCopyRAST_node):boolean;
 begin
-    result:=DirPathExists(tCopyRAST_ROOT(Node).Get_TARGET_basePath);
+{    result:=DirPathExists(tCopyRAST_ROOT(Node).Get_TARGET_basePath);
     if result then begin
         result:=DeleteDirectory(tCopyRAST_ROOT(Node).Get_TARGET_basePath,FALSE);
         if not result then begin
@@ -57,7 +57,7 @@ begin
     {$ifdef _DEBUG_}
     else begin
         DEBUG('TARGET_basePath "'+tCopyRAST_ROOT(Node).Get_TARGET_basePath+'" already missing')
-    end{$endIf};
+    end{$endIf};}
 end;
 
 end.

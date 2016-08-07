@@ -30,6 +30,11 @@ type
   public
     procedure Add_PathType(const PathType:eCopyRAST_node_SrchPath);
     procedure ins_ChldLast(const node:tCopyRAST_node);
+  public
+    function Get_Source_obj_Name:string; override;
+    function Get_Target_obj_Name:string; override;
+    function Get_Source_dir_Name:string; override;
+    function Get_Target_dir_Name:string; override;
   end;
 
  tCopyRAST_node_BaseDIR=class(tCopyRAST_node_Folder)
@@ -75,6 +80,32 @@ begin
     inherited Create(Path);
    _Paths_:=[];
 end;
+
+//------------------------------------------------------------------------------
+
+function tCopyRAST_node_Folder.Get_Source_obj_Name:string; override;
+begin
+    result:=_getDirNAME_;
+end;
+
+function tCopyRAST_node_Folder.Get_Source_dir_Name:string; override;
+begin
+    result:=_getFilePATH_;
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+function tCopyRAST_node_Folder.Get_Target_obj_Name:string; override;
+begin
+    //result:=_getFileNAME_;
+end;
+
+function tCopyRAST_node_Folder.Get_Target_dir_Name:string; override;
+begin
+    //result:=_getFileNAME_;
+end;
+
+//------------------------------------------------------------------------------
 
 function tCopyRAST_node_Folder._getCaption_:string;
 begin

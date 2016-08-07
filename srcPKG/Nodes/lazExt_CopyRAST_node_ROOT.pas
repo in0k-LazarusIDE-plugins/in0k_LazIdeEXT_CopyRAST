@@ -88,7 +88,8 @@ type
     constructor Create(const nodeText:string);
     destructor DESTROY; override;
   public
-
+    function Get_TARGET_basePath:string;
+    function Get_SOURCE_basePath:string;
   end;
 
 
@@ -887,6 +888,18 @@ begin
 end;
 
 {%endregion}
+
+
+function tCopyRAST_ROOT.Get_SOURCE_basePath:string;
+begin
+    result:=_get_BaseDIR_PATH_;
+end;
+
+
+function tCopyRAST_ROOT.Get_TARGET_basePath:string;
+begin
+    result:=Get_SOURCE_basePath+'\CopyRast';
+end;
 
 end.
 

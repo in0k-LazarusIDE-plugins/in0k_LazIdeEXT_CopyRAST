@@ -33,6 +33,11 @@ type
     function have_SingleLFM:boolean;
   public
     constructor Create(const FullFileName:string; const PkgFileType:TPkgFileType);
+  public
+    function Get_Source_obj_Name:string; override;
+    function Get_Target_obj_Name:string; override;
+    function Get_Source_dir_Name:string; override;
+    function Get_Target_dir_Name:string; override;
   end;
 
  tCopyRAST_node_FILE=class(tCopyRAST_node_File_CORE)
@@ -108,6 +113,31 @@ end;
 constructor tCopyRAST_node_fileMain_CORE.Create(const FullFileName:string);
 begin
     inherited Create(FullFileName,pftMainUnit); //??? какой тип использовать
+end;
+
+
+//------------------------------------------------------------------------------
+
+function tCopyRAST_node_fileMain_CORE.Get_Source_obj_Name:string; override;
+begin
+    result:=_getFileNAME_;
+end;
+
+function tCopyRAST_node_fileMain_CORE.Get_Source_dir_Name:string; override;
+begin
+    result:=_getFilePATH_;
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+function tCopyRAST_node_fileMain_CORE.Get_Target_obj_Name:string; override;
+begin
+    //result:=_getFileNAME_;
+end;
+
+function tCopyRAST_node_fileMain_CORE.Get_Target_dir_Name:string; override;
+begin
+    //result:=_getFileNAME_;
 end;
 
 end.
