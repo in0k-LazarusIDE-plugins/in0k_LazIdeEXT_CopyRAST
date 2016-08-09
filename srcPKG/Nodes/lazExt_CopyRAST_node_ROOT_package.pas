@@ -28,7 +28,8 @@ type
 
 implementation
 
-uses lazExt_CopyRAST_operation_clearTargetDir;
+uses lazExt_CopyRAST_operation_clearTargetDir,
+     lazExt_CopyRAST_operation_createTargetDirs;
 
 
 procedure tCopyRAST_ROOT_package.set_DirExpanded(const DirPath:string);
@@ -66,6 +67,7 @@ end;
 procedure tCopyRAST_ROOT_package.onCreate_makeUp_operationList(const List:tList);
 begin
     List.Add(tLazExt_CopyRAST_operation_clearTargetDir.Create(self));
+    List.Add(tLazExt_CopyRAST_operation_createTargetDirs.Create(self));
 end;
 
 end.

@@ -35,7 +35,7 @@ type
     constructor Create(const nodeText:string);
     destructor DESTROY; override;
   public
-    function _clc_Source_dir_Name_:string
+    //function _clc_Source_dir_Name_:string;
   public
     function Get_Source_obj_Name:string; virtual;
     function Get_Source_dir_Name:string; virtual;
@@ -117,22 +117,23 @@ end;
 
 //------------------------------------------------------------------------------
 
-function Get_Source_obj_Name:string;
+function tCopyRAST_node.Get_Source_obj_Name:string;
 begin
     result:='';
 end;
 
-function Get_Target_obj_Name:string;
+function tCopyRAST_node.Get_Target_obj_Name:string;
 begin
     result:='';
 end;
 
-function Get_Source_dir_Name:string;
+function tCopyRAST_node.Get_Source_dir_Name:string;
 begin
     result:='';
+    if Assigned(_prnt_) then result:=_prnt_.Get_Source_fullName;
 end;
 
-function Get_Target_dir_Name:string;
+function tCopyRAST_node.Get_Target_dir_Name:string;
 begin
     result:='';
 end;
@@ -141,7 +142,9 @@ end;
 
 function tCopyRAST_node.Get_Source_fullName:string;
 begin
-    result:=Get_Source_dir_Name+DirectorySeparator+Get_Source_obj_Name;
+    result:=Get_Source_dir_Name;
+    if result<>'' then result:=result+DirectorySeparator;
+    result:=result+Get_Source_obj_Name;
 end;
 
 function tCopyRAST_node.Get_Target_fullName:string;

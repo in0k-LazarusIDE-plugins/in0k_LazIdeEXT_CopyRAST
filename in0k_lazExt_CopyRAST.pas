@@ -15,7 +15,8 @@ uses
     in0k_lazIdeSRC_DEBUG, lazExt_CopyRAST_node_ROOT_package, 
     in0k_lazIdeSRC_FuckUpForm_01, lazExt_CopyRAST_node_ROOT_project, 
     lazExt_CopyRAST_FuckUpForm, lazExt_CopyRAST_operationNode_CORE, 
-    lazExt_CopyRAST_operation_clearTargetDir, LazarusPackageIntf;
+    lazExt_CopyRAST_operation_clearTargetDir, 
+    lazExt_CopyRAST_operation_createTargetDirs, LazarusPackageIntf;
 
 implementation
 

@@ -32,8 +32,8 @@ type
     procedure ins_ChldLast(const node:tCopyRAST_node);
   public
     function Get_Source_obj_Name:string; override;
+    //function Get_Source_dir_Name:string; override;
     function Get_Target_obj_Name:string; override;
-    function Get_Source_dir_Name:string; override;
     function Get_Target_dir_Name:string; override;
   end;
 
@@ -83,24 +83,24 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tCopyRAST_node_Folder.Get_Source_obj_Name:string; override;
+function tCopyRAST_node_Folder.Get_Source_obj_Name:string;
 begin
     result:=_getDirNAME_;
 end;
 
-function tCopyRAST_node_Folder.Get_Source_dir_Name:string; override;
+{function tCopyRAST_node_Folder.Get_Source_dir_Name:string;
 begin
-    result:=_getFilePATH_;
-end;
+    result:=_getDirNAME_;
+end;}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function tCopyRAST_node_Folder.Get_Target_obj_Name:string; override;
+function tCopyRAST_node_Folder.Get_Target_obj_Name:string;
 begin
     //result:=_getFileNAME_;
 end;
 
-function tCopyRAST_node_Folder.Get_Target_dir_Name:string; override;
+function tCopyRAST_node_Folder.Get_Target_dir_Name:string;
 begin
     //result:=_getFileNAME_;
 end;

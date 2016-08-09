@@ -38,11 +38,18 @@ end;
 
 function tLazExt_CopyRAST_operation_createTargetDirs.Is_Possible(const Node:tCopyRAST_node):boolean;
 begin
-    result:=(node is tCopyRAST_ROOT)or(node is tCopyRAST_node_Folder);
+    result:={(node is tCopyRAST_ROOT)or}(node is tCopyRAST_node_Folder);
 end;
 
 function tLazExt_CopyRAST_operation_createTargetDirs.doOperation(const Node:tCopyRAST_node):boolean;
 begin
+    result:=true;
+    {$ifdef _DEBUG_}
+        DEBUG('[tst]','Get_Source_dir_Name "'+tCopyRAST_ROOT(Node).Get_Source_dir_Name+'"');
+        DEBUG('[tst]','Get_Source_obj_Name "'+tCopyRAST_ROOT(Node).Get_Source_obj_Name+'"');
+        DEBUG('[tst]','Get_Source_fullName "'+tCopyRAST_ROOT(Node).Get_Source_fullName+'"');
+    {$endIf};
+
 {    result:=DirPathExists(tCopyRAST_ROOT(Node).Get_TARGET_basePath);
     if result then begin
         result:=DeleteDirectory(tCopyRAST_ROOT(Node).Get_TARGET_basePath,FALSE);
