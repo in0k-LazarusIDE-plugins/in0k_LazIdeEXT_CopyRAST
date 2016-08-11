@@ -149,7 +149,9 @@ end;
 
 function tCopyRAST_node.Get_Target_fullName:string;
 begin
-    result:=Get_Target_dir_Name+DirectorySeparator+Get_Target_obj_Name;
+    result:=Get_Target_dir_Name;
+    if result<>'' then result:=result+DirectorySeparator;
+    result:=result+Get_Target_obj_Name;
 end;
 
 

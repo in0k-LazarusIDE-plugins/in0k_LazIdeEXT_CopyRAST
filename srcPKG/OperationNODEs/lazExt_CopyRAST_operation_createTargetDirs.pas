@@ -45,10 +45,13 @@ function tLazExt_CopyRAST_operation_createTargetDirs.doOperation(const Node:tCop
 begin
     result:=true;
     {$ifdef _DEBUG_}
-        DEBUG('[tst]','Get_Source_dir_Name "'+tCopyRAST_ROOT(Node).Get_Source_dir_Name+'"');
-        DEBUG('[tst]','Get_Source_obj_Name "'+tCopyRAST_ROOT(Node).Get_Source_obj_Name+'"');
-        DEBUG('[tst]','Get_Source_fullName "'+tCopyRAST_ROOT(Node).Get_Source_fullName+'"');
+        DEBUG('>---','Get_Source_obj_Name "'+tCopyRAST_ROOT(Node).Get_Source_obj_Name+'"');
+        DEBUG('>---','Get_Source_dir_Name "'+tCopyRAST_ROOT(Node).Get_Source_dir_Name+'"');
+        DEBUG('>---','Get_Source_fullName "'+tCopyRAST_ROOT(Node).Get_Source_fullName+'"');
+        //---
+        DEBUG('--->','Get_Target_fullName "'+tCopyRAST_ROOT(Node).Get_Target_fullName+'"');
     {$endIf};
+    //ForceDirectoriesUTF8();
 
 {    result:=DirPathExists(tCopyRAST_ROOT(Node).Get_TARGET_basePath);
     if result then begin
