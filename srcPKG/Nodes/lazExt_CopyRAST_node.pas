@@ -136,6 +136,7 @@ end;
 function tCopyRAST_node.Get_Target_dir_Name:string;
 begin
     result:='';
+    if Assigned(_prnt_) then result:=_prnt_.Get_Target_fullName;
 end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

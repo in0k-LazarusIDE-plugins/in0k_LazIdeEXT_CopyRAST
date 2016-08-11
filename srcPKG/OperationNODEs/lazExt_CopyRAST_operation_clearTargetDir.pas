@@ -15,7 +15,8 @@ interface
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
   lazExt_CopyRAST_node,
   lazExt_CopyRAST_node_ROOT,
-  FileUtil;
+  lazExt_CopyRAST_node_Folder,
+  FileUtil,LazFileUtils;
 
 type
 
@@ -31,33 +32,30 @@ implementation
 
 function tLazExt_CopyRAST_operation_clearTargetDir._getOperationName_:string;
 begin
-    result:='clear Target Dir';
+    result:='Clear Target Dir';
 end;
 
 //------------------------------------------------------------------------------
 
 function tLazExt_CopyRAST_operation_clearTargetDir.Is_Possible(const Node:tCopyRAST_node):boolean;
 begin
-    result:=node is tCopyRAST_ROOT;
+    result:=node is tCopyRAST_node_BaseDIR;
 end;
 
 function tLazExt_CopyRAST_operation_clearTargetDir.doOperation(const Node:tCopyRAST_node):boolean;
 begin
-    result:=DirPathExists(tCopyRAST_ROOT(Node).Get_TARGET_basePath);
+   _mssge_:=Node.Get_Target_fullName;
+    result:=DirPathExists(_mssge_);
     if result then begin
-        result:=DeleteDirectory(tCopyRAST_ROOT(Node).Get_TARGET_basePath,FALSE);
-        if not result then begin
-           _Error_:='DeleteDirectory "'+tCopyRAST_ROOT(Node).Get_TARGET_basePath+'" ER';
-        end
-        {$ifdef _DEBUG_}
-        else begin
-            DEBUG('DeleteDirectory "'+tCopyRAST_ROOT(Node).Get_TARGET_basePath+'" OK');
-        end{$endIf};
+        result:=DeleteDirectory(_mssge_,FALSE);
+        if result
+        then _mssge_:='TARGET_basePath "'+_mssge_+'" DELETED'
+        else _mssge_:='DeleteDirectory("'+_mssge_+'") ERR';
     end
-    {$ifdef _DEBUG_}
     else begin
-        DEBUG('TARGET_basePath "'+tCopyRAST_ROOT(Node).Get_TARGET_basePath+'" already missing')
-    end{$endIf};
+        result:=TRUE;
+       _mssge_:='TARGET_basePath "'+_mssge_+'" already missing';
+    end;
 end;
 
 end.

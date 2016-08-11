@@ -34,12 +34,15 @@ type
     function Get_Source_obj_Name:string; override;
     //function Get_Source_dir_Name:string; override;
     function Get_Target_obj_Name:string; override;
-    function Get_Target_dir_Name:string; override;
+    //function Get_Target_dir_Name:string; override;
   end;
 
  tCopyRAST_node_BaseDIR=class(tCopyRAST_node_Folder)
-  protected
-    //function _getCaption_:string; override;
+  public
+   function Get_Source_obj_Name:string; override;
+   function Get_Source_dir_Name:string; override;
+   function Get_Target_obj_Name:string; override;
+   function Get_Target_dir_Name:string; override;
   end;
 
 
@@ -93,17 +96,20 @@ begin
     result:=_getDirNAME_;
 end;}
 
+
+
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function tCopyRAST_node_Folder.Get_Target_obj_Name:string;
 begin
-    //result:=_getFileNAME_;
+    result:=Get_Source_obj_Name;
 end;
 
-function tCopyRAST_node_Folder.Get_Target_dir_Name:string;
+{function tCopyRAST_node_Folder.Get_Target_dir_Name:string;
 begin
     //result:=_getFileNAME_;
-end;
+end;}
 
 //------------------------------------------------------------------------------
 
@@ -134,6 +140,32 @@ procedure tCopyRAST_node_Folder.Add_PathType(const PathType:eCopyRAST_node_SrchP
 begin
     Include(_Paths_,PathType);
 end;
+
+
+
+//------------------------------------------------------------------------------
+
+function tCopyRAST_node_BaseDIR.Get_Source_obj_Name:string;
+begin
+    result:=ExtractFileName(ExtractFileDir(_nodeText_));
+end;
+
+function tCopyRAST_node_BaseDIR.Get_Source_dir_Name:string;
+begin
+    result:=ExtractFileDir(ExtractFileDir(_nodeText_));
+end;
+
+function tCopyRAST_node_BaseDIR.Get_Target_obj_Name:string;
+begin
+    result:='CopyRAST';
+end;
+
+function tCopyRAST_node_BaseDIR.Get_Target_dir_Name:string;
+begin
+    result:=Get_Source_fullName;
+end;
+
+
 
 //----
 

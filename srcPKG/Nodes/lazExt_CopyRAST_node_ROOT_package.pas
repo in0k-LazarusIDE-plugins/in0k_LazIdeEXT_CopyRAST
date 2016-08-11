@@ -29,7 +29,9 @@ type
 implementation
 
 uses lazExt_CopyRAST_operation_clearTargetDir,
-     lazExt_CopyRAST_operation_createTargetDirs;
+     lazExt_CopyRAST_operation_createTargetDirs,
+     lazExt_CopyRAST_operation_copyFiles,
+     lazExt_CopyRAST_operation_PSF_updateUnit;
 
 
 procedure tCopyRAST_ROOT_package.set_DirExpanded(const DirPath:string);
@@ -68,6 +70,8 @@ procedure tCopyRAST_ROOT_package.onCreate_makeUp_operationList(const List:tList)
 begin
     List.Add(tLazExt_CopyRAST_operation_clearTargetDir.Create(self));
     List.Add(tLazExt_CopyRAST_operation_createTargetDirs.Create(self));
+    List.Add(tLazExt_CopyRAST_operation_copyFiles.Create(self));
+    List.Add(tLazExt_CopyRAST_operation_PSF_updateUnit.Create(self));
 end;
 
 end.

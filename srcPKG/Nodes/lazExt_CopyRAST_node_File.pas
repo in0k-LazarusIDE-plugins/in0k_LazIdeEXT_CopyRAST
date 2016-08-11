@@ -35,7 +35,7 @@ type
     constructor Create(const FullFileName:string; const PkgFileType:TPkgFileType);
   public
     function Get_Source_obj_Name:string; override;
-    //function Get_Source_dir_Name:string; override;
+    function Get_Source_dir_Name:string; override;
     function Get_Target_obj_Name:string; override;
     function Get_Target_dir_Name:string; override;
   end;
@@ -123,21 +123,23 @@ begin
     result:=_getFileNAME_;
 end;
 
-{function tCopyRAST_node_File_CORE.Get_Source_dir_Name:string;
+function tCopyRAST_node_File_CORE.Get_Source_dir_Name:string;
 begin
-    result:=_getFilePATH_;
-end;}
+    if _prnt_ is tCopyRAST_node_File_CORE then result:=_prnt_.Get_Source_dir_Name
+    else result:=inherited;
+end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function tCopyRAST_node_File_CORE.Get_Target_obj_Name:string;
 begin
-    //result:=_getFileNAME_;
+    result:=Get_Source_obj_Name;
 end;
 
 function tCopyRAST_node_File_CORE.Get_Target_dir_Name:string;
 begin
-    //result:=_getFileNAME_;
+    if _prnt_ is tCopyRAST_node_File_CORE then result:=_prnt_.Get_Target_dir_Name
+    else result:=inherited;
 end;
 
 end.

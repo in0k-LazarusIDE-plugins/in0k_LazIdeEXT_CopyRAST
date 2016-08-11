@@ -12,7 +12,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="21">
+    <Files Count="23">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -98,6 +98,14 @@
         <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_operation_createTargetDirs.pas"/>
         <UnitName Value="lazExt_CopyRAST_operation_createTargetDirs"/>
       </Item21>
+      <Item22>
+        <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_operation_copyFiles.pas"/>
+        <UnitName Value="lazExt_CopyRAST_operation_copyFiles"/>
+      </Item22>
+      <Item23>
+        <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_operation_PSF_updateUnit.pas"/>
+        <UnitName Value="lazExt_CopyRAST_operation_PSF_updateUnit"/>
+      </Item23>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

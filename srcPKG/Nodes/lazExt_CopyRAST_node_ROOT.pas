@@ -12,7 +12,7 @@ interface
 
 
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
-     sysutils,  FileUtil, PackageIntf, LazFileUtils, LazIDEIntf, Dialogs,
+     sysutils,  FileUtil, PackageIntf, LazFileUtils, LazIDEIntf, Dialogs, Forms,
                             Classes,
     CodeToolManager, CodeCache,  CustomCodeTool,
     //Dialogs,
@@ -90,6 +90,13 @@ type
   public
     function Get_TARGET_basePath:string;
     function Get_SOURCE_basePath:string;
+
+    function Get_Source_obj_Name:string; override;
+    function Get_Source_dir_Name:string; override;
+
+    function Get_Target_obj_Name:string; override;
+    function Get_Target_dir_Name:string; override;
+
   end;
 
 
@@ -97,11 +104,11 @@ type
  tLazExt_CopyRAST_operation_CORE=class
   protected
    _Owner_:tCopyRAST_ROOT;
-   _Error_:string;
+   _mssge_:string;
   protected
     function _getOperationName_:string; virtual;
     function _getOperationHint_:string; virtual;
-    function _getErrorDescript_:string; virtual;
+    function _get_Message_Text_:string; virtual;
     {$ifdef _DEBUG_}
     function _getMessageOnSKIP_:boolean; virtual;
     {$endIf}
@@ -787,19 +794,21 @@ function tCopyRAST_ROOT._CopyRAST_operation_NODE_(const Node:tCopyRAST_node; con
 begin
     if Operation.Is_Possible(Node) then begin
         result:=TRUE;
+        Operation._mssge_:='NOT implemented';
         if Operation.doOperation(node) then begin
-            {$ifdef _DEBUG_}DEBUG(' ok ','"'+node.NodeTXT+'"');{$endIf}
+            {$ifdef _DEBUG_}DEBUG(' ok ',node.ClassName+': '+Operation._get_Message_Text_);{$endIf}
         end
         else begin
-            {$ifdef _DEBUG_}DEBUG(' ER ','"'+node.NodeTXT+'"'+' : '+Operation._getErrorDescript_);{$endIf}
+            {$ifdef _DEBUG_}DEBUG('-ER-',node.ClassName+': '+Operation._get_Message_Text_);{$endIf}
         end;
     end
     else begin
         result:=FALSE;
         {$ifdef _DEBUG_}
-            if Operation._getMessageOnSKIP_ then DEBUG('SKIP','"'+node.NodeTXT+'"');
+            if Operation._getMessageOnSKIP_ then DEBUG('SKIP',node.ClassName+': '+Operation._get_Message_Text_);
         {$endIf}
     end;
+    Application.ProcessMessages;
 end;
 
 function tCopyRAST_ROOT._CopyRAST_operations_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):integer;
@@ -828,17 +837,11 @@ begin
     for i:=0 to _operationList_.Count-1 do begin
         tmp:=tLazExt_CopyRAST_operation_CORE(_operationList_.Items[i]);
         if Assigned(tmp) then begin
-            {$ifdef _DEBUG_}DEBUG('Operations START',tmp.ClassName);{$endIf}
+            {$ifdef _DEBUG_}DEBUG('Operations START: '+tmp._getOperationName_,tmp.ClassName);{$endIf}
             r:=_CopyRAST_operations_(nil,tmp);
-            {$ifdef _DEBUG_}DEBUG('Operations -END-',tmp.ClassName+' '+inttostr(r)+' times was Executed');{$endIf}
+            {$ifdef _DEBUG_}DEBUG('Operations -END-: '+tmp._getOperationName_,tmp.ClassName+' '+inttostr(r)+' times was Executed');{$endIf}
         end;
     end;
-    //
-{    TargetDirPATH:='';
-   _copyRast_prepare_Target_BaseDIR_(TargetDirPATH);
-   _copyRast_prepare_Target_DirTREE_(TargetDirPATH,nil);
-   _copyRast_COPY_(nil,TargetDirPATH);
-   _copyRast_FileUPDATE_(nil);}
 end;
 
 
@@ -848,7 +851,7 @@ end;
 constructor tLazExt_CopyRAST_operation_CORE.Create(const AOwner:tCopyRAST_ROOT);
 begin
    _Owner_:=AOwner;
-   _Error_:='NOT implemented';
+   _mssge_:='NOT implemented';
 end;
 
 //------------------------------------------------------------------------------
@@ -870,9 +873,9 @@ begin
     result:=FALSE;
 end;
 
-function tLazExt_CopyRAST_operation_CORE._getErrorDescript_:string;
+function tLazExt_CopyRAST_operation_CORE._get_Message_Text_:string;
 begin
-    result:=_Error_;
+    result:=_mssge_;
 end;
 
 //------------------------------------------------------------------------------
@@ -895,10 +898,31 @@ begin
     result:=_get_BaseDIR_PATH_;
 end;
 
-
 function tCopyRAST_ROOT.Get_TARGET_basePath:string;
 begin
     result:=Get_SOURCE_basePath+'\CopyRast';
+end;
+
+//------------------------------------
+
+function tCopyRAST_ROOT.Get_Source_obj_Name:string;
+begin
+    result:=_get_BaseDIR_PATH_;
+end;
+
+function tCopyRAST_ROOT.Get_Source_dir_Name:string;
+begin
+    result:='';
+end;
+
+function tCopyRAST_ROOT.Get_Target_dir_Name:string;
+begin
+    result:=Get_Source_dir_Name;
+end;
+
+function tCopyRAST_ROOT.Get_Target_obj_Name:string;
+begin
+    result:='CopyRast';
 end;
 
 end.
