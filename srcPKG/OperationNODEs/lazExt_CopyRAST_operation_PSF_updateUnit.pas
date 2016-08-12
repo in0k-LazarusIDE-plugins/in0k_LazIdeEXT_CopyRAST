@@ -45,23 +45,33 @@ function tLazExt_CopyRAST_operation_PSF_updateUnit.doOperation(const Node:tCopyR
 var Code:TCodeBuffer;
     Tool:TCodeTool;
 begin
-    _mssge_:=Node.Get_Target_fullName;
-     result:=FileExistsUTF8(Node.Get_Target_fullName);
-     if result then begin
-
-
-         // Step 1: load the file and parse it
-         Code:=CodeToolBoss.LoadFile(node.Get_Target_fullName,true,false);
-         if Code=nil then begin
-            _mssge_:='CodeToolBoss.LoadFile("'+_mssge_+'") ERR';
-             EXIT(FALSE);
-         end;
-         if NOT CodeToolBoss.Explore(Code,Tool,false) then begin
-            _mssge_:='CodeToolBoss.Explore("'+_mssge_+'" ..) ERR';
-             EXIT(FALSE);
-         end;
-
-
+   _mssge_:=Node.Get_Target_fullName;
+    result:=FileExistsUTF8(Node.Get_Target_fullName);
+    if result then begin
+        //---
+        Code:=CodeToolBoss.LoadFile(node.Get_Target_fullName,true,false);
+        result:=Assigned(Code);
+        if not result then _mssge_:='CodeBuffer:"'+_mssge_+'" NOT received';
+        //---
+        if result then begin
+            CodeToolBoss.Explore(Code,Tool,false);
+            result:=Assigned(Tool);
+            if not result then _mssge_:='CodeTool:"'+_mssge_+'" NOT received'
+        end;
+        //---
+        if result then begin
+            result:=Tool.RenameSource(ExtractFileNameOnly(Node.Get_Target_obj_Name),CodeToolBoss.SourceChangeCache);
+            if not result then _mssge_:='Tool.RenameSource:"'+_mssge_+'" ER';
+        end;
+        //---
+        if result then begin
+            result:=code.Save;
+            if not result then _mssge_:='code.Save:"'+_mssge_+'" ER'
+        end;
+        //----------
+        if result then begin
+            _mssge_:='changes APPLIED: unit "'+ExtractFileNameOnly(Node.Get_Source_obj_Name)+'" -> "'+ExtractFileNameOnly(Node.Get_Target_obj_Name)+'" in file "'+Node.Get_Target_fullName+'"';
+        end;
      end
      else begin
         _mssge_:='TARGET File:'+'"'+Node.Get_Target_fullName+'"'+' NOT exists';
