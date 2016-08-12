@@ -133,7 +133,7 @@ end;
 
 function tCopyRAST_node_File_CORE.Get_Target_obj_Name:string;
 begin
-    result:=Get_Source_obj_Name;
+    result:=ExtractFileNameOnly(Get_Source_obj_Name)+'_CR'+ExtractFileExt(Get_Source_obj_Name);
 end;
 
 function tCopyRAST_node_File_CORE.Get_Target_dir_Name:string;
