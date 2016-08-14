@@ -48,22 +48,22 @@ begin
    _mssge_:=Node.Get_Target_fullName;
     result:=FileExistsUTF8(Node.Get_Target_fullName);
     if result then begin
-        //---
+        //--- Загружаем
         Code:=CodeToolBoss.LoadFile(node.Get_Target_fullName,true,false);
         result:=Assigned(Code);
         if not result then _mssge_:='CodeBuffer:"'+_mssge_+'" NOT received';
-        //---
+        //--- Получаем средство для редактирования
         if result then begin
             CodeToolBoss.Explore(Code,Tool,false);
             result:=Assigned(Tool);
             if not result then _mssge_:='CodeTool:"'+_mssge_+'" NOT received'
         end;
-        //---
+        //--- Переименовываем
         if result then begin
             result:=Tool.RenameSource(ExtractFileNameOnly(Node.Get_Target_obj_Name),CodeToolBoss.SourceChangeCache);
             if not result then _mssge_:='Tool.RenameSource:"'+_mssge_+'" ER';
         end;
-        //---
+        //--- Сохраняем
         if result then begin
             result:=code.Save;
             if not result then _mssge_:='code.Save:"'+_mssge_+'" ER'
@@ -79,74 +79,3 @@ begin
 end;
 
 end.
-
-
-begin
-   DEBUG(node.NewFilePATH);
-   try
-
-
-        // Step 1: load the file and parse it
-        Code:=CodeToolBoss.LoadFile(node.NewFilePATH,true,false);
-        //if Code=nil then raise Exception.Create('loading failed '+Filename);
-        CodeToolBoss.Explore(Code,Tool,false);
-        //  if not CodeToolBoss.Explore(Code,Tool,false) then
-          //  ...;// parse error ...
-
-        // Step 2: connect the SourceChangeCache
-        CodeToolBoss.SourceChangeCache.MainScanner:=Tool.Scanner;
-
-
-
-         //Code.
-
-
-          DEBUG(' ok :'+'_copyRast_FileUPDATE_File',Tool.GetCachedSourceName);
-          result:=Tool.RenameSource('asdfasdfasdf',CodeToolBoss.SourceChangeCache);
-          if result
-          then DEBUG('OKOKOKOK')
-          else DEBUG('ERRRRRRR');
-
-
-           //CodeToolBoss.SourceChangeCache.Replace(gtNone,gtNone,1,1,'qwerqwerqwerqwerqwe');
-
-
-        //Tool.FindEmptyMethods();
-
-
-        {
-
-          // Step 3: use Replace to insert and/or delete code
-          // The first two parameters are the needed spaces in front and behind the insertion
-          // The FromPos,ToPos defines the deleted/replaced range in CleanPos positions.
-          // The NewCode is the string of new code. Use '' for a delete.
-          if not CodeToolBoss.SourceChangeCache.Replace(gtNone,gtNone,FromPos,ToPos,NewCode) then
-            exit; // e.g. source read only or a former Replace has deleted the place
-     //     ...do some more Replace...
-       //}
-          // Step 4: Apply the changes
-        //  CodeToolBoss.SourceChangeCache.Apply;
-        if not CodeToolBoss.SourceChangeCache.Apply then begin
-            {$ifdef _DEBUG_}
-                DEBUG(' ER :'+'_copyRast_FileUPDATE_File','CodeToolBoss.SourceChangeCache.Apply');
-            {$endIf}
-            result:=FALSE;
-        end;
-
-        //Code.
-
-        //CodeToolBoss.sa
-        {$ifdef _DEBUG_}
-            if Result
-            then DEBUG(' ok :'+'_copyRast_FileUPDATE_File','ghjk')
-            else DEBUG(' ER :'+'_copyRast_FileUPDATE_File','sdf')
-        {$endIf}
-    except
-        result:=FALSE;
-        {$ifdef _DEBUG_}
-            DEBUG('EXPT:'+'_copyRast_FileUPDATE_File','"'+node.NewFilePATH+'"');
-        {$endIf}
-    end;
-    Code.Save;
-
-
