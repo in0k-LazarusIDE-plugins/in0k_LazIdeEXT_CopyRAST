@@ -31,7 +31,8 @@ implementation
 uses lazExt_CopyRAST_operation_clearTargetDir,
      lazExt_CopyRAST_operation_createTargetDirs,
      lazExt_CopyRAST_operation_copyFiles,
-     lazExt_CopyRAST_operation_PSF_updateUnit;
+     lazExt_CopyRAST_operation_PSF_updateUnit,
+     lazExt_CopyRAST_operation_PSF_updateUsesMain;
 
 
 procedure tCopyRAST_ROOT_package.set_DirExpanded(const DirPath:string);
@@ -72,6 +73,7 @@ begin
     List.Add(tLazExt_CopyRAST_operation_createTargetDirs.Create(self));
     List.Add(tLazExt_CopyRAST_operation_copyFiles.Create(self));
     List.Add(tLazExt_CopyRAST_operation_PSF_updateUnit.Create(self));
+    List.Add(tLazExt_CopyRAST_operation_PSF_updateUsesMain.Create(self));
 end;
 
 end.

@@ -23,6 +23,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
 
 type
  tLazExt_CopyRAST_operation_CORE=class;
+ tLazExt_CopyRAST_operation_CORE_twoStep=class;
 
  tCopyRAST_ROOT=class(tCopyRAST_node)
   protected
@@ -72,13 +73,17 @@ type
 
 
 
-    function _CopyRAST_operation_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):boolean;
-    function _CopyRAST_operations_    (const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):integer;
 
 
   protected
-    function _copyRast_prepare_Target_BaseDIR_(out   BaseDir:string; const Clear:boolean=true):boolean;
-    function _copyRast_prepare_Target_DirTREE_(const BaseDir:string; const Node:tCopyRAST_node):boolean;
+    //function _copyRast_prepare_Target_BaseDIR_(out   BaseDir:string; const Clear:boolean=true):boolean;
+    //function _copyRast_prepare_Target_DirTREE_(const BaseDir:string; const Node:tCopyRAST_node):boolean;
+
+  protected
+    function _CopyRAST_operation_secondStep_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE_twoStep):boolean;
+    function _CopyRAST_operations_secondStep_    (const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE_twoStep):integer;
+    function _CopyRAST_operation_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):boolean;
+    function _CopyRAST_operations_    (const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):integer;
   public
     function CopyRAST:boolean;
 
@@ -119,6 +124,11 @@ type
     constructor Create(const AOwner:tCopyRAST_ROOT);
   end;
 
+ tLazExt_CopyRAST_operation_CORE_twoStep=class(tLazExt_CopyRAST_operation_CORE)
+  public
+    function secondStep_Is_Possible(const Node:tCopyRAST_node):boolean; virtual;
+    function secondStep_doOperation(const Node:tCopyRAST_node):boolean; virtual;
+  end;
 
 
 
@@ -737,7 +747,7 @@ end;
 //------------------------------------------------------------------------------
 
 
-function tCopyRAST_ROOT._copyRast_prepare_Target_BaseDIR_(out BaseDir:string; const Clear:boolean=true):boolean;
+{function tCopyRAST_ROOT._copyRast_prepare_Target_BaseDIR_(out BaseDir:string; const Clear:boolean=true):boolean;
 begin
     if BaseDir='' then BaseDir:=_get_BaseDIR_PATH_+'\CopyRast';
     {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','path: '+BaseDir);{$endIf}
@@ -762,9 +772,9 @@ begin
     else begin
         {$ifdef _DEBUG_}DEBUG('_copyRast_prepare_TargetDIG_','Clear: FALSE');{$endIf}
     end;
-end;
+end;}
 
-function tCopyRAST_ROOT._copyRast_prepare_Target_DirTREE_(const BaseDir:string; const Node:tCopyRAST_node):boolean;
+{function tCopyRAST_ROOT._copyRast_prepare_Target_DirTREE_(const BaseDir:string; const Node:tCopyRAST_node):boolean;
 var tmp:tCopyRAST_node;
     str:string;
 begin // глупо и тупо рекурсией
@@ -788,6 +798,44 @@ begin // глупо и тупо рекурсией
         //--->
         tmp:=tmp.NodeNEXT;
     end;
+end;}
+
+
+function tCopyRAST_ROOT._CopyRAST_operation_secondStep_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE_twoStep):boolean;
+begin
+    if Operation.secondStep_Is_Possible(Node) then begin
+        result:=TRUE;
+        Operation._mssge_:='NOT implemented';
+        if Operation.secondStep_doOperation(node) then begin
+            {$ifdef _DEBUG_}DEBUG(' ok ','secondStep '+node.ClassName+': '+Operation._get_Message_Text_);{$endIf}
+        end
+        else begin
+            {$ifdef _DEBUG_}DEBUG('-ER-','secondStep '+node.ClassName+': '+Operation._get_Message_Text_);{$endIf}
+        end;
+    end
+    else begin
+        result:=FALSE;
+        {$ifdef _DEBUG_}
+            if Operation._getMessageOnSKIP_ then DEBUG('SKIP','secondStep '+node.ClassName+': '+Operation._get_Message_Text_);
+        {$endIf}
+    end;
+    Application.ProcessMessages;
+end;
+
+function tCopyRAST_ROOT._CopyRAST_operations_secondStep_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE_twoStep):integer;
+var tmp:tCopyRAST_node;
+begin // глупо и тупо рекурсией
+    tmp:=node; if not Assigned(tmp) then tmp:=self;
+    result:=0;
+    //--- себя
+    if _CopyRAST_operation_secondStep_NODE_(tmp,Operation) then result:=1;
+    //--- пошли по детям
+    tmp:=tmp.NodeCHLD;
+    while Assigned(tmp) do begin
+        result:=result+_CopyRAST_operations_secondStep_(tmp,Operation);
+        //--->
+        tmp:=tmp.NodeNEXT;
+    end;
 end;
 
 function tCopyRAST_ROOT._CopyRAST_operation_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):boolean;
@@ -797,6 +845,9 @@ begin
         Operation._mssge_:='NOT implemented';
         if Operation.doOperation(node) then begin
             {$ifdef _DEBUG_}DEBUG(' ok ',node.ClassName+': '+Operation._get_Message_Text_);{$endIf}
+            if Operation is tLazExt_CopyRAST_operation_CORE_twoStep then begin
+                _CopyRAST_operations_secondStep_(NIL,tLazExt_CopyRAST_operation_CORE_twoStep(Operation));
+            end;
         end
         else begin
             {$ifdef _DEBUG_}DEBUG('-ER-',node.ClassName+': '+Operation._get_Message_Text_);{$endIf}
@@ -886,6 +937,18 @@ begin
 end;
 
 function tLazExt_CopyRAST_operation_CORE.doOperation(const Node:tCopyRAST_node):boolean;
+begin
+    result:=FALSE;
+end;
+
+//------------------------------------------------------------------------------
+
+function tLazExt_CopyRAST_operation_CORE_twoStep.secondStep_Is_Possible(const Node:tCopyRAST_node):boolean;
+begin
+    result:=FALSE;
+end;
+
+function tLazExt_CopyRAST_operation_CORE_twoStep.secondStep_doOperation(const Node:tCopyRAST_node):boolean;
 begin
     result:=FALSE;
 end;
