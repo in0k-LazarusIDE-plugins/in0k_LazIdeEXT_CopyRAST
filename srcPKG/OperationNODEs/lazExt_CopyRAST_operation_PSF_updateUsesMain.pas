@@ -14,7 +14,7 @@ interface
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
   lazExt_CopyRAST_node,  lazExt_CopyRAST_node_ROOT,
   lazExt_CopyRAST_node_File,
-  FileUtil, LazFileUtils,
+  FileUtil, LazFileUtils, CodeTree, LinkScanner,
   CodeToolManager, CodeCache, StdCodeTools{CodeTree};
 
 type
@@ -74,6 +74,7 @@ end;
 function tLazExt_CopyRAST_operation_PSF_updateUsesMain.secondStep_doOperation(const Node:tCopyRAST_node):boolean;
 var Code:TCodeBuffer;
     Tool:TCodeTool;
+    UsesNode: TCodeTreeNode;
 begin
    _mssge_:=Node.Get_Target_fullName;
     result:=FileExistsUTF8(Node.Get_Target_fullName);
@@ -90,10 +91,70 @@ begin
         end;
         //---
         if result then begin
-            result:=Tool.RenameUsedUnit(ExtractFileNameOnly(_src_.Get_Source_obj_Name), ExtractFileNameOnly(_src_.Get_Target_obj_Name),'',CodeToolBoss.SourceChangeCache);
+
+
+            while tool.SrcLen>tool.CurPos.StartPos do begin
+                Tool.GetAtom;
+                Tool.ReadNextAtom;
+            end;
+
+
+            {UsesNode:=Tool.FindMainUsesNode;
+
+            if Assigned(UsesNode) then begin
+                _mssge_:=_mssge_+'OKOKOKOK';
+                 result:=true;
+            end
+            else begin
+                _mssge_:=_mssge_+'main unit section NOT found in "'+_mssge_+'"';
+                 result:=true;
+            end;}
+
+
+
+
+
+            {result:=Tool.RenameUsedUnit(ExtractFileNameOnly(_src_.Get_Source_obj_Name), ExtractFileNameOnly(_src_.Get_Target_obj_Name),'',CodeToolBoss.SourceChangeCache);
             if not result then begin
                _mssge_:='Tool.RenameUsedUnit: ERR';
-            end;
+            end;}
+
+
+
+
+
+
+
+
+
+
+
+
+              //if UsesSection=usMain then
+             { try Tool.BuildTree(lsrMainUsesSectionEnd)
+              except _mssge_:=' BuildTree FAIL ' end;
+              UsesNode:=Tool.FindMainUsesNode;
+
+              if Assigned(UsesNode) then begin
+                  _mssge_:=_mssge_+'OKOKOKOK';
+                   result:=true;
+              end
+              else begin
+                  _mssge_:=_mssge_+'main unit section NOT found in "'+_mssge_+'"';
+                   result:=true;
+              end; }
+
+
+              //else
+              //  BuildTree(lsrImplementationUsesSectionEnd);
+              //case UsesSection Of
+              //  usMain: UsesNode:=FindMainUsesNode;
+              //  usImplementation: UsesNode:=FindImplementationUsesNode;
+              //end;
+              //Result:=UnitExistsInUsesSection(UsesNode,AnUnitName);
+           // end;
+
+
         end;
         //---
         if result then begin
@@ -101,9 +162,9 @@ begin
             if not result then _mssge_:='code.Save:"'+_mssge_+'" ER'
         end;
         //----------
-        if result then begin
-            _mssge_:='changes APPLIED: unit "'+{ExtractFileNameOnly(Node.Get_Source_obj_Name)+'" -> "'+ExtractFileNameOnly(Node.Get_Target_obj_Name)+}'" in file "'+Node.Get_Target_fullName+'"';
-        end;
+        //if result then begin
+        //    _mssge_:='changes APPLIED: unit "'+{ExtractFileNameOnly(Node.Get_Source_obj_Name)+'" -> "'+ExtractFileNameOnly(Node.Get_Target_obj_Name)+}'" in file "'+Node.Get_Target_fullName+'"';
+        //end;
      end
      else begin
         _mssge_:='TARGET File:'+'"'+Node.Get_Target_fullName+'"'+' NOT exists';

@@ -807,16 +807,16 @@ begin
         result:=TRUE;
         Operation._mssge_:='NOT implemented';
         if Operation.secondStep_doOperation(node) then begin
-            {$ifdef _DEBUG_}DEBUG(' ok ','secondStep '+node.ClassName+': '+Operation._get_Message_Text_);{$endIf}
+            {$ifdef _DEBUG_}DEBUG(' ok  secondStep',Operation._get_Message_Text_+' for node^'+node.ClassName);{$endIf}
         end
         else begin
-            {$ifdef _DEBUG_}DEBUG('-ER-','secondStep '+node.ClassName+': '+Operation._get_Message_Text_);{$endIf}
+            {$ifdef _DEBUG_}DEBUG('-ER- secondStep',Operation._get_Message_Text_+' for node^'+node.ClassName);{$endIf}
         end;
     end
     else begin
         result:=FALSE;
         {$ifdef _DEBUG_}
-            if Operation._getMessageOnSKIP_ then DEBUG('SKIP','secondStep '+node.ClassName+': '+Operation._get_Message_Text_);
+            if Operation._getMessageOnSKIP_ then DEBUG('SKIP secondStep',Operation._get_Message_Text_+' for node^'+node.ClassName);
         {$endIf}
     end;
     Application.ProcessMessages;
@@ -844,19 +844,19 @@ begin
         result:=TRUE;
         Operation._mssge_:='NOT implemented';
         if Operation.doOperation(node) then begin
-            {$ifdef _DEBUG_}DEBUG(' ok ',node.ClassName+': '+Operation._get_Message_Text_);{$endIf}
+            {$ifdef _DEBUG_}DEBUG(' ok ',Operation._get_Message_Text_+' for node^'+node.ClassName);{$endIf}
             if Operation is tLazExt_CopyRAST_operation_CORE_twoStep then begin
                 _CopyRAST_operations_secondStep_(NIL,tLazExt_CopyRAST_operation_CORE_twoStep(Operation));
             end;
         end
         else begin
-            {$ifdef _DEBUG_}DEBUG('-ER-',node.ClassName+': '+Operation._get_Message_Text_);{$endIf}
+            {$ifdef _DEBUG_}DEBUG('-ER-',Operation._get_Message_Text_ +' for node^'+node.ClassName);{$endIf}
         end;
     end
     else begin
         result:=FALSE;
         {$ifdef _DEBUG_}
-            if Operation._getMessageOnSKIP_ then DEBUG('SKIP',node.ClassName+': '+Operation._get_Message_Text_);
+            if Operation._getMessageOnSKIP_ then DEBUG('SKIP',Operation._get_Message_Text_+' for node^'+node.ClassName);
         {$endIf}
     end;
     Application.ProcessMessages;
