@@ -12,7 +12,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="23">
+    <Files Count="24">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -106,6 +106,10 @@
         <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_operation_PSF_updateUnit.pas"/>
         <UnitName Value="lazExt_CopyRAST_operation_PSF_updateUnit"/>
       </Item23>
+      <Item24>
+        <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_operation_PSF_updateUsesMain.pas"/>
+        <UnitName Value="lazExt_CopyRAST_operation_PSF_updateUsesMain"/>
+      </Item24>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>
