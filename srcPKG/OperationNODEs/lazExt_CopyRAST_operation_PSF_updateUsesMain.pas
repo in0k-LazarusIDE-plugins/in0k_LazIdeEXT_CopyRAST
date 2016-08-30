@@ -92,9 +92,11 @@ begin
         //---
         if result then begin
 
-
+            tool.MoveCursorToCleanPos(0);
             while tool.SrcLen>tool.CurPos.StartPos do begin
-                Tool.GetAtom;
+                if tool.UpAtomIs('USES') then begin
+                    DEBUG('FIND USES in "'+Node.Get_Target_fullName+'"');
+                end;
                 Tool.ReadNextAtom;
             end;
 
