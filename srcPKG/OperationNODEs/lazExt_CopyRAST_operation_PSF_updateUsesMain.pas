@@ -74,7 +74,10 @@ end;
 function tLazExt_CopyRAST_operation_PSF_updateUsesMain.secondStep_doOperation(const Node:tCopyRAST_node):boolean;
 var Code:TCodeBuffer;
     Tool:TCodeTool;
-    UsesNode: TCodeTreeNode;
+    UsesNode:TCodeTreeNode;
+
+    fndNAME:string;
+
 begin
    _mssge_:=Node.Get_Target_fullName;
     result:=FileExistsUTF8(Node.Get_Target_fullName);
@@ -91,11 +94,14 @@ begin
         end;
         //---
         if result then begin
+            fndNAME:=upcase(ExtractFileNameWithoutExt(node.Get_Source_obj_Name));
+
+
 
             tool.MoveCursorToCleanPos(0);
-            while tool.SrcLen>tool.CurPos.StartPos do begin
-                if tool.UpAtomIs('USES') then begin
-                    DEBUG('FIND USES in "'+Node.Get_Target_fullName+'"');
+            while tool.CurPos.EndPos<tool.SrcLen do begin
+                if tool.UpAtomIs(fndNAME) then begin
+                    DEBUG('FIND "'+fndNAME +'" in file "'+Node.Get_Target_fullName+'"');
                 end;
                 Tool.ReadNextAtom;
             end;
