@@ -14,7 +14,7 @@ interface
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
   lazExt_CopyRAST_node,  lazExt_CopyRAST_node_ROOT,
   lazExt_CopyRAST_node_File,
-  FileUtil, LazFileUtils,
+  FileUtil, LazFileUtils,  LazIDEIntf,
   CodeToolManager, CodeCache;
 
 type
@@ -45,11 +45,15 @@ function tLazExt_CopyRAST_operation_PSF_updateUnit.doOperation(const Node:tCopyR
 var Code:TCodeBuffer;
     Tool:TCodeTool;
 begin
+
+    // save changes in source editor to codetools
+     // LazarusIDE.SaveSourceEditorChangesToCodeCache(-1);
+
    _mssge_:=Node.Get_Target_fullName;
     result:=FileExistsUTF8(Node.Get_Target_fullName);
     if result then begin
         //--- Загружаем
-        Code:=CodeToolBoss.LoadFile(node.Get_Target_fullName,true,false);
+        Code:=CodeToolBoss.LoadFile(node.Get_Target_fullName,false{true},false);
         result:=Assigned(Code);
         if not result then _mssge_:='CodeBuffer:"'+_mssge_+'" NOT received';
         //--- Получаем средство для редактирования
@@ -58,11 +62,29 @@ begin
             result:=Assigned(Tool);
             if not result then _mssge_:='CodeTool:"'+_mssge_+'" NOT received'
         end;
+
+        // Step 2: connect the SourceChangeCache
+        //  CodeToolBoss.SourceChangeCache.MainScanner:=Tool.Scanner;
+        //  CodeToolBoss.SourceChangeCache.BeginUpdate;
+
         //--- Переименовываем
         if result then begin
             result:=Tool.RenameSource(ExtractFileNameOnly(Node.Get_Target_obj_Name),CodeToolBoss.SourceChangeCache);
             if not result then _mssge_:='Tool.RenameSource:"'+_mssge_+'" ER';
         end;
+        // Step 4: Apply the changes
+        //if result then begin
+        //     result:=CodeToolBoss.SourceChangeCache.Apply;
+        //     if not result then _mssge_:='CodeToolBoss.SourceChangeCache.Apply:"'+_mssge_+'" ER'
+        //end;
+
+      //   CodeToolBoss.SourceCache.;
+
+        //--- Сохраняем
+        //if result then begin
+        //    result:=CodeToolBoss.SourceChangeCache.EndUpdate;
+        //    if not result then _mssge_:='code.Save:"'+_mssge_+'" ER'
+        //end;
         //--- Сохраняем
         if result then begin
             result:=code.Save;

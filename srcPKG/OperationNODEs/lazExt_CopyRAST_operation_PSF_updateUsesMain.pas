@@ -29,7 +29,7 @@ type
     function doOperation(const Node:tCopyRAST_node):boolean; override;
   public
     function secondStep_Is_Possible(const Node:tCopyRAST_node):boolean; override;
-    function secondStep_doOperation(const Node:tCopyRAST_node):boolean; override;
+    function secondStep_doOperation(const Node:tCopyRAST_node):integer; override;
   end;
 
 implementation
@@ -71,73 +71,85 @@ begin
             (FilenameIsPascalUnit(node.Get_Target_fullName)); //< ПАСКАЛЕВСКИЙ исходник
 end;
 
-function tLazExt_CopyRAST_operation_PSF_updateUsesMain.secondStep_doOperation(const Node:tCopyRAST_node):boolean;
+function tLazExt_CopyRAST_operation_PSF_updateUsesMain.secondStep_doOperation(const Node:tCopyRAST_node):integer;
 var Code:TCodeBuffer;
     Tool:TCodeTool;
     UsesNode:TCodeTreeNode;
 
     fndNAME:string;
-    needSave:integer;
 begin
-    needSave:=0;
-
-
+    result:=0;
+    //---
    _mssge_:=Node.Get_Target_fullName;
-    result:=FileExistsUTF8(Node.Get_Target_fullName);
-    if result then begin
-        //---
-        Code:=CodeToolBoss.LoadFile(node.Get_Target_fullName,true,false);
-        result:=Assigned(Code);
-        if not result then _mssge_:='CodeBuffer:"'+_mssge_+'" NOT received';
-        //---
-        if result then begin
-            CodeToolBoss.Explore(Code,Tool,false);
-            result:=Assigned(Tool);
-            if not result then _mssge_:='CodeTool:"'+_mssge_+'" NOT received'
-        end;
-        //---
+    if NOT FileExistsUTF8(Node.Get_Target_fullName) then begin
+       _mssge_:='TARGET File:'+'"'+Node.Get_Target_fullName+'"'+' NOT exists';
+        exit(-1);
+    end;
+
+    Code:=CodeToolBoss.LoadFile(node.Get_Target_fullName,false{true},false);
+    if NOT Assigned(Code) then begin
+       _mssge_:='CodeBuffer:"'+Node.Get_Target_fullName+'" NOT received';
+        exit(-1);
+    end;
+
+    CodeToolBoss.Explore(Code,Tool,false);
+    if NOT Assigned(Tool) then begin
+        _mssge_:='CodeTool:"'+Node.Get_Target_fullName+'" NOT received';
+         exit(-1);
+    end;
 
         // Step 2: connect the SourceChangeCache
-        CodeToolBoss.SourceChangeCache.MainScanner:=Tool.Scanner;
+        //CodeToolBoss.SourceChangeCache.MainScanner:=Tool.Scanner;
+        //CodeToolBoss.SourceChangeCache.BeginUpdate;
 
         // Step 3: EDIT
-        if result then begin
-            fndNAME:=upcase(ExtractFileNameWithoutExt(node.Get_Source_obj_Name));
-            tool.MoveCursorToCleanPos(0);
-            while tool.CurPos.EndPos<tool.SrcLen do begin
-                if (tool.CurPos.Flag=cafWord)and
-                   (tool.UpAtomIs(fndNAME))
-                then begin
-                    DEBUG('FIND "'+fndNAME +'" SP='+inttostr(tool.CurPos.StartPos)+' EP='+inttostr(tool.CurPos.EndPos)+' in file "'+Node.Get_Target_fullName+'"');
-                    result:=CodeToolBoss.SourceChangeCache.Replace(gtNone,gtNone,tool.CurPos.StartPos,tool.CurPos.EndPos,fndNAME);
-                    if result then inc(needSave)
-                    else begin
-                       _mssge_:='CodeToolBoss.SourceChangeCache.Replace: ERR';
-                        BREAK;
-                    end;
-                end;
-                Tool.ReadNextAtom;
-            end;
-        end;
 
-        // Step 4: Apply the changes
-        if result and (needSave>0) then begin
-             result:=CodeToolBoss.SourceChangeCache.Apply;
-             if not result then _mssge_:='CodeToolBoss.SourceChangeCache.Apply:"'+_mssge_+'" ER'
+    fndNAME:=upcase(ExtractFileNameWithoutExt(_src_.Get_Source_obj_Name));
+    tool.MoveCursorToCleanPos(0);
+    while tool.CurPos.EndPos<tool.SrcLen do begin
+        if (tool.CurPos.Flag=cafWord)and(tool.UpAtomIs(fndNAME)) then begin
+            DEBUG('FIND "'+fndNAME +'" SP='+inttostr(tool.CurPos.StartPos)+' EP='+inttostr(tool.CurPos.EndPos)+' in file "'+Node.Get_Target_fullName+'"');
+            //code.Replace();
+            inc(result);
+            //result:=CodeToolBoss.SourceChangeCache.Replace(gtNone,gtNone,tool.CurPos.StartPos,tool.CurPos.EndPos,fndNAME);
+            //result:=CodeToolBoss.SourceChangeCache.Replace(gtNone,gtNone,tool.CurPos.StartPos,tool.CurPos.StartPos,'ssadfasdfasdf');
+            {if result then inc(result)
+            else begin
+            _mssge_:='CodeToolBoss.SourceChangeCache.Replace: ERR';
+            BREAK;
+            end;}
         end;
-        // Step 5: SAVE the changes
-        if result then begin
+        Tool.ReadNextAtom;
+    end;
+
+
+    // Step 4: Apply the changes
+    //if result and (result>0) then begin
+    //     result:=CodeToolBoss.SourceChangeCache.EndUpdate;
+    //     //result:=CodeToolBoss.SourceChangeCache.Apply;
+    //     if not result then _mssge_:='CodeToolBoss.SourceChangeCache.Apply:"'+_mssge_+'" ER'
+    //end;
+
+    // Step 5: SAVE the changes
+    if NOT code.Save then begin
+        _mssge_:='code.Save:"'+Node.Get_Target_fullName+'" ER';
+         exit(-1);
+    end;
+
+    //---
+   _mssge_:='in file "'+Node.Get_Target_fullName+'"';
+
+{        if result then begin
             result:=code.Save;
             if not result then _mssge_:='code.Save:"'+_mssge_+'" ER'
         end;
         //----------
         if result then begin
-            _mssge_:='changes APPLIED '+inttostr(needSave)+': unit "'+{ExtractFileNameOnly(Node.Get_Source_obj_Name)+'" -> "'+ExtractFileNameOnly(Node.Get_Target_obj_Name)+}'" in file "'+Node.Get_Target_fullName+'"';
         end;
      end
      else begin
-        _mssge_:='TARGET File:'+'"'+Node.Get_Target_fullName+'"'+' NOT exists';
-     end;
+
+     end;}
 end;
 
 end.

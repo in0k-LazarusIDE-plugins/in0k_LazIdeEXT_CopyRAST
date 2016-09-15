@@ -80,7 +80,7 @@ type
     //function _copyRast_prepare_Target_DirTREE_(const BaseDir:string; const Node:tCopyRAST_node):boolean;
 
   protected
-    function _CopyRAST_operation_secondStep_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE_twoStep):boolean;
+    function _CopyRAST_operation_secondStep_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE_twoStep):integer;
     function _CopyRAST_operations_secondStep_    (const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE_twoStep):integer;
     function _CopyRAST_operation_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):boolean;
     function _CopyRAST_operations_    (const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):integer;
@@ -127,7 +127,7 @@ type
  tLazExt_CopyRAST_operation_CORE_twoStep=class(tLazExt_CopyRAST_operation_CORE)
   public
     function secondStep_Is_Possible(const Node:tCopyRAST_node):boolean; virtual;
-    function secondStep_doOperation(const Node:tCopyRAST_node):boolean; virtual;
+    function secondStep_doOperation(const Node:tCopyRAST_node):integer; virtual;
   end;
 
 
@@ -801,20 +801,25 @@ begin // глупо и тупо рекурсией
 end;}
 
 
-function tCopyRAST_ROOT._CopyRAST_operation_secondStep_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE_twoStep):boolean;
+function tCopyRAST_ROOT._CopyRAST_operation_secondStep_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE_twoStep):integer;
+var SecOprRES:integer;
 begin
+    result:=0;
     if Operation.secondStep_Is_Possible(Node) then begin
-        result:=TRUE;
         Operation._mssge_:='NOT implemented';
-        if Operation.secondStep_doOperation(node) then begin
-            {$ifdef _DEBUG_}DEBUG(' ok  secondStep',Operation._get_Message_Text_+' for node^'+node.ClassName);{$endIf}
-        end
-        else begin
+        SecOprRES:=Operation.secondStep_doOperation(node);
+        result:=result+SecOprRES;
+        if SecOprRES<0 then begin// ОШИБКИ
             {$ifdef _DEBUG_}DEBUG('-ER- secondStep',Operation._get_Message_Text_+' for node^'+node.ClassName);{$endIf}
-        end;
+        end
+       else
+        if SecOprRES>0 then begin //< НИЧЕГО небыло сделанно
+            result:=result+SecOprRES;
+            {$ifdef _DEBUG_}DEBUG(' ok  secondStep','changes made '+inttostr(SecOprRES)+'. '+Operation._get_Message_Text_+' for node^'+node.ClassName);{$endIf}
+        end
     end
     else begin
-        result:=FALSE;
+        result:=0;
         {$ifdef _DEBUG_}
             if Operation._getMessageOnSKIP_ then DEBUG('SKIP secondStep',Operation._get_Message_Text_+' for node^'+node.ClassName);
         {$endIf}
@@ -828,7 +833,7 @@ begin // глупо и тупо рекурсией
     tmp:=node; if not Assigned(tmp) then tmp:=self;
     result:=0;
     //--- себя
-    if _CopyRAST_operation_secondStep_NODE_(tmp,Operation) then result:=1;
+    if _CopyRAST_operation_secondStep_NODE_(tmp,Operation)>0 then result:=1;
     //--- пошли по детям
     tmp:=tmp.NodeCHLD;
     while Assigned(tmp) do begin
@@ -839,18 +844,28 @@ begin // глупо и тупо рекурсией
 end;
 
 function tCopyRAST_ROOT._CopyRAST_operation_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):boolean;
+var res:integer;
 begin
     if Operation.Is_Possible(Node) then begin
         result:=TRUE;
         Operation._mssge_:='NOT implemented';
-        if Operation.doOperation(node) then begin
-            {$ifdef _DEBUG_}DEBUG(' ok ',Operation._get_Message_Text_+' for node^'+node.ClassName);{$endIf}
-            if Operation is tLazExt_CopyRAST_operation_CORE_twoStep then begin
-                _CopyRAST_operations_secondStep_(NIL,tLazExt_CopyRAST_operation_CORE_twoStep(Operation));
+        if Operation is tLazExt_CopyRAST_operation_CORE_twoStep then begin
+            if Operation.doOperation(node) then begin
+                {$ifdef _DEBUG_}DEBUG(' go ',Operation._get_Message_Text_+' for node^'+node.ClassName);{$endIf}
+                res:=_CopyRAST_operations_secondStep_(NIL,tLazExt_CopyRAST_operation_CORE_twoStep(Operation));
+                {$ifdef _DEBUG_}DEBUG(' ok ','make '+inttostr(res)+' changes. '+Operation._get_Message_Text_+' for node^'+node.ClassName);{$endIf}
+            end
+            else begin
+                {$ifdef _DEBUG_}DEBUG('-ER-',Operation._get_Message_Text_ +' for node^'+node.ClassName);{$endIf}
             end;
         end
         else begin
-            {$ifdef _DEBUG_}DEBUG('-ER-',Operation._get_Message_Text_ +' for node^'+node.ClassName);{$endIf}
+            if Operation.doOperation(node) then begin
+                {$ifdef _DEBUG_}DEBUG(' ok ',Operation._get_Message_Text_+' for node^'+node.ClassName);{$endIf}
+            end
+            else begin
+                {$ifdef _DEBUG_}DEBUG('-ER-',Operation._get_Message_Text_ +' for node^'+node.ClassName);{$endIf}
+            end;
         end;
     end
     else begin
@@ -885,7 +900,8 @@ var i:integer;
     r:integer;
   tmp:tLazExt_CopyRAST_operation_CORE;
 begin
-    for i:=0 to _operationList_.Count-1 do begin
+   LazarusIDE.SaveSourceEditorChangesToCodeCache(nil);
+   for i:=0 to _operationList_.Count-1 do begin
         tmp:=tLazExt_CopyRAST_operation_CORE(_operationList_.Items[i]);
         if Assigned(tmp) then begin
             {$ifdef _DEBUG_}DEBUG('Operations START: '+tmp._getOperationName_,tmp.ClassName);{$endIf}
@@ -948,9 +964,9 @@ begin
     result:=FALSE;
 end;
 
-function tLazExt_CopyRAST_operation_CORE_twoStep.secondStep_doOperation(const Node:tCopyRAST_node):boolean;
+function tLazExt_CopyRAST_operation_CORE_twoStep.secondStep_doOperation(const Node:tCopyRAST_node):integer;
 begin
-    result:=FALSE;
+    result:=0;
 end;
 
 {%endregion}
