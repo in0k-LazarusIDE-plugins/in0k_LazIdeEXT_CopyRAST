@@ -5,6 +5,9 @@ unit lazExt_CopyRAST;
 interface
 
 uses in0k_lazIdeSRC_ExpertCORE,
+     {in0k_lazIdeSRC_ExpertCORE,}
+     //in0k_lazIdeSRC_ExpertCORE,
+     (*in0k_lazIdeSRC_ExpertCORE,*)
      in0k_lazIdeSRC_DEBUG,
      lazExt_CopyRAST_StrConsts,
      lazExt_CopyRAST_wndPackage,

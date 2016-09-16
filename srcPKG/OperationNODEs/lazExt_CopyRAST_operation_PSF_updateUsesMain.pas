@@ -77,6 +77,7 @@ var Code:TCodeBuffer;
     UsesNode:TCodeTreeNode;
 
     fndNAME:string;
+    repNAME:string;
 begin
     result:=0;
     //---
@@ -99,20 +100,23 @@ begin
     end;
 
         // Step 2: connect the SourceChangeCache
-        //CodeToolBoss.SourceChangeCache.MainScanner:=Tool.Scanner;
-        //CodeToolBoss.SourceChangeCache.BeginUpdate;
+        CodeToolBoss.SourceChangeCache.MainScanner:=Tool.Scanner;
+        CodeToolBoss.SourceChangeCache.BeginUpdate;
 
         // Step 3: EDIT
 
     fndNAME:=upcase(ExtractFileNameWithoutExt(_src_.Get_Source_obj_Name));
+    repNAME:=upcase(ExtractFileNameWithoutExt(_src_.Get_Target_obj_Name));
     tool.MoveCursorToCleanPos(0);
     while tool.CurPos.EndPos<tool.SrcLen do begin
         if (tool.CurPos.Flag=cafWord)and(tool.UpAtomIs(fndNAME)) then begin
             DEBUG('FIND "'+fndNAME +'" SP='+inttostr(tool.CurPos.StartPos)+' EP='+inttostr(tool.CurPos.EndPos)+' in file "'+Node.Get_Target_fullName+'"');
             //code.Replace();
-            inc(result);
+            //inc(result);
             //result:=CodeToolBoss.SourceChangeCache.Replace(gtNone,gtNone,tool.CurPos.StartPos,tool.CurPos.EndPos,fndNAME);
-            //result:=CodeToolBoss.SourceChangeCache.Replace(gtNone,gtNone,tool.CurPos.StartPos,tool.CurPos.StartPos,'ssadfasdfasdf');
+            if CodeToolBoss.SourceChangeCache.Replace(gtNone,gtNone,tool.CurPos.StartPos,tool.CurPos.EndPos,repNAME+'{ '+fndNAME+' }') then begin
+                result:=result+1;
+            end;
             {if result then inc(result)
             else begin
             _mssge_:='CodeToolBoss.SourceChangeCache.Replace: ERR';
@@ -122,13 +126,11 @@ begin
         Tool.ReadNextAtom;
     end;
 
-
     // Step 4: Apply the changes
-    //if result and (result>0) then begin
-    //     result:=CodeToolBoss.SourceChangeCache.EndUpdate;
-    //     //result:=CodeToolBoss.SourceChangeCache.Apply;
-    //     if not result then _mssge_:='CodeToolBoss.SourceChangeCache.Apply:"'+_mssge_+'" ER'
-    //end;
+    if not CodeToolBoss.SourceChangeCache.EndUpdate then begin
+        _mssge_:='CodeToolBoss.SourceChangeCache.EndUpdate:"'+Node.Get_Target_fullName+'" ER';
+         exit(-1);
+    end;
 
     // Step 5: SAVE the changes
     if NOT code.Save then begin
@@ -139,17 +141,6 @@ begin
     //---
    _mssge_:='in file "'+Node.Get_Target_fullName+'"';
 
-{        if result then begin
-            result:=code.Save;
-            if not result then _mssge_:='code.Save:"'+_mssge_+'" ER'
-        end;
-        //----------
-        if result then begin
-        end;
-     end
-     else begin
-
-     end;}
 end;
 
 end.
