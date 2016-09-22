@@ -13,6 +13,7 @@ interface
 
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
   lazExt_CopyRAST_node,  lazExt_CopyRAST_node_ROOT,
+  lazExt_CopyRAST_TEXTs,
   lazExt_CopyRAST_node_File,
   FileUtil, LazFileUtils, CodeTree, LinkScanner,  SourceChanger, CodeAtom,
   CodeToolManager, CodeCache, StdCodeTools{CodeTree};
@@ -87,7 +88,7 @@ begin
         exit(-1);
     end;
 
-    Code:=CodeToolBoss.LoadFile(node.Get_Target_fullName,false{true},false);
+    Code:=CodeToolBoss.LoadFile(node.Get_Target_fullName,true,false);
     if NOT Assigned(Code) then begin
        _mssge_:='CodeBuffer:"'+Node.Get_Target_fullName+'" NOT received';
         exit(-1);
@@ -106,7 +107,7 @@ begin
         // Step 3: EDIT
 
     fndNAME:=upcase(ExtractFileNameWithoutExt(_src_.Get_Source_obj_Name));
-    repNAME:=upcase(ExtractFileNameWithoutExt(_src_.Get_Target_obj_Name));
+    repNAME:=      (ExtractFileNameWithoutExt(_src_.Get_Target_obj_Name));
     tool.MoveCursorToCleanPos(0);
     while tool.CurPos.EndPos<tool.SrcLen do begin
         if (tool.CurPos.Flag=cafWord)and(tool.UpAtomIs(fndNAME)) then begin
@@ -114,7 +115,7 @@ begin
             //code.Replace();
             //inc(result);
             //result:=CodeToolBoss.SourceChangeCache.Replace(gtNone,gtNone,tool.CurPos.StartPos,tool.CurPos.EndPos,fndNAME);
-            if CodeToolBoss.SourceChangeCache.Replace(gtNone,gtNone,tool.CurPos.StartPos,tool.CurPos.EndPos,repNAME+'{ '+fndNAME+' }') then begin
+            if CodeToolBoss.SourceChangeCache.Replace(gtNone,gtNone,tool.CurPos.StartPos,tool.CurPos.EndPos,repNAME+CopyRAST_Text_comment_InlineReplace_PAS(tool.GetAtom)) then begin
                 result:=result+1;
             end;
             {if result then inc(result)

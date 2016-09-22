@@ -53,7 +53,7 @@ begin
     result:=FileExistsUTF8(Node.Get_Target_fullName);
     if result then begin
         //--- Загружаем
-        Code:=CodeToolBoss.LoadFile(node.Get_Target_fullName,false{true},false);
+        Code:=CodeToolBoss.LoadFile(node.Get_Target_fullName,true,false);
         result:=Assigned(Code);
         if not result then _mssge_:='CodeBuffer:"'+_mssge_+'" NOT received';
         //--- Получаем средство для редактирования
@@ -69,7 +69,7 @@ begin
 
         //--- Переименовываем
         if result then begin
-            result:=Tool.RenameSource(ExtractFileNameOnly(Node.Get_Target_obj_Name),CodeToolBoss.SourceChangeCache);
+            result:=Tool.RenameSource(ExtractFileNameOnly(Node.Get_Target_obj_Name)+'{asdf}',CodeToolBoss.SourceChangeCache);
             if not result then _mssge_:='Tool.RenameSource:"'+_mssge_+'" ER';
         end;
         // Step 4: Apply the changes

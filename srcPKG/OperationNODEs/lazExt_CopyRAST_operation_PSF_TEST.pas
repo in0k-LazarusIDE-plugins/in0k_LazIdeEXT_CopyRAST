@@ -1,7 +1,13 @@
-unit lazExt_CopyRAST_operation_PSF_TEST;
+unit lazExt_CopyRAST_operation_PSF_TEST{%CopyRAST:"lazExt_CopyRAST_operation_PSF_TEST"};
 {$mode objfpc}{$H+}
 
 interface
+
+{%CopyRAST:"sdfasdf"}
+
+
+
+
 
 {$i in0k_lazIdeSRC_SETTINGs.inc} //< настройки компанента-Расширения.
 //< Можно смело убирать, так как будеть работать только в моей специальной

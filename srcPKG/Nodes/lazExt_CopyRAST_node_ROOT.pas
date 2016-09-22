@@ -119,7 +119,7 @@ type
     {$endIf}
   public
     function Is_Possible(const Node:tCopyRAST_node):boolean; virtual;
-    function doOperation(const Node:tCopyRAST_node):boolean; virtual;
+    function doOperation(const Node:tCopyRAST_node):integer; virtual;
   public
     constructor Create(const AOwner:tCopyRAST_ROOT);
   end;
@@ -130,6 +130,9 @@ type
     function secondStep_doOperation(const Node:tCopyRAST_node):integer; virtual;
   end;
 
+
+// step
+// scnd
 
 
 
@@ -896,19 +899,36 @@ end;
 
 function tCopyRAST_ROOT.CopyRAST:boolean;
 var TargetDirPATH:string;
+
+    ChCount:integer; //
+    ErCount:integer;
+
 var i:integer;
     r:integer;
   tmp:tLazExt_CopyRAST_operation_CORE;
 begin
    LazarusIDE.SaveSourceEditorChangesToCodeCache(nil);
+
+
+
+
+   {$ifdef _DEBUG_}DEBUG('CopyRAST START',DateTimeToStr(NOW));{$endIf}
+   ChCount:=0;
+   ErCount:=0;
+   //--- ну ... поехали ...
    for i:=0 to _operationList_.Count-1 do begin
         tmp:=tLazExt_CopyRAST_operation_CORE(_operationList_.Items[i]);
         if Assigned(tmp) then begin
             {$ifdef _DEBUG_}DEBUG('Operations START: '+tmp._getOperationName_,tmp.ClassName);{$endIf}
             r:=_CopyRAST_operations_(nil,tmp);
+            if r>0 then
+
+
             {$ifdef _DEBUG_}DEBUG('Operations -END-: '+tmp._getOperationName_,tmp.ClassName+' '+inttostr(r)+' times was Executed');{$endIf}
         end;
     end;
+    //--- вот и приЕхали ...
+    {$ifdef _DEBUG_}DEBUG('CopyRAST -END-',DateTimeToStr(NOW)+' '+'ChCount='+inttostr(ChCount)+' '+'ErCount='+inttostr(ErCount));{$endIf}
 end;
 
 
@@ -947,14 +967,22 @@ end;
 
 //------------------------------------------------------------------------------
 
+// [проверка] Можно ли применить данную операцию к узлу?
+// @prm Node узел, который проверяем
+// @ret true данную операцию применять МОЖНО
 function tLazExt_CopyRAST_operation_CORE.Is_Possible(const Node:tCopyRAST_node):boolean;
 begin
     result:=FALSE;
 end;
 
-function tLazExt_CopyRAST_operation_CORE.doOperation(const Node:tCopyRAST_node):boolean;
+// [выполнение] Применить данную операцию к узлу.
+// @prm Node узел, который проверяем
+// @ret 0 изменений нет
+// @ret >0 кол-во проведенных изменений
+// @ret <0 ОШИБКА при выполнении
+function tLazExt_CopyRAST_operation_CORE.doOperation(const Node:tCopyRAST_node):integer;
 begin
-    result:=FALSE;
+    result:=0;
 end;
 
 //------------------------------------------------------------------------------
