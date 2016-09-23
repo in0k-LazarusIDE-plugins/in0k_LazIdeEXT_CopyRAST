@@ -25,7 +25,7 @@ type
     function _getOperationName_:string; override;
   public
     function Is_Possible(const Node:tCopyRAST_node):boolean; override;
-    function doOperation(const Node:tCopyRAST_node):boolean; override;
+    function doOperation(const Node:tCopyRAST_node):integer; override;
   end;
 
 implementation
@@ -42,19 +42,20 @@ begin
     result:=node is tCopyRAST_node_BaseDIR;
 end;
 
-function tLazExt_CopyRAST_operation_clearTargetDir.doOperation(const Node:tCopyRAST_node):boolean;
+function tLazExt_CopyRAST_operation_clearTargetDir.doOperation(const Node:tCopyRAST_node):integer;
 begin
-   _mssge_:=Node.Get_Target_fullName;
-    result:=DirPathExists(_mssge_);
-    if result then begin
-        result:=DeleteDirectory(_mssge_,FALSE);
-        if result
-        then _mssge_:='TARGET_basePath "'+_mssge_+'" DELETED'
-        else _mssge_:='DeleteDirectory("'+_mssge_+'") ERR';
+    if not DirPathExists(Node.Get_Target_fullName) then begin
+        result:=0;
+       _mssge_:='TARGET_basePath already missing';
     end
-    else begin
-        result:=TRUE;
-       _mssge_:='TARGET_basePath "'+_mssge_+'" already missing';
+   else
+    if DeleteDirectory(Node.Get_Target_fullName,FALSE) then begin
+       _mssge_:='TARGET_basePath DELETED';
+        result:=+1;
+    end
+   else begin
+       _mssge_:='DeleteDirectory';
+        result:=-1;
     end;
 end;
 

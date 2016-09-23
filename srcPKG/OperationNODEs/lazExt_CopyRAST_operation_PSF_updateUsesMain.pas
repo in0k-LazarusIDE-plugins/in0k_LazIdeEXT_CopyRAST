@@ -18,9 +18,9 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
   FileUtil, LazFileUtils, CodeTree, LinkScanner,  SourceChanger, CodeAtom,
   CodeToolManager, CodeCache, StdCodeTools{CodeTree};
 
-type
+//type
 
- tLazExt_CopyRAST_operation_PSF_updateUsesMain=class(tLazExt_CopyRAST_operation_CORE_twoStep)
+{ tLazExt_CopyRAST_operation_PSF_updateUsesMain=class(tLazExt_CopyRAST_operation_CORE_twoStep)
   protected
    _src_:tCopyRAST_node_FILE;
   protected
@@ -31,11 +31,11 @@ type
   public
     function secondStep_Is_Possible(const Node:tCopyRAST_node):boolean; override;
     function secondStep_doOperation(const Node:tCopyRAST_node):integer; override;
-  end;
+  end; }
 
 implementation
 
-function tLazExt_CopyRAST_operation_PSF_updateUsesMain._getOperationName_:string;
+{function tLazExt_CopyRAST_operation_PSF_updateUsesMain._getOperationName_:string;
 begin
     result:='Pascal source files update USES main section';
 end;
@@ -142,7 +142,7 @@ begin
     //---
    _mssge_:='in file "'+Node.Get_Target_fullName+'"';
 
-end;
+end;  }
 
 end.
 

@@ -24,7 +24,7 @@ type
     function _getOperationName_:string; override;
   public
     function Is_Possible(const Node:tCopyRAST_node):boolean; override;
-    function doOperation(const Node:tCopyRAST_node):boolean; override;
+    function doOperation(const Node:tCopyRAST_node):integer; override;
   end;
 
 implementation
@@ -41,20 +41,27 @@ begin
     result:=(node is tCopyRAST_node_File_CORE);
 end;
 
-function tLazExt_CopyRAST_operation_copyFiles.doOperation(const Node:tCopyRAST_node):boolean;
+function tLazExt_CopyRAST_operation_copyFiles.doOperation(const Node:tCopyRAST_node):integer;
 begin
-    _mssge_:='"'+Node.Get_Source_fullName+'"'+' -> '+'"'+Node.Get_Target_fullName+'"';
-     result:=NOT FileExistsUTF8(_mssge_);
-     if result then begin
-         result:=CopyFile(Node.Get_Source_fullName,Node.Get_Target_fullName{,[cffOverwriteFile,cffPreserveTime]});
-         if result
-         then _mssge_:=_mssge_+'" COPYED'
-         else _mssge_:='CopyFile('+_mssge_+') ERR';
-     end
-     else begin
-         result:=TRUE;
-        _mssge_:='TARGET File:'+'"'+Node.Get_Target_fullName+'"'+' already present';
-     end;
+    if NOT FileExistsUTF8(Node.Get_Source_fullName) then begin
+        result:=-1;
+       _mssge_:='Source file NOT present:'+'"'+Node.Get_Source_fullName+'"';
+    end
+   else
+    if FileExistsUTF8(Node.Get_Target_fullName) then begin
+        result:=-1;
+       _mssge_:='Target file ALREADY present:'+'"'+Node.Get_Target_fullName+'"';
+    end
+   else
+    if CopyFile(Node.Get_Source_fullName,Node.Get_Target_fullName{,[cffOverwriteFile,cffPreserveTime]})
+    then begin
+        result:=+1;
+       _mssge_:='COPYED';
+    end
+    else begin
+       _mssge_:='COPYED';
+        result:=-1;
+    end;
 end;
 
 end.

@@ -23,19 +23,19 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
   FileUtil, LazFileUtils,
   CodeToolManager, CodeCache;
 
-type
+//type
 
- tLazExt_CopyRAST_operation_PSF_TEST=class(tLazExt_CopyRAST_operation_CORE)
+ {tLazExt_CopyRAST_operation_PSF_TEST=class(tLazExt_CopyRAST_operation_CORE)
   protected
     function _getOperationName_:string; override;
   public
     function Is_Possible(const Node:tCopyRAST_node):boolean; override;
     function doOperation(const Node:tCopyRAST_node):boolean; override;
-  end;
+  end;  }
 
 implementation
 
-function tLazExt_CopyRAST_operation_PSF_TEST._getOperationName_:string;
+{function tLazExt_CopyRAST_operation_PSF_TEST._getOperationName_:string;
 begin
     result:='Pascal source files update UNIT name';
 end;
@@ -97,6 +97,6 @@ begin
      else begin
         _mssge_:='TARGET File:'+'"'+Node.Get_Target_fullName+'"'+' NOT exists';
      end;
-end;
+end; }
 
 end.

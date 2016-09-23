@@ -25,6 +25,10 @@ type
  tLazExt_CopyRAST_operation_CORE=class;
  tLazExt_CopyRAST_operation_CORE_twoStep=class;
 
+
+ f_doOperation=procedure(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE; var exCount,ChCount,ErCount:integer) of object;
+
+
  tCopyRAST_ROOT=class(tCopyRAST_node)
   protected
    _operationList_:TList;
@@ -80,8 +84,13 @@ type
     //function _copyRast_prepare_Target_DirTREE_(const BaseDir:string; const Node:tCopyRAST_node):boolean;
 
   protected
-    function _CopyRAST_operation_secondStep_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE_twoStep):integer;
-    function _CopyRAST_operations_secondStep_    (const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE_twoStep):integer;
+    procedure _CopyRAST_operations_forEach_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE; FNK:f_doOperation; var exCount,ChCount,ErCount:integer);
+
+
+    function _CopyRAST_operation_secondStep_NODE_ (const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE_twoStep):integer;
+    function _CopyRAST_operations_secondStep_     (const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE_twoStep):integer;
+    procedure _CopyRAST_operation_nodeOneStep_doOperation_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE; var exCount,ChCount,ErCount:integer);
+    procedure _CopyRAST_operation_nodeTwoStep_doOperation_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE; var exCount,ChCount,ErCount:integer);
     function _CopyRAST_operation_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):boolean;
     function _CopyRAST_operations_    (const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):integer;
   public
@@ -117,22 +126,28 @@ type
     {$ifdef _DEBUG_}
     function _getMessageOnSKIP_:boolean; virtual;
     {$endIf}
+  protected
+    function _doOperation_EDIT_(const Node:tCopyRAST_node; const nodeFileName:string):integer;
   public
-    function Is_Possible(const Node:tCopyRAST_node):boolean; virtual;
-    function doOperation(const Node:tCopyRAST_node):integer; virtual;
+    function  doOperation_EDIT(const Node:tCopyRAST_node;  const Code:TCodeBuffer; const Tool:TCodeTool):integer; virtual;
+  public
+    procedure Prepare4Use; virtual; //< так названо, просто для выравнивания ;-)
+    function  Is_Possible(const Node:tCopyRAST_node):boolean; virtual;
+    function  doOperation(const Node:tCopyRAST_node):integer; virtual;
+    //---
+    function  makeLogEnds(const Node:tCopyRAST_node):string; virtual;
   public
     constructor Create(const AOwner:tCopyRAST_ROOT);
   end;
 
  tLazExt_CopyRAST_operation_CORE_twoStep=class(tLazExt_CopyRAST_operation_CORE)
   public
+    //    ClearStages
+
     function secondStep_Is_Possible(const Node:tCopyRAST_node):boolean; virtual;
     function secondStep_doOperation(const Node:tCopyRAST_node):integer; virtual;
   end;
 
-
-// step
-// scnd
 
 
 
@@ -846,12 +861,55 @@ begin // глупо и тупо рекурсией
     end;
 end;
 
+
+procedure tCopyRAST_ROOT._CopyRAST_operation_nodeOneStep_doOperation_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE; var exCount,ChCount,ErCount:integer);
+var rslt:integer;
+begin
+    Operation.Prepare4Use;
+    if not Operation.Is_Possible(Node) then begin
+        //inc(exCount);
+        //{$ifdef _DEBUG_}DEBUG('SKIP',Operation.makeLogEnds(Node));{$endIf}
+    end
+    else begin
+        inc(exCount);
+        rslt:=Operation.doOperation(node);
+        if rslt>0 then begin
+            inc(ChCount,rslt);
+            {$ifdef _DEBUG_}DEBUG(' ok ',Operation._mssge_+' <:> '+Operation.makeLogEnds(Node));{$endIf}
+        end
+       else
+        if rslt<0 then begin
+            inc(ErCount,-rslt);
+            {$ifdef _DEBUG_}DEBUG('-ER-',Operation._mssge_+' <:> '+Operation.makeLogEnds(Node));{$endIf}
+        end;
+    end;
+end;
+
+procedure tCopyRAST_ROOT._CopyRAST_operation_nodeTwoStep_doOperation_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE; var exCount,ChCount,ErCount:integer);
+begin
+    Operation.Prepare4Use;
+    if not Operation.Is_Possible(Node) then begin
+        //inc(exCount);
+        //{$ifdef _DEBUG_}DEBUG('SKIP',Operation.makeLogEnds(Node));{$endIf}
+    end
+    else begin
+       _CopyRAST_operations_forEach_(nil,Operation, @_CopyRAST_operation_nodeOneStep_doOperation_, exCount,ChCount,ErCount);
+    end;
+end;
+
+
+
+
+
 function tCopyRAST_ROOT._CopyRAST_operation_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):boolean;
 var res:integer;
 begin
-    if Operation.Is_Possible(Node) then begin
+    //Operation.ClearStages;
+
+
+   { if Operation.Is_Possible(Node) then begin
         result:=TRUE;
-        Operation._mssge_:='NOT implemented';
+        Operation.ClearStages;
         if Operation is tLazExt_CopyRAST_operation_CORE_twoStep then begin
             if Operation.doOperation(node) then begin
                 {$ifdef _DEBUG_}DEBUG(' go ',Operation._get_Message_Text_+' for node^'+node.ClassName);{$endIf}
@@ -877,7 +935,7 @@ begin
             if Operation._getMessageOnSKIP_ then DEBUG('SKIP',Operation._get_Message_Text_+' for node^'+node.ClassName);
         {$endIf}
     end;
-    Application.ProcessMessages;
+    Application.ProcessMessages; }
 end;
 
 function tCopyRAST_ROOT._CopyRAST_operations_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):integer;
@@ -896,10 +954,26 @@ begin // глупо и тупо рекурсией
     end;
 end;
 
+procedure tCopyRAST_ROOT._CopyRAST_operations_forEach_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE; FNK:f_doOperation; var exCount,ChCount,ErCount:integer);
+var tmp:tCopyRAST_node;
+begin // глупо и тупо рекурсией
+    tmp:=node; if not Assigned(tmp) then tmp:=self;
+    //--- себя
+    FNK(tmp,Operation,exCount,ChCount,ErCount);
+    //--- пошли по детям
+    tmp:=tmp.NodeCHLD;
+    while Assigned(tmp) do begin
+       _CopyRAST_operations_forEach_(tmp,Operation,FNK, exCount,ChCount,ErCount);
+        tmp:=tmp.NodeNEXT;
+    end;
+end;
+
+
 
 function tCopyRAST_ROOT.CopyRAST:boolean;
 var TargetDirPATH:string;
 
+    ExCount:integer; //
     ChCount:integer; //
     ErCount:integer;
 
@@ -908,27 +982,25 @@ var i:integer;
   tmp:tLazExt_CopyRAST_operation_CORE;
 begin
    LazarusIDE.SaveSourceEditorChangesToCodeCache(nil);
-
-
-
-
    {$ifdef _DEBUG_}DEBUG('CopyRAST START',DateTimeToStr(NOW));{$endIf}
+   ExCount:=0;
    ChCount:=0;
    ErCount:=0;
    //--- ну ... поехали ...
    for i:=0 to _operationList_.Count-1 do begin
         tmp:=tLazExt_CopyRAST_operation_CORE(_operationList_.Items[i]);
         if Assigned(tmp) then begin
-            {$ifdef _DEBUG_}DEBUG('Operations START: '+tmp._getOperationName_,tmp.ClassName);{$endIf}
-            r:=_CopyRAST_operations_(nil,tmp);
-            if r>0 then
+            //r:=_CopyRAST_operations_(nil,tmp);
+            //if r>0 then inc(ChCount,r)
+            //else inc(ErCount,r);
+
+           _CopyRAST_operations_forEach_(nil,tmp, @_CopyRAST_operation_nodeOneStep_doOperation_, exCount,ChCount,ErCount);
 
 
-            {$ifdef _DEBUG_}DEBUG('Operations -END-: '+tmp._getOperationName_,tmp.ClassName+' '+inttostr(r)+' times was Executed');{$endIf}
         end;
     end;
     //--- вот и приЕхали ...
-    {$ifdef _DEBUG_}DEBUG('CopyRAST -END-',DateTimeToStr(NOW)+' '+'ChCount='+inttostr(ChCount)+' '+'ErCount='+inttostr(ErCount));{$endIf}
+    {$ifdef _DEBUG_}DEBUG('CopyRAST -END-',DateTimeToStr(NOW)+' '+'ExCount='+inttostr(ExCount)+' '+'ChCount='+inttostr(ChCount)+' '+'ErCount='+inttostr(ErCount));{$endIf}
 end;
 
 
@@ -967,6 +1039,13 @@ end;
 
 //------------------------------------------------------------------------------
 
+// [подготовка] примедение инструмента в ИСХОДНОЕ положение
+procedure tLazExt_CopyRAST_operation_CORE.Prepare4Use;//; //< так названо, просто для выравнивания ;-)
+begin
+   _mssge_:='NOT implemented';
+end;
+
+
 // [проверка] Можно ли применить данную операцию к узлу?
 // @prm Node узел, который проверяем
 // @ret true данную операцию применять МОЖНО
@@ -984,6 +1063,54 @@ function tLazExt_CopyRAST_operation_CORE.doOperation(const Node:tCopyRAST_node):
 begin
     result:=0;
 end;
+
+function tLazExt_CopyRAST_operation_CORE.makeLogEnds(const Node:tCopyRAST_node):string;
+begin
+    result:='say '+'"'+self.ClassName+'"'+' for '+'"'+node.Get_Target_fullName+'"';
+end;
+
+function tLazExt_CopyRAST_operation_CORE._doOperation_EDIT_(const Node:tCopyRAST_node; const nodeFileName:string):integer;
+var Code:TCodeBuffer;
+    Tool:TCodeTool;
+begin // взято из http://wiki.freepascal.org/Codetools#Usage
+    // Step 0: проверим ... он вообще есть? ... он не может не есть
+    if NOT FileExistsUTF8(nodeFileName) then begin
+       _mssge_:='TARGET NOT exists:'+'"'+nodeFileName+'"';
+        EXIT(-1);
+    end;
+    // Step 1: load the file and parse it
+    Code:=CodeToolBoss.LoadFile(nodeFileName,true,false);
+    if NOT Assigned(Code) then begin
+       _mssge_:='CodeBuffer NOT received:"'+nodeFileName+'" ';
+        EXIT(-1);
+    end;
+    CodeToolBoss.Explore(Code,Tool,false);
+    if NOT Assigned(Tool) then begin
+       _mssge_:='CodeTool NOT received:"'+nodeFileName+'"';
+        EXIT(-1);
+    end;
+    // Step 2: connect the SourceChangeCache
+    CodeToolBoss.SourceChangeCache.MainScanner:=Tool.Scanner;
+    // Step 3: EDIT
+    result:=doOperation_EDIT(Node,Code,Tool);
+    if result<0 then EXIT;
+    // Step 4: Apply the changes
+    if not CodeToolBoss.SourceChangeCache.EndUpdate then begin
+        _mssge_:='CodeToolBoss.SourceChangeCache.EndUpdate ERROR:"'+nodeFileName+'"';
+         exit(-1);
+    end;
+    // Step 5: SAVE the changes
+    if NOT code.Save then begin
+        _mssge_:='code.Save ERROR:"'+nodeFileName+'" ER';
+         exit(-1);
+    end;
+end;
+
+function tLazExt_CopyRAST_operation_CORE.doOperation_EDIT(const Node:tCopyRAST_node; const Code:TCodeBuffer; const Tool:TCodeTool):integer;
+begin
+    result:=0;
+end;
+
 
 //------------------------------------------------------------------------------
 

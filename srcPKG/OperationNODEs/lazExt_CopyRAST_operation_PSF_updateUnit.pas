@@ -14,6 +14,7 @@ interface
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
   lazExt_CopyRAST_node,  lazExt_CopyRAST_node_ROOT,
   lazExt_CopyRAST_node_File,
+  lazExt_CopyRAST_TEXTs,
   FileUtil, LazFileUtils,  LazIDEIntf,
   CodeToolManager, CodeCache;
 
@@ -22,9 +23,12 @@ type
  tLazExt_CopyRAST_operation_PSF_updateUnit=class(tLazExt_CopyRAST_operation_CORE)
   protected
     function _getOperationName_:string; override;
+  protected
+   _new_UnitName_:string;
   public
     function Is_Possible(const Node:tCopyRAST_node):boolean; override;
-    function doOperation(const Node:tCopyRAST_node):boolean; override;
+    function doOperation(const Node:tCopyRAST_node):integer; override;
+    function doOperation_EDIT(const Node:tCopyRAST_node; const Code:TCodeBuffer; const Tool:TCodeTool):integer; override;
   end;
 
 implementation
@@ -41,63 +45,25 @@ begin
     result:=(node is tCopyRAST_node_File_CORE) and (FilenameIsPascalUnit(node.Get_Target_fullName));
 end;
 
-function tLazExt_CopyRAST_operation_PSF_updateUnit.doOperation(const Node:tCopyRAST_node):boolean;
-var Code:TCodeBuffer;
-    Tool:TCodeTool;
+function tLazExt_CopyRAST_operation_PSF_updateUnit.doOperation(const Node:tCopyRAST_node):integer;
 begin
+   _new_UnitName_:=ExtractFileNameOnly(Node.Get_Target_obj_Name);
+    result:=_doOperation_EDIT_(node,Node.Get_Target_fullName);
+end;
 
-    // save changes in source editor to codetools
-     // LazarusIDE.SaveSourceEditorChangesToCodeCache(-1);
-
-   _mssge_:=Node.Get_Target_fullName;
-    result:=FileExistsUTF8(Node.Get_Target_fullName);
-    if result then begin
-        //--- Загружаем
-        Code:=CodeToolBoss.LoadFile(node.Get_Target_fullName,true,false);
-        result:=Assigned(Code);
-        if not result then _mssge_:='CodeBuffer:"'+_mssge_+'" NOT received';
-        //--- Получаем средство для редактирования
-        if result then begin
-            CodeToolBoss.Explore(Code,Tool,false);
-            result:=Assigned(Tool);
-            if not result then _mssge_:='CodeTool:"'+_mssge_+'" NOT received'
-        end;
-
-        // Step 2: connect the SourceChangeCache
-        //  CodeToolBoss.SourceChangeCache.MainScanner:=Tool.Scanner;
-        //  CodeToolBoss.SourceChangeCache.BeginUpdate;
-
-        //--- Переименовываем
-        if result then begin
-            result:=Tool.RenameSource(ExtractFileNameOnly(Node.Get_Target_obj_Name)+'{asdf}',CodeToolBoss.SourceChangeCache);
-            if not result then _mssge_:='Tool.RenameSource:"'+_mssge_+'" ER';
-        end;
-        // Step 4: Apply the changes
-        //if result then begin
-        //     result:=CodeToolBoss.SourceChangeCache.Apply;
-        //     if not result then _mssge_:='CodeToolBoss.SourceChangeCache.Apply:"'+_mssge_+'" ER'
-        //end;
-
-      //   CodeToolBoss.SourceCache.;
-
-        //--- Сохраняем
-        //if result then begin
-        //    result:=CodeToolBoss.SourceChangeCache.EndUpdate;
-        //    if not result then _mssge_:='code.Save:"'+_mssge_+'" ER'
-        //end;
-        //--- Сохраняем
-        if result then begin
-            result:=code.Save;
-            if not result then _mssge_:='code.Save:"'+_mssge_+'" ER'
-        end;
-        //----------
-        if result then begin
-            _mssge_:='changes APPLIED: unit "'+ExtractFileNameOnly(Node.Get_Source_obj_Name)+'" -> "'+ExtractFileNameOnly(Node.Get_Target_obj_Name)+'" in file "'+Node.Get_Target_fullName+'"';
-        end;
-     end
-     else begin
-        _mssge_:='TARGET File:'+'"'+Node.Get_Target_fullName+'"'+' NOT exists';
-     end;
+function tLazExt_CopyRAST_operation_PSF_updateUnit.doOperation_EDIT(const Node:tCopyRAST_node; const Code:TCodeBuffer; const Tool:TCodeTool):integer;
+var lstName:string;
+begin
+    lstName:=CodeToolBoss.GetSourceName(Code,false);
+    if CodeToolBoss.RenameSource(Code,ExtractFileNameOnly(Node.Get_Target_obj_Name)+CopyRAST_Text_comment_InlineReplace_PAS(lstName))
+    then begin
+      _mssge_:='RenameSource "'+lstName+'"->"'+ExtractFileNameOnly(Node.Get_Target_obj_Name)+'"';
+       result:=+1;
+    end
+    else begin
+      _mssge_:='RenameSource "'+lstName+'"->"'+ExtractFileNameOnly(Node.Get_Target_obj_Name)+'"';
+       result:=+1;
+    end
 end;
 
 end.

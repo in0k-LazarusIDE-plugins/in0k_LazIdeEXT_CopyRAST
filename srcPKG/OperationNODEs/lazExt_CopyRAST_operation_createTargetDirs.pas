@@ -24,7 +24,7 @@ type
     function _getOperationName_:string; override;
   public
     function Is_Possible(const Node:tCopyRAST_node):boolean; override;
-    function doOperation(const Node:tCopyRAST_node):boolean; override;
+    function doOperation(const Node:tCopyRAST_node):integer; override;
   end;
 
 implementation
@@ -41,20 +41,21 @@ begin
     result:=(node is tCopyRAST_node_Folder);
 end;
 
-function tLazExt_CopyRAST_operation_createTargetDirs.doOperation(const Node:tCopyRAST_node):boolean;
+function tLazExt_CopyRAST_operation_createTargetDirs.doOperation(const Node:tCopyRAST_node):integer;
 begin
-    _mssge_:=Node.Get_Target_fullName;
-     result:=NOT DirPathExists(_mssge_);
-     if result then begin
-         result:=ForceDirectory(_mssge_);
-         if result
-         then _mssge_:='TARGET_Path "'+_mssge_+'" CREATED'
-         else _mssge_:='ForceDirectory("'+_mssge_+'") ERR';
-     end
-     else begin
-         result:=TRUE;
-        _mssge_:='TARGET_Path "'+_mssge_+'" already present';
-     end;
+    if DirPathExists(Node.Get_Target_fullName) then begin
+       _mssge_:='TARGET_Path already present';
+        result:=0;
+    end
+   else
+    if ForceDirectory(Node.Get_Target_fullName) then begin
+       _mssge_:='TARGET_Path CREATED';
+        result:=+1;
+    end
+   else begin
+       _mssge_:='ForceDirectory';
+        result:=-1;
+    end;
 end;
 
 end.
