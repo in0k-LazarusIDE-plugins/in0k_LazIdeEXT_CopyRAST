@@ -4,11 +4,20 @@ unit lazExt_CopyRAST;
 
 interface
 
-uses in0k_lazIdeSRC_ExpertCORE,
+{$i in0k_lazIdeSRC_SETTINGs.inc} //< настройки компанента-Расширения.
+//< Можно смело убирать, так как будеть работать только в моей специальной
+//< "системе имен и папок" `in0k_LazExt_..`.
+
+
+{$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
+    {$define _DEBUG_}
+{$endIf}
+
+uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
+     in0k_lazIdeSRC_ExpertCORE,
      {in0k_lazIdeSRC_ExpertCORE,}
      //in0k_lazIdeSRC_ExpertCORE,
      (*in0k_lazIdeSRC_ExpertCORE,*)
-     in0k_lazIdeSRC_DEBUG,
      lazExt_CopyRAST_StrConsts,
      lazExt_CopyRAST_wndPackage,
      lazExt_CopyRAST_wndProject,
@@ -37,6 +46,7 @@ type
   end;
 
 implementation
+uses LCLVersion;
 
 constructor tLazExt_CopyRAST.Create;
 begin
@@ -68,15 +78,39 @@ procedure tLazExt_CopyRAST._ideCommand_copyRast_Package_onClick(Sender:TObject);
 var Pkg:TIDEPackage;
     Frm:TCustomForm;
     wnd:TCustomForm;
+    tmp:tObject;
 begin
-    Pkg:=PackageEditingInterface.GetPackageOfEditorItem(Sender);
-    Frm:=_ide_GetPackageEditorForm(Sender);
+    {$ifdef _DEBUG_}
+        DEBUG('_ideCommand_copyRast_Package_onClick', 'sender is '+sender.ClassName);
+    {$endIf}
+    {%region --- определение способа поиска ----------------------- /fold}
+    // тут возможно в разных версиях Лазаруса придется поступать по разному
+    {$if     (lcl_major=1) and (lcl_minor=4) and (lcl_release=4)}
+        {$WARNING 'NOT Tested in this LazarusIDE version'}
+        tmp:=Sender;
+    {$elseif (lcl_major=1) and (lcl_minor=6) and (lcl_release=0)}
+        tmp:=Sender;
+    {$elseif (lcl_major=1) and (lcl_minor=6) and (lcl_release=2) and (lcl_patch=0)}
+        tmp:=TIDEMenuCommand(sender).MenuItem;
+    {$else} //< способ по умолчанию
+        {$WARNING 'NOT Tested in this LazarusIDE version'}
+        tmp:=Sender;
+    {$endif}
+    {%endregion}
+    Pkg:=PackageEditingInterface.GetPackageOfEditorItem(tmp);
+    Frm:=_ide_GetPackageEditorForm(tmp);
     if Assigned(Pkg)and Assigned(Frm) then begin
         wnd:=IDEWindowCreators.ShowForm(clazExt_CopyRAST_wndPackage_name+'___'+Pkg.Name,true);
         if Assigned(wnd) then begin //< инициализируем окошко
             Twnd_lazExt_CopyRAST_Package(wnd).Init(Pkg,Frm);
         end;
     end
+    {$ifdef _DEBUG_}
+    else begin
+         if not Assigned(Pkg) then DEBUG('_ideCommand_copyRast_Package_onClick', 'FaIL not Assigned(Pkg)');
+         if not Assigned(Frm) then DEBUG('_ideCommand_copyRast_Package_onClick', 'FaIL not Assigned(Frm)');
+    end;
+    {$endIf}
 end;
 
 procedure tLazExt_CopyRAST._crt_IDEWnd_copyRast_Package_(Sender:TObject; aFormName:string; var AForm:TCustomForm; DoDisableAutoSizing:boolean);

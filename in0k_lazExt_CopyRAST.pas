@@ -7,21 +7,25 @@ unit in0k_lazExt_CopyRAST;
 interface
 
 uses
-    REG, in0k_lazIdeSRC_ExpertCORE, lazExt_CopyRAST_wndCORE, lazExt_CopyRAST, 
-    lazExt_CopyRAST_StrConsts, lazExt_CopyRAST_wndPackage, 
-    lazExt_CopyRAST_wndProject, lazExt_CopyRAST_node, 
-    lazExt_CopyRAST_node_File, lazExt_CopyRAST_node_Folder, 
-    lazExt_CopyRAST_node_ROOT, lazExt_CopyRAST_from_IDEProcs, 
-    in0k_lazIdeSRC_DEBUG, lazExt_CopyRAST_node_ROOT_package, 
-    in0k_lazIdeSRC_FuckUpForm_01, lazExt_CopyRAST_node_ROOT_project, 
-    lazExt_CopyRAST_FuckUpForm, lazExt_CopyRAST_operationNode_CORE, 
-    lazExt_CopyRAST_operation_clearTargetDir, 
-    lazExt_CopyRAST_operation_createTargetDirs, 
-    lazExt_CopyRAST_operation_copyFiles, 
-    lazExt_CopyRAST_operation_PSF_updateUnit, 
-    lazExt_CopyRAST_operation_PSF_updateUsesMain, 
-    lazExt_CopyRAST_operation_PSF_TEST, lazExt_CopyRAST_TEXTs, 
-    LazarusPackageIntf;
+          REG, in0k_lazIdeSRC_ExpertCORE, lazExt_CopyRAST_wndCORE, 
+          lazExt_CopyRAST, lazExt_CopyRAST_StrConsts, 
+          lazExt_CopyRAST_wndPackage, lazExt_CopyRAST_wndProject, 
+          lazExt_CopyRAST_node, lazExt_CopyRAST_node_File, 
+          lazExt_CopyRAST_node_Folder, lazExt_CopyRAST_node_ROOT, 
+          lazExt_CopyRAST_from_IDEProcs, in0k_lazIdeSRC_DEBUG, 
+          lazExt_CopyRAST_node_ROOT_package, in0k_lazIdeSRC_FuckUpForm_01, 
+          lazExt_CopyRAST_node_ROOT_project, lazExt_CopyRAST_FuckUpForm, 
+          Processing_CORE, lazExt_CopyRAST_operation_clearTargetDir, 
+          lazExt_CopyRAST_operation_createTargetDirs, 
+          lazExt_CopyRAST_operation_copyFiles, 
+          lazExt_CopyRAST_operation_PSF_updateUnit, 
+          lazExt_CopyRAST_operation_PSF_updateUsesMain, 
+          lazExt_CopyRAST_operation_PSF_TEST, lazExt_CopyRAST_TEXTs, 
+          lazExt_CopyRAST_Node2TEXTs, 
+          lazExt_CopyRAST_operationNode_EXECUTOR_Package, 
+          lazExt_CopyRAST_processingNODE, lazExt_CopyRAST_processingMCHN, 
+          prcNode_clearTargetDir, prcNode_createTargetDir, prcNode_copyFile, 
+          prcNode_PSF_updateUnit, prcNode_PSF_updateUses, LazarusPackageIntf;
 
 implementation
 

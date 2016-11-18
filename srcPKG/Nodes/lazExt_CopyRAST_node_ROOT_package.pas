@@ -8,7 +8,8 @@ uses Classes,
     PackageIntf,
     lazExt_CopyRAST_node_File,
     lazExt_CopyRAST_node_Folder,
-    lazExt_CopyRAST_node_ROOT;
+    lazExt_CopyRAST_node_ROOT,
+    lazExt_CopyRAST_processingMCHN;
 
 type
 
@@ -20,6 +21,8 @@ type
     procedure add_File       (const FullFileName:string; const FileType:TPkgFileType);
   public
     procedure PREAPARE;
+    function CopyRAST:boolean; override;
+
   public
     procedure onCreate_makeUp_operationList(const List:tList); override;
   end;
@@ -76,6 +79,15 @@ begin
     List.Add(tLazExt_CopyRAST_operation_PSF_updateUnit.Create(self));
     //List.Add(tLazExt_CopyRAST_operation_PSF_updateUsesMain.Create(self));
     //List.Add(tLazExt_CopyRAST_operation_PSF_TEST.Create(self));
+end;
+
+
+function tCopyRAST_ROOT_package.CopyRAST:boolean;
+var tmp:tPrcMCHN_Base;
+begin
+    tmp:=tPrcMCHN_Base.Create(self);
+    tmp.EXECUTE;
+    tmp.FREE;
 end;
 
 end.

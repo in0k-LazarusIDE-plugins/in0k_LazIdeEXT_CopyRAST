@@ -12,7 +12,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="26">
+    <Files Count="35">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -87,8 +87,8 @@
         <UnitName Value="lazExt_CopyRAST_FuckUpForm"/>
       </Item18>
       <Item19>
-        <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_operationNode_CORE.pas"/>
-        <UnitName Value="lazExt_CopyRAST_operationNode_CORE"/>
+        <Filename Value="srcPKG\OperationNODEs\Processing_CORE.pas"/>
+        <UnitName Value="Processing_CORE"/>
       </Item19>
       <Item20>
         <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_operation_clearTargetDir.pas"/>
@@ -118,6 +118,42 @@
         <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_TEXTs.pas"/>
         <UnitName Value="lazExt_CopyRAST_TEXTs"/>
       </Item26>
+      <Item27>
+        <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_Node2TEXTs.pas"/>
+        <UnitName Value="lazExt_CopyRAST_Node2TEXTs"/>
+      </Item27>
+      <Item28>
+        <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_operationNode_EXECUTOR_Package.pas"/>
+        <UnitName Value="lazExt_CopyRAST_operationNode_EXECUTOR_Package"/>
+      </Item28>
+      <Item29>
+        <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_processingNODE.pas"/>
+        <UnitName Value="lazExt_CopyRAST_processingNODE"/>
+      </Item29>
+      <Item30>
+        <Filename Value="srcPKG\OperationNODEs\lazExt_CopyRAST_processingMCHN.pas"/>
+        <UnitName Value="lazExt_CopyRAST_processingMCHN"/>
+      </Item30>
+      <Item31>
+        <Filename Value="srcPKG\OperationNODEs\prcNode_clearTargetDir.pas"/>
+        <UnitName Value="prcNode_clearTargetDir"/>
+      </Item31>
+      <Item32>
+        <Filename Value="srcPKG\OperationNODEs\prcNode_createTargetDir.pas"/>
+        <UnitName Value="prcNode_createTargetDir"/>
+      </Item32>
+      <Item33>
+        <Filename Value="srcPKG\OperationNODEs\prcNode_copyFile.pas"/>
+        <UnitName Value="prcNode_copyFile"/>
+      </Item33>
+      <Item34>
+        <Filename Value="srcPKG\OperationNODEs\prcNode_PSF_updateUnit.pas"/>
+        <UnitName Value="prcNode_PSF_updateUnit"/>
+      </Item34>
+      <Item35>
+        <Filename Value="srcPKG\OperationNODEs\prcNode_PSF_updateUses.pas"/>
+        <UnitName Value="prcNode_PSF_updateUses"/>
+      </Item35>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

@@ -94,7 +94,7 @@ type
     function _CopyRAST_operation_NODE_(const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):boolean;
     function _CopyRAST_operations_    (const Node:tCopyRAST_node; const Operation:tLazExt_CopyRAST_operation_CORE):integer;
   public
-    function CopyRAST:boolean;
+    function CopyRAST:boolean; virtual;
 
   public
     procedure onCreate_makeUp_operationList(const List:tList); virtual;
