@@ -8,11 +8,13 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcPKG;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm"/>
+        <IncludeFiles Value="srcPKG"/>
+        <Libraries Value="srcPKG"/>
+        <OtherUnitFiles Value="srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcPKG;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm;srcPKG\OperationNODEs\Processing_ProjPack"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="35">
+    <Files Count="41">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -154,6 +156,30 @@
         <Filename Value="srcPKG\OperationNODEs\prcNode_PSF_updateUses.pas"/>
         <UnitName Value="prcNode_PSF_updateUses"/>
       </Item35>
+      <Item36>
+        <Filename Value="srcPKG\OperationNODEs\prcNode_XML_updateLPK.pas"/>
+        <UnitName Value="prcNode_XML_updateLPK"/>
+      </Item36>
+      <Item37>
+        <Filename Value="srcPKG\OperationNODEs\prcNode_core_srcEdit.pas"/>
+        <UnitName Value="prcNode_core_srcEdit"/>
+      </Item37>
+      <Item38>
+        <Filename Value="srcPKG\OperationNODEs\prcNode_core_xmlEdit.pas"/>
+        <UnitName Value="prcNode_core_xmlEdit"/>
+      </Item38>
+      <Item39>
+        <Filename Value="srcPKG\OperationNODEs\prcNode_XML_updateLPK_v4.pas"/>
+        <UnitName Value="prcNode_XML_updateLPK_v4"/>
+      </Item39>
+      <Item40>
+        <Filename Value="srcPKG\OperationNODEs\Processing_ProjPack\prcNode_XML_CompilerOptions_SearchPaths.pas"/>
+        <UnitName Value="prcNode_XML_CompilerOptions_SearchPaths"/>
+      </Item40>
+      <Item41>
+        <Filename Value="srcPKG\OperationNODEs\Processing_ProjPack\prcNode_XML_Files.pas"/>
+        <UnitName Value="prcNode_XML_Files"/>
+      </Item41>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

@@ -11,6 +11,7 @@ uses Classes,
     prcNode_copyFile,
     prcNode_PSF_updateUnit,
     prcNode_PSF_updateUses,
+    prcNode_XML_updateLPK,
     Processing_CORE;
 
 type
@@ -63,6 +64,7 @@ begin // заполняем некими специальными?
     prcList_Add(tPrcNODE_copyFile);
     prcList_Add(tPrcNODE_PSF_updateUnit);
     prcList_Add(tPrcNODE_PSF_updateUses);
+    prcList_Add(tPrcNODE_xml_updateLpk);
 end;
 
 //------------------------------------------------------------------------------

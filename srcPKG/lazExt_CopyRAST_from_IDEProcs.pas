@@ -8,6 +8,10 @@ uses LazFileUtils,LazFileCache, FileUtil,
   Classes, SysUtils;
 
 
+const cSearchPaths_delimeter=';';
+
+
+
 //!!! начинать с NextStartPos=1
 function GetNextDirectoryInSearchPath(const SearchPath: string; var NextStartPos: integer): string;
 
@@ -29,10 +33,10 @@ begin
   if PathLen>0 then begin
     repeat
       while (NextStartPos<=PathLen)
-      and (SearchPath[NextStartPos] in [';',#0..#32]) do
+      and (SearchPath[NextStartPos] in [cSearchPaths_delimeter,#0..#32]) do
         inc(NextStartPos);
       CurStartPos:=NextStartPos;
-      while (NextStartPos<=PathLen) and (SearchPath[NextStartPos]<>';') do
+      while (NextStartPos<=PathLen) and (SearchPath[NextStartPos]<>cSearchPaths_delimeter) do
         inc(NextStartPos);
       Result:=TrimFilename(copy(SearchPath,CurStartPos,NextStartPos-CurStartPos));
       if Result<>'' then exit;

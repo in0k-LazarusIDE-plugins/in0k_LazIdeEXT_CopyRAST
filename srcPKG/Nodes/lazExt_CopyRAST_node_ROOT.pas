@@ -304,7 +304,7 @@ begin
     result:=nil;
     prnt:=_get_BaseDIR_;
     if not Assigned(prnt) then EXIT; //< это КАСЯК, обработать как-то надо?
-    if 0=CompareFilenames(PathFLDR+PathDelim,prnt.DirPATH) then begin
+    if (PathFLDR='')or(0=CompareFilenames(PathFLDR+PathDelim,prnt.DirPATH)) then begin
         result:=prnt;
     end
     else begin

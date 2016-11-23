@@ -37,8 +37,19 @@ type
   public
     //function _clc_Source_dir_Name_:string;
   public
+//             get_absolute
+//                 relative
+
+    //Name
+    //Path
+
+
+
+
     function Get_Source_obj_Name:string; virtual;
+
     function Get_Source_dir_Name:string; virtual;
+
     function Get_Target_obj_Name:string; virtual;
     function Get_Target_dir_Name:string; virtual;
     //---

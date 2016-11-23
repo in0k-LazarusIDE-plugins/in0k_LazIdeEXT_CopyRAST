@@ -33,6 +33,7 @@ type
    _PARNT_:tOperationNode_CORE;
    _eNODE_:tCopyRAST_node;
     function _get_toolHigher_:tOperationNode_CORE;
+    function _get_rootHigher_:tCopyRAST_ROOT;
   protected
     procedure doEvent_onNoNeed(const message:string);
     procedure doEvent_onPASSED(const message:string);
@@ -116,6 +117,14 @@ function tOperationNode_CORE._get_toolHigher_:tOperationNode_CORE;
 begin
     result:=self;
     while Assigned(result._PARNT_) do result:=result._PARNT_;
+end;
+
+function tOperationNode_CORE._get_rootHigher_:tCopyRAST_ROOT;
+var tmp:tCopyRAST_node;
+begin
+    result:=nil;
+    tmp:=_eNODE_;
+    while (Assigned(tmp))and(not (tmp is tCopyRAST_ROOT)) do tmp:=tmp.NodePRNT;
 end;
 
 //------------------------------------------------------------------------------

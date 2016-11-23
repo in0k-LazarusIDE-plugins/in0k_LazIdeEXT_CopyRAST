@@ -25,7 +25,10 @@ uses
           lazExt_CopyRAST_operationNode_EXECUTOR_Package, 
           lazExt_CopyRAST_processingNODE, lazExt_CopyRAST_processingMCHN, 
           prcNode_clearTargetDir, prcNode_createTargetDir, prcNode_copyFile, 
-          prcNode_PSF_updateUnit, prcNode_PSF_updateUses, LazarusPackageIntf;
+          prcNode_PSF_updateUnit, prcNode_PSF_updateUses, 
+          prcNode_XML_updateLPK, prcNode_core_srcEdit, prcNode_core_xmlEdit, 
+          prcNode_XML_updateLPK_v4, prcNode_XML_CompilerOptions_SearchPaths, 
+          prcNode_XML_Files, LazarusPackageIntf;
 
 implementation
 

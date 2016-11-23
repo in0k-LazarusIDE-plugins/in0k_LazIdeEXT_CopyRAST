@@ -4,7 +4,18 @@ unit lazExt_CopyRAST_wndPackage;
 
 interface
 
-uses lazExt_CopyRAST_wndCORE,
+{$i in0k_lazIdeSRC_SETTINGs.inc} //< настройки компанента-Расширения.
+//< Можно смело убирать, так как будеть работать только в моей специальной
+//< "системе имен и папок" `in0k_LazExt_..`.
+
+{$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
+    {$define _DEBUG_}
+{$endIf}
+
+uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
+        in0k_lazIdeSRC_DEBUG,
+     {$endIf}
+    lazExt_CopyRAST_wndCORE,
      lazExt_CopyRAST_node_ROOT,
      lazExt_CopyRAST_node_ROOT_package,
 
@@ -70,7 +81,23 @@ begin
         root.add_PackageFile(_package_.Filename);
         //-------------------------------------
         for i:=0 to _package_.FileCount-1 do begin
-            with _package_.Files[i] do root.add_File(GetFullFilename,FileType);
+            with _package_.Files[i] do begin
+                root.add_File(GetShortFilename(false),FileType);
+                //root.add_File(GetFullFilename,FileType);
+                //{$ifdef _DEBUG_}
+                    //DEBUG(GetFullFilename);
+                    //DEBUG(GetShortFilename(false));
+                    //DEBUG(GetFileOwnerName);
+                    //DEBUG(Filename);
+                    //DEBUG(Filename);
+                    //function GetFullFilename: string; virtual; abstract; // if no path, the file was not saved yet
+                    //function GetShortFilename(UseUp: boolean): string; virtual; abstract;
+                    //function GetFileOwner: TObject; virtual; abstract;
+                    //function GetFileOwnerName: string; virtual; abstract;
+
+
+                    //{$endIf}
+			end;
         end;
         //-------------------------------------
         root.PREAPARE;

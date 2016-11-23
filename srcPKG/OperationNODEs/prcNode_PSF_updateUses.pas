@@ -21,23 +21,24 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
     lazExt_CopyRAST_node,
     lazExt_CopyRAST_node_File,
     lazExt_CopyRAST_processingNODE,
+    prcNode_core_srcEdit,
     FileUtil, LazFileUtils;
 
 type
 
- tPrcNODE_PSF_updateUses=class(tPrcNODE_Edit)
+ tPrcNODE_PSF_updateUses=class(tPrcNODE_core_srcEdit)
   public
     function Is_Possible:boolean; override;
     function doOperation:boolean; override;
   end;
 
- tPrcNODE_PSF_updateUses_D0=class(tPrcNODE_EditDO)
+ tPrcNODE_PSF_updateUses_D0=class(tPrcNODE_core_srcEditDO)
   public
     function Is_Possible:boolean; override;
     function doOperation:boolean; override;
   end;
 
- tPrcNODE_PSF_updateUses_D1=class(tPrcNODE_EditDO)
+ tPrcNODE_PSF_updateUses_D1=class(tPrcNODE_core_srcEditDO)
   public
     function Is_Possible:boolean; override;
     function doOperation:boolean; override;

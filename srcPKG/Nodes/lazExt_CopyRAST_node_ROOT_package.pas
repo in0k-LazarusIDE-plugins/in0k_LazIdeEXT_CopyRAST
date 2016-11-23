@@ -36,6 +36,7 @@ uses lazExt_CopyRAST_operation_clearTargetDir,
      lazExt_CopyRAST_operation_copyFiles,
      lazExt_CopyRAST_operation_PSF_updateUnit,
      lazExt_CopyRAST_operation_PSF_updateUsesMain,
+     prcNode_core_xmlEdit,
      lazExt_CopyRAST_operation_PSF_TEST;
 
 
