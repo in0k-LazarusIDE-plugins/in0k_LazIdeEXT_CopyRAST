@@ -28,7 +28,7 @@ uses
           prcNode_PSF_updateUnit, prcNode_PSF_updateUses, 
           prcNode_XML_updateLPK, prcNode_core_srcEdit, prcNode_core_xmlEdit, 
           prcNode_XML_updateLPK_v4, prcNode_XML_CompilerOptions_SearchPaths, 
-          prcNode_XML_Files, LazarusPackageIntf;
+          prcNode_XML_Files, prcNode_PSF_updateInclude, LazarusPackageIntf;
 
 implementation
 

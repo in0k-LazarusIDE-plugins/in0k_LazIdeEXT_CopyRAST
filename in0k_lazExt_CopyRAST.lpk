@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="41">
+    <Files Count="42">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -180,6 +180,10 @@
         <Filename Value="srcPKG\OperationNODEs\Processing_ProjPack\prcNode_XML_Files.pas"/>
         <UnitName Value="prcNode_XML_Files"/>
       </Item41>
+      <Item42>
+        <Filename Value="srcPKG\OperationNODEs\prcNode_PSF_updateInclude.pas"/>
+        <UnitName Value="prcNode_PSF_updateInclude"/>
+      </Item42>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

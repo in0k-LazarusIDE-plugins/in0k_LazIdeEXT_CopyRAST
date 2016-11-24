@@ -15,6 +15,7 @@ interface
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
         in0k_lazIdeSRC_DEBUG,
      {$endIf}
+    FileUtil,    LazFileUtils, sysutils,
     lazExt_CopyRAST_from_IDEProcs,
     lazExt_CopyRAST_node_File,
     prcNode_XML_updateLPK;
@@ -80,10 +81,10 @@ end;
 function tPrcNODE__DO__.doOperation:boolean;
 begin
     result:=true;
-    {$ifdef _DEBUG_}DEBUG(tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._FileName_+' '+node4Execut.NodeTXT+' ');{$endIf}
+    //{$ifdef _DEBUG_}DEBUG(tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._FileName_+' '+node4Execut.NodeTXT+' ');{$endIf}
     if node4Execut.NodeTXT=tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._FileName_ then begin
-        tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._FileName_:=tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._FileName_+'CR';
-        tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._UnitName_:=tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._UnitName_+'CR';
+        tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._FileName_:=AppendPathDelim(ExtractFileDir(tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._FileName_))+node4Execut.Get_Target_obj_Name;
+        tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._UnitName_:=ExtractFileNameWithoutExt(node4Execut.Get_Target_obj_Name);
         //---
         result:=FALSE; //< ВСЕ, нашли ... дальше идти по дереву НЕ надо
 	end;
@@ -115,6 +116,8 @@ begin
        _UnitName_:=tmp_UnitName;
         EXECUTE_4TREE(tPrcNODE__DO__);
         if (_FileName_<>tmp_FileName)or(_UnitName_<>tmp_UnitName) then begin
+            XMLConfg.SetDeleteValue(cnfgPTH+'/'+'Filename'+'/'+'Value',_FileName_,'');
+            XMLConfg.SetDeleteValue(cnfgPTH+'/'+'UnitName'+'/'+'Value',_UnitName_,'');
             doEvent_onPASSED('replace path "'+cnfgPTH+'"');
 		end;
 	end;

@@ -33,6 +33,7 @@ type
   protected
     property CodeBuff:TCodeBuffer read _get_CodeBuff_;
     property CodeTool:TCodeTool   read _get_CodeTool_;
+    function CleanPos_in_CodeBuff(const CleanPos:integer):boolean;
   end;
 
 implementation
@@ -110,6 +111,12 @@ begin
     if Assigned(tmp) then result:=tmp.CodeTool;
 end;
 
+//------------------------------------------------------------------------------
+
+function tPrcNODE_core_srcEditDO.CleanPos_in_CodeBuff(const CleanPos:integer):boolean;
+begin
+    with CodeBuff do result:=(1<=CleanPos)and(CleanPos<=SourceLength) ;
+end;
 
 end.
 
