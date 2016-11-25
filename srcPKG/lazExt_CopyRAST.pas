@@ -9,20 +9,21 @@ interface
 //< "системе имен и папок" `in0k_LazExt_..`.
 
 
-{$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
-    {$define _DEBUG_}
-{$endIf}
-
-uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
-     in0k_lazIdeSRC_ExpertCORE,
+uses in0k_lazIdeSRC_ExpertCORE,
      {in0k_lazIdeSRC_ExpertCORE,}
      //in0k_lazIdeSRC_ExpertCORE,
      (*in0k_lazIdeSRC_ExpertCORE,*)
      lazExt_CopyRAST_StrConsts,
-     lazExt_CopyRAST_wndPackage,
+     {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
+     lazExt_CopyRAST_wndPackage in 'D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcPKG\Forms',
      lazExt_CopyRAST_wndProject,
   MenuIntf, IDECommands, IDEWindowIntf, PackageIntf, LazIDEIntf, ProjectIntf,
   Classes, Controls, Forms, Menus;
+
+{$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
+    {$define _DEBUG_}
+{$endIf}
+
 
 type
 

@@ -40,7 +40,6 @@ type
    _includeFileNode_:tCopyRAST_node;
   protected
     function _processing_(const ACleanPos: integer; var FilenameStartPos, FileNameEndPos, CommentStart, CommentEnd: integer):integer;
-
   public
     function Is_Possible:boolean; override;
     function doOperation:boolean; override;
