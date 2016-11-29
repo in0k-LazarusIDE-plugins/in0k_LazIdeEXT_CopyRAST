@@ -480,7 +480,7 @@ begin
         if (tmp is tCopyRAST_node_FILE) then begin
             if pftLFM<>tCopyRAST_node_FILE(tmp).FileTYPE then begin
                 if (NOT _tst_FileXXX_haveLFM_(tCopyRAST_node_FILE(tmp)))and
-                   (_tst_FileSRC_lfmHAVE_(tCopyRAST_node_FILE(tmp).NodeTXT))
+                   (_tst_FileSRC_lfmHAVE_(tCopyRAST_node_FILE(tmp).Get_Source_fullName))
                 then begin
                     lll:=tCopyRAST_node_FILE.Create(FilenameIsPascalSource_getRsrc_Name(tmp.NodeTXT),pftLFM);
                    _add_FileXXX_(lll);
