@@ -313,7 +313,7 @@ begin
     //---
     tmp:=tmp.NodeCHLD;
     while Assigned(tmp) do begin
-        itm:=ItemsTreeView.Items.AddChildObject(TreeNode,tmp.Caption,tmp);
+        itm:=ItemsTreeView.Items.AddChildObject(TreeNode,tmp.src_NodeTXT,tmp);
        _ITV_SetUp_nodeImage_(itm);
        _ITV_SetUp_(itm);
         itm.Expanded:=TRUE;
@@ -326,7 +326,7 @@ end;
 procedure Twnd_lazExt_CopyRAST_CORE.ITV_SetUp(const ROOT:tCopyRAST_ROOT);
 var tmp:tTreeNode;
 begin
-    tmp:=ItemsTreeView.Items.AddChildObjectFirst(nil,ROOT.Caption,ROOT);
+    tmp:=ItemsTreeView.Items.AddChildObjectFirst(nil,ROOT.src_NodeTXT,ROOT);
    _ITV_SetUp_(tmp);
 end;
 

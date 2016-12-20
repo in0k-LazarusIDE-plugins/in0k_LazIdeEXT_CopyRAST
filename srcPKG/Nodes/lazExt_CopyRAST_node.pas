@@ -15,22 +15,26 @@ type
    _next_:tCopyRAST_node;
    _chld_:tCopyRAST_node;
   protected
-   _nodeText_:string;
-    function _getCaption_:string; virtual;
-  public
-    property Caption:string read _getCaption_; // заголовок для узла
-    property NodeTXT:string read _nodeText_;   // ПОЛНЫЙ текст
-  public
-    property NodePRNT:tCopyRAST_node read _prnt_;
-    property NodeNEXT:tCopyRAST_node read _next_;
-    property NodeCHLD:tCopyRAST_node read _chld_;
-  protected
     function  _chldFrst_:tCopyRAST_node;
     function  _chldLast_:tCopyRAST_node;
   protected
     procedure _ins_nodeAfte_(const node:tCopyRAST_node);
     procedure _ins_ChldFrst_(const node:tCopyRAST_node);
     procedure _ins_ChldLast_(const node:tCopyRAST_node);
+  public
+    property NodePRNT:tCopyRAST_node read _prnt_;
+    property NodeNEXT:tCopyRAST_node read _next_;
+    property NodeCHLD:tCopyRAST_node read _chld_;
+
+  protected
+   _source_Text_:string;
+    function _src_getNodeTXT_:string; virtual;
+    function _src_getHintTXT_:string; virtual;
+  public
+    property source_Text:string read _source_Text_;    // ПОЛНЫЙ текст
+    property src_NodeTXT:string read _src_getNodeTXT_; // заголовок для узла
+    property src_HintTXT:string read _src_getNodeTXT_; // заголовок для узла
+
   public
     constructor Create(const nodeText:string);
     destructor DESTROY; override;
@@ -42,9 +46,6 @@ type
 
     //Name
     //Path
-
-
-
 
     function Get_Source_obj_Name:string; virtual;
 
@@ -61,7 +62,7 @@ implementation
 
 constructor tCopyRAST_node.Create(const nodeText:string);
 begin
-   _nodeText_:=nodeText;
+   _source_Text_:=nodeText;
    _prnt_    :=nil;
    _next_    :=nil;
    _chld_    :=nil;
@@ -69,7 +70,7 @@ end;
 
 destructor tCopyRAST_node.DESTROY;
 begin
-   _nodeText_:=''; //< наследие мифов
+   _source_Text_:=''; //< наследие мифов
    _prnt_    :=nil;
    _next_    :=nil;
    _chld_    :=nil;
@@ -77,9 +78,14 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tCopyRAST_node._getCaption_:string;
+function tCopyRAST_node._src_getNodeTXT_:string;
 begin
-    result:=_nodeText_;
+    result:=_source_Text_;
+end;
+
+function tCopyRAST_node._src_getHintTXT_:string;
+begin
+    result:='';
 end;
 
 //------------------------------------------------------------------------------

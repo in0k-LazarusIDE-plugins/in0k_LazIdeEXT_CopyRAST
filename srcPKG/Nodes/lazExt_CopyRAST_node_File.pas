@@ -16,7 +16,7 @@ type
    _fileType_:TPkgFileType;
    _newPATH_:string;
   protected
-    function _getCaption_ :string; override;
+    function _src_getNodeTXT_ :string; override;
     function _getFileNAME_:string;
     function _getFilePATH_:string;
     function _get_Old_PATH_:string;
@@ -66,27 +66,27 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tCopyRAST_node_File_CORE._getCaption_:string;
+function tCopyRAST_node_File_CORE._src_getNodeTXT_:string;
 begin
     result:=_getFileNAME_;
-    //if FilenameIsPascalSource8HasResources(_nodeText_) then result:=result+' R'
+    //if FilenameIsPascalSource8HasResources(_source_Text_) then result:=result+' R'
 end;
 
 function tCopyRAST_node_File_CORE._getFileNAME_:string;
 begin
-    result:=ExtractFileName(_nodeText_);
+    result:=ExtractFileName(_source_Text_);
 end;
 
 function tCopyRAST_node_File_CORE._getFilePATH_:string;
 begin
-    result:=ExtractFileDir(_nodeText_);
+    result:=ExtractFileDir(_source_Text_);
 end;
 
 //------------------------------------------------------------------------------
 
 function tCopyRAST_node_File_CORE._get_Old_PATH_:string;
 begin
-    result:=_nodeText_;
+    result:=_source_Text_;
 end;
 
 function tCopyRAST_node_File_CORE._get_New_PATH_:string;

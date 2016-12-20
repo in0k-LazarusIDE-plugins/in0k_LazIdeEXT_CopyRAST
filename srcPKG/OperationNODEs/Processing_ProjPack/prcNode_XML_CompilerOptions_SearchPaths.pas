@@ -99,14 +99,14 @@ end;
 
 function tPrcNODE__DO__.doOperation:boolean;
 begin
-    if prntTOOL._tmpDirNAME_=node4Execut.NodeTXT then begin
+    if prntTOOL._tmpDirNAME_=node4Execut.source_Text then begin
         // запосним что на замену
         {TODO: ОБЯЗАТЕЛЬНО надо делать}
         //prntTOOL._tmpDirNAME_:=node4Execut.Get_Target_fullName;
         // для отчета, изменилось или нет
-        if node4Execut.NodeTXT<>node4Execut.Get_Target_fullName
-        then doEvent_onPASSED('Rename DIR "'+node4Execut.NodeTXT+'"->"'+prntTOOL._tmpDirNAME_+'"')
-        else doEvent_onNoNeed('Search DIR "'+node4Execut.NodeTXT+'" NOT changed');
+        if node4Execut.source_Text<>node4Execut.Get_Target_fullName
+        then doEvent_onPASSED('Rename DIR "'+node4Execut.source_Text+'"->"'+prntTOOL._tmpDirNAME_+'"')
+        else doEvent_onNoNeed('Search DIR "'+node4Execut.source_Text+'" NOT changed');
 	end;
 end;
 

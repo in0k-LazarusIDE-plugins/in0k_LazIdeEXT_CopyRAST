@@ -82,7 +82,7 @@ function tPrcNODE__DO__.doOperation:boolean;
 begin
     result:=true;
     //{$ifdef _DEBUG_}DEBUG(tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._FileName_+' '+node4Execut.NodeTXT+' ');{$endIf}
-    if node4Execut.NodeTXT=tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._FileName_ then begin
+    if node4Execut.source_Text=tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._FileName_ then begin
         tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._FileName_:=AppendPathDelim(ExtractFileDir(tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._FileName_))+node4Execut.Get_Target_obj_Name;
         tPrcNODE_xmlPrjPkg_Files_DO(self.Tool_Parent)._UnitName_:=ExtractFileNameWithoutExt(node4Execut.Get_Target_obj_Name);
         //---

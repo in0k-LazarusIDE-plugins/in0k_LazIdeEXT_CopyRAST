@@ -19,11 +19,11 @@ type
    _Paths_:sCopyRAST_node_SrchPath;
   protected
     function _isABSOLUTE_:boolean;
-    function _getCaption_:string; override;
+    function _src_getNodeTXT_:string; override;
     function _getDirNAME_:string;
   public
     property DirNAME:string read _getDirNAME_;
-    property DirPATH:string read _nodeText_;
+    property DirPATH:string read _source_Text_;
     property inPATHs:sCopyRAST_node_SrchPath read _Paths_;
   public
     constructor Create(const Path:string);
@@ -113,7 +113,7 @@ end;}
 
 //------------------------------------------------------------------------------
 
-function tCopyRAST_node_Folder._getCaption_:string;
+function tCopyRAST_node_Folder._src_getNodeTXT_:string;
 begin
     result:=_getDirNAME_;
     //---
@@ -122,13 +122,13 @@ end;
 
 function tCopyRAST_node_Folder._getDirNAME_:string;
 begin
-    if _isABSOLUTE_ then result:=ExtractFilePath(_nodeText_)
-    else result:=ExtractFileName(_nodeText_);//   ExtractFileDir(_nodeText_);
+    if _isABSOLUTE_ then result:=ExtractFilePath(_source_Text_)
+    else result:=ExtractFileName(_source_Text_);//   ExtractFileDir(_source_Text_);
 end;
 
 function tCopyRAST_node_Folder._isABSOLUTE_:boolean;
 begin
-    result:=FilenameIsAbsolute(_nodeText_);
+    result:=FilenameIsAbsolute(_source_Text_);
 end;
 
 procedure tCopyRAST_node_Folder.ins_ChldLast(const node:tCopyRAST_node);
@@ -147,12 +147,12 @@ end;
 
 function tCopyRAST_node_BaseDIR.Get_Source_obj_Name:string;
 begin
-    result:=ExtractFileName(ExtractFileDir(_nodeText_));
+    result:=ExtractFileName(ExtractFileDir(_source_Text_));
 end;
 
 function tCopyRAST_node_BaseDIR.Get_Source_dir_Name:string;
 begin
-    result:=ExtractFileDir(ExtractFileDir(_nodeText_));
+    result:=ExtractFileDir(ExtractFileDir(_source_Text_));
 end;
 
 function tCopyRAST_node_BaseDIR.Get_Target_obj_Name:string;
@@ -169,7 +169,7 @@ end;
 
 //----
 
-{function tCopyRAST_node_BaseDIR._getCaption_:string;
+{function tCopyRAST_node_BaseDIR._src_getNodeTXT_:string;
 begin
    result:=_nodeText_;
 end;}

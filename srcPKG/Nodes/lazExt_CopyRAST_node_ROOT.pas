@@ -188,7 +188,7 @@ implementation
 
 constructor tCopyRAST_ROOT.Create(const nodeText:string);
 begin
-    inherited Create(NodeTXT);
+    inherited Create(source_Text);
    _operationList_:=TList.Create;
     onCreate_makeUp_operationList(_operationList_);
 end;
@@ -234,7 +234,7 @@ begin
         tmp:=tCopyRAST_node_BaseDIR.Create(BaseDIR);
        _ins_ChldFrst_(tmp);
     end
-    else tCopyRAST_ROOT(tmp)._nodeText_:=BaseDIR;
+    else tCopyRAST_ROOT(tmp)._source_Text_:=BaseDIR;
 end;
 
 function tCopyRAST_ROOT._get_BaseDIR_PATH_:string;
@@ -242,7 +242,7 @@ var tmp:tCopyRAST_node_BaseDIR;
 begin
     tmp:=_get_BaseDIR_;
     if Assigned(tmp) then begin
-        result:=tmp.NodeTXT;
+        result:=tmp.source_Text;
     end;
 end;
 
@@ -414,7 +414,7 @@ begin
             prnt:=tCopyRAST_node_Folder(_fnd_fileSRC_(prnt,ExtractFileNameWithoutExt(FileXXX.FileNAME)));
             if NOT _tst_FileXXX_haveLFM_(tCopyRAST_node_FILE(tCopyRAST_node(prnt))) then begin
                 prnt.ins_ChldLast(FileXXX);
-                {$ifdef _DEBUG_}DEBUG('_add_FileXXX_','{'+'LFM'+'}'+FileXXX.NodeTXT);{$endIf}
+                {$ifdef _DEBUG_}DEBUG('_add_FileXXX_','{'+'LFM'+'}'+FileXXX.source_Text);{$endIf}
             end
             else begin
                 {todo: чет надо поделать}
@@ -425,7 +425,7 @@ begin
         end
         else begin
             prnt.ins_ChldLast(FileXXX);
-            {$ifdef _DEBUG_}DEBUG('_add_FileXXX_','{'+'}'+FileXXX.NodeTXT);{$endIf}
+            {$ifdef _DEBUG_}DEBUG('_add_FileXXX_','{'+'}'+FileXXX.source_Text);{$endIf}
         end;
     end;
 end;
@@ -482,7 +482,7 @@ begin
                 if (NOT _tst_FileXXX_haveLFM_(tCopyRAST_node_FILE(tmp)))and
                    (_tst_FileSRC_lfmHAVE_(tCopyRAST_node_FILE(tmp).Get_Source_fullName))
                 then begin
-                    lll:=tCopyRAST_node_FILE.Create(FilenameIsPascalSource_getRsrc_Name(tmp.NodeTXT),pftLFM);
+                    lll:=tCopyRAST_node_FILE.Create(FilenameIsPascalSource_getRsrc_Name(tmp.source_Text),pftLFM);
                    _add_FileXXX_(lll);
                 end;
             end;
@@ -533,7 +533,7 @@ var
   var MainUsesSection,ImplementationUsesSection:TStrings;
 begin
       // make sure the filename is trimmed and contains a full path
-      ExpandedFilename:=CleanAndExpandFilename(FileXXX.NodeTXT);
+      ExpandedFilename:=CleanAndExpandFilename(FileXXX.source_Text);
       // save changes in source editor to codetools
       LazarusIDE.SaveSourceEditorChangesToCodeCache(nil);
 
@@ -546,10 +546,10 @@ begin
       if CodeToolBoss.FindUsedUnitFiles(CodeBuf, MainUsesSection,ImplementationUsesSection) then begin
          _prepare_fileUSE_fnd8add_(TStringList(MainUsesSection));
          _prepare_fileUSE_fnd8add_(TStringList(ImplementationUsesSection));
-          //ShowMessage('file:'+LineEnding+FileXXX.NodeTXT+LineEnding+'inMAIN:'+LineEnding+MainUsesSection.Text+LineEnding+'inIMPL:'+LineEnding+ImplementationUsesSection.Text);
+          //ShowMessage('file:'+LineEnding+FileXXX.source_Text+LineEnding+'inMAIN:'+LineEnding+MainUsesSection.Text+LineEnding+'inIMPL:'+LineEnding+ImplementationUsesSection.Text);
       end
       else begin
-          //ShowMessage('file:'+LineEnding+FileXXX.NodeTXT+LineEnding+'Uses NOT FOUND');
+          //ShowMessage('file:'+LineEnding+FileXXX.source_Text+LineEnding+'Uses NOT FOUND');
       end;
 
       MainUsesSection          .FREE;
@@ -589,7 +589,7 @@ begin
     // save changes in source editor to codetools
     LazarusIDE.SaveSourceEditorChangesToCodeCache(nil);
     // load the file
-    result:=CodeToolBoss.LoadFile(node.NodeTXT,false,false);
+    result:=CodeToolBoss.LoadFile(node.source_Text,false,false);
 end;
 
 //------------------------------------------------------------------------------
@@ -618,7 +618,7 @@ end;
 
 function tCopyRAST_ROOT._copyRast_getOldPATH_(const node:tCopyRAST_node_FILE):string;
 begin
-    result:=node.NodeTXT;
+    result:=node.source_Text;
 end;
 
 function tCopyRAST_ROOT._copyRast_getNewPATH_(const node:tCopyRAST_node_FILE; const BaseDir:string):string;
