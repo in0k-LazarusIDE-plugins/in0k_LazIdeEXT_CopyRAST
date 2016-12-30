@@ -9,7 +9,6 @@ uses lazExt_CopyRAST_node, lazExt_CopyRAST_StrConsts,
 
 type
 
-
  eCopyRAST_node_SrchPath=(CopyRAST_node_SrchPTH__Fu,CopyRAST_node_SrchPTH__Fi,CopyRAST_node_SrchPTH__Fl);
  sCopyRAST_node_SrchPath=set of eCopyRAST_node_SrchPath;
 
@@ -63,20 +62,9 @@ type
  tCopyRAST_node_PathPKG=class(tCopyRAST_node_PathDIR)
   end;
 
-function eCopyRAST_node_SrchPath__2__text(const item:eCopyRAST_node_SrchPath):string;
 
 
 implementation
-
-function eCopyRAST_node_SrchPath__2__text(const item:eCopyRAST_node_SrchPath):string;
-begin
-    case item of
-        CopyRAST_node_SrchPTH__Fu: result:='Fu';
-        CopyRAST_node_SrchPTH__Fi: result:='Fi';
-        CopyRAST_node_SrchPTH__Fl: result:='Fl';
-    end;
-end;
-
 
 constructor tCopyRAST_node_Folder.Create(const Path:string);
 begin

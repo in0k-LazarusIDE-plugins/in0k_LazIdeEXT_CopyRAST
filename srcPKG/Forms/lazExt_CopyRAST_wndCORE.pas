@@ -13,7 +13,9 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
 
      IDEImagesIntf, PackageIntf,
      lazExt_CopyRAST_FuckUpForm,
+     in0k_lazExt_CopyRAST_cmpTree,
 
+     srcTree_item_coreROOT,
 
     lazExt_CopyRAST_node_ROOT,
     lazExt_CopyRAST_node_ROOT_package,
@@ -30,10 +32,12 @@ type
  Twnd_lazExt_CopyRAST_CORE = class(TForm)
     Button1: TButton;
     Button2: TButton;
+		Button3: TButton;
     ItemsTreeView: TTreeView;
     Panel1: TPanel;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+		procedure Button3Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -63,6 +67,7 @@ type
     //function  ITV_add_BasePath(const Path:string):TTreeNode;
     //function  ITV_add_Pkg_File(const Prnt:TTreeNode; const fileName:string):TTreeNode;
     //procedure ITV_add_Pkg_Path(const Prnt:TTreeNode; const PathType:eCopyRAST_node_Path; const Paths:string);
+    cmpCopyRAST_Tree:tCmp_CopyRAST_Tree;
   public
     constructor Create(AOwner:TComponent); override;
     destructor DESTROY; override;
@@ -117,10 +122,20 @@ begin
    _parentOBJ_:=nil;
    _parentFRM_:=nil;
    _cpRastObj_:=nil;
+    //---
+    cmpCopyRAST_Tree:=tCmp_CopyRAST_Tree.Create(SELF);
+    with cmpCopyRAST_Tree do begin
+       Parent:=self;
+       Align:=alClient;
+  	end;
+    //cmpCopyRAST_Tree.Height:=self.Height div 2;
 end;
 
 destructor Twnd_lazExt_CopyRAST_CORE.DESTROY;
 begin
+    //cmpCopyRAST_Tree.Root.FREE;
+    //---
+
    _copyRastObj_DST_;
     //---
    _FuckUpForm_.ParentForm_CLEAR; //< после этого, можно спокойно уничтожаться
@@ -159,6 +174,10 @@ begin
     ImageIndexBinary          := IDEImages.LoadImage(16, 'pkg_binary');
     ImageIndexConflict        := IDEImages.LoadImage(16, 'pkg_conflict');
     ImageIndexDirectory       := IDEImages.LoadImage(16, 'pkg_files');
+    //---
+
+
+
 end;
 
 procedure Twnd_lazExt_CopyRAST_CORE.FormClose(Sender: TObject;
@@ -170,6 +189,8 @@ end;
 
 procedure Twnd_lazExt_CopyRAST_CORE.FormDestroy(Sender: TObject);
 begin
+    //---
+    inherited;
 end;
 
 //------------------------------------------------------------------------------
@@ -182,6 +203,15 @@ end;
 procedure Twnd_lazExt_CopyRAST_CORE.Button2Click(Sender: TObject);
 begin
     _cpRastObj_.CopyRAST;
+end;
+
+procedure Twnd_lazExt_CopyRAST_CORE.Button3Click(Sender: TObject);
+//var tmp:tSrcTree_ROOT;
+begin
+  //  tmp:=cmpCopyRAST_Tree.Root;
+    //cmpCopyRAST_Tree.Root:=NIL;
+  //  cmpCopyRAST_Tree.Clear;
+  //  tmp.FREE;
 end;
 
 //------------------------------------------------------------------------------
@@ -232,12 +262,12 @@ procedure Twnd_lazExt_CopyRAST_CORE._copyRastObj_DST_;
 begin
     // не красиво, уничтодаем объекты _copyRastObj через пользовательский интерфейс
     {todo: необходимо переделать}
-    ItemsTreeView.BeginUpdate;
-    ItemsTreeView.Items.Clear; // собственноо вот тут и идет УНИЧТОЖЕНИЕ объектов
+    //ItemsTreeView.BeginUpdate;
+    //ItemsTreeView.Items.Clear; // собственноо вот тут и идет УНИЧТОЖЕНИЕ объектов
     //---
    _cpRastObj_:=nil;
     //---
-    ItemsTreeView.EndUpdate;
+    //ItemsTreeView.EndUpdate;
 end;
 
 procedure Twnd_lazExt_CopyRAST_CORE._reInit_copyRast_;

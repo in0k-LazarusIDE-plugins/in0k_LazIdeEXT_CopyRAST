@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="D:\!DeVeLoP\Lazarus_1.6.2_x64\fpc\3.0.0\bin\x86_64-win64\fpc.exe" Date="1231859847"/>
+  <Params Value=" -MObjFPC -Scaghi -O1 -g -gl -gh -WG -l -vewnhibq -FiD:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST -FuD:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcPKG\srcTree\Items\CORE -FuD:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcPKG\srcTree\Items -FuD:\!DeVeLoP\Lazarus_1.6.2_x64\components\fpcunit\lib\x86_64-win64\win32 -FuD:\!DeVeLoP\Lazarus_1.6.2_x64\components\synedit\units\x86_64-win64\win32 -FuD:\!DeVeLoP\Lazarus_1.6.2_x64\lcl\units\x86_64-win64\win32 -FuD:\!DeVeLoP\Lazarus_1.6.2_x64\lcl\units\x86_64-win64 -FuD:\!DeVeLoP\Lazarus_1.6.2_x64\components\lazutils\lib\x86_64-win64 -FuD:\!DeVeLoP\Lazarus_1.6.2_x64\packager\units\x86_64-win64 -FuD:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\unitTests\ -dLCL -dLCLwin32 TESTs.lpr"/>
+</CONFIG>

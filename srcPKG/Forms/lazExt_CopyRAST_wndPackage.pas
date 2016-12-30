@@ -18,6 +18,8 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
     lazExt_CopyRAST_wndCORE,
      lazExt_CopyRAST_node_ROOT,
      lazExt_CopyRAST_node_ROOT_package,
+        srcTree_item_root4Package,
+        srcTree_builder_4Package,
 
      lazExt_CopyRAST_StrConsts,
      lazExt_CopyRAST_node, lazExt_CopyRAST_node_Folder, lazExt_CopyRAST_node_File,
@@ -72,7 +74,7 @@ var root:tCopyRAST_ROOT_package;
        i:integer;
 begin
     result:=nil;
-    try root:=tCopyRAST_ROOT_package.Create('PACKAGE');
+   { try root:=tCopyRAST_ROOT_package.Create('PACKAGE');
         //-------------------------------------
         root.set_DirExpanded(_package_.DirectoryExpanded);
         root.add_SearchPaths(_package_.LazCompilerOptions.OtherUnitFiles,CopyRAST_node_SrchPTH__Fu);
@@ -103,7 +105,11 @@ begin
         root.PREAPARE;
         //-------------------------------------
         result:=root;
-    except root.free; root:=nil; end;
+    except root.free; root:=nil; end;    }
+
+    cmpCopyRAST_Tree.Root:=srcTree_builder_4Package_MAKE(_package_);
+
+
 end;
 
 end.

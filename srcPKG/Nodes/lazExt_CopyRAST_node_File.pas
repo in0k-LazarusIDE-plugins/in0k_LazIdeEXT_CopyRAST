@@ -125,7 +125,7 @@ end;
 
 function tCopyRAST_node_File_CORE.Get_Source_dir_Name:string;
 begin
-    if _prnt_ is tCopyRAST_node_File_CORE then result:=_prnt_.Get_Source_dir_Name
+    if _prnt_ is tCopyRAST_node_File_CORE then result:=tCopyRAST_node(_prnt_).Get_Source_dir_Name
     else result:=inherited;
 end;
 
@@ -138,7 +138,7 @@ end;
 
 function tCopyRAST_node_File_CORE.Get_Target_dir_Name:string;
 begin
-    if _prnt_ is tCopyRAST_node_File_CORE then result:=_prnt_.Get_Target_dir_Name
+    if _prnt_ is tCopyRAST_node_File_CORE then result:=tCopyRAST_node(_prnt_).Get_Target_dir_Name
     else result:=inherited;
 end;
 

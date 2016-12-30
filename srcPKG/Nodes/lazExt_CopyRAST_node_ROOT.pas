@@ -234,7 +234,7 @@ begin
         tmp:=tCopyRAST_node_BaseDIR.Create(BaseDIR);
        _ins_ChldFrst_(tmp);
     end
-    else tCopyRAST_ROOT(tmp)._source_Text_:=BaseDIR;
+    else tCopyRAST_ROOT(tmp)._item_Text_:=BaseDIR;
 end;
 
 function tCopyRAST_ROOT._get_BaseDIR_PATH_:string;
@@ -386,7 +386,6 @@ begin
     StartPos:=1;
     singlDir:=GetNextDirectoryInSearchPath(SrchPTH,StartPos);
     while singlDir<>'' do begin
-        {$ifdef _DEBUG_}DEBUG('add_SrchPTH','{'+eCopyRAST_node_SrchPath__2__text(KIND)+'}'+singlDir);{$endIf}
         {todo: чет наверно как-то потестить надо}
         FoldrDir:=_PathFLDR_GET_(singlDir);
         if Assigned(FoldrDir) then begin
