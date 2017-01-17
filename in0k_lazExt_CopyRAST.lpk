@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="53">
+    <Files Count="54">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -228,6 +228,10 @@
         <Filename Value="srcPKG\srcTree\Items\srcTree_item_fsFolder.pas"/>
         <UnitName Value="srcTree_item_fsFolder"/>
       </Item53>
+      <Item54>
+        <Filename Value="srcPKG\srcTree\Items\srcTree_item_fsFile.pas"/>
+        <UnitName Value="srcTree_item_fsFile"/>
+      </Item54>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

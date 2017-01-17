@@ -11,8 +11,11 @@ uses Controls, ComCtrls, Forms,
     srcTree_item_coreROOT,
     srcTree_item_coreFileSystem,
     //---
-    srcTree_item_root4Package,
+
+    srcTree_item_coreMAIN,
     srcTree_item_main4Package,
+
+    srcTree_item_root4Package,
     srcTree_item_baseDIR,
     srcTree_item_fsFolder,
 
@@ -210,8 +213,16 @@ function tCmp_CopyRAST_Tree._item_gImj_(const item:tSrcTree_item):integer;
 begin
     result:=-1;//cSrcTREE_img_file;
     //---
-    if item is tStcTree_item_fsNode then begin // элемент ФайловойСистемы
-        if item is tSrcTree_item_fsNodeDIR then begin
+    if item is tSrcTree_ROOT then begin
+       if item is tSrcTree_Root4Package then result:=cSrcTREE_img_Package
+    end
+   else
+    if item is tSrcTree_MAIN then begin
+        if item is tSrcTree_Main4Package then result:=cSrcTREE_img_PckFILE
+    end
+   else
+    if item is _tStcTree_item_fsNode_ then begin // элемент ФайловойСистемы
+        if item is _tSrcTree_item_fsNodeFLDR_ then begin
             if item is tCopyRAST_item_BaseDIR then result:=cSrcTREE_img_BaseDIR
            else
             if item is tSrcTree_item_fsNodeFLDR then begin
@@ -221,19 +232,11 @@ begin
             end;
         end
        else
-        if item is tSrcTree_item_fsNodeFILE then begin
+        if item is _tSrcTree_item_fsNodeFILE_ then begin
             result:=cSrcTREE_img_file;
             {todo:}
         end
-    end
-    else
-    if item is tSrcTree_Root4Package then result:=cSrcTREE_img_Package
-   else
-    if item is tSrcTree_Main4Package then result:=cSrcTREE_img_PckFILE
-//   else //----
-//    if item is tSrcTree_Root4Package then result:=cSrcTREE_img_Package
-//   else
-//    if item is tSrcTree_Main4Package then result:=cSrcTREE_img_PckFILE
+    end;
 end;
 
 function tCmp_CopyRAST_Tree._item_hint_(const item:tSrcTree_item):string;
@@ -248,12 +251,9 @@ var tmp:tSrcTree_item;
 begin {todo: уйти от рекурсии?}
     result:=SELF.Items.AddChildObject(prnt,item.ItemNAME,item);
     //---
-    result.ImageIndex:=_item_gImj_(item);
-//    self.ToolTips:=;
-
-  //  result.
-
-
+    result.SelectedIndex:=_item_gImj_(item);
+    result.ImageIndex   :=result.SelectedIndex;
+    //---
     tmp:=item.ItemCHLD;
     while Assigned(tmp) do begin
        _item2TREE_(result,tmp);
