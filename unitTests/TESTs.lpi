@@ -39,7 +39,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="13">
+    <Units Count="14">
       <Unit0>
         <Filename Value="TESTs.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -92,6 +92,10 @@
         <Filename Value="uTST_004_srcTree_itemROOT__get_relPATH_ab_ac_ad.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit12>
+      <Unit13>
+        <Filename Value="uTST_004_srcTree_itemROOT__realCase_001.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

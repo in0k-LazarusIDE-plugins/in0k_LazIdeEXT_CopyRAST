@@ -6,6 +6,7 @@ interface
 
 uses srcTree_item_coreROOT,
      srcTree_item_coreFileSystem,
+     srcTree_item_fsFolder,
     Classes, SysUtils, fpcunit, testutils, testregistry;
 
 type
@@ -13,9 +14,9 @@ type
  tUTST_srcTree_itemROOT__get_relPATH_ab_ac_ad= class(TTestCase)
   protected
     ROOT:tSrcTree_ROOT;
-    dir1:tSrcTree_item_fsNodeDIR;
-    dir2:tSrcTree_item_fsNodeDIR;
-    dir3:tSrcTree_item_fsNodeDIR;
+    dir1:tSrcTree_item_fsNodeFLDR;
+    dir2:tSrcTree_item_fsNodeFLDR;
+    dir3:tSrcTree_item_fsNodeFLDR;
   protected
     procedure SetUp; override;
     procedure TearDown; override;

@@ -6,6 +6,7 @@ interface
 
 uses srcTree_item_coreROOT,
      srcTree_item_coreFileSystem,
+     srcTree_item_fsFolder,
     Classes, SysUtils, fpcunit, testutils, testregistry;
 
 type
@@ -56,7 +57,7 @@ end;
 //==============================================================================
 
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_empty;
-var res:tSrcTree_item_fsNodeDIR;
+var res:tSrcTree_item_fsNodeFLDR;
 begin // должно возвращать BaseDIR
     res:=SrcTreeROOT_fnd_relPATH(root,'');
     //---
@@ -67,7 +68,7 @@ end;
 //------------------------------------------------------------------------------
 
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_TEST;
-var res:tSrcTree_item_fsNodeDIR;
+var res:tSrcTree_item_fsNodeFLDR;
 begin
     res:=SrcTreeROOT_fnd_relPATH(root,'TEST');
     //---
@@ -75,7 +76,7 @@ begin
 end;
 
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_TEST_ds;
-var res:tSrcTree_item_fsNodeDIR;
+var res:tSrcTree_item_fsNodeFLDR;
 begin
     res:=SrcTreeROOT_fnd_relPATH(root,'TEST'+DirectorySeparator);
     //---
@@ -84,7 +85,7 @@ end;
 
 
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_TEST_ds_TEST;
-var res:tSrcTree_item_fsNodeDIR;
+var res:tSrcTree_item_fsNodeFLDR;
 begin
     res:=SrcTreeROOT_fnd_relPATH(root,'TEST'+DirectorySeparator+'TEST');
     //---
@@ -92,7 +93,7 @@ begin
 end;
 
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_TEST_ds_TEST_ds;
-var res:tSrcTree_item_fsNodeDIR;
+var res:tSrcTree_item_fsNodeFLDR;
 begin
     res:=SrcTreeROOT_fnd_relPATH(root,'TEST'+DirectorySeparator+'TEST'+DirectorySeparator);
     //---

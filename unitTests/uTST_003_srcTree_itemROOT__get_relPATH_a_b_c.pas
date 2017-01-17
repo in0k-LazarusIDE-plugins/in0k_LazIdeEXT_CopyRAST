@@ -6,6 +6,8 @@ interface
 
 uses srcTree_item_coreROOT,
      srcTree_item_coreFileSystem,
+     srcTree_item_fsFolder,
+
     Classes, SysUtils, fpcunit, testutils, testregistry;
 
 type
@@ -13,9 +15,9 @@ type
  tUTST_srcTree_itemROOT__get_relPATH_a_b_c=class(TTestCase)
  protected
     ROOT:tSrcTree_ROOT;
-    FldA:tSrcTree_item_fsNodeDIR;
-    FldB:tSrcTree_item_fsNodeDIR;
-    FldC:tSrcTree_item_fsNodeDIR;
+    FldA:tSrcTree_item_fsNodeFLDR;
+    FldB:tSrcTree_item_fsNodeFLDR;
+    FldC:tSrcTree_item_fsNodeFLDR;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
@@ -53,7 +55,7 @@ const
 //------------------------------------------------------------------------------
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_a_b_c.relPATH_get_empty;
-var res:tSrcTree_item_fsNodeDIR;
+var res:tSrcTree_item_fsNodeFLDR;
 begin // должно возвращать BaseDIR
     res:=SrcTreeROOT_get_relPATH(root,'');
     //---

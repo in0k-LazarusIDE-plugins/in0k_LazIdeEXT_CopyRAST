@@ -94,7 +94,6 @@ end;
 //==============================================================================
 
 initialization
-
     RegisterTest(tUTST_srcTree_itemROOT__BaseDIR);
 end.
 

@@ -6,6 +6,7 @@ interface
 
 uses srcTree_item_coreROOT,
      srcTree_item_coreFileSystem,
+     srcTree_item_fsFolder,
     Classes, SysUtils, fpcunit, testutils, testregistry;
 
 type
@@ -13,9 +14,9 @@ type
  tUTST_srcTree_itemROOT__get_relPATH_a_b_W__xn= class(TTestCase)
   protected
     ROOT:tSrcTree_ROOT;
-    FldA:tSrcTree_item_fsNodeDIR;
-    FldB:tSrcTree_item_fsNodeDIR;
-    FldC:tSrcTree_item_fsNodeDIR;
+    FldA:tSrcTree_item_fsNodeFLDR;
+    FldB:tSrcTree_item_fsNodeFLDR;
+    FldC:tSrcTree_item_fsNodeFLDR;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
@@ -51,7 +52,7 @@ end;
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_a_b_W__xn.relPATH_get_abW_an;
 var tst__Flder:string;
-    resul__Get:tSrcTree_item_fsNodeDIR;
+    resul__Get:tSrcTree_item_fsNodeFLDR;
 begin
     // собсно ТЕСТ должен СОЗДАТЬ новую
     tst__Flder:=c_FLDR_A+DirectorySeparator+'n';
@@ -63,7 +64,7 @@ end;
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_a_b_W__xn.relPATH_get_abW_bn;
 var tst__Flder:string;
-    resul__Get:tSrcTree_item_fsNodeDIR;
+    resul__Get:tSrcTree_item_fsNodeFLDR;
 begin
     // собсно ТЕСТ должен СОЗДАТЬ новую
     tst__Flder:=c_FLDR_B+DirectorySeparator+'n';
@@ -75,7 +76,7 @@ end;
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_a_b_W__xn.relPATH_get_abW_Wn;
 var tst__Flder:string;
-    resul__Get:tSrcTree_item_fsNodeDIR;
+    resul__Get:tSrcTree_item_fsNodeFLDR;
 begin
     // собсно ТЕСТ должен СОЗДАТЬ новую
     tst__Flder:=c_FLDR_C+DirectorySeparator+'n';
