@@ -4,11 +4,12 @@ unit srcTree_item_coreMAIN;
 
 interface
 
-uses srcTree_item_coreFileSystem;
+uses
+  srcTree_item_coreFileSystem;
 
 type
 
- tSrcTree_MAIN=class(tSrcTree_item_fsNodeFILE)
+ tSrcTree_MAIN=class(_tSrcTree_item_fsNodeFILE_)
 
   end;
 

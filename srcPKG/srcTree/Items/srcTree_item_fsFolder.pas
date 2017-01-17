@@ -12,7 +12,7 @@ type
   eSrcTree_SrchPath=(SrcTree_SrchPath__Fu,SrcTree_SrchPath__Fi,SrcTree_SrchPath__Fl);
   sSrcTree_SrchPath=set of eSrcTree_SrchPath;
 
- tSrcTree_item_fsNodeFLDR=class(tSrcTree_item_fsNodeDIR)
+ tSrcTree_item_fsNodeFLDR=class(_tSrcTree_item_fsNodeFLDR_)
   protected
     function _get_ItemHint_:string; override;
   protected

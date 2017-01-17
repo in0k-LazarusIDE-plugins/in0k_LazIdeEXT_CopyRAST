@@ -13,10 +13,19 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
   srcTree_item_coreROOT,
   lazExt_CopyRAST_from_IDEProcs,
   srcTree_item_coreFileSystem,
+  srcTree_item_coreMAIN,
   srcTree_item_fsFolder;
 
 
-procedure srcTree_builder_add_SearchPATH(const ROOT:tSrcTree_ROOT; const DirPATH:string; const SrchPath:eSrcTree_SrchPath);
+
+procedure srcTree_builder_add_MainFILE          (const ROOT:tSrcTree_ROOT; const MAIN:tSrcTree_MAIN);
+
+
+function  srcTree_builder_add_SearchPATH_DirNAME(const ROOT:tSrcTree_ROOT; const DirNAME:string; const PathKIND:eSrcTree_SrchPath):tSrcTree_item_fsNodeFLDR;
+procedure srcTree_builder_add_SearchPATH_DirLIST(const ROOT:tSrcTree_ROOT; const DirLIST:string; const PathKIND:eSrcTree_SrchPath);
+
+procedure srcTree_builder_add_FileNode          (const ROOT:tSrcTree_ROOT; const DirNode:tSrcTree_item_fsNodeFLDR; const FileNode:_tSrcTree_item_fsNodeFILE_);
+
 
 implementation
 
@@ -30,26 +39,46 @@ implementation
 {$endIf}
 {%endregion}
 
+// добавить ПУТь поиска
+// @prm ROOT     куда именно добавляем
+// @prm DirNAME  название директории (путь в файловой системе)
+// @prm PathKIND тип "пути поиска"
+function srcTree_builder_add_SearchPATH_DirNAME(const ROOT:tSrcTree_ROOT; const DirNAME:string; const PathKIND:eSrcTree_SrchPath):tSrcTree_item_fsNodeFLDR;
+begin {todo: мож проверки добавить}
+    {$ifdef _debug_}DEBUG('add_SrchPTH','{'{+eCopyRAST_node_SrchPath__2__text(PathKIND)}+'}'+DirNAME);{$endIf} {todo: детализировать лог указанием ТИПА PathKIND}
+    result:=SrcTreeROOT_get_relPATH(ROOT,DirNAME);
+    if Assigned(result) then begin
+        //--- добавим найденному ТИП пути
+        SrcTree_item_fsFolder__addSearhPATH(result,PathKIND);
+    end;
+end;
 
-// добавить ПУТИ поиска
-procedure srcTree_builder_add_SearchPATH(const ROOT:tSrcTree_ROOT; const DirPATH:string; const SrchPath:eSrcTree_SrchPath);
+// добавить СПИСОК ПУТЕЙ поиска
+// @prm ROOT     куда именно добавляем
+// @prm DirLIST  список директорий с разделителем ";"
+// @prm PathKIND тип "пути поиска"
+procedure srcTree_builder_add_SearchPATH_DirLIST(const ROOT:tSrcTree_ROOT; const DirLIST:string; const PathKIND:eSrcTree_SrchPath);
 var StartPos:Integer;
     singlDir:string;
-    NodeFLDR:tSrcTree_item_fsNodeFLDR;
 begin
     StartPos:=1;
-    singlDir:=GetNextDirectoryInSearchPath(DirPATH,StartPos);
+    singlDir:=GetNextDirectoryInSearchPath(DirLIST,StartPos);
     while singlDir<>'' do begin
-        {$ifdef _debug_}DEBUG('add_SrchPTH','{'{+eCopyRAST_node_SrchPath__2__text(SrchPath)}+'}'+singlDir);{$endIf}
-        {todo: чет наверно как-то потестить надо}
-        NodeFLDR:=SrcTreeROOT_get_relPATH(ROOT,singlDir);
-        if Assigned(NodeFLDR) then begin
-            //--- добавим найденному ТИП пути
-            SrcTree_item_fsFolder__addSearhPATH(NodeFLDR,SrchPath);
-        end;
+        srcTree_builder_add_SearchPATH_DirNAME(ROOT,singlDir,PathKIND);
         //-->
-        singlDir:=GetNextDirectoryInSearchPath(DirPATH,StartPos);
+        singlDir:=GetNextDirectoryInSearchPath(DirLIST,StartPos);
     end;
+end;
+
+
+procedure srcTree_builder_add_MainFILE(const ROOT:tSrcTree_ROOT; const MAIN:tSrcTree_MAIN);
+begin
+    SrcTreeROOT_add_Main(ROOT,MAIN);
+end;
+
+procedure srcTree_builder_add_FileNode(const ROOT:tSrcTree_ROOT; const DirNode:tSrcTree_item_fsNodeFLDR; const FileNode:_tSrcTree_item_fsNodeFILE_);
+begin
+    SrcTreeROOT_add_File(ROOT,DirNode,FileNode);
 end;
 
 end.
