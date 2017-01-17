@@ -14,6 +14,7 @@ uses //{$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$en
 
      srcTree_item_CORE,
      srcTree_item_coreFileSystem,
+     srcTree_item_coreMAIN,
      srcTree_item_baseDIR,
      srcTree_item_fsFolder;
 
@@ -29,9 +30,12 @@ function  SrcTreeROOT_get_BaseDIR(const item:tSrcTree_ROOT):tCopyRAST_item_BaseD
 procedure SrcTreeROOT_set_BaseDIR(const item:tSrcTree_ROOT; const baseDir:string);
 
 //function  SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string; out lstDir:tSrcTree_item_fsNodeDIR):tSrcTree_item_fsNodeDIR;
-function  SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string)                                    :tSrcTree_item_fsNodeDIR;
+function  SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string)                                    :tSrcTree_item_fsNodeFLDR;
 function  SrcTreeROOT_get_relPATH(const item:tSrcTree_ROOT; const folder:string)                                    :tSrcTree_item_fsNodeFLDR;
 
+
+procedure SrcTreeROOT_add_Main   (const item:tSrcTree_ROOT; const MainNode:tSrcTree_MAIN);
+procedure SrcTreeROOT_add_File   (const item:tSrcTree_ROOT; const fldrNode:_tSrcTree_item_fsNodeFLDR_; fileNode:_tSrcTree_item_fsNodeFILE_);
 
 implementation
 
@@ -74,10 +78,10 @@ end;
 
 //------------------------------------------------------------------------------
 
-function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string; out lstDir:tSrcTree_item_fsNodeDIR; out mdlDir:string):tSrcTree_item_fsNodeDIR;
+function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string; out lstDir:_tSrcTree_item_fsNodeFLDR_; out mdlDir:string):_tSrcTree_item_fsNodeFLDR_;
 var fldr:string;
     tmp :tSrcTree_item;
-    s:string;
+    //s:string;
 begin
     {$ifdef _debug_}DEBUG('SrcTreeROOT_fnd_relPATH',folder);{$endIf}
 
@@ -103,11 +107,11 @@ begin
             //--- ищем ПРЯМОЕ попадание
             tmp :=lstDir.ItemCHLD;
             while Assigned(tmp) do begin
-                if (tmp is tSrcTree_item_fsNodeDIR) and //< проверяем ТОКА папки
-                   (CompareFilenames(fldr,tSrcTree_item_fsNodeDIR(tmp).src_Name)=0)
+                if (tmp is _tSrcTree_item_fsNodeFLDR_) and //< проверяем ТОКА папки
+                   (CompareFilenames(fldr,_tSrcTree_item_fsNodeFLDR_(tmp).src_Name)=0)
                 then begin
                     // надо-же ... нашли ПРЯМОЕ попадание в папку !!!
-                    result:=tSrcTree_item_fsNodeDIR(tmp);
+                    result:=_tSrcTree_item_fsNodeFLDR_(tmp);
                     mdlDir:='';
                     BREAK;
   		 					end;
@@ -120,28 +124,30 @@ begin
             fldr:=ChompPathDelim(folder);
             tmp :=lstDir.ItemCHLD;
             while Assigned(tmp) do begin
-                if tmp is tSrcTree_item_fsNodeDIR then begin //< проверяем ТОКА папки
-                    if CompareFilenames(fldr,tSrcTree_item_fsNodeDIR(tmp).src_Name)=0
-                    then begin // нашли полное соответствие
-                        result:=tSrcTree_item_fsNodeDIR(tmp);
+                if tmp is _tSrcTree_item_fsNodeFLDR_ then begin //< проверяем ТОКА папки
+                    if (CompareFilenames(fldr,_tSrcTree_item_fsNodeFLDR_(tmp).src_Name)=0) or
+                       (CompareFilenames(fldr,_tSrcTree_item_fsNodeFLDR_(tmp).src_PATH)=0)
+                    then begin // нашли полное соответствие по имени или пути
+                        result:=_tSrcTree_item_fsNodeFLDR_(tmp);
                         mdlDir:='';
                         BREAK;
 										end
-                   else
-                    if FileIsInPath(tSrcTree_item_fsNodeDIR(tmp).src_PATH,fldr)
-                    then begin // нашли ВХОЖДЕНИЕ попадание в папку
-                       mdlDir:=fldr;
-                       BREAK;
-         		 				end
-                   else
-                    if FileIsInPath(fldr,tSrcTree_item_fsNodeDIR(tmp).src_PATH)
-                    then begin // нашли ВХОЖДЕНИЕ попадание в папку
-                        lstDir:=tSrcTree_item_fsNodeDIR(tmp);
-                        mdlDir:='';
-                        BREAK;
-         		 				end;
+                    else begin
+                        if FileIsInPath(_tSrcTree_item_fsNodeFLDR_(tmp).src_PATH,fldr)
+                        then begin // нашли ВХОЖДЕНИЕ попадание в папку
+                            mdlDir:=fldr;
+                            BREAK;
+       		 				      end
+                       else
+                        if FileIsInPath(fldr,_tSrcTree_item_fsNodeFLDR_(tmp).src_PATH)
+                        then begin // нашли ВХОЖДЕНИЕ попадание в папку
+                            lstDir:=_tSrcTree_item_fsNodeFLDR_(tmp);
+                            mdlDir:='';
+                            BREAK;
+         		   				  end;
+									  end;
 								end;
-                //-->
+								//-->
                 tmp:=tmp.ItemNEXT;
   					end;
 				end;
@@ -151,17 +157,17 @@ begin
     {$ifdef _debug_}DEBUG('SrcTreeROOT_fnd_relPATH','out'+'"'+mdlDir+'"');{$endIf}
 end;
 
-function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_item_fsNodeDIR;
-var lstDir:tSrcTree_item_fsNodeDIR;
+function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_item_fsNodeFLDR;
+var lstDir:_tSrcTree_item_fsNodeFLDR_;
     mdlDir:string;
 begin
-    result:=SrcTreeROOT_fnd_relPATH(item,folder,lstDir,mdlDir);
+    result:=tSrcTree_item_fsNodeFLDR(SrcTreeROOT_fnd_relPATH(item,folder,lstDir,mdlDir));
 end;
 
 //------------------------------------------------------------------------------
 
 function SrcTreeROOT_get_relPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_item_fsNodeFLDR;
-var lstDir:tSrcTree_item_fsNodeDIR;
+var lstDir:_tSrcTree_item_fsNodeFLDR_;
     mdlDir:string;
     tmp0  :tSrcTree_item;
     tmp1  :tSrcTree_item;
@@ -181,14 +187,14 @@ begin
         result:=tSrcTree_item_fsNodeFLDR.Create(ChompPathDelim(folder));
         {$ifdef _debug_}DEBUG('CRT',folder+' '+result.ItemTEXT+' '+result.ItemHINT);{$endIf}
         SrcTree_insert_ChldLast(lstDir,Result);
-        // теперь ВСЕ "файловое" (tStcTree_item_fsNode) что лежит в lstDir
+        // теперь ВСЕ "файловое" (_tStcTree_item_fsNode_) что лежит в lstDir
         // и попадает по пути в folder должно быть перенесено в result
         tmp0:=lstDir.ItemCHLD;
         while Assigned(tmp0) do begin
             tmp1:=tmp0.ItemNEXT;
             //---
-            if tmp0 is tStcTree_item_fsNode then begin
-                if FileIsInPath( tStcTree_item_fsNode(tmp0).src_PATH, result.src_PATH ) then begin
+            if tmp0 is _tStcTree_item_fsNode_ then begin
+                if FileIsInPath( _tStcTree_item_fsNode_(tmp0).src_PATH, result.src_PATH ) then begin
                     SrcTree_cut_From_Parent(tmp0);
                     SrcTree_insert_ChldLast(result,tmp0);
 								end;
@@ -197,6 +203,19 @@ begin
             tmp0:=tmp1;
 				end;
 		end;
+end;
+
+
+//==============================================================================
+
+procedure SrcTreeROOT_add_Main(const item:tSrcTree_ROOT; const MainNode:tSrcTree_MAIN);
+begin
+    SrcTree_insert_ChldFrst(SrcTreeROOT_get_BaseDIR(item),MainNode);
+end;
+
+procedure SrcTreeROOT_add_File(const item:tSrcTree_ROOT; const fldrNode:_tSrcTree_item_fsNodeFLDR_; fileNode:_tSrcTree_item_fsNodeFILE_);
+begin
+    SrcTree_insert_ChldLast(fldrNode,fileNode);
 end;
 
 end.
