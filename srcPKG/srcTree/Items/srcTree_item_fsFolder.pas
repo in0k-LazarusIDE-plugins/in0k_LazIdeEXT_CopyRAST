@@ -27,6 +27,7 @@ procedure SrcTree_item_fsFolder__addSearhPATH(const item:tSrcTree_item_fsNodeFLD
 //function eCopyRAST_node_SrchPath__2__text(const item:eCopyRAST_node_SrchPath):string;
 
 
+function SrcTree_SrchPathKIND_2_Text(const Kind:eSrcTree_SrchPath):string;
 
 implementation
 
@@ -43,6 +44,11 @@ begin
         SrcTree_SrchPath__Fi: result:='Fi';
         SrcTree_SrchPath__Fl: result:='Fl';
     end;
+end;
+
+function SrcTree_SrchPathKIND_2_Text(const Kind:eSrcTree_SrchPath):string;
+begin
+    result:=_SrchPath__2__text_(Kind);
 end;
 
 function _SrchPaths__2__text_(const SrchPaths:sSrcTree_SrchPath):string;

@@ -45,8 +45,8 @@ implementation
 // @prm PathKIND тип "пути поиска"
 function srcTree_builder_add_SearchPATH_DirNAME(const ROOT:tSrcTree_ROOT; const DirNAME:string; const PathKIND:eSrcTree_SrchPath):tSrcTree_item_fsNodeFLDR;
 begin {todo: мож проверки добавить}
-    {$ifdef _debug_}DEBUG('add_SrchPTH','{'{+eCopyRAST_node_SrchPath__2__text(PathKIND)}+'}'+DirNAME);{$endIf} {todo: детализировать лог указанием ТИПА PathKIND}
     result:=SrcTreeROOT_get_relPATH(ROOT,DirNAME);
+    {$ifDef _debug_}DEBUG('srcTree_builder_add_SearchPATH_DirNAME',Assigned2OK(result)+' PathKIND="'+SrcTree_SrchPathKIND_2_Text(PathKIND)+'"'+' DirNAME="'+DirNAME+'"');{$endIf}
     if Assigned(result) then begin
         //--- добавим найденному ТИП пути
         SrcTree_item_fsFolder__addSearhPATH(result,PathKIND);
@@ -61,6 +61,7 @@ procedure srcTree_builder_add_SearchPATH_DirLIST(const ROOT:tSrcTree_ROOT; const
 var StartPos:Integer;
     singlDir:string;
 begin
+    {$ifDef _debug_}DEBUG('srcTree_builder_add_SearchPATH_DirLIST','PathKIND="'+SrcTree_SrchPathKIND_2_Text(PathKIND)+'"'+' DirLIST="'+DirLIST+'"');{$endIf}
     StartPos:=1;
     singlDir:=GetNextDirectoryInSearchPath(DirLIST,StartPos);
     while singlDir<>'' do begin
@@ -73,6 +74,7 @@ end;
 
 procedure srcTree_builder_add_MainFILE(const ROOT:tSrcTree_ROOT; const MAIN:tSrcTree_MAIN);
 begin
+    {$ifDef _debug_}DEBUG('srcTree_builder_add_MainFILE','MAIN="'+MAIN.ItemTEXT+'"');{$endIf}
     SrcTreeROOT_add_Main(ROOT,MAIN);
 end;
 

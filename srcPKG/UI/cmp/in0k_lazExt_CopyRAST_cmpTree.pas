@@ -5,6 +5,7 @@ unit in0k_lazExt_CopyRAST_cmpTree;
 interface
 
 uses Controls, ComCtrls, Forms,
+     PackageIntf,
      IDEImagesIntf,
 
     srcTree_item_CORE,
@@ -13,11 +14,13 @@ uses Controls, ComCtrls, Forms,
     //---
 
     srcTree_item_coreMAIN,
-    srcTree_item_main4Package,
+    //srcTree_item_4Package,
 
-    srcTree_item_root4Package,
     srcTree_item_baseDIR,
+    srcTree_item_4Package,
+    srcTree_item_4Project,
     srcTree_item_fsFolder,
+    srcTree_item_fsFile,
 
     Classes, SysUtils;
 
@@ -71,6 +74,15 @@ var
 
   cSrcTREE_img_file    :integer; // просто какой-то файл
   cSrcTREE_img_file_src:integer; // исходный код
+  cSrcTREE_img_file_REG:integer;
+  cSrcTREE_img_file_LFM:integer;
+  cSrcTREE_img_file_LRS:integer;
+  cSrcTREE_img_file_Inc:integer;
+  cSrcTREE_img_file_Issues:integer;
+  cSrcTREE_img_file_txt:integer;
+  cSrcTREE_img_file_BIN:integer;
+
+
 
 
 
@@ -104,7 +116,15 @@ begin
     cSrcTREE_img_SrchPTH:=IDEImages.LoadImage(16, 'pkg_files');
     //---
     cSrcTREE_img_file    :=IDEImages.LoadImage(16, 'pkg_text');
-    cSrcTREE_img_file_src:=IDEImages.LoadImage(16, 'item_unit');
+    cSrcTREE_img_file_src:=IDEImages.LoadImage(16, 'pkg_unit');
+    cSrcTREE_img_file_REG:=IDEImages.LoadImage(16, 'pkg_registerunit');
+    cSrcTREE_img_file_LFM    := IDEImages.LoadImage(16, 'pkg_lfm');
+    cSrcTREE_img_file_LRS    := IDEImages.LoadImage(16, 'pkg_lrs');
+    cSrcTREE_img_file_Inc    := IDEImages.LoadImage(16, 'pkg_include');
+    cSrcTREE_img_file_Issues := IDEImages.LoadImage(16, 'pkg_issues');
+    cSrcTREE_img_file_txt    := IDEImages.LoadImage(16, 'pkg_text');
+    cSrcTREE_img_file_BIN    := IDEImages.LoadImage(16, 'pkg_binary');
+
     //---
    _CRT_img_Commons__isLoaded_:=TRUE;
 end;
@@ -201,7 +221,7 @@ function tCmp_CopyRAST_Tree._root_get_:tSrcTree_ROOT;
 begin
     {todo: это ВВРЕМЕННАЯ проверка, тут что-то другое надо, для аозможности ГРУПП проектов}
     {$ifOpt D+}Assert(Assigned(_root_)and(_root_ is tSrcTree_ROOT) ,'_root_ NOT tSrcTree_ROOT');{$endIf}
-    if root is tSrcTree_Root4Package then SrcTREE_imageIndexs_need4Package;
+    if root is tSrcTree_ROOT then SrcTREE_imageIndexs_need4Package;
     result:=tSrcTree_ROOT(_root_);
 end;
 
@@ -213,14 +233,18 @@ function tCmp_CopyRAST_Tree._item_gImj_(const item:tSrcTree_item):integer;
 begin
     result:=-1;//cSrcTREE_img_file;
     //---
-    if item is tSrcTree_ROOT then begin
+    if item is tSrcTree_ROOT then begin // "Корневой УЗЕЛ"
        if item is tSrcTree_Root4Package then result:=cSrcTREE_img_Package
+      else
+       if item is tSrcTree_Root4Project then result:=cSrcTREE_img_Project
     end
    else
-    if item is tSrcTree_MAIN then begin
+    if item is tSrcTree_MAIN then begin // "ГЛАВНЫЙ УЗЕЛ"
         if item is tSrcTree_Main4Package then result:=cSrcTREE_img_PckFILE
+       else
+        if item is tSrcTree_Main4Project then result:=cSrcTREE_img_PrjFILE
     end
-   else
+   else // остальное
     if item is _tStcTree_item_fsNode_ then begin // элемент ФайловойСистемы
         if item is _tSrcTree_item_fsNodeFLDR_ then begin
             if item is tCopyRAST_item_BaseDIR then result:=cSrcTREE_img_BaseDIR
@@ -233,7 +257,21 @@ begin
         end
        else
         if item is _tSrcTree_item_fsNodeFILE_ then begin
-            result:=cSrcTREE_img_file;
+            if item is tSrcTree_item_fsFile then begin
+                case tSrcTree_item_fsFile(item).fileKIND of
+                  pftUnit:        result:=cSrcTREE_img_file_src;
+                  pftVirtualUnit: result:=cSrcTREE_img_file_src;
+                  pftMainUnit:    result:=cSrcTREE_img_file_REG;
+                  pftLFM:         result:=cSrcTREE_img_file_LFM;
+                  pftLRS:         result:=cSrcTREE_img_file_LRS;
+                  pftInclude:     result:=cSrcTREE_img_file_Inc;
+                  pftIssues:      result:=cSrcTREE_img_file_Issues;
+                  pftText:        result:=cSrcTREE_img_file_txt;
+                  pftBinary:      result:=cSrcTREE_img_file_BIN;
+                  else            result:=cSrcTREE_img_file;
+                end;
+            end
+            else result:=cSrcTREE_img_file;
             {todo:}
         end
     end;

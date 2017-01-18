@@ -30,9 +30,9 @@ uses
     prcNode_XML_CompilerOptions_SearchPaths, prcNode_XML_Files, 
     prcNode_PSF_updateInclude, srcTree_item_coreFileSystem, 
     in0k_lazExt_CopyRAST_cmpTree, srcTree_builder_CORE, 
-    srcTree_builder_4Package, srcTree_item_root4Package, srcTree_item_CORE, 
+    srcTree_builder_4Package, srcTree_item_4Package, srcTree_item_CORE, 
     srcTree_item_coreROOT, srcTree_item_baseDIR, srcTree_item_coreMAIN, 
-    srcTree_item_main4Package, srcTree_item_fsFolder, srcTree_item_fsFile, 
+    srcTree_item_4Project, srcTree_item_fsFolder, srcTree_item_fsFile, 
     LazarusPackageIntf;
 
 implementation

@@ -201,8 +201,8 @@
         <UnitName Value="srcTree_builder_4Package"/>
       </Item46>
       <Item47>
-        <Filename Value="srcPKG\srcTree\Items\srcTree_item_root4Package.pas"/>
-        <UnitName Value="srcTree_item_root4Package"/>
+        <Filename Value="srcPKG\srcTree\Items\srcTree_item_4Package.pas"/>
+        <UnitName Value="srcTree_item_4Package"/>
       </Item47>
       <Item48>
         <Filename Value="srcPKG\srcTree\Items\CORE\srcTree_item_CORE.pas"/>
@@ -221,8 +221,8 @@
         <UnitName Value="srcTree_item_coreMAIN"/>
       </Item51>
       <Item52>
-        <Filename Value="srcPKG\srcTree\Items\srcTree_item_main4Package.pas"/>
-        <UnitName Value="srcTree_item_main4Package"/>
+        <Filename Value="srcPKG\srcTree\Items\srcTree_item_4Project.pas"/>
+        <UnitName Value="srcTree_item_4Project"/>
       </Item52>
       <Item53>
         <Filename Value="srcPKG\srcTree\Items\srcTree_item_fsFolder.pas"/>

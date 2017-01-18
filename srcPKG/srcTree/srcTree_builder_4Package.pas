@@ -26,10 +26,9 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
    srcTree_builder_CORE,
    srcTree_item_coreFileSystem,
    srcTree_item_fsFolder,
+   srcTree_item_fsFile,
 
-   srcTree_item_root4Package,
-   srcTree_item_main4Package,
-
+   srcTree_item_4Package,
    PackageIntf;
 
 
@@ -42,34 +41,35 @@ function srcTree_builder_4Package_MAKE(const Package:TIDEPackage):tSrcTree_Root4
 var i:integer;
     s:string;
   fldr:tSrcTree_item_fsNodeFLDR;
-  flNd:_tSrcTree_item_fsNodeFILE_;
+  flNd:tSrcTree_item_fsFile;
 begin
     {$ifOpt D+}Assert(Assigned(Package),'Package is NILL');{$endIf}
+    //---
+    {$ifDef _DEBUG_}DEBUG('srcTree_builder_4Package_MAKE','create Root4Package');{$endIf}
     result:=tSrcTree_Root4Package.Create(Package.Name);
     //--- пробиваем БАЗОВЫЙ путь
+    {$ifDef _DEBUG_}DEBUG('srcTree_builder_4Package_MAKE','set BaseDIR="'+Package.DirectoryExpanded+'"');{$endIf}
     SrcTreeROOT_set_BaseDIR(result,Package.DirectoryExpanded);
-    //
-    //fldr:=;
-    //if Assigned(fldr) then begin
-        //flNd:=
-        srcTree_builder_add_MainFILE(result,tSrcTree_Main4Package.Create(Package.Filename));
-  	//end;
+    //--- главный файл
+    {$ifDef _DEBUG_}DEBUG('srcTree_builder_4Package_MAKE','add MainFILE="'+Package.Filename+'"');{$endIf}
+    srcTree_builder_add_MainFILE(result,tSrcTree_Main4Package.Create(Package.Filename));
     //--- пробиваем пути поиска
+    {$ifDef _DEBUG_}DEBUG('srcTree_builder_4Package_MAKE','add Search Paths');{$endIf}
     srcTree_builder_add_SearchPATH_DirLIST(result,Package.LazCompilerOptions.OtherUnitFiles,SrcTree_SrchPath__Fu);
     srcTree_builder_add_SearchPATH_DirLIST(result,Package.LazCompilerOptions.IncludePath   ,SrcTree_SrchPath__Fi);
     srcTree_builder_add_SearchPATH_DirLIST(result,Package.LazCompilerOptions.Libraries     ,SrcTree_SrchPath__Fl);
     //--- пробиваем файлы проэкта
+    {$ifDef _DEBUG_}DEBUG('srcTree_builder_4Package_MAKE','add used files');{$endIf}
     for i:=0 to Package.FileCount-1 do begin
         with Package.Files[i] do begin
             S:=Package.Files[i].GetShortFilename(false);
             fldr:=tSrcTree_item_fsNodeFLDR(SrcTreeROOT_fnd_relPATH(result,ExtractFileDir(S)));
             DEBUG('addFile',Filename);
             if Assigned(fldr) then begin
-                flNd:=_tSrcTree_item_fsNodeFILE_.Create(s);
+                flNd:=tSrcTree_item_fsFile.Create(s,Package.Files[i].FileType);
                 srcTree_builder_add_FileNode(result,fldr,flNd);
 						end
             else DEBUG('addFile','not found '+'"'+ExtractFileDir(S)+'"');
-
 				end;
 		end;
 end;

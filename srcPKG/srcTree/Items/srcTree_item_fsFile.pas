@@ -14,6 +14,8 @@ type
   protected
    _fileType_:TPkgFileType;
   public
+    property fileKIND:TPkgFileType read _fileType_;
+  public
     constructor Create(const Text:string; const FileType:TPkgFileType); virtual;
     constructor Create(const Text:string); override;
   end;

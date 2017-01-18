@@ -18,7 +18,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
     lazExt_CopyRAST_wndCORE,
      lazExt_CopyRAST_node_ROOT,
      lazExt_CopyRAST_node_ROOT_package,
-        srcTree_item_root4Package,
+       // srcTree_item_root4Package,
         srcTree_builder_4Package,
 
      lazExt_CopyRAST_StrConsts,
