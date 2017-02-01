@@ -15,16 +15,16 @@ interface
 
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
         in0k_lazIdeSRC_DEBUG,
+        sysutils,
      {$endIf}
 
-   LazFileUtils,
-   FileUtil,
-   sysutils,
+   //LazFileUtils,
+   //FileUtil,
    srcTree_item_CORE,
-   srcTree_item_baseDIR,
+   //srcTree_item_baseDIR,
    srcTree_item_coreROOT,
    srcTree_builder_CORE,
-   srcTree_item_coreFileSystem,
+   //srcTree_item_coreFileSystem,
    srcTree_item_fsFolder,
    srcTree_item_fsFile,
 
@@ -44,7 +44,11 @@ var i:integer;
   flNd:tSrcTree_item_fsFile;
 begin
     {$ifOpt D+}Assert(Assigned(Package),'Package is NILL');{$endIf}
-    //---
+
+    //--------------
+    {$ifDef _DEBUG_}DEBUG('srcTree_builder_4Package_MAKE','START at '+DateTimeToStr(NOW));{$endIf}
+    //--------------
+
     {$ifDef _DEBUG_}DEBUG('srcTree_builder_4Package_MAKE','create Root4Package');{$endIf}
     result:=tSrcTree_Root4Package.Create(Package.Name);
     //--- пробиваем БАЗОВЫЙ путь
@@ -72,6 +76,10 @@ begin
             else DEBUG('addFile','not found '+'"'+ExtractFileDir(S)+'"');
 				end;
 		end;
+
+    //--------------
+    {$ifDef _DEBUG_}DEBUG('srcTree_builder_4Package_MAKE','END at '+DateTimeToStr(NOW));{$endIf}
+    //--------------
 end;
 
 end.
