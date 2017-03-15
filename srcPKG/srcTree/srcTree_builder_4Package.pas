@@ -106,7 +106,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function Get_PTHs(const mOBJ:pointer; const Path:eSrcTree_SrchPath):string;
+function tSrcTree_Builder_4Package.Get_PTHs(const mOBJ:pointer; const Path:eSrcTree_SrchPath):string;
 begin
     case Path of
         SrcTree_SrchPath__Fu: result:=TIDEPackage(mOBJ).LazCompilerOptions.OtherUnitFiles;

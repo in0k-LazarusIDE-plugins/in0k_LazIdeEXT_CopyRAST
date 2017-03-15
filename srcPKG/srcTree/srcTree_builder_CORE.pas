@@ -22,6 +22,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
   in0k_srcTree_fndBaseDIR,
   in0k_srcTree_fndRelPATH,
         in0k_srcTree_fndMainFILE,
+        in0k_srcTree_addSrchPATH,
   in0k_srcTree_getRelPATH;
 
 
@@ -39,6 +40,7 @@ type
     function Set_Main(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; virtual;
   protected
     function Get_PTHs(const mOBJ:pointer; const Path:eSrcTree_SrchPath):string;    virtual;
+    function Set_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):string;        virtual;
 
 
   protected
@@ -71,8 +73,6 @@ function srcTree_builder__CRT__NodeROOT(const nodeCreator:pSrcTree_builder_nodeC
 procedure srcTree_builder_add_MainFILE          (const ROOT:tSrcTree_ROOT; const MAIN:tSrcTree_MAIN);
 
 
-function  srcTree_builder_add_SearchPATH_DirNAME(const ROOT:tSrcTree_ROOT; const DirNAME:string; const PathKIND:eSrcTree_SrchPath):tSrcTree_item_fsNodeFLDR;
-procedure srcTree_builder_add_SearchPATH_DirLIST(const ROOT:tSrcTree_ROOT; const DirLIST:string; const PathKIND:eSrcTree_SrchPath);
 
 procedure srcTree_builder_add_FileNode          (const ROOT:tSrcTree_ROOT; const DirNode:tSrcTree_item_fsNodeFLDR; const FileNode:_tSrcTree_item_fsNodeFILE_);
 
@@ -153,6 +153,15 @@ begin
     result:='';
 end;
 
+function tSrcTree_Builder_CORE.Set_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):string;
+var PathKIND:eSrcTree_SrchPath;
+begin
+    //
+    for PathKIND:=Low(eSrcTree_SrchPath) to High(eSrcTree_SrchPath) do begin
+        srcTree_builder_add_SearchPATH_DirLIST(ROOT,Get_PTHs(mOBJ,PathKIND),PathKIND);
+    end;
+end;
+
 //------------------------------------------------------------------------------
 
 function tSrcTree_Builder_CORE.MAKE_SourceTREE(const MainOBJ:pointer):tSrcTree_ROOT;
@@ -163,7 +172,7 @@ begin
 
     //--- создаем файл ROOT
     result:=Set_ROOT(MainOBJ);
-    {$ifDef _DEBUG_}DEBUG('MAKE_SourceTREE','create Root'+'('+result.ClassName+')'+':'+result.ItemNAME);{$endIf}
+    {$ifDef _DEBUG_}DEBUG('MAKE_SourceTREE','create Root'+'('+result.ClassName+')'+':'+'"'+result.ItemNAME+'"');{$endIf}
 
     //--- пробиваем БАЗОВЫЙ путь
     Set_Base(MainOBJ,result);
@@ -174,6 +183,8 @@ begin
     Set_Main(MainOBJ,result);
     {$ifDef _DEBUG_}DEBUG('MAKE_SourceTREE','set MainFILE'+'('+SrcTree_fndMainFILE(result).ClassName+')'+':'+'"'+SrcTree_fndMainFILE(result).ItemNAME+'"');{$endIf}
 
+    //--- пробиваем Пути ПОИСКА
+    Set_PTHs(MainOBJ,result);
     //   SrcTree_fndBaseDIR(result).src_PATH;
 
     //{$ifDef _DEBUG_}DEBUG('MAKE_SourceTREE','START at '+DateTimeToStr(NOW));{$endIf}
@@ -203,40 +214,6 @@ begin
     {$IfOpt D+}Assert(Assigned(nodeCreator^.Crt_node_Root),'nodeCreator^.Crt_node_Root NOT define');{$endIf}
     result:=nodeCreator^.Crt_node_Root(nodeCreator^.OBJ,ROOT_Name);
     {$ifDef _DEBUG_}DEBUG('srcTree_builder__CORE','create Root '+result.ClassName+':'+result.ItemNAME);{$endIf}
-end;
-
-
-
-// добавить ПУТь поиска
-// @prm ROOT     куда именно добавляем
-// @prm DirNAME  название директории (путь в файловой системе)
-// @prm PathKIND тип "пути поиска"
-function srcTree_builder_add_SearchPATH_DirNAME(const ROOT:tSrcTree_ROOT; const DirNAME:string; const PathKIND:eSrcTree_SrchPath):tSrcTree_item_fsNodeFLDR;
-begin {todo: мож проверки добавить}
-    result:=SrcTree_getRelPATH(ROOT,DirNAME);
-    {$ifDef _debug_}DEBUG('srcTree_builder_add_SearchPATH_DirNAME',Assigned2OK(result)+' PathKIND="'+SrcTree_SrchPathKIND_2_Text(PathKIND)+'"'+' DirNAME="'+DirNAME+'"');{$endIf}
-    if Assigned(result) then begin
-        //--- добавим найденному ТИП пути
-        SrcTree_item_fsFolder__addSearhPATH(result,PathKIND);
-    end;
-end;
-
-// добавить СПИСОК ПУТЕЙ поиска
-// @prm ROOT     куда именно добавляем
-// @prm DirLIST  список директорий с разделителем ";"
-// @prm PathKIND тип "пути поиска"
-procedure srcTree_builder_add_SearchPATH_DirLIST(const ROOT:tSrcTree_ROOT; const DirLIST:string; const PathKIND:eSrcTree_SrchPath);
-var StartPos:Integer;
-    singlDir:string;
-begin
-    {$ifDef _debug_}DEBUG('srcTree_builder_add_SearchPATH_DirLIST','PathKIND="'+SrcTree_SrchPathKIND_2_Text(PathKIND)+'"'+' DirLIST="'+DirLIST+'"');{$endIf}
-    StartPos:=1;
-    singlDir:=GetNextDirectoryInSearchPath(DirLIST,StartPos);
-    while singlDir<>'' do begin
-        srcTree_builder_add_SearchPATH_DirNAME(ROOT,singlDir,PathKIND);
-        //-->
-        singlDir:=GetNextDirectoryInSearchPath(DirLIST,StartPos);
-    end;
 end;
 
 
