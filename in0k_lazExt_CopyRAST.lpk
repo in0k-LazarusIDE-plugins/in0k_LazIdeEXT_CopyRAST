@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="54">
+    <Files Count="63">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -232,6 +232,42 @@
         <Filename Value="srcPKG\srcTree\Items\srcTree_item_fsFile.pas"/>
         <UnitName Value="srcTree_item_fsFile"/>
       </Item54>
+      <Item55>
+        <Filename Value="srcPKG\srcTree\Items\CORE\in0k_srcTree_fndRelPATH.pas"/>
+        <UnitName Value="in0k_srcTree_fndRelPATH"/>
+      </Item55>
+      <Item56>
+        <Filename Value="srcPKG\srcTree\Items\CORE\in0k_srcTree_getRelPATH.pas"/>
+        <UnitName Value="in0k_srcTree_getRelPATH"/>
+      </Item56>
+      <Item57>
+        <Filename Value="srcPKG\srcTree\srcTree_FNC.pas"/>
+        <UnitName Value="srcTree_FNC"/>
+      </Item57>
+      <Item58>
+        <Filename Value="srcPKG\srcTree\Items\CORE\in0k_srcTree_fndBaseDIR.pas"/>
+        <UnitName Value="in0k_srcTree_fndBaseDIR"/>
+      </Item58>
+      <Item59>
+        <Filename Value="srcPKG\srcTree\Items\CORE\in0k_srcTree_getBaseDIR.pas"/>
+        <UnitName Value="in0k_srcTree_getBaseDIR"/>
+      </Item59>
+      <Item60>
+        <Filename Value="srcPKG\srcTree\Items\CORE\in0k_srcTree_setBaseDIR.pas"/>
+        <UnitName Value="in0k_srcTree_setBaseDIR"/>
+      </Item60>
+      <Item61>
+        <Filename Value="srcPKG\srcTree\Items\CORE\in0k_srcTree_getMainFILE.pas"/>
+        <UnitName Value="in0k_srcTree_getMainFILE"/>
+      </Item61>
+      <Item62>
+        <Filename Value="srcPKG\srcTree\Items\CORE\in0k_srcTree_fndMainFILE.pas"/>
+        <UnitName Value="in0k_srcTree_fndMainFILE"/>
+      </Item62>
+      <Item63>
+        <Filename Value="srcPKG\srcTree\Items\CORE\in0k_srcTree_setMainFILE.pas"/>
+        <UnitName Value="in0k_srcTree_setMainFILE"/>
+      </Item63>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

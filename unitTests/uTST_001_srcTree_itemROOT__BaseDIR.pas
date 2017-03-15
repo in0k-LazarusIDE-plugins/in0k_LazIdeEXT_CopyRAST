@@ -8,6 +8,9 @@ uses
   srcTree_item_CORE,
   srcTree_item_coreROOT,
   srcTree_item_coreFileSystem,
+  in0k_srcTree_fndBaseDIR,
+  in0k_srcTree_getBaseDIR,
+  in0k_srcTree_setBaseDIR,
   //---
   Classes, SysUtils, fpcunit, testutils, testregistry;
 
@@ -46,14 +49,14 @@ end;
 procedure tUTST_srcTree_itemROOT__BaseDIR.FND;
 var baseDir:tSrcTree_item;
 begin
-    baseDir:=SrcTreeROOT_fnd_BaseDIR(ROOT);
+    baseDir:=SrcTree_fndBaseDIR(ROOT);
     AssertNull('`baseDir` MUST be nil',baseDir);
 end;
 
 procedure tUTST_srcTree_itemROOT__BaseDIR.GET;
 var baseDir:tSrcTree_item;
 begin
-    baseDir:=SrcTreeROOT_get_BaseDIR(ROOT);
+    baseDir:=SrcTree_getBaseDIR(ROOT);
     AssertNotNull('`baseDir` must be NOT nil',baseDir);
     AssertSame   ('`baseDir.parent` must be ROOT',baseDir.ItemPRNT,ROOT);
 end;
@@ -64,8 +67,8 @@ procedure tUTST_srcTree_itemROOT__BaseDIR.GET_FND;
 var baseDir0:tSrcTree_item;
 var baseDir1:tSrcTree_item;
 begin
-    baseDir0:=SrcTreeROOT_get_BaseDIR(ROOT);
-    baseDir1:=SrcTreeROOT_fnd_BaseDIR(ROOT);
+    baseDir0:=SrcTree_getBaseDIR(ROOT);
+    baseDir1:=SrcTree_fndBaseDIR(ROOT);
     AssertSame('must be EQUAL',baseDir0,baseDir1);
 end;
 
@@ -74,9 +77,9 @@ end;
 procedure tUTST_srcTree_itemROOT__BaseDIR.SET_FND;
 var baseDir:tSrcTree_item;
 begin
-    SrcTreeROOT_set_BaseDIR(ROOT,GetTempDir);
+    SrcTree_setBaseDIR(ROOT,GetTempDir);
     //---
-    baseDir:=SrcTreeROOT_fnd_BaseDIR(ROOT);
+    baseDir:=SrcTree_fndBaseDIR(ROOT);
     AssertNotNull('`baseDir` must be NOT nil',baseDir);
     AssertSame   ('`baseDir.parent` must be ROOT',baseDir.ItemPRNT,ROOT);
 end;
@@ -84,9 +87,9 @@ end;
 procedure tUTST_srcTree_itemROOT__BaseDIR.SET_GET;
 var baseDir:tSrcTree_item;
 begin
-    SrcTreeROOT_set_BaseDIR(ROOT,GetTempDir);
+    SrcTree_setBaseDIR(ROOT,GetTempDir);
     //---
-    baseDir:=SrcTreeROOT_get_BaseDIR(ROOT);
+    baseDir:=SrcTree_getBaseDIR(ROOT);
     AssertNotNull('`baseDir` must be NOT nil',baseDir);
     AssertSame   ('`baseDir.parent` must be ROOT',baseDir.ItemPRNT,ROOT);
 end;

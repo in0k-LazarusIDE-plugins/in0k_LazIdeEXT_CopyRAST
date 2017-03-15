@@ -7,6 +7,9 @@ interface
 uses srcTree_item_coreROOT,
      srcTree_item_coreFileSystem,
      srcTree_item_fsFolder,
+     in0k_srcTree_getRelPATH,
+     in0k_srcTree_fndBaseDIR,
+     in0k_srcTree_setBaseDIR,
     Classes, SysUtils, fpcunit, testutils, testregistry;
 
 type
@@ -37,7 +40,7 @@ implementation
 procedure tUTST_srcTree_itemROOT__get_relPATH_ab_ac_ad.SetUp;
 begin
     ROOT:=tSrcTree_ROOT.Create('ROOT');       //< собсно создаем
-    SrcTreeROOT_set_BaseDIR(ROOT,GetTempDir); //< устанавливаем ГЛАВНЫЙ путь
+    SrcTree_setBaseDIR(ROOT,GetTempDir); //< устанавливаем ГЛАВНЫЙ путь
     dir1:=nil;
     dir2:=nil;
     dir3:=nil;
@@ -67,20 +70,20 @@ begin //Проверка: #1(a/b) #2(a; a/b; a/c) #3(a; a/b; a/c; a/d)
     dirName3:=c_FLDR_A+DirectorySeparator+'D';
 
     //#1 - НОВАЯ
-    dir1:=SrcTreeROOT_get_relPATH(root,dirName1);
+    dir1:=SrcTree_getRelPATH(root,dirName1);
     AssertNotNull('`dir1` is NIL',dir1);
     // проверим структуру
-    AssertSame   ('wrong PARENT' ,dir1.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('wrong PARENT' ,dir1.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
 
     //#2 - НОВАЯ
-    dir2:=SrcTreeROOT_get_relPATH(root,dirName2);
+    dir2:=SrcTree_getRelPATH(root,dirName2);
     AssertNotNull('`dir2` is NIL',dir2);
     // проверим структуру
-    AssertNotSame('wrong PARENT',dir1.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertNotSame('wrong PARENT',dir1.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
     AssertSame   ('wrong NEXT'  ,dir1.ItemNEXT,dir2);
 
     //--- должен СОЗДАТЬ новую
-    dir3:=SrcTreeROOT_get_relPATH(root,dirName3);
+    dir3:=SrcTree_getRelPATH(root,dirName3);
     AssertNotNull('`dir3` is NIL',dir3);
 
     AssertSame   ('wrong NEXT'  ,dir2.ItemNEXT,dir3);

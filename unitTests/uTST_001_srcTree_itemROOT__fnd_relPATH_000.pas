@@ -5,9 +5,11 @@ unit uTST_001_srcTree_itemROOT__fnd_relPATH_000;
 interface
 
 uses srcTree_item_coreROOT,
-     srcTree_item_coreFileSystem,
      srcTree_item_fsFolder,
-    Classes, SysUtils, fpcunit, testutils, testregistry;
+     srcTree_FNC,
+     in0k_srcTree_fndBaseDIR,
+     in0k_srcTree_setBaseDIR,
+    Classes, SysUtils, fpcunit, testregistry;
 
 type
 
@@ -34,7 +36,7 @@ implementation
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.SetUp;
 begin
     ROOT:=tSrcTree_ROOT.Create('ROOT');       //< собсно создаем
-    SrcTreeROOT_set_BaseDIR(ROOT,GetTempDir); //< устанавливаем ГЛАВНЫЙ путь
+    SrcTree_setBaseDIR(ROOT,GetTempDir); //< устанавливаем ГЛАВНЫЙ путь
 end;
 
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.TearDown;
@@ -51,7 +53,7 @@ end;
 
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.baseDIR_is_Present;
 begin
-    AssertNotNull(SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertNotNull(SrcTree_fndBaseDIR(ROOT));
 end;
 
 //==============================================================================
@@ -62,7 +64,7 @@ begin // должно возвращать BaseDIR
     res:=SrcTreeROOT_fnd_relPATH(root,'');
     //---
     AssertNotNull('notFound',res);
-    AssertSame   ('`res` must by BaseDIR',res,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('`res` must by BaseDIR',res,SrcTree_fndBaseDIR(ROOT));
 end;
 
 //------------------------------------------------------------------------------

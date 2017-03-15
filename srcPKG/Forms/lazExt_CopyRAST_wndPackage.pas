@@ -72,6 +72,10 @@ end;
 function Twnd_lazExt_CopyRAST_Package._copyRastObj_CRT_:tCopyRAST_ROOT;
 var root:tCopyRAST_ROOT_package;
        i:integer;
+
+
+    STB:tSrcTree_Builder_4Package;
+
 begin
     result:=nil;
    { try root:=tCopyRAST_ROOT_package.Create('PACKAGE');
@@ -107,9 +111,14 @@ begin
         result:=root;
     except root.free; root:=nil; end;    }
 
-    cmpCopyRAST_Tree.Root:=srcTree_builder_4Package_MAKE(_package_);
+    //cmpCopyRAST_Tree.Root:=srcTree_builder_4Package_MAKE(_package_);
 
+    STB:=tSrcTree_Builder_4Package.Create;
+        //{$ifDef _DEBUG_}DEBUG('srcTree_builder_4Package_MAKE','START at '+DateTimeToStr(NOW));{$endIf}
+    cmpCopyRAST_Tree.Root:=STB.MAKE_SourceTREE(_package_);
 
+        //{$ifDef _DEBUG_}DEBUG('srcTree_builder_4Package_MAKE','START at '+DateTimeToStr(NOW));{$endIf}
+    STB.FREE;
 end;
 
 end.

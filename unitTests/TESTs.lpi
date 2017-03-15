@@ -39,7 +39,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="14">
+    <Units Count="20">
       <Unit0>
         <Filename Value="TESTs.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -96,6 +96,30 @@
         <Filename Value="uTST_004_srcTree_itemROOT__realCase_001.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit13>
+      <Unit14>
+        <Filename Value="..\srcPKG\srcTree\srcTree_FNC.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\srcPKG\srcTree\Items\CORE\in0k_srcTree_getRelPATH.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\srcPKG\srcTree\Items\CORE\in0k_srcTree_fndRelPATH.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\srcPKG\srcTree\Items\CORE\in0k_srcTree_fndBaseDIR.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="..\srcPKG\srcTree\Items\CORE\in0k_srcTree_getBaseDIR.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="..\srcPKG\srcTree\Items\CORE\in0k_srcTree_setBaseDIR.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit19>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -103,7 +127,7 @@
     <PathDelim Value="\"/>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);.."/>
-      <OtherUnitFiles Value="..\srcPKG\srcTree\Items\CORE;..\srcPKG\srcTree\Items"/>
+      <OtherUnitFiles Value="..\srcPKG\srcTree\Items\CORE;..\srcPKG\srcTree\Items;..\srcPKG\srcTree"/>
       <UnitOutputDirectory Value="lib"/>
     </SearchPaths>
     <Parsing>

@@ -6,7 +6,7 @@ uses srcTree_item_coreFileSystem;
 
 type
 
- tCopyRAST_item_BaseDIR=class(_tSrcTree_item_fsBaseDIR_);
+ tSrcTree_BASE=class(_tSrcTree_item_fsBaseDIR_);
 
 
 implementation

@@ -247,7 +247,7 @@ begin
    else // остальное
     if item is _tStcTree_item_fsNode_ then begin // элемент ФайловойСистемы
         if item is _tSrcTree_item_fsNodeFLDR_ then begin
-            if item is tCopyRAST_item_BaseDIR then result:=cSrcTREE_img_BaseDIR
+            if item is tSrcTree_BASE then result:=cSrcTREE_img_BaseDIR
            else
             if item is tSrcTree_item_fsNodeFLDR then begin
                 if (tSrcTree_item_fsNodeFLDR(item).inSearchPATHs=[])

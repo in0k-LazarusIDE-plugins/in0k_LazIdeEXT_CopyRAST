@@ -7,7 +7,10 @@ interface
 uses srcTree_item_coreROOT,
      srcTree_item_coreFileSystem,
      srcTree_item_fsFolder,
-    Classes, SysUtils, fpcunit, testutils, testregistry;
+     in0k_srcTree_getRelPATH,
+     in0k_srcTree_fndBaseDIR,
+     in0k_srcTree_setBaseDIR,
+  Classes, SysUtils, fpcunit, testutils, testregistry;
 
 type
 
@@ -37,7 +40,7 @@ implementation
 procedure tUTST_srcTree_itemROOT__get_relPATH_abc_ab_a.SetUp;
 begin
     ROOT:=tSrcTree_ROOT.Create('ROOT');       //< собсно создаем
-    SrcTreeROOT_set_BaseDIR(ROOT,GetTempDir); //< устанавливаем ГЛАВНЫЙ путь
+    SrcTree_setBaseDIR(ROOT,GetTempDir); //< устанавливаем ГЛАВНЫЙ путь
     FldA:=nil;
     FldB:=nil;
     FldC:=nil;
@@ -67,21 +70,21 @@ begin
     tstFlder02:=tstFlder01+DirectorySeparator+c_FLDR_C;
 
     //--- должен СОЗДАТЬ новую
-    FldC:=SrcTreeROOT_get_relPATH(root,tstFlder02);
+    FldC:=SrcTree_getRelPATH(root,tstFlder02);
     AssertNotNull('`FldC` is NIL',FldC);
-    AssertSame   ('wrong PARENT',FldC.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('wrong PARENT',FldC.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
 
     //--- должен СОЗДАТЬ новую
-    FldB:=SrcTreeROOT_get_relPATH(root,tstFlder01);
+    FldB:=SrcTree_getRelPATH(root,tstFlder01);
     AssertNotNull('`FldB` is NIL',FldB);
-    AssertSame   ('wrong PARENT',FldB.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('wrong PARENT',FldB.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
     AssertSame   ('wrong CHILD' ,FldB.ItemCHLD,FldC);
     AssertSame   ('wrong PARENT',FldC.ItemPRNT,FldB);
 
     //--- должен СОЗДАТЬ новую
-    FldA:=SrcTreeROOT_get_relPATH(root,tstFlder00);
+    FldA:=SrcTree_getRelPATH(root,tstFlder00);
     AssertNotNull('`FldA` is NIL',FldA);
-    AssertSame   ('wrong PARENT',FldA.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('wrong PARENT',FldA.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
     AssertSame   ('wrong CHILD' ,FldA.ItemCHLD,FldB);
     AssertSame   ('wrong PARENT',FldB.ItemPRNT,FldA);
 end;
@@ -96,21 +99,21 @@ begin
     tstFlder02:=tstFlder01+DirectorySeparator+c_FLDR_C;
 
     //--- должен СОЗДАТЬ новую
-    FldC:=SrcTreeROOT_get_relPATH(root,tstFlder02);
+    FldC:=SrcTree_getRelPATH(root,tstFlder02);
     AssertNotNull('`FldC` is NIL',FldC);
-    AssertSame   ('wrong PARENT',FldC.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('wrong PARENT',FldC.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
 
     //--- должен СОЗДАТЬ новую
-    FldB:=SrcTreeROOT_get_relPATH(root,tstFlder01);
+    FldB:=SrcTree_getRelPATH(root,tstFlder01);
     AssertNotNull('`FldB` is NIL',FldB);
-    AssertSame   ('wrong PARENT',FldB.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('wrong PARENT',FldB.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
     AssertSame   ('wrong CHILD' ,FldB.ItemCHLD,FldC);
     AssertSame   ('wrong PARENT',FldC.ItemPRNT,FldB);
 
     //--- должен СОЗДАТЬ новую
-    FldA:=SrcTreeROOT_get_relPATH(root,tstFlder00);
+    FldA:=SrcTree_getRelPATH(root,tstFlder00);
     AssertNotNull('`FldA` is NIL',FldA);
-    AssertSame   ('wrong PARENT',FldA.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('wrong PARENT',FldA.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
     AssertSame   ('wrong CHILD' ,FldA.ItemCHLD,FldB);
     AssertSame   ('wrong PARENT',FldB.ItemPRNT,FldA);
 end;
@@ -125,21 +128,21 @@ begin
     tstFlder02:=tstFlder01+DirectorySeparator+c_FLDR_C;
 
     //--- должен СОЗДАТЬ новую
-    FldC:=SrcTreeROOT_get_relPATH(root,tstFlder02);
+    FldC:=SrcTree_getRelPATH(root,tstFlder02);
     AssertNotNull('`FldC` is NIL',FldC);
-    AssertSame   ('wrong PARENT',FldC.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('wrong PARENT',FldC.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
 
     //--- должен СОЗДАТЬ новую
-    FldB:=SrcTreeROOT_get_relPATH(root,tstFlder01);
+    FldB:=SrcTree_getRelPATH(root,tstFlder01);
     AssertNotNull('`FldB` is NIL',FldB);
-    AssertSame   ('wrong PARENT',FldB.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('wrong PARENT',FldB.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
     AssertSame   ('wrong CHILD' ,FldB.ItemCHLD,FldC);
     AssertSame   ('wrong PARENT',FldC.ItemPRNT,FldB);
 
     //--- должен СОЗДАТЬ новую
-    FldA:=SrcTreeROOT_get_relPATH(root,tstFlder00);
+    FldA:=SrcTree_getRelPATH(root,tstFlder00);
     AssertNotNull('`FldA` is NIL',FldA);
-    AssertSame   ('wrong PARENT',FldA.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('wrong PARENT',FldA.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
     AssertSame   ('wrong CHILD' ,FldA.ItemCHLD,FldB);
     AssertSame   ('wrong PARENT',FldB.ItemPRNT,FldA);
 end;
@@ -154,21 +157,21 @@ begin
     tstFlder02:=tstFlder01+DirectorySeparator+'W'+DirectorySeparator+c_FLDR_C;
 
     //--- должен СОЗДАТЬ новую
-    FldC:=SrcTreeROOT_get_relPATH(root,tstFlder02);
+    FldC:=SrcTree_getRelPATH(root,tstFlder02);
     AssertNotNull('`FldC` is NIL',FldC);
-    AssertSame   ('wrong PARENT',FldC.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('wrong PARENT',FldC.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
 
     //--- должен СОЗДАТЬ новую
-    FldB:=SrcTreeROOT_get_relPATH(root,tstFlder01);
+    FldB:=SrcTree_getRelPATH(root,tstFlder01);
     AssertNotNull('`FldB` is NIL',FldB);
-    AssertSame   ('wrong PARENT',FldB.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('wrong PARENT',FldB.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
     AssertSame   ('wrong CHILD' ,FldB.ItemCHLD,FldC);
     AssertSame   ('wrong PARENT',FldC.ItemPRNT,FldB);
 
     //--- должен СОЗДАТЬ новую
-    FldA:=SrcTreeROOT_get_relPATH(root,tstFlder00);
+    FldA:=SrcTree_getRelPATH(root,tstFlder00);
     AssertNotNull('`FldA` is NIL',FldA);
-    AssertSame   ('wrong PARENT',FldA.ItemPRNT,SrcTreeROOT_fnd_BaseDIR(ROOT));
+    AssertSame   ('wrong PARENT',FldA.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
     AssertSame   ('wrong CHILD' ,FldA.ItemCHLD,FldB);
     AssertSame   ('wrong PARENT',FldB.ItemPRNT,FldA);
 end;

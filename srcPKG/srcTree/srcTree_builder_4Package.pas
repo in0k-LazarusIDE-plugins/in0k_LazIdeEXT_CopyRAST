@@ -23,19 +23,112 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
    srcTree_item_CORE,
    //srcTree_item_baseDIR,
    srcTree_item_coreROOT,
+
+        srcTree_item_coreMAIN,
    srcTree_builder_CORE,
    //srcTree_item_coreFileSystem,
    srcTree_item_fsFolder,
    srcTree_item_fsFile,
+        srcTree_item_baseDIR,
+        srcTree_FNC,
 
+        in0k_srcTree_getBaseDIR,
+        in0k_srcTree_setBaseDIR,
+        in0k_srcTree_setMainFILE,
+
+        //srcTree_fnd_relPATH,
    srcTree_item_4Package,
    PackageIntf;
 
 
 
+type
+
+ tSrcTree_Builder_4Package=class(tSrcTree_Builder_CORE)
+  protected
+    function Crt_ROOT(const name:string):tSrcTree_ROOT; override;
+    function Crt_Base(const name:string):tSrcTree_BASE; override;
+    function Crt_Main(const name:string):tSrcTree_MAIN; override;
+  protected
+    //function Crt_BaseDIR (const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; override;
+  protected
+    function make_ROOT(const MainOBJ:pointer):tSrcTree_ROOT;                           override;
+    function make_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; override;
+    function make_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; override;
+
+
+    //function _make_SourceTREE_root_(const MainOBJ:pointer):tSrcTree_ROOT; override;
+  end;
+
+
+
+
 function srcTree_builder_4Package_MAKE(const Package:TIDEPackage):tSrcTree_Root4Package;
 
+function srcTree_builder_4Package_MAKE(const Package:TIDEPackage; const nodeCreator:pSrcTree_builder_nodeCreator):tSrcTree_Root4Package;
+
+
 implementation
+
+function tSrcTree_Builder_4Package.Crt_ROOT(const name:string):tSrcTree_ROOT;
+begin
+    result:=tSrcTree_Root4Package.Create(name);
+end;
+
+function tSrcTree_Builder_4Package.Crt_Base(const name:string):tSrcTree_BASE;
+begin
+    result:=tSrcTree_BASE.Create(name);
+end;
+
+function tSrcTree_Builder_4Package.Crt_Main(const name:string):tSrcTree_MAIN;
+begin
+    result:=tSrcTree_Main4Package.Create(name);
+end;
+
+{function tSrcTree_Builder_4Package.Crt_BaseDIR(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE;
+begin
+    //----
+end;}
+
+{
+function tSrcTree_Builder_4Package.Crt_RootNODE(const rootName:string):tSrcTree_ROOT;
+begin
+    result:=tSrcTree_Root4Package.Create(rootName);
+end;
+}
+{
+function tSrcTree_Builder_4Package._make_SourceTREE_root_(const MainOBJ:pointer):tSrcTree_ROOT;
+begin
+    result:=Crt_RootNODE(TIDEPackage(MainOBJ).Name);
+end;
+}
+
+
+
+function tSrcTree_Builder_4Package.make_ROOT(const MainOBJ:pointer):tSrcTree_ROOT;
+begin
+    result:=Crt_ROOT(TIDEPackage(MainOBJ).Name);
+end;
+
+function tSrcTree_Builder_4Package.make_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE;
+begin
+    result:=SrcTree_setBaseDIR(ROOT, TIDEPackage(MainOBJ).DirectoryExpanded, @Crt_Base);
+end;
+
+function tSrcTree_Builder_4Package.make_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN;
+begin
+    result:=SrcTree_setMainFILE(ROOT, TIDEPackage(MainOBJ).Filename, @Crt_Main,@Crt_Base);
+end;
+
+
+
+
+
+
+function srcTree_builder_4Package_MAKE(const Package:TIDEPackage; const nodeCreator:pSrcTree_builder_nodeCreator):tSrcTree_Root4Package;
+begin
+
+end;
 
 function srcTree_builder_4Package_MAKE(const Package:TIDEPackage):tSrcTree_Root4Package;
 var i:integer;
@@ -43,7 +136,7 @@ var i:integer;
   fldr:tSrcTree_item_fsNodeFLDR;
   flNd:tSrcTree_item_fsFile;
 begin
-    {$ifOpt D+}Assert(Assigned(Package),'Package is NILL');{$endIf}
+   (* {$ifOpt D+}Assert(Assigned(Package),'Package is NILL');{$endIf}
 
     //--------------
     {$ifDef _DEBUG_}DEBUG('srcTree_builder_4Package_MAKE','START at '+DateTimeToStr(NOW));{$endIf}
@@ -79,7 +172,7 @@ begin
 
     //--------------
     {$ifDef _DEBUG_}DEBUG('srcTree_builder_4Package_MAKE','END at '+DateTimeToStr(NOW));{$endIf}
-    //--------------
+    //--------------   *)
 end;
 
 end.
