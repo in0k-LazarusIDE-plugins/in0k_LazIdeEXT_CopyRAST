@@ -32,10 +32,13 @@ type
     function new_ROOT(const name:string):tSrcTree_ROOT; virtual;
     function new_Base(const name:string):tSrcTree_BASE; virtual;
     function new_Main(const name:string):tSrcTree_MAIN; virtual;
+    function new_FLDR(const name:string):tSrcTree_item_fsNodeFLDR; virtual;
   protected
-    function Set_ROOT(const MainOBJ:pointer                          ):tSrcTree_ROOT; virtual;
-    function Set_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; virtual;
-    function Set_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; virtual;
+    function Set_ROOT(const mOBJ:pointer                          ):tSrcTree_ROOT; virtual;
+    function Set_Base(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; virtual;
+    function Set_Main(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; virtual;
+  protected
+    function Get_PTHs(const mOBJ:pointer; const Path:eSrcTree_SrchPath):string;    virtual;
 
 
   protected
@@ -106,6 +109,12 @@ begin // чисто для примера! переОПРЕдЕЛИТЬ в на�
     result:=tSrcTree_MAIN(name);//nil;
 end;
 
+function tSrcTree_Builder_CORE.new_FLDR(const name:string):tSrcTree_item_fsNodeFLDR;
+begin // чисто для примера! переОПРЕдЕЛИТЬ в наследниках!
+    result:=tSrcTree_item_fsNodeFLDR(name);//nil;
+end;
+
+
 
 {function tSrcTree_Builder_CORE.new_Base(const BaseDIR_PATH:string):tSrcTree_BASE;
 begin
@@ -122,20 +131,29 @@ begin
     result:=Crt_RootNODE('');
 end;}
 
-function tSrcTree_Builder_CORE.Set_ROOT(const MainOBJ:pointer):tSrcTree_ROOT;
+function tSrcTree_Builder_CORE.Set_ROOT(const mOBJ:pointer):tSrcTree_ROOT;
 begin
     result:=nil;
 end;
 
-function tSrcTree_Builder_CORE.Set_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE;
+function tSrcTree_Builder_CORE.Set_Base(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE;
 begin
     result:=nil;
 end;
 
-function tSrcTree_Builder_CORE.Set_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN;
+function tSrcTree_Builder_CORE.Set_Main(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN;
 begin
     result:=nil;
 end;
+
+//------------------------------------------------------------------------------
+
+function tSrcTree_Builder_CORE.Get_PTHs(const mOBJ:pointer; const Path:eSrcTree_SrchPath):string;
+begin
+    result:='';
+end;
+
+//------------------------------------------------------------------------------
 
 function tSrcTree_Builder_CORE.MAKE_SourceTREE(const MainOBJ:pointer):tSrcTree_ROOT;
 begin

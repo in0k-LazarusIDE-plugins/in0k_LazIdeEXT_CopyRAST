@@ -52,9 +52,11 @@ type
   protected
     //function Crt_BaseDIR (const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; override;
   protected
-    function Set_ROOT(const MainOBJ:pointer                          ):tSrcTree_ROOT; override;
-    function Set_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; override;
-    function Set_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; override;
+    function Set_ROOT(const mOBJ:pointer                          ):tSrcTree_ROOT; override;
+    function Set_Base(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; override;
+    function Set_Main(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; override;
+  protected
+    function Get_PTHs(const mOBJ:pointer; const Path:eSrcTree_SrchPath):string;    override;
 
 
     //function _make_SourceTREE_root_(const MainOBJ:pointer):tSrcTree_ROOT; override;
@@ -87,23 +89,34 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tSrcTree_Builder_4Package.Set_ROOT(const MainOBJ:pointer):tSrcTree_ROOT;
+function tSrcTree_Builder_4Package.Set_ROOT(const mOBJ:pointer):tSrcTree_ROOT;
 begin
-    result:=new_ROOT(TIDEPackage(MainOBJ).Name);
+    result:=new_ROOT(TIDEPackage(mOBJ).Name);
 end;
 
-function tSrcTree_Builder_4Package.Set_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE;
+function tSrcTree_Builder_4Package.Set_Base(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE;
 begin
-    result:=SrcTree_setBaseDIR(ROOT, TIDEPackage(MainOBJ).DirectoryExpanded, @new_Base);
+    result:=SrcTree_setBaseDIR(ROOT, TIDEPackage(mOBJ).DirectoryExpanded, @new_Base);
 end;
 
-function tSrcTree_Builder_4Package.Set_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN;
+function tSrcTree_Builder_4Package.Set_Main(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN;
 begin
-    result:=SrcTree_setMainFILE(ROOT, TIDEPackage(MainOBJ).Filename, @new_Main,@new_Base);
+    result:=SrcTree_setMainFILE(ROOT, TIDEPackage(mOBJ).Filename, @new_Main,@new_Base);
 end;
 
+//------------------------------------------------------------------------------
 
+function Get_PTHs(const mOBJ:pointer; const Path:eSrcTree_SrchPath):string;
+begin
+    case Path of
+        SrcTree_SrchPath__Fu: result:=TIDEPackage(mOBJ).LazCompilerOptions.OtherUnitFiles;
+        SrcTree_SrchPath__Fi: result:=TIDEPackage(mOBJ).LazCompilerOptions.IncludePath;
+        SrcTree_SrchPath__Fl: result:=TIDEPackage(mOBJ).LazCompilerOptions.Libraries;
+        else result:='';
+    end;
+end;
 
+//------------------------------------------------------------------------------
 
 
 
