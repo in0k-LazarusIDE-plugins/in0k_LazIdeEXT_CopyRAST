@@ -46,15 +46,15 @@ type
 
  tSrcTree_Builder_4Package=class(tSrcTree_Builder_CORE)
   protected
-    function Crt_ROOT(const name:string):tSrcTree_ROOT; override;
-    function Crt_Base(const name:string):tSrcTree_BASE; override;
-    function Crt_Main(const name:string):tSrcTree_MAIN; override;
+    function new_ROOT(const name:string):tSrcTree_ROOT; override;
+    function new_Base(const name:string):tSrcTree_BASE; override;
+    function new_Main(const name:string):tSrcTree_MAIN; override;
   protected
     //function Crt_BaseDIR (const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; override;
   protected
-    function make_ROOT(const MainOBJ:pointer):tSrcTree_ROOT;                           override;
-    function make_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; override;
-    function make_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; override;
+    function Set_ROOT(const MainOBJ:pointer                          ):tSrcTree_ROOT; override;
+    function Set_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; override;
+    function Set_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; override;
 
 
     //function _make_SourceTREE_root_(const MainOBJ:pointer):tSrcTree_ROOT; override;
@@ -70,54 +70,36 @@ function srcTree_builder_4Package_MAKE(const Package:TIDEPackage; const nodeCrea
 
 implementation
 
-function tSrcTree_Builder_4Package.Crt_ROOT(const name:string):tSrcTree_ROOT;
+function tSrcTree_Builder_4Package.new_ROOT(const name:string):tSrcTree_ROOT;
 begin
     result:=tSrcTree_Root4Package.Create(name);
 end;
 
-function tSrcTree_Builder_4Package.Crt_Base(const name:string):tSrcTree_BASE;
+function tSrcTree_Builder_4Package.new_Base(const name:string):tSrcTree_BASE;
 begin
     result:=tSrcTree_BASE.Create(name);
 end;
 
-function tSrcTree_Builder_4Package.Crt_Main(const name:string):tSrcTree_MAIN;
+function tSrcTree_Builder_4Package.new_Main(const name:string):tSrcTree_MAIN;
 begin
     result:=tSrcTree_Main4Package.Create(name);
 end;
 
-{function tSrcTree_Builder_4Package.Crt_BaseDIR(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE;
-begin
-    //----
-end;}
+//------------------------------------------------------------------------------
 
-{
-function tSrcTree_Builder_4Package.Crt_RootNODE(const rootName:string):tSrcTree_ROOT;
+function tSrcTree_Builder_4Package.Set_ROOT(const MainOBJ:pointer):tSrcTree_ROOT;
 begin
-    result:=tSrcTree_Root4Package.Create(rootName);
-end;
-}
-{
-function tSrcTree_Builder_4Package._make_SourceTREE_root_(const MainOBJ:pointer):tSrcTree_ROOT;
-begin
-    result:=Crt_RootNODE(TIDEPackage(MainOBJ).Name);
-end;
-}
-
-
-
-function tSrcTree_Builder_4Package.make_ROOT(const MainOBJ:pointer):tSrcTree_ROOT;
-begin
-    result:=Crt_ROOT(TIDEPackage(MainOBJ).Name);
+    result:=new_ROOT(TIDEPackage(MainOBJ).Name);
 end;
 
-function tSrcTree_Builder_4Package.make_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE;
+function tSrcTree_Builder_4Package.Set_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE;
 begin
-    result:=SrcTree_setBaseDIR(ROOT, TIDEPackage(MainOBJ).DirectoryExpanded, @Crt_Base);
+    result:=SrcTree_setBaseDIR(ROOT, TIDEPackage(MainOBJ).DirectoryExpanded, @new_Base);
 end;
 
-function tSrcTree_Builder_4Package.make_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN;
+function tSrcTree_Builder_4Package.Set_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN;
 begin
-    result:=SrcTree_setMainFILE(ROOT, TIDEPackage(MainOBJ).Filename, @Crt_Main,@Crt_Base);
+    result:=SrcTree_setMainFILE(ROOT, TIDEPackage(MainOBJ).Filename, @new_Main,@new_Base);
 end;
 
 

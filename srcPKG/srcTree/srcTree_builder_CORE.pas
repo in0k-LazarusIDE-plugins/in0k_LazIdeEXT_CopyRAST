@@ -29,13 +29,13 @@ type
 
  tSrcTree_Builder_CORE=class
   protected
-    function Crt_ROOT(const name:string):tSrcTree_ROOT; virtual;
-    function Crt_Base(const name:string):tSrcTree_BASE; virtual;
-    function Crt_Main(const name:string):tSrcTree_MAIN; virtual;
+    function new_ROOT(const name:string):tSrcTree_ROOT; virtual;
+    function new_Base(const name:string):tSrcTree_BASE; virtual;
+    function new_Main(const name:string):tSrcTree_MAIN; virtual;
   protected
-    function make_ROOT(const MainOBJ:pointer):tSrcTree_ROOT; virtual;
-    function make_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; virtual;
-    function make_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; virtual;
+    function Set_ROOT(const MainOBJ:pointer                          ):tSrcTree_ROOT; virtual;
+    function Set_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; virtual;
+    function Set_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; virtual;
 
 
   protected
@@ -91,23 +91,23 @@ begin
   // _mainOBJ_:=MainOBJ;
 end;}
 
-function tSrcTree_Builder_CORE.Crt_ROOT(const name:string):tSrcTree_ROOT;
-begin
-    result:=NIL;//tSrcTree_ROOT.Create(rootName);
+function tSrcTree_Builder_CORE.new_ROOT(const name:string):tSrcTree_ROOT;
+begin // чисто для примера! переОПРЕдЕЛИТЬ в наследниках!
+    result:=tSrcTree_ROOT(name);//NIL;//tSrcTree_ROOT.Create(rootName);
 end;
 
-function tSrcTree_Builder_CORE.Crt_Base(const name:string):tSrcTree_BASE;
-begin
-    result:=nil;
+function tSrcTree_Builder_CORE.new_Base(const name:string):tSrcTree_BASE;
+begin // чисто для примера! переОПРЕдЕЛИТЬ в наследниках!
+    result:=tSrcTree_BASE(name);//nil;
 end;
 
-function tSrcTree_Builder_CORE.Crt_Main(const name:string):tSrcTree_MAIN;
-begin
-    result:=nil;
+function tSrcTree_Builder_CORE.new_Main(const name:string):tSrcTree_MAIN;
+begin // чисто для примера! переОПРЕдЕЛИТЬ в наследниках!
+    result:=tSrcTree_MAIN(name);//nil;
 end;
 
 
-{function tSrcTree_Builder_CORE.Crt_Base(const BaseDIR_PATH:string):tSrcTree_BASE;
+{function tSrcTree_Builder_CORE.new_Base(const BaseDIR_PATH:string):tSrcTree_BASE;
 begin
     result:=tSrcTree_BASE.Create(BaseDIR_PATH);
 end;}
@@ -122,17 +122,17 @@ begin
     result:=Crt_RootNODE('');
 end;}
 
-function tSrcTree_Builder_CORE.make_ROOT(const MainOBJ:pointer):tSrcTree_ROOT;
+function tSrcTree_Builder_CORE.Set_ROOT(const MainOBJ:pointer):tSrcTree_ROOT;
 begin
     result:=nil;
 end;
 
-function tSrcTree_Builder_CORE.make_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE;
+function tSrcTree_Builder_CORE.Set_Base(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE;
 begin
     result:=nil;
 end;
 
-function tSrcTree_Builder_CORE.make_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN;
+function tSrcTree_Builder_CORE.Set_Main(const MainOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN;
 begin
     result:=nil;
 end;
@@ -144,16 +144,16 @@ begin
     //--------------
 
     //--- создаем файл ROOT
-    result:=make_ROOT(MainOBJ);
+    result:=Set_ROOT(MainOBJ);
     {$ifDef _DEBUG_}DEBUG('MAKE_SourceTREE','create Root'+'('+result.ClassName+')'+':'+result.ItemNAME);{$endIf}
 
     //--- пробиваем БАЗОВЫЙ путь
-    make_Base(MainOBJ,result);
+    Set_Base(MainOBJ,result);
     {$ifDef _DEBUG_}DEBUG('MAKE_SourceTREE','set BaseDIR'+'('+SrcTree_fndBaseDIR(result).ClassName+')'+':'+'"'+SrcTree_fndBaseDIR(result).src_PATH+'"');{$endIf}
     //SrcTreeROOT_set_BaseDIR(result,Package.DirectoryExpanded);
 
     //--- пробиваем ГЛАВНЫЙ файл
-    make_Main(MainOBJ,result);
+    Set_Main(MainOBJ,result);
     {$ifDef _DEBUG_}DEBUG('MAKE_SourceTREE','set MainFILE'+'('+SrcTree_fndMainFILE(result).ClassName+')'+':'+'"'+SrcTree_fndMainFILE(result).ItemNAME+'"');{$endIf}
 
     //   SrcTree_fndBaseDIR(result).src_PATH;
