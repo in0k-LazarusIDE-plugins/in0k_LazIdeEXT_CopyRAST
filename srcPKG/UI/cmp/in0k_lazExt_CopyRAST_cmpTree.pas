@@ -111,9 +111,9 @@ var
 
 procedure _do_reLoad_imageIndexs_Commons_;
 begin
-    cSrcTREE_img_BaseDIR:=IDEImages.LoadImage(16, 'menu_search_files'); {done: пока эта картинка вроже подходит по смыслу}
+    cSrcTREE_img_BaseDIR:=IDEImages.LoadImage(16, 'pkg_files'); {done: пока эта картинка вроже подходит по смыслу}
     cSrcTREE_img_SnglDIR:=IDEImages.LoadImage(16, 'folder');
-    cSrcTREE_img_SrchPTH:=IDEImages.LoadImage(16, 'pkg_files');
+    cSrcTREE_img_SrchPTH:=IDEImages.LoadImage(16, 'menu_search_files');
     //---
     cSrcTREE_img_file    :=IDEImages.LoadImage(16, 'pkg_text');
     cSrcTREE_img_file_src:=IDEImages.LoadImage(16, 'pkg_unit');
