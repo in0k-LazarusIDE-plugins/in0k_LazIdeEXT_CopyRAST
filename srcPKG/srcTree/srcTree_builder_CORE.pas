@@ -117,7 +117,7 @@ end;
 
 function tSrcTree_Builder_CORE.new_FLDR(const name:string):tSrcTree_item_fsNodeFLDR;
 begin // чисто для примера! переОПРЕдЕЛИТЬ в наследниках!
-    result:=tSrcTree_item_fsNodeFLDR(name);//nil;
+    result:=tSrcTree_item_fsNodeFLDR.Create(name);//nil;
 end;
 
 function tSrcTree_Builder_CORE.new_FILE(const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile;

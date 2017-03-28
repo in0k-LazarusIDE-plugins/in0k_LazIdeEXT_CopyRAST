@@ -39,7 +39,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="22">
+    <Units Count="23">
       <Unit0>
         <Filename Value="TESTs.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -57,7 +57,7 @@
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_a_b_c.pas"/>
+        <Filename Value="uTST_003_srcTree_itemROOT__getRelPATH_____a_b_c.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
       <Unit5>
@@ -128,6 +128,10 @@
         <Filename Value="..\srcPKG\srcTree\Items\CORE\in0k_srcTree_addNodeFILE.inc"/>
         <IsPartOfProject Value="True"/>
       </Unit21>
+      <Unit22>
+        <Filename Value="uTST_003_srcTree_itemROOT__getRelPATH_4m__a_b_c.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit22>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
