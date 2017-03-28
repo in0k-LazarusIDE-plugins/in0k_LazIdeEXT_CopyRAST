@@ -13,7 +13,7 @@ uses
 
 
 function SrcTree_setBaseDIR(const item:tSrcTree_ROOT; const baseDir:string; const crtFnc:fSrcTree_getBaseDIR_crtBaseDIR):tSrcTree_BASE;
-function SrcTree_setBaseDIR(const item:tSrcTree_ROOT; const baseDir:string; const crtFnc:aSrcTree_getBaseDIR_crtBaseDIR):tSrcTree_BASE;
+function SrcTree_setBaseDIR(const item:tSrcTree_ROOT; const baseDir:string; const crtFnc:mSrcTree_getBaseDIR_crtBaseDIR):tSrcTree_BASE;
 
 
 procedure SrcTree_setBaseDIR(const item:tSrcTree_ROOT; const baseDir:string; const crtFnc:fSrcTree_getBaseDIR_crtBaseDIR);
@@ -28,7 +28,7 @@ begin
     SrcTree_re_set_itemTEXT(result,baseDir);
 end;
 
-function SrcTree_setBaseDIR(const item:tSrcTree_ROOT; const baseDir:string; const crtFnc:aSrcTree_getBaseDIR_crtBaseDIR):tSrcTree_BASE;
+function SrcTree_setBaseDIR(const item:tSrcTree_ROOT; const baseDir:string; const crtFnc:mSrcTree_getBaseDIR_crtBaseDIR):tSrcTree_BASE;
 begin
     {$ifOpt D+}Assert(Assigned(item));{$endIf}
     result:=SrcTree_getBaseDIR(item,crtFnc);

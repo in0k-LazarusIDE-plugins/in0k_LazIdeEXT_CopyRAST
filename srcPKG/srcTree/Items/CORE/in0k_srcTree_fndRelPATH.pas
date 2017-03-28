@@ -12,8 +12,17 @@ uses
   Classes, SysUtils, LazFileUtils;
 
 function SrcTree_fndRelPATH(const item:tSrcTree_ROOT; const folder:string; out lstDir:_tSrcTree_item_fsNodeFLDR_; out mdlDir:string):_tSrcTree_item_fsNodeFLDR_;
+function SrcTree_fndRelPATH(const item:tSrcTree_ROOT; const folder:string):_tSrcTree_item_fsNodeFLDR_;
 
 implementation
+
+function SrcTree_fndRelPATH(const item:tSrcTree_ROOT; const folder:string):_tSrcTree_item_fsNodeFLDR_;
+var lstDir:_tSrcTree_item_fsNodeFLDR_;
+    mdlDir:string;
+begin
+    result:=SrcTree_fndRelPATH(item,folder,lstDir,mdlDir);
+end;
+
 
 function SrcTree_fndRelPATH(const item:tSrcTree_ROOT; const folder:string; out lstDir:_tSrcTree_item_fsNodeFLDR_; out mdlDir:string):_tSrcTree_item_fsNodeFLDR_;
 var fldr:string;

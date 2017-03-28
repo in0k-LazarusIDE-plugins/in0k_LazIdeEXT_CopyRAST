@@ -6,7 +6,10 @@ uses
   Interfaces, Forms, GuiTestRunner, fpcunittestrunner,
 
 
-uTST_001_srcTree_itemROOT__BaseDIR, uTST_001_srcTree_itemROOT__fnd_relPATH_000,
+uTST_001_srcTree_itemROOT__BaseDIR_fnk,
+uTST_001_srcTree_itemROOT__BaseDIR_mtd,
+
+uTST_001_srcTree_itemROOT__fnd_relPATH_000,
 uTST_003_srcTree_itemROOT__get_relPATH_a_b_c,
 uTST_003_srcTree_itemROOT__get_relPATH_a_b_c__xn,
 uTST_003_srcTree_itemROOT__get_relPATH_W_b_c__xn,

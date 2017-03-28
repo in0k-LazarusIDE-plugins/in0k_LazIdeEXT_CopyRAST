@@ -1,4 +1,4 @@
-unit uTST_001_srcTree_itemROOT__BaseDIR;
+unit uTST_001_srcTree_itemROOT__BaseDIR_fnk;
 
 {$mode objfpc}{$H+}
 
@@ -16,7 +16,7 @@ uses
 
 type
 
- tUTST_srcTree_itemROOT__BaseDIR=class(TTestCase)
+ tUTST_srcTree_itemROOT__BaseDIR_fnk=class(TTestCase)
   protected
     ROOT:tSrcTree_ROOT;
   protected
@@ -34,26 +34,26 @@ type
 
 implementation
 
-procedure tUTST_srcTree_itemROOT__BaseDIR.SetUp;
+procedure tUTST_srcTree_itemROOT__BaseDIR_fnk.SetUp;
 begin
     ROOT:=tSrcTree_ROOT.Create('ROOT');
 end;
 
-procedure tUTST_srcTree_itemROOT__BaseDIR.TearDown;
+procedure tUTST_srcTree_itemROOT__BaseDIR_fnk.TearDown;
 begin
     ROOT.FREE;
 end;
 
 //==============================================================================
 
-procedure tUTST_srcTree_itemROOT__BaseDIR.FND;
+procedure tUTST_srcTree_itemROOT__BaseDIR_fnk.FND;
 var baseDir:tSrcTree_item;
 begin
     baseDir:=SrcTree_fndBaseDIR(ROOT);
     AssertNull('`baseDir` MUST be nil',baseDir);
 end;
 
-procedure tUTST_srcTree_itemROOT__BaseDIR.GET;
+procedure tUTST_srcTree_itemROOT__BaseDIR_fnk.GET;
 var baseDir:tSrcTree_item;
 begin
     baseDir:=SrcTree_getBaseDIR(ROOT);
@@ -63,7 +63,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tUTST_srcTree_itemROOT__BaseDIR.GET_FND;
+procedure tUTST_srcTree_itemROOT__BaseDIR_fnk.GET_FND;
 var baseDir0:tSrcTree_item;
 var baseDir1:tSrcTree_item;
 begin
@@ -74,7 +74,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tUTST_srcTree_itemROOT__BaseDIR.SET_FND;
+procedure tUTST_srcTree_itemROOT__BaseDIR_fnk.SET_FND;
 var baseDir:tSrcTree_item;
 begin
     SrcTree_setBaseDIR(ROOT,GetTempDir);
@@ -84,7 +84,7 @@ begin
     AssertSame   ('`baseDir.parent` must be ROOT',baseDir.ItemPRNT,ROOT);
 end;
 
-procedure tUTST_srcTree_itemROOT__BaseDIR.SET_GET;
+procedure tUTST_srcTree_itemROOT__BaseDIR_fnk.SET_GET;
 var baseDir:tSrcTree_item;
 begin
     SrcTree_setBaseDIR(ROOT,GetTempDir);
@@ -97,6 +97,6 @@ end;
 //==============================================================================
 
 initialization
-    RegisterTest(tUTST_srcTree_itemROOT__BaseDIR);
+    RegisterTest(tUTST_srcTree_itemROOT__BaseDIR_fnk);
 end.
 

@@ -9,6 +9,7 @@ uses srcTree_item_coreROOT,
      in0k_srcTree_getRelPATH,
      in0k_srcTree_fndBaseDIR,
      in0k_srcTree_setBaseDIR,
+     srcTree_item_baseDIR,
 
     Classes, SysUtils, fpcunit, testregistry;
 

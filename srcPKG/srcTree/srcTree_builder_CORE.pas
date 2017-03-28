@@ -12,6 +12,9 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
         in0k_lazIdeSRC_DEBUG,
         sysutils,
      {$endIf}
+        PackageIntf,
+
+        srcTree_item_fsFile,
   srcTree_item_CORE,
   srcTree_item_coreROOT,
   lazExt_CopyRAST_from_IDEProcs,
@@ -34,6 +37,7 @@ type
     function new_Base(const name:string):tSrcTree_BASE; virtual;
     function new_Main(const name:string):tSrcTree_MAIN; virtual;
     function new_FLDR(const name:string):tSrcTree_item_fsNodeFLDR; virtual;
+    function new_FILE(const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile; virtual;
   protected
     function Set_ROOT(const mOBJ:pointer                          ):tSrcTree_ROOT; virtual;
     function Set_Base(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; virtual;
@@ -41,7 +45,9 @@ type
   protected
     function Get_PTHs(const mOBJ:pointer; const Path:eSrcTree_SrchPath):string;    virtual;
     function Set_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):string;        virtual;
-
+  protected
+    function Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile; virtual;
+    function Set_ITMs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):string;        virtual;
 
   protected
 
@@ -114,6 +120,10 @@ begin // чисто для примера! переОПРЕдЕЛИТЬ в на�
     result:=tSrcTree_item_fsNodeFLDR(name);//nil;
 end;
 
+function tSrcTree_Builder_CORE.new_FILE(const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile;
+begin
+    result:=tSrcTree_item_fsFile.Create(fileName,fileKind);
+end;
 
 
 {function tSrcTree_Builder_CORE.new_Base(const BaseDIR_PATH:string):tSrcTree_BASE;
@@ -156,10 +166,21 @@ end;
 function tSrcTree_Builder_CORE.Set_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):string;
 var PathKIND:eSrcTree_SrchPath;
 begin
-    //
     for PathKIND:=Low(eSrcTree_SrchPath) to High(eSrcTree_SrchPath) do begin
-        srcTree_builder_add_SearchPATH_DirLIST(ROOT,Get_PTHs(mOBJ,PathKIND),PathKIND);
+        srcTree_builder_add_SearchPATH_DirLIST(ROOT,Get_PTHs(mOBJ,PathKIND),PathKIND,@new_FLDR);
     end;
+end;
+
+//------------------------------------------------------------------------------
+
+function tSrcTree_Builder_CORE.Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile;
+begin
+
+end;
+
+function tSrcTree_Builder_CORE.Set_ITMs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):string;
+begin
+
 end;
 
 //------------------------------------------------------------------------------
@@ -177,7 +198,6 @@ begin
     //--- пробиваем БАЗОВЫЙ путь
     Set_Base(MainOBJ,result);
     {$ifDef _DEBUG_}DEBUG('MAKE_SourceTREE','set BaseDIR'+'('+SrcTree_fndBaseDIR(result).ClassName+')'+':'+'"'+SrcTree_fndBaseDIR(result).src_PATH+'"');{$endIf}
-    //SrcTreeROOT_set_BaseDIR(result,Package.DirectoryExpanded);
 
     //--- пробиваем ГЛАВНЫЙ файл
     Set_Main(MainOBJ,result);
@@ -185,9 +205,12 @@ begin
 
     //--- пробиваем Пути ПОИСКА
     Set_PTHs(MainOBJ,result);
-    //   SrcTree_fndBaseDIR(result).src_PATH;
+    {$ifDef _DEBUG_}DEBUG('MAKE_SourceTREE','add SrchPATH');{$endIf}
 
-    //{$ifDef _DEBUG_}DEBUG('MAKE_SourceTREE','START at '+DateTimeToStr(NOW));{$endIf}
+    //---
+    Set_ITMs(MainOBJ,result);
+
+
     //--------------
     {$ifDef _DEBUG_}DEBUG('MAKE_SourceTREE','END at '+DateTimeToStr(NOW)+' for MainOBJ'+addr2txt(MainOBJ));{$endIf}
     //--------------

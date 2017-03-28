@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="64">
+    <Files Count="66">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -272,6 +272,14 @@
         <Filename Value="srcPKG\srcTree\Items\CORE\in0k_srcTree_addSrchPATH.pas"/>
         <UnitName Value="in0k_srcTree_addSrchPATH"/>
       </Item64>
+      <Item65>
+        <Filename Value="srcPKG\srcTree\Items\CORE\in0k_srcTree_fndNodeFILE.pas"/>
+        <UnitName Value="in0k_srcTree_fndNodeFILE"/>
+      </Item65>
+      <Item66>
+        <Filename Value="srcPKG\srcTree\Items\CORE\in0k_srcTree_addNodeFILE.pas"/>
+        <UnitName Value="in0k_srcTree_addNodeFILE"/>
+      </Item66>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

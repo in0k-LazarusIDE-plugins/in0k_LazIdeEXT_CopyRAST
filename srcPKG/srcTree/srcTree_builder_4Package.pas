@@ -35,6 +35,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
         in0k_srcTree_getBaseDIR,
         in0k_srcTree_setBaseDIR,
         in0k_srcTree_setMainFILE,
+        in0k_srcTree_addNodeFILE,
 
         //srcTree_fnd_relPATH,
    srcTree_item_4Package,
@@ -57,6 +58,9 @@ type
     function Set_Main(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; override;
   protected
     function Get_PTHs(const mOBJ:pointer; const Path:eSrcTree_SrchPath):string;    override;
+  protected
+    function Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile; override;
+    function Set_ITMs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):string;        override;
 
 
     //function _make_SourceTREE_root_(const MainOBJ:pointer):tSrcTree_ROOT; override;
@@ -113,6 +117,37 @@ begin
         SrcTree_SrchPath__Fi: result:=TIDEPackage(mOBJ).LazCompilerOptions.IncludePath;
         SrcTree_SrchPath__Fl: result:=TIDEPackage(mOBJ).LazCompilerOptions.Libraries;
         else result:='';
+    end;
+end;
+
+//------------------------------------------------------------------------------
+
+function tSrcTree_Builder_4Package.Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile;
+begin
+    result:=SrcTree_addNodeFILE(ROOT, fileName,fileKind, @new_FILE,@new_FLDR);
+end;
+
+function tSrcTree_Builder_4Package.Set_ITMs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):string;
+var i:integer;
+    s:string;
+begin
+    for i:=0 to TIDEPackage(mOBJ).FileCount-1 do begin
+        with TIDEPackage(mOBJ).Files[i] do begin
+            S:=TIDEPackage(mOBJ).Files[i].GetShortFilename(false);
+            Add_FILE(mOBJ,ROOT, S,TIDEPackage(mOBJ).Files[i].FileType);
+            {
+                fldr:=tSrcTree_item_fsNodeFLDR(SrcTreeROOT_fnd_relPATH(result,ExtractFileDir(S)));
+                DEBUG('addFile',Filename);
+                if Assigned(fldr) then begin
+                    flNd:=tSrcTree_item_fsFile.Create(s,Package.Files[i].FileType);
+                    srcTree_builder_add_FileNode(result,fldr,flNd);
+    						end
+                else DEBUG('addFile','not found '+'"'+ExtractFileDir(S)+'"');
+    				end;
+    		end;    f   }
+
+        end;
+
     end;
 end;
 

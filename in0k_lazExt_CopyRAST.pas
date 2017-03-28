@@ -34,7 +34,8 @@ uses
   in0k_srcTree_fndRelPATH, in0k_srcTree_getRelPATH, srcTree_FNC, 
   in0k_srcTree_fndBaseDIR, in0k_srcTree_getBaseDIR, in0k_srcTree_setBaseDIR, 
   in0k_srcTree_getMainFILE, in0k_srcTree_fndMainFILE, 
-  in0k_srcTree_setMainFILE, in0k_srcTree_addSrchPATH, LazarusPackageIntf;
+  in0k_srcTree_setMainFILE, in0k_srcTree_addSrchPATH, 
+  in0k_srcTree_fndNodeFILE, in0k_srcTree_addNodeFILE, LazarusPackageIntf;
 
 implementation
 

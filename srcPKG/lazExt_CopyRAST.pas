@@ -93,6 +93,8 @@ begin
         tmp:=Sender;
     {$elseif (lcl_major=1) and (lcl_minor=6) and (lcl_release=2) and (lcl_patch=0)}
         tmp:=TIDEMenuCommand(sender).MenuItem;
+    {$elseif (lcl_major=1) and (lcl_minor=6) and (lcl_release=4) and (lcl_patch=0)}
+        tmp:=TIDEMenuCommand(sender).MenuItem;
     {$else} //< способ по умолчанию
         {$WARNING 'NOT Tested in this LazarusIDE version'}
         tmp:=Sender;
