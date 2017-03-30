@@ -20,11 +20,11 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
      lazExt_CopyRAST_node_ROOT_package,
        // srcTree_item_root4Package,
         srcTree_builder_4Package,
-
+        srcTree_FNC,
      lazExt_CopyRAST_StrConsts,
      lazExt_CopyRAST_node, lazExt_CopyRAST_node_Folder, lazExt_CopyRAST_node_File,
   PackageIntf,
-  sysutils, Classes, ComCtrls;
+  sysutils, Classes, ComCtrls, ExtCtrls, StdCtrls, Dialogs;
 
 
 const
@@ -35,6 +35,8 @@ type
  { Twnd_lazExt_CopyRAST_Package }
 
  Twnd_lazExt_CopyRAST_Package = class(Twnd_lazExt_CopyRAST_CORE)
+    Button4: TButton;
+    procedure Button4Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   protected
     function _package_:TIDEPackage; inline;
@@ -53,6 +55,19 @@ begin
     inherited;
     //---
     Caption:=cRes_CopyRAST_PKG_name;
+end;
+
+procedure Twnd_lazExt_CopyRAST_Package.Button4Click(Sender: TObject);
+//var tmp:tSrcTree_ROOT;
+begin
+   // if SaveDialog1.Execute then begin
+        SrcTreeROOT_toGourceLOG(cmpCopyRAST_Tree.Root,SaveDialog1.FileName);
+    //end;
+
+  //  tmp:=cmpCopyRAST_Tree.Root;
+    //cmpCopyRAST_Tree.Root:=NIL;
+  //  cmpCopyRAST_Tree.Clear;
+  //  tmp.FREE;
 end;
 
 //------------------------------------------------------------------------------

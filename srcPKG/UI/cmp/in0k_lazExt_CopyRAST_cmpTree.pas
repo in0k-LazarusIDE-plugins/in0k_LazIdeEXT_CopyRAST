@@ -221,7 +221,7 @@ function tCmp_CopyRAST_Tree._root_get_:tSrcTree_ROOT;
 begin
     {todo: это ВВРЕМЕННАЯ проверка, тут что-то другое надо, для аозможности ГРУПП проектов}
     {$ifOpt D+}Assert(Assigned(_root_)and(_root_ is tSrcTree_ROOT) ,'_root_ NOT tSrcTree_ROOT');{$endIf}
-    if root is tSrcTree_ROOT then SrcTREE_imageIndexs_need4Package;
+    //if root is tSrcTree_ROOT then SrcTREE_imageIndexs_need4Package;
     result:=tSrcTree_ROOT(_root_);
 end;
 

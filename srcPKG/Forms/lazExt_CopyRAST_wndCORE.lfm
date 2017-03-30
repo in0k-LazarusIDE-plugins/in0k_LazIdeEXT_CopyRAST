@@ -1,7 +1,7 @@
 object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
-  Left = 415
+  Left = 321
   Height = 471
-  Top = 213
+  Top = 186
   Width = 662
   Caption = 'wnd_lazExt_CopyRAST_CORE'
   ClientHeight = 471
@@ -9,7 +9,7 @@ object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.6.2.0'
+  LCLVersion = '1.6.4.0'
   object ItemsTreeView: TTreeView
     Left = 0
     Height = 421
@@ -53,13 +53,17 @@ object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
       TabOrder = 1
     end
     object Button3: TButton
-      Left = 568
+      Left = 424
       Height = 25
-      Top = 5
+      Top = 8
       Width = 75
       Caption = 'Button3'
       OnClick = Button3Click
       TabOrder = 2
     end
+  end
+  object SaveDialog1: TSaveDialog
+    left = 513
+    top = 10
   end
 end

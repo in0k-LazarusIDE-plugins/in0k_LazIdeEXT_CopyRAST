@@ -14,7 +14,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
      IDEImagesIntf, PackageIntf,
      lazExt_CopyRAST_FuckUpForm,
      in0k_lazExt_CopyRAST_cmpTree,
-
+     srcTree_FNC,
      srcTree_item_coreROOT,
 
     lazExt_CopyRAST_node_ROOT,
@@ -35,6 +35,7 @@ type
 		Button3: TButton;
     ItemsTreeView: TTreeView;
     Panel1: TPanel;
+    SaveDialog1: TSaveDialog;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
 		procedure Button3Click(Sender: TObject);
@@ -208,6 +209,10 @@ end;
 procedure Twnd_lazExt_CopyRAST_CORE.Button3Click(Sender: TObject);
 //var tmp:tSrcTree_ROOT;
 begin
+   // if SaveDialog1.Execute then begin
+        SrcTreeROOT_toGourceLOG(cmpCopyRAST_Tree.Root,SaveDialog1.FileName);
+    //end;
+
   //  tmp:=cmpCopyRAST_Tree.Root;
     //cmpCopyRAST_Tree.Root:=NIL;
   //  cmpCopyRAST_Tree.Clear;

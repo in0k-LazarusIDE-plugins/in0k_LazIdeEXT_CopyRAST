@@ -36,7 +36,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
         in0k_srcTree_setBaseDIR,
         in0k_srcTree_setMainFILE,
         in0k_srcTree_addNodeFILE,
-
+        in0k_srcTree_addSrchPATH,
         //srcTree_fnd_relPATH,
    srcTree_item_4Package,
    PackageIntf;
@@ -57,7 +57,8 @@ type
     function Set_Base(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; override;
     function Set_Main(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; override;
   protected
-    function Get_PTHs(const mOBJ:pointer; const Path:eSrcTree_SrchPath):string;    override;
+    function Add_PATH(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirPath:string):tSrcTree_item_fsNodeFLDR; override;
+    function Get_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath):string;    override;
   protected
     function Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile; override;
     function Set_ITMs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):string;        override;
@@ -110,7 +111,13 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tSrcTree_Builder_4Package.Get_PTHs(const mOBJ:pointer; const Path:eSrcTree_SrchPath):string;
+function tSrcTree_Builder_4Package.Add_PATH(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirPath:string):tSrcTree_item_fsNodeFLDR;
+begin
+    result:=srcTree_builder_add_SearchPATH_DirNAME(ROOT,DirPath,Path, @new_FLDR);
+
+end;
+
+function tSrcTree_Builder_4Package.Get_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath):string;
 begin
     case Path of
         SrcTree_SrchPath__Fu: result:=TIDEPackage(mOBJ).LazCompilerOptions.OtherUnitFiles;

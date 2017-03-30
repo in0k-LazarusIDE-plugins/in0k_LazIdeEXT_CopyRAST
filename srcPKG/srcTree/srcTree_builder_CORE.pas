@@ -43,7 +43,9 @@ type
     function Set_Base(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; virtual;
     function Set_Main(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; virtual;
   protected
-    function Get_PTHs(const mOBJ:pointer; const Path:eSrcTree_SrchPath):string;    virtual;
+    function Add_PATH(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirPath:string):tSrcTree_item_fsNodeFLDR; virtual;
+    function Add_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirLIST:string):string;    virtual;
+    function Get_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath):string;    virtual;
     function Set_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):string;        virtual;
   protected
     function Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile; virtual;
@@ -158,7 +160,31 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tSrcTree_Builder_CORE.Get_PTHs(const mOBJ:pointer; const Path:eSrcTree_SrchPath):string;
+function tSrcTree_Builder_CORE.Add_PATH(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirPath:string):tSrcTree_item_fsNodeFLDR;
+begin
+    //result:=srcTree_builder_add_SearchPATH_DirNAME(mOBJ,DirPath,Path, @new_FLDR);
+
+    //
+end;
+
+function tSrcTree_Builder_CORE.Add_PTHs(const mOBJ:pointer;  const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirLIST:string):string;
+var StartPos:Integer;
+    singlDir:string;
+    tmpFLDR :tSrcTree_item_fsNodeFLDR;
+begin
+    //{$ifDef _debug_}DEBUG('srcTree_builder_add_SearchPATH_DirLIST','PathKIND="'+SrcTree_SrchPathKIND_2_Text(PathKIND)+'"'+' DirLIST="'+DirLIST+'"');{$endIf}
+    StartPos:=1;
+    singlDir:=GetNextDirectoryInSearchPath(DirLIST,StartPos);
+        while singlDir<>'' do begin
+            tmpFLDR:=Add_PATH(mOBJ,ROOT,Path,singlDir);
+            {$ifDef _DEBUG_}DEBUG('MAKE_SourceTREE','add SrchPATH'+'('+tmpFLDR.ClassName+')'+':'+'"'+tmpFLDR.src_PATH+'"');{$endIf}
+            //-->
+            singlDir:=GetNextDirectoryInSearchPath(DirLIST,StartPos);
+        end;
+   // end;
+end;
+
+function tSrcTree_Builder_CORE.Get_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath):string;
 begin
     result:='';
 end;
@@ -167,7 +193,8 @@ function tSrcTree_Builder_CORE.Set_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_
 var PathKIND:eSrcTree_SrchPath;
 begin
     for PathKIND:=Low(eSrcTree_SrchPath) to High(eSrcTree_SrchPath) do begin
-        srcTree_builder_add_SearchPATH_DirLIST(ROOT,Get_PTHs(mOBJ,PathKIND),PathKIND,@new_FLDR);
+        //srcTree_builder_add_SearchPATH_DirLIST(ROOT,Get_PTHs(mOBJ,PathKIND),PathKIND,@new_FLDR);
+        Add_PTHs(mOBJ,ROOT,PathKIND,Get_PTHs(mOBJ,ROOT,PathKIND));
     end;
 end;
 

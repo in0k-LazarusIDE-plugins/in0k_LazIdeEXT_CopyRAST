@@ -106,7 +106,7 @@ begin
     result:='';
     //--- ищем родителя типа _tStcTree_item_fsNode_
     tmp:=ItemPRNT;
-    while Assigned(tmp) and not (ItemPRNT is _tStcTree_item_fsNode_) do tmp:=tmp.ItemPRNT;
+    while Assigned(tmp) and not(tmp is _tStcTree_item_fsNode_) do tmp:=tmp.ItemPRNT;
     //---
     if Assigned(tmp) then begin // ага ... есть таки у кого спросить
         if ItemPRNT is _tSrcTree_item_fsBaseDIR_ then result:=''

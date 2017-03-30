@@ -7,7 +7,7 @@ begin
         tmp:=SrcTree_getRelPATH(item, extractFileDir(fileName), crtRelPATH);
         {$ifOpt D+}Assert(Assigned(tmp));{$endIf}
         result:=crtFnc(fileName, fileKind);
-        SrcTree_insert_ChldFrst(tmp,result);
+        SrcTree_insert_ChldLast(tmp,result);
     end;
 end;
 
