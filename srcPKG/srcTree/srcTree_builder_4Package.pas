@@ -20,25 +20,25 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
 
    //LazFileUtils,
    //FileUtil,
-   srcTree_item_CORE,
+   in0k_lazIdeSRC_srcTree_item_CORE,
    //srcTree_item_baseDIR,
-   srcTree_item_coreROOT,
+   in0k_lazIdeSRC_srcTree_item_Globals,
 
-        srcTree_item_coreMAIN,
+
    srcTree_builder_CORE,
    //srcTree_item_coreFileSystem,
-   srcTree_item_fsFolder,
-   srcTree_item_fsFile,
-        srcTree_item_baseDIR,
+   in0k_lazIdeSRC_srcTree_item_fsFolder,
+   in0k_lazIdeSRC_srcTree_item_fsFile,
+
         srcTree_FNC,
 
-        in0k_srcTree_getBaseDIR,
+        in0k_lazIdeSRC_srcTree_FNK_getBaseDIR,
         in0k_srcTree_setBaseDIR,
         in0k_srcTree_setMainFILE,
         in0k_srcTree_addNodeFILE,
         in0k_srcTree_addSrchPATH,
         //srcTree_fnd_relPATH,
-   srcTree_item_4Package,
+
    PackageIntf;
 
 
@@ -57,10 +57,10 @@ type
     function Set_Base(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; override;
     function Set_Main(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; override;
   protected
-    function Add_PATH(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirPath:string):tSrcTree_item_fsNodeFLDR; override;
+    function Add_PATH(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirPath:string):tSrcTree_fsFLDR; override;
     function Get_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath):string;    override;
   protected
-    function Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile; override;
+    function Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_fsFILE; override;
     function Set_ITMs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):string;        override;
 
 
@@ -111,7 +111,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tSrcTree_Builder_4Package.Add_PATH(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirPath:string):tSrcTree_item_fsNodeFLDR;
+function tSrcTree_Builder_4Package.Add_PATH(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirPath:string):tSrcTree_fsFLDR;
 begin
     result:=srcTree_builder_add_SearchPATH_DirNAME(ROOT,DirPath,Path, @new_FLDR);
 
@@ -129,7 +129,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tSrcTree_Builder_4Package.Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile;
+function tSrcTree_Builder_4Package.Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_fsFILE;
 begin
     result:=SrcTree_addNodeFILE(ROOT, fileName,fileKind, @new_FILE,@new_FLDR);
 end;
@@ -143,10 +143,10 @@ begin
             S:=TIDEPackage(mOBJ).Files[i].GetShortFilename(false);
             Add_FILE(mOBJ,ROOT, S,TIDEPackage(mOBJ).Files[i].FileType);
             {
-                fldr:=tSrcTree_item_fsNodeFLDR(SrcTreeROOT_fnd_relPATH(result,ExtractFileDir(S)));
+                fldr:=tSrcTree_fsFLDR(SrcTreeROOT_fnd_relPATH(result,ExtractFileDir(S)));
                 DEBUG('addFile',Filename);
                 if Assigned(fldr) then begin
-                    flNd:=tSrcTree_item_fsFile.Create(s,Package.Files[i].FileType);
+                    flNd:=tSrcTree_fsFILE.Create(s,Package.Files[i].FileType);
                     srcTree_builder_add_FileNode(result,fldr,flNd);
     						end
                 else DEBUG('addFile','not found '+'"'+ExtractFileDir(S)+'"');
@@ -170,8 +170,8 @@ end;
 function srcTree_builder_4Package_MAKE(const Package:TIDEPackage):tSrcTree_Root4Package;
 var i:integer;
     s:string;
-  fldr:tSrcTree_item_fsNodeFLDR;
-  flNd:tSrcTree_item_fsFile;
+  fldr:tSrcTree_fsFLDR;
+  flNd:tSrcTree_fsFILE;
 begin
    (* {$ifOpt D+}Assert(Assigned(Package),'Package is NILL');{$endIf}
 
@@ -197,10 +197,10 @@ begin
     for i:=0 to Package.FileCount-1 do begin
         with Package.Files[i] do begin
             S:=Package.Files[i].GetShortFilename(false);
-            fldr:=tSrcTree_item_fsNodeFLDR(SrcTreeROOT_fnd_relPATH(result,ExtractFileDir(S)));
+            fldr:=tSrcTree_fsFLDR(SrcTreeROOT_fnd_relPATH(result,ExtractFileDir(S)));
             DEBUG('addFile',Filename);
             if Assigned(fldr) then begin
-                flNd:=tSrcTree_item_fsFile.Create(s,Package.Files[i].FileType);
+                flNd:=tSrcTree_fsFILE.Create(s,Package.Files[i].FileType);
                 srcTree_builder_add_FileNode(result,fldr,flNd);
 						end
             else DEBUG('addFile','not found '+'"'+ExtractFileDir(S)+'"');

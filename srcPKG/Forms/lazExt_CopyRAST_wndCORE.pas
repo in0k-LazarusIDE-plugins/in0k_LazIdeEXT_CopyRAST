@@ -15,7 +15,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
      lazExt_CopyRAST_FuckUpForm,
      in0k_lazExt_CopyRAST_cmpTree,
      srcTree_FNC,
-     srcTree_item_coreROOT,
+     in0k_lazIdeSRC_srcTree_item_Globals,
 
     lazExt_CopyRAST_node_ROOT,
     lazExt_CopyRAST_node_ROOT_package,

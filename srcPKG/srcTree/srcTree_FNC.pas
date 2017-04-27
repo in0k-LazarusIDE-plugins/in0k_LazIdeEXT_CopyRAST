@@ -14,25 +14,25 @@ uses
         in0k_lazIdeSRC_DEBUG,
         //sysutils,
      {$endIf}
-  srcTree_item_CORE,
-  srcTree_item_coreROOT,
-  srcTree_item_coreFileSystem,
-  srcTree_item_fsFolder,
+  in0k_lazIdeSRC_srcTree_item_CORE,
+  in0k_lazIdeSRC_srcTree_item_Globals,
+  in0k_lazIdeSRC_srcTree_item_coreFileSystem,
+  in0k_lazIdeSRC_srcTree_item_fsFolder,
   in0k_srcTree_fndRelPATH,
   Classes, SysUtils;
 
-function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_item_fsNodeFLDR;
+function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_fsFLDR;
 
 procedure SrcTreeROOT_toGourceLOG(const item:tSrcTree_item; const FileName:string);
 
 
 implementation
 
-function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_item_fsNodeFLDR;
+function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_fsFLDR;
 var lstDir:_tSrcTree_item_fsNodeFLDR_;
     mdlDir:string;
 begin
-    result:=tSrcTree_item_fsNodeFLDR(in0k_srcTree_fndRelPATH.SrcTree_fndRelPATH(item,folder,lstDir,mdlDir));
+    result:=tSrcTree_fsFLDR(in0k_srcTree_fndRelPATH.SrcTree_fndRelPATH(item,folder,lstDir,mdlDir));
 end;
 
 const smb='|';

@@ -14,15 +14,15 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
      {$endIf}
         PackageIntf,
 
-        srcTree_item_fsFile,
-  srcTree_item_CORE,
-  srcTree_item_coreROOT,
+        in0k_lazIdeSRC_srcTree_item_fsFile,
+  in0k_lazIdeSRC_srcTree_item_CORE,
+  in0k_lazIdeSRC_srcTree_item_Globals,
   lazExt_CopyRAST_from_IDEProcs,
-  srcTree_item_coreFileSystem,
-  srcTree_item_coreMAIN,
-  srcTree_item_fsFolder,
-  srcTree_item_baseDIR,
-  in0k_srcTree_fndBaseDIR,
+  in0k_lazIdeSRC_srcTree_item_coreFileSystem,
+
+  in0k_lazIdeSRC_srcTree_item_fsFolder,
+
+  in0k_lazIdeSRC_srcTree_FNK_fndBaseDIR,
   in0k_srcTree_fndRelPATH,
         in0k_srcTree_fndMainFILE,
         in0k_srcTree_addSrchPATH,
@@ -36,24 +36,24 @@ type
     function new_ROOT(const name:string):tSrcTree_ROOT; virtual;
     function new_Base(const name:string):tSrcTree_BASE; virtual;
     function new_Main(const name:string):tSrcTree_MAIN; virtual;
-    function new_FLDR(const name:string):tSrcTree_item_fsNodeFLDR; virtual;
-    function new_FILE(const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile; virtual;
+    function new_FLDR(const name:string):tSrcTree_fsFLDR; virtual;
+    function new_FILE(const fileName:string; const fileKind:TPkgFileType):tSrcTree_fsFILE; virtual;
   protected
     function Set_ROOT(const mOBJ:pointer                          ):tSrcTree_ROOT; virtual;
     function Set_Base(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_BASE; virtual;
     function Set_Main(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):tSrcTree_MAIN; virtual;
   protected
-    function Add_PATH(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirPath:string):tSrcTree_item_fsNodeFLDR; virtual;
+    function Add_PATH(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirPath:string):tSrcTree_fsFLDR; virtual;
     function Add_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirLIST:string):string;    virtual;
     function Get_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath):string;    virtual;
     function Set_PTHs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):string;        virtual;
   protected
-    function Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile; virtual;
+    function Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_fsFILE; virtual;
     function Set_ITMs(const mOBJ:pointer; const ROOT:tSrcTree_ROOT):string;        virtual;
 
   protected
 
-    function Crt_fsNodeFLDR(const folderName:string):tSrcTree_item_fsNodeFLDR;
+    function Crt_fsNodeFLDR(const folderName:string):tSrcTree_fsFLDR;
   public
     function MAKE_SourceTREE(const MainOBJ:pointer):tSrcTree_ROOT;
   public
@@ -62,7 +62,7 @@ type
 
 type
  fCrt_Node_ROOT =function(const OBJ:pointer; const ROOT_Name:string):tSrcTree_ROOT;
- fCrt_fsNodeFLDR=function(const OBJ:pointer; const folderName:string):tSrcTree_item_fsNodeFLDR;
+ fCrt_fsNodeFLDR=function(const OBJ:pointer; const folderName:string):tSrcTree_fsFLDR;
 
  rSrcTree_builder_nodeCreator=record
     OBJ:pointer;
@@ -78,11 +78,11 @@ function srcTree_builder__CRT__NodeROOT(const nodeCreator:pSrcTree_builder_nodeC
 
 
 
-procedure srcTree_builder_add_MainFILE          (const ROOT:tSrcTree_ROOT; const MAIN:tSrcTree_MAIN);
+//procedure srcTree_builder_add_MainFILE          (const ROOT:tSrcTree_ROOT; const MAIN:tSrcTree_MAIN);
 
 
 
-procedure srcTree_builder_add_FileNode          (const ROOT:tSrcTree_ROOT; const DirNode:tSrcTree_item_fsNodeFLDR; const FileNode:_tSrcTree_item_fsNodeFILE_);
+//procedure srcTree_builder_add_FileNode          (const ROOT:tSrcTree_ROOT; const DirNode:tSrcTree_item_fsNodeFLDR; const FileNode:_tSrcTree_item_fsNodeFILE_);
 
 
 implementation
@@ -117,14 +117,14 @@ begin // чисто для примера! переОПРЕдЕЛИТЬ в на�
     result:=tSrcTree_MAIN(name);//nil;
 end;
 
-function tSrcTree_Builder_CORE.new_FLDR(const name:string):tSrcTree_item_fsNodeFLDR;
+function tSrcTree_Builder_CORE.new_FLDR(const name:string):tSrcTree_fsFLDR;
 begin // чисто для примера! переОПРЕдЕЛИТЬ в наследниках!
-    result:=tSrcTree_item_fsNodeFLDR.Create(name);//nil;
+    result:=tSrcTree_fsFLDR.Create(name);//nil;
 end;
 
-function tSrcTree_Builder_CORE.new_FILE(const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile;
+function tSrcTree_Builder_CORE.new_FILE(const fileName:string; const fileKind:TPkgFileType):tSrcTree_fsFILE;
 begin
-    result:=tSrcTree_item_fsFile.Create(fileName,fileKind);
+    result:=tSrcTree_fsFILE.Create(fileName,fileKind);
 end;
 
 
@@ -133,9 +133,9 @@ begin
     result:=tSrcTree_BASE.Create(BaseDIR_PATH);
 end;}
 
-function tSrcTree_Builder_CORE.Crt_fsNodeFLDR(const folderName:string):tSrcTree_item_fsNodeFLDR;
+function tSrcTree_Builder_CORE.Crt_fsNodeFLDR(const folderName:string):tSrcTree_fsFLDR;
 begin
-    result:=tSrcTree_item_fsNodeFLDR.Create(folderName);
+    result:=tSrcTree_fsFLDR.Create(folderName);
 end;
 
 {function tSrcTree_Builder_CORE._make_SourceTREE_root_(const MainOBJ:pointer):tSrcTree_ROOT;
@@ -160,7 +160,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tSrcTree_Builder_CORE.Add_PATH(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirPath:string):tSrcTree_item_fsNodeFLDR;
+function tSrcTree_Builder_CORE.Add_PATH(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirPath:string):tSrcTree_fsFLDR;
 begin
     //result:=srcTree_builder_add_SearchPATH_DirNAME(mOBJ,DirPath,Path, @new_FLDR);
 
@@ -170,7 +170,7 @@ end;
 function tSrcTree_Builder_CORE.Add_PTHs(const mOBJ:pointer;  const ROOT:tSrcTree_ROOT; const Path:eSrcTree_SrchPath; const DirLIST:string):string;
 var StartPos:Integer;
     singlDir:string;
-    tmpFLDR :tSrcTree_item_fsNodeFLDR;
+    tmpFLDR :tSrcTree_fsFLDR;
 begin
     //{$ifDef _debug_}DEBUG('srcTree_builder_add_SearchPATH_DirLIST','PathKIND="'+SrcTree_SrchPathKIND_2_Text(PathKIND)+'"'+' DirLIST="'+DirLIST+'"');{$endIf}
     StartPos:=1;
@@ -200,7 +200,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tSrcTree_Builder_CORE.Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_item_fsFile;
+function tSrcTree_Builder_CORE.Add_FILE(const mOBJ:pointer; const ROOT:tSrcTree_ROOT; const fileName:string; const fileKind:TPkgFileType):tSrcTree_fsFILE;
 begin
 
 end;
@@ -267,16 +267,16 @@ begin
 end;
 
 
-procedure srcTree_builder_add_MainFILE(const ROOT:tSrcTree_ROOT; const MAIN:tSrcTree_MAIN);
+{procedure srcTree_builder_add_MainFILE(const ROOT:tSrcTree_ROOT; const MAIN:tSrcTree_MAIN);
 begin
     {$ifDef _debug_}DEBUG('srcTree_builder_add_MainFILE','MAIN="'+MAIN.ItemTEXT+'"');{$endIf}
     SrcTreeROOT_add_Main(ROOT,MAIN);
-end;
+end; }
 
-procedure srcTree_builder_add_FileNode(const ROOT:tSrcTree_ROOT; const DirNode:tSrcTree_item_fsNodeFLDR; const FileNode:_tSrcTree_item_fsNodeFILE_);
+{procedure srcTree_builder_add_FileNode(const ROOT:tSrcTree_ROOT; const DirNode:tSrcTree_fsFLDR; const FileNode:_tSrcTree_item_fsNodeFILE_);
 begin
     SrcTreeROOT_add_File(ROOT,DirNode,FileNode);
-end;
+end;}
 
 end.
 

@@ -8,19 +8,19 @@ uses Controls, ComCtrls, Forms,
      PackageIntf,
      IDEImagesIntf,
 
-    srcTree_item_CORE,
-    srcTree_item_coreROOT,
-    srcTree_item_coreFileSystem,
+    in0k_lazIdeSRC_srcTree_item_CORE,
+    in0k_lazIdeSRC_srcTree_item_Globals,
+    in0k_lazIdeSRC_srcTree_item_coreFileSystem,
     //---
 
-    srcTree_item_coreMAIN,
+
     //srcTree_item_4Package,
 
-    srcTree_item_baseDIR,
-    srcTree_item_4Package,
-    srcTree_item_4Project,
-    srcTree_item_fsFolder,
-    srcTree_item_fsFile,
+
+
+
+    in0k_lazIdeSRC_srcTree_item_fsFolder,
+    in0k_lazIdeSRC_srcTree_item_fsFile,
 
     Classes, SysUtils;
 
@@ -249,16 +249,16 @@ begin
         if item is _tSrcTree_item_fsNodeFLDR_ then begin
             if item is tSrcTree_BASE then result:=cSrcTREE_img_BaseDIR
            else
-            if item is tSrcTree_item_fsNodeFLDR then begin
-                if (tSrcTree_item_fsNodeFLDR(item).inSearchPATHs=[])
+            if item is tSrcTree_fsFLDR then begin
+                if (tSrcTree_fsFLDR(item).inSearchPATHs=[])
                 then result:=cSrcTREE_img_SnglDIR
                 else result:=cSrcTREE_img_SrchPTH;
             end;
         end
        else
         if item is _tSrcTree_item_fsNodeFILE_ then begin
-            if item is tSrcTree_item_fsFile then begin
-                case tSrcTree_item_fsFile(item).fileKIND of
+            if item is tSrcTree_fsFILE then begin
+                case tSrcTree_fsFILE(item).fileKIND of
                   pftUnit:        result:=cSrcTREE_img_file_src;
                   pftVirtualUnit: result:=cSrcTREE_img_file_src;
                   pftMainUnit:    result:=cSrcTREE_img_file_REG;

@@ -5,7 +5,7 @@ unit lazExt_CopyRAST_node;
 interface
 
 uses lazExt_CopyRAST_StrConsts,
-  srcTree_item_CORE,
+  in0k_lazIdeSRC_srcTree_item_CORE,
   Classes, SysUtils, LazFileUtils;
 
 type

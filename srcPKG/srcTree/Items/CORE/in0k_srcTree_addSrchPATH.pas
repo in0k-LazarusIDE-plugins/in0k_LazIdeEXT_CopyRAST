@@ -13,12 +13,12 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
         in0k_lazIdeSRC_DEBUG,
         sysutils,
      {$endIf}
-    srcTree_item_coreROOT,
-  srcTree_item_fsFolder,
+    in0k_lazIdeSRC_srcTree_item_Globals,
+  in0k_lazIdeSRC_srcTree_item_fsFolder,
   in0k_srcTree_getRelPATH,
   lazExt_CopyRAST_from_IDEProcs;
 
-function  srcTree_builder_add_SearchPATH_DirNAME(const ROOT:tSrcTree_ROOT; const DirNAME:string; const PathKIND:eSrcTree_SrchPath; const crtFnc:mSrcTree_crtRelPATH_callBACK):tSrcTree_item_fsNodeFLDR;
+function  srcTree_builder_add_SearchPATH_DirNAME(const ROOT:tSrcTree_ROOT; const DirNAME:string; const PathKIND:eSrcTree_SrchPath; const crtFnc:mSrcTree_crtRelPATH_callBACK):tSrcTree_fsFLDR;
 procedure srcTree_builder_add_SearchPATH_DirLIST(const ROOT:tSrcTree_ROOT; const DirLIST:string; const PathKIND:eSrcTree_SrchPath; const crtFnc:mSrcTree_crtRelPATH_callBACK);
 
 implementation
@@ -27,13 +27,13 @@ implementation
 // @prm ROOT     куда именно добавляем
 // @prm DirNAME  название директории (путь в файловой системе)
 // @prm PathKIND тип "пути поиска"
-function srcTree_builder_add_SearchPATH_DirNAME(const ROOT:tSrcTree_ROOT; const DirNAME:string; const PathKIND:eSrcTree_SrchPath; const crtFnc:mSrcTree_crtRelPATH_callBACK):tSrcTree_item_fsNodeFLDR;
+function srcTree_builder_add_SearchPATH_DirNAME(const ROOT:tSrcTree_ROOT; const DirNAME:string; const PathKIND:eSrcTree_SrchPath; const crtFnc:mSrcTree_crtRelPATH_callBACK):tSrcTree_fsFLDR;
 begin {todo: мож проверки добавить}
     result:=SrcTree_getRelPATH(ROOT,DirNAME,crtFnc);
     {$ifDef _debug_}DEBUG('srcTree_builder_add_SearchPATH_DirNAME',Assigned2OK(result)+' PathKIND="'+SrcTree_SrchPathKIND_2_Text(PathKIND)+'"'+' DirNAME="'+DirNAME+'"');{$endIf}
     if Assigned(result) then begin
         //--- добавим найденному ТИП пути
-        SrcTree_item_fsFolder__addSearhPATH(result,PathKIND);
+        SrcTree_fsFolder__addSearhPATH(result,PathKIND);
     end;
 end;
 

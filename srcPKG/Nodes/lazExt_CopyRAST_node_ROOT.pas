@@ -218,7 +218,7 @@ end;
 // поиск BaseDIR по типу
 function tCopyRAST_ROOT._get_BaseDIR_:tCopyRAST_node_BaseDIR;
 begin //< оно ДОЛЖНО быть в корне РЕБЕНКОМ
-    result:=tCopyRAST_node_BaseDIR(_chldFrst_);
+    result:=tCopyRAST_node_BaseDIR(_get_chldFrst_);
     while Assigned(result) do begin
        if TObject(Result) is tCopyRAST_node_BaseDIR then BREAK;
        result:=tCopyRAST_node_BaseDIR(tCopyRAST_node_BaseDIR(result).NodeNEXT);

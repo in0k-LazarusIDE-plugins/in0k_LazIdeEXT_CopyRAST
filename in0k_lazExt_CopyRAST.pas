@@ -26,16 +26,18 @@ uses
   prcNode_PSF_updateUnit, prcNode_PSF_updateUses, prcNode_XML_updateLPK, 
   prcNode_core_srcEdit, prcNode_core_xmlEdit, prcNode_XML_updateLPK_v4, 
   prcNode_XML_CompilerOptions_SearchPaths, prcNode_XML_Files, 
-  prcNode_PSF_updateInclude, srcTree_item_coreFileSystem, 
+  prcNode_PSF_updateInclude, in0k_lazIdeSRC_srcTree_item_coreFileSystem, 
   in0k_lazExt_CopyRAST_cmpTree, srcTree_builder_CORE, 
-  srcTree_builder_4Package, srcTree_item_4Package, srcTree_item_CORE, 
-  srcTree_item_coreROOT, srcTree_item_baseDIR, srcTree_item_coreMAIN, 
-  srcTree_item_4Project, srcTree_item_fsFolder, srcTree_item_fsFile, 
+  srcTree_builder_4Package, in0k_lazIdeSRC_srcTree_item_CORE, 
+  in0k_lazIdeSRC_srcTree_item_fsFolder, in0k_lazIdeSRC_srcTree_item_fsFile, 
   in0k_srcTree_fndRelPATH, in0k_srcTree_getRelPATH, srcTree_FNC, 
-  in0k_srcTree_fndBaseDIR, in0k_srcTree_getBaseDIR, in0k_srcTree_setBaseDIR, 
+  in0k_lazIdeSRC_srcTree_FNK_fndBaseDIR, 
+  in0k_lazIdeSRC_srcTree_FNK_getBaseDIR, in0k_srcTree_setBaseDIR, 
   in0k_srcTree_getMainFILE, in0k_srcTree_fndMainFILE, 
   in0k_srcTree_setMainFILE, in0k_srcTree_addSrchPATH, 
-  in0k_srcTree_fndNodeFILE, in0k_srcTree_addNodeFILE, LazarusPackageIntf;
+  in0k_srcTree_fndNodeFILE, in0k_srcTree_addNodeFILE, 
+  in0k_lazIdeSRC_srcTree_coreFileSystemFNK, 
+  in0k_lazIdeSRC_srcTree_item_Globals, LazarusPackageIntf;
 
 implementation
 

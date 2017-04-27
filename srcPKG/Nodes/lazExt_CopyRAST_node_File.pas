@@ -99,11 +99,11 @@ end;
 function tCopyRAST_node_File_CORE.have_SingleLFM:boolean;
 begin
     // проверяем что есть ЕДИНСТВЕННЫЙ ребенок
-    result:=Assigned(self._chldFrst_);
-    if result then result:=NOT Assigned(tCopyRAST_node_File_CORE(self._chldFrst_)._next_);
+    result:=Assigned(self._get_chldFrst_);
+    if result then result:=NOT Assigned(tCopyRAST_node_File_CORE(self._get_chldFrst_)._next_);
     // проверим что этот ребенок LFM
-    if result and (self._chldFrst_ is tCopyRAST_node_File_CORE) then begin
-        result:=tCopyRAST_node_File_CORE(self._chldFrst_)._fileType_=pftLFM;
+    if result and (self._get_chldFrst_ is tCopyRAST_node_File_CORE) then begin
+        result:=tCopyRAST_node_File_CORE(self._get_chldFrst_)._fileType_=pftLFM;
     end
     else result:=FALSE;
 end;

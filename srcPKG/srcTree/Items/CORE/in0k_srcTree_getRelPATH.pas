@@ -5,10 +5,11 @@ unit in0k_srcTree_getRelPATH;
 interface
 
 uses
-  srcTree_item_CORE,
-  srcTree_item_coreROOT,
-  srcTree_item_coreFileSystem,
-  srcTree_item_fsFolder,
+  in0k_lazIdeSRC_srcTree_item_CORE,
+  in0k_lazIdeSRC_srcTree_item_Globals,
+  in0k_lazIdeSRC_srcTree_item_coreFileSystem,
+  in0k_lazIdeSRC_srcTree_item_fsFolder,
+
   in0k_srcTree_fndRelPATH,
   Classes, SysUtils, LazFileUtils;
 
@@ -17,14 +18,14 @@ type
 
 
   {todo: rename}
-  fSrcTree_crtRelPATH_callBACK=function(const relFolderName:string):tSrcTree_item_fsNodeFLDR;
-  //nSrcTree_crtRelPATH_callBACK=function(const relFolderName:string):tSrcTree_item_fsNodeFLDR is nested;
-  mSrcTree_crtRelPATH_callBACK=function(const relFolderName:string):tSrcTree_item_fsNodeFLDR of object;
+  fSrcTree_crtRelPATH_callBACK=function(const relFolderName:string):tSrcTree_fsFLDR;
+  //nSrcTree_crtRelPATH_callBACK=function(const relFolderName:string):tSrcTree_fsFLDR is nested;
+  mSrcTree_crtRelPATH_callBACK=function(const relFolderName:string):tSrcTree_fsFLDR of object;
 
-  function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string; const crtFnc:fSrcTree_crtRelPATH_callBACK):tSrcTree_item_fsNodeFLDR; overload;
+  function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string; const crtFnc:fSrcTree_crtRelPATH_callBACK):tSrcTree_fsFLDR; overload;
   //function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string; const crtFnc:nSrcTree_crtRelPATH_callBACK):tSrcTree_item_fsNodeFLDR; overload;
-  function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string; const crtFnc:mSrcTree_crtRelPATH_callBACK):tSrcTree_item_fsNodeFLDR; overload;
-  function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_item_fsNodeFLDR;
+  function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string; const crtFnc:mSrcTree_crtRelPATH_callBACK):tSrcTree_fsFLDR; overload;
+  function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_fsFLDR;
 
 implementation
 
@@ -50,25 +51,25 @@ begin
     end;
 end;
 
-function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string; const crtFnc:fSrcTree_crtRelPATH_callBACK):tSrcTree_item_fsNodeFLDR;
+function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string; const crtFnc:fSrcTree_crtRelPATH_callBACK):tSrcTree_fsFLDR;
 {$I in0k_srcTree_getRelPATH.inc}
 
-//function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string; const crtFnc:nSrcTree_crtRelPATH_callBACK):tSrcTree_item_fsNodeFLDR;
+//function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string; const crtFnc:nSrcTree_crtRelPATH_callBACK):tSrcTree_fsFLDR;
 //{$I in0k_srcTree_getRelPATH.inc}
 
-function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string; const crtFnc:mSrcTree_crtRelPATH_callBACK):tSrcTree_item_fsNodeFLDR;
+function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string; const crtFnc:mSrcTree_crtRelPATH_callBACK):tSrcTree_fsFLDR;
 {$I in0k_srcTree_getRelPATH.inc}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // просто создаем папку с путем.
 // при кастомизации тут момжно выбирать классы
-function _crt_relPATH_callBACK_(const relFolderName:string):tSrcTree_item_fsNodeFLDR;
+function _crt_relPATH_callBACK_(const relFolderName:string):tSrcTree_fsFLDR;
 begin
-    result:=tSrcTree_item_fsNodeFLDR.Create(ChompPathDelim(relFolderName));
+    result:=tSrcTree_fsFLDR.Create(ChompPathDelim(relFolderName));
 end;
 
-function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_item_fsNodeFLDR;
+function SrcTree_getRelPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_fsFLDR;
 begin
     result:=SrcTree_getRelPATH(item,folder,@_crt_relPATH_callBACK_);
 end;

@@ -5,10 +5,10 @@ unit in0k_srcTree_setMainFILE;
 interface
 
 uses
-  srcTree_item_CORE,
-  srcTree_item_coreROOT,
-  srcTree_item_coreMAIN,
-    in0k_srcTree_getBaseDIR,
+  in0k_lazIdeSRC_srcTree_item_CORE,
+  in0k_lazIdeSRC_srcTree_item_Globals,
+
+    in0k_lazIdeSRC_srcTree_FNK_getBaseDIR,
     in0k_srcTree_getMainFILE;
 
 function SrcTree_setMainFILE(const item:tSrcTree_ROOT; const MainFileNAME:string; const crtFnc:mSrcTree_getMainFILE_crtMainFILE; const crtBaseDIR:mSrcTree_getBaseDIR_crtBaseDIR):tSrcTree_MAIN;

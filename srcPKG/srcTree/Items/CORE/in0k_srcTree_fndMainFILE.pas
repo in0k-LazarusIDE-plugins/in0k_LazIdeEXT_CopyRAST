@@ -5,11 +5,11 @@ unit in0k_srcTree_fndMainFILE;
 interface
 
 uses
-  srcTree_item_CORE,
-  srcTree_item_coreROOT,
+  in0k_lazIdeSRC_srcTree_item_CORE,
+  in0k_lazIdeSRC_srcTree_item_Globals,
 
-in0k_srcTree_fndBaseDIR,
-srcTree_item_coreMAIN,
+in0k_lazIdeSRC_srcTree_FNK_fndBaseDIR,
+
   Classes, SysUtils;
 
 function SrcTree_fndMainFILE(const item:tSrcTree_ROOT):tSrcTree_MAIN;

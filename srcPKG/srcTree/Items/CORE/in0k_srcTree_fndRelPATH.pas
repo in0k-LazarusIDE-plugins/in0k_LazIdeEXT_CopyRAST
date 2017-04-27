@@ -5,10 +5,10 @@ unit in0k_srcTree_fndRelPATH;
 interface
 
 uses
-  srcTree_item_CORE,
-  srcTree_item_coreFileSystem,
-  srcTree_item_coreROOT,
-  in0k_srcTree_fndBaseDIR,
+  in0k_lazIdeSRC_srcTree_item_CORE,
+  in0k_lazIdeSRC_srcTree_item_coreFileSystem,
+  in0k_lazIdeSRC_srcTree_item_Globals,
+  in0k_lazIdeSRC_srcTree_FNK_fndBaseDIR,
   Classes, SysUtils, LazFileUtils;
 
 function SrcTree_fndRelPATH(const item:tSrcTree_ROOT; const folder:string; out lstDir:_tSrcTree_item_fsNodeFLDR_; out mdlDir:string):_tSrcTree_item_fsNodeFLDR_;

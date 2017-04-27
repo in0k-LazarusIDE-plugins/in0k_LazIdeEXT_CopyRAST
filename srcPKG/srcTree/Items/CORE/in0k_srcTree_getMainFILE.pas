@@ -5,11 +5,11 @@ unit in0k_srcTree_getMainFILE;
 interface
 
 uses
-  srcTree_item_CORE,
-  srcTree_item_coreMAIN,
-  srcTree_item_coreROOT,
-  srcTree_item_baseDIR,
-  in0k_srcTree_getBaseDIR,
+  in0k_lazIdeSRC_srcTree_item_CORE,
+  in0k_lazIdeSRC_srcTree_item_Globals,
+
+
+  in0k_lazIdeSRC_srcTree_FNK_getBaseDIR,
   in0k_srcTree_fndMainFILE,
   Classes, SysUtils;
 
