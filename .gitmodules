@@ -7,3 +7,6 @@
 [submodule "srcExt/in0k-lazarusIdeSRC-FuckUpForm"]
 	path = srcExt/in0k-lazarusIdeSRC-FuckUpForm
 	url = https://github.com/in0k-LazarusIDE-soures/in0k-lazarusIdeSRC-FuckUpForm.git
+[submodule "srcExt/in0k-lazarusIdeSRC-SourceTREE"]
+	path = srcExt/in0k-lazarusIdeSRC-SourceTREE
+	url = https://github.com/in0k-LazarusIDE-soures/in0k-lazarusIdeSRC-SourceTREE.git
