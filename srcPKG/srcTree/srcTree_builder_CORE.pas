@@ -22,11 +22,11 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
 
   in0k_lazIdeSRC_srcTree_item_fsFolder,
 
-  in0k_lazIdeSRC_srcTree_FNK_fndBaseDIR,
-  in0k_lazIdeSRC_srcTree_FNK_fndRelPATH,
-        in0k_lazIdeSRC_srcTree_FNK_fndMainFILE,
-        in0k_lazIdeSRC_srcTree_FNK_addSrchPATH,
-  in0k_lazIdeSRC_srcTree_FNK_getRelPATH;
+  in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
+  in0k_lazIdeSRC_srcTree_FNK_relPATH_FND,
+        in0k_lazIdeSRC_srcTree_FNK_mainFILE_FND,
+        in0k_lazIdeSRC_srcTree_FNK_srchPATH_ADD,
+  in0k_lazIdeSRC_srcTree_FNK_relPATH_GET;
 
 
 type

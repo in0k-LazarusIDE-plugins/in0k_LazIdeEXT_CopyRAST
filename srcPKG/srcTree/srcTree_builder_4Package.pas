@@ -32,11 +32,11 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
 
         srcTree_FNC,
 
-        in0k_lazIdeSRC_srcTree_FNK_getBaseDIR,
-        in0k_lazIdeSRC_srcTree_FNK_setBaseDIR,
-        in0k_lazIdeSRC_srcTree_FNK_setMainFILE,
-        in0k_lazIdeSRC_srcTree_FNK_addNodeFILE,
-        in0k_lazIdeSRC_srcTree_FNK_addSrchPATH,
+        in0k_lazIdeSRC_srcTree_FNK_baseDIR_GET,
+        in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
+        in0k_lazIdeSRC_srcTree_FNK_mainFILE_SET,
+        in0k_lazIdeSRC_srcTree_FNK_nodeFILE_ADD,
+        in0k_lazIdeSRC_srcTree_FNK_srchPATH_ADD,
         //srcTree_fnd_relPATH,
 
    PackageIntf;

@@ -18,7 +18,7 @@ uses
   in0k_lazIdeSRC_srcTree_item_Globals,
   in0k_lazIdeSRC_srcTree_item_coreFileSystem,
   in0k_lazIdeSRC_srcTree_item_fsFolder,
-  in0k_lazIdeSRC_srcTree_FNK_fndRelPATH,
+  in0k_lazIdeSRC_srcTree_FNK_relPATH_FND,
   Classes, SysUtils;
 
 function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_fsFLDR;
