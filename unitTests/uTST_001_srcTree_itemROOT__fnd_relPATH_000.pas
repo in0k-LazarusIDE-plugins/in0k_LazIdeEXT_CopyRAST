@@ -4,8 +4,9 @@ unit uTST_001_srcTree_itemROOT__fnd_relPATH_000;
 
 interface
 
-uses srcTree_item_coreROOT,
-     srcTree_item_fsFolder,
+uses
+  in0k_lazIdeSRC_srcTree_item_CORE,
+  in0k_lazIdeSRC_srcTree_item_coreFileSystem,
      srcTree_FNC,
      in0k_srcTree_fndBaseDIR,
      in0k_srcTree_setBaseDIR,

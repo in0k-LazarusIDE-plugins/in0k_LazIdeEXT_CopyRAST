@@ -4,7 +4,7 @@ unit lazExt_CopyRAST_node_File;
 
 interface
 
-uses lazExt_CopyRAST_node, lazExt_CopyRAST_from_IDEProcs,
+uses lazExt_CopyRAST_node, in0k_lazIdeSRC_srcTree_coreFromIDEProcs,
   PackageIntf,
   sysutils, LazFileUtils;
 

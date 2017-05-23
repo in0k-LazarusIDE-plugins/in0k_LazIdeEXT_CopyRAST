@@ -5,14 +5,14 @@ unit uTST_001_srcTree_itemROOT__BaseDIR_mtd;
 interface
 
 uses
-  srcTree_item_CORE,
-  srcTree_item_coreROOT,
-  srcTree_item_coreFileSystem,
-  in0k_srcTree_fndBaseDIR,
-  in0k_srcTree_getBaseDIR,
-  in0k_srcTree_setBaseDIR,
-  srcTree_item_baseDIR,
-  lazfileUtils,
+  in0k_lazIdeSRC_srcTree_item_CORE,
+  in0k_lazIdeSRC_srcTree_item_coreFileSystem,
+  in0k_lazIdeSRC_srcTree_item_Globals,
+  in0k_lazIdeSRC_srcTree_FNK_fndBaseDIR,
+  in0k_lazIdeSRC_srcTree_FNK_getBaseDIR,
+  in0k_lazIdeSRC_srcTree_FNK_setBaseDIR,
+  //---
+  in0k_lazIdeSRC_srcTree_coreFileSystemFNK,
   //---
   Classes, SysUtils, fpcunit, testutils, testregistry;
 
@@ -52,7 +52,7 @@ end;
 
 function tUTST_srcTree_itemROOT__BaseDIR_mtd._CRT_(const BaseDIR_PATH:string):tSrcTree_BASE;
 begin
-    result:= tSrcTree_BASE.Create(ChompPathDelim(BaseDIR_PATH));
+    result:= tSrcTree_BASE.Create(srcTree_fsFnk_ChompPathDelim(BaseDIR_PATH));
 end;
 
 //==============================================================================

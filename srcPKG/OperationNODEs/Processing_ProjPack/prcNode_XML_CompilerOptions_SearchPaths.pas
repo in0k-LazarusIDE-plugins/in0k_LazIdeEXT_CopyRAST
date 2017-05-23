@@ -15,7 +15,7 @@ interface
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
         in0k_lazIdeSRC_DEBUG,
      {$endIf}
-    lazExt_CopyRAST_from_IDEProcs,
+    in0k_lazIdeSRC_srcTree_coreFromIDEProcs,
     lazExt_CopyRAST_node_Folder,
     prcNode_XML_updateLPK;
 

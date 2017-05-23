@@ -17,16 +17,16 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
         in0k_lazIdeSRC_srcTree_item_fsFile,
   in0k_lazIdeSRC_srcTree_item_CORE,
   in0k_lazIdeSRC_srcTree_item_Globals,
-  lazExt_CopyRAST_from_IDEProcs,
+  in0k_lazIdeSRC_srcTree_coreFromIDEProcs,
   in0k_lazIdeSRC_srcTree_item_coreFileSystem,
 
   in0k_lazIdeSRC_srcTree_item_fsFolder,
 
   in0k_lazIdeSRC_srcTree_FNK_fndBaseDIR,
-  in0k_srcTree_fndRelPATH,
-        in0k_srcTree_fndMainFILE,
-        in0k_srcTree_addSrchPATH,
-  in0k_srcTree_getRelPATH;
+  in0k_lazIdeSRC_srcTree_FNK_fndRelPATH,
+        in0k_lazIdeSRC_srcTree_FNK_fndMainFILE,
+        in0k_lazIdeSRC_srcTree_FNK_addSrchPATH,
+  in0k_lazIdeSRC_srcTree_FNK_getRelPATH;
 
 
 type
