@@ -11,7 +11,7 @@ uses
   lazExt_CopyRAST_StrConsts, lazExt_CopyRAST_wndPackage, 
   lazExt_CopyRAST_wndProject, lazExt_CopyRAST_node, lazExt_CopyRAST_node_File, 
   lazExt_CopyRAST_node_Folder, lazExt_CopyRAST_node_ROOT, 
-  in0k_lazIdeSRC_srcTree_coreFromIDEProcs, in0k_lazIdeSRC_DEBUG, 
+  in0k_lazIdeSRC_srcTree_CORE_fromIDEProcs_FNK, in0k_lazIdeSRC_DEBUG, 
   lazExt_CopyRAST_node_ROOT_package, in0k_lazIdeSRC_FuckUpForm_01, 
   lazExt_CopyRAST_node_ROOT_project, lazExt_CopyRAST_FuckUpForm, 
   Processing_CORE, lazExt_CopyRAST_operation_clearTargetDir, 
@@ -26,9 +26,9 @@ uses
   prcNode_PSF_updateUnit, prcNode_PSF_updateUses, prcNode_XML_updateLPK, 
   prcNode_core_srcEdit, prcNode_core_xmlEdit, prcNode_XML_updateLPK_v4, 
   prcNode_XML_CompilerOptions_SearchPaths, prcNode_XML_Files, 
-  prcNode_PSF_updateInclude, in0k_lazIdeSRC_srcTree_item_coreFileSystem, 
+  prcNode_PSF_updateInclude, in0k_lazIdeSRC_srcTree_CORE_itemFileSystem, 
   in0k_lazExt_CopyRAST_cmpTree, srcTree_builder_CORE, 
-  srcTree_builder_4Package, in0k_lazIdeSRC_srcTree_item_CORE, 
+  srcTree_builder_4Package, in0k_lazIdeSRC_srcTree_CORE_item, 
   in0k_lazIdeSRC_srcTree_item_fsFolder, in0k_lazIdeSRC_srcTree_item_fsFile, 
   in0k_lazIdeSRC_srcTree_FNK_relPATH_FND, 
   in0k_lazIdeSRC_srcTree_FNK_relPATH_Get, srcTree_FNC, 
@@ -41,7 +41,7 @@ uses
   in0k_lazIdeSRC_srcTree_FNK_srchPATH_ADD, 
   in0k_lazIdeSRC_srcTree_FNK_nodeFILE_FND, 
   in0k_lazIdeSRC_srcTree_FNK_nodeFILE_ADD, 
-  in0k_lazIdeSRC_srcTree_coreFileSystemFNK, 
+  in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK, 
   in0k_lazIdeSRC_srcTree_item_Globals, LazarusPackageIntf;
 
 implementation

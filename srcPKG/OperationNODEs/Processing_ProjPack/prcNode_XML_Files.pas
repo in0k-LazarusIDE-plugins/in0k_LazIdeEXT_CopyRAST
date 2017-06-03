@@ -16,7 +16,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
         in0k_lazIdeSRC_DEBUG,
      {$endIf}
     FileUtil,    LazFileUtils, sysutils,
-    in0k_lazIdeSRC_srcTree_coreFromIDEProcs,
+    in0k_lazIdeSRC_srcTree_CORE_fromIDEProcs_FNK,
     lazExt_CopyRAST_node_File,
     prcNode_XML_updateLPK;
 

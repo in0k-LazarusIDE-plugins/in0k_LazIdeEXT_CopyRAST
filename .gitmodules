@@ -10,3 +10,6 @@
 [submodule "srcExt/in0k-lazarusIdeSRC-SourceTREE"]
 	path = srcExt/in0k-lazarusIdeSRC-SourceTREE
 	url = https://github.com/in0k-LazarusIDE-soures/in0k-lazarusIdeSRC-SourceTREE.git
+[submodule "srcExt/in0k-lazarusIdeSRC-SourceTREE-UI"]
+	path = srcExt/in0k-lazarusIdeSRC-SourceTREE-UI
+	url = https://github.com/in0k-LazarusIDE-soures/in0k-lazarusIdeSRC-SourceTREE-UI.git
