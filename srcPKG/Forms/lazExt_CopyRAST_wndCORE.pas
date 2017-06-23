@@ -88,17 +88,17 @@ implementation
 {%endregion}
 
 
-var
+//var
 
-  vITV_BasePath:integer; // базовый путь
+  {vITV_BasePath:integer; // базовый путь
   vITV_package :integer; // ГЛАВНЫЙ файл ПАКЕТА
   vITV_project :integer; // ГЛАВНЫЙ файл ПРИЛОЖЕНИЯ
   vITV_Folder  :integer; // Папка (директория)
   vITV_Files   :integer; // Группа фалов
   vITV_File    :integer; // некий файл
+  }
 
-
-  ImageIndexFiles: integer;
+  {ImageIndexFiles: integer;
   ImageIndexRemovedFiles: integer;
   ImageIndexRequired: integer;
   ImageIndexRemovedRequired: integer;
@@ -112,7 +112,7 @@ var
   ImageIndexBinary: integer;
   ImageIndexConflict: integer;
   ImageIndexDirectory: integer;
-
+  }
 
 {$R *.lfm}
 
@@ -151,7 +151,7 @@ procedure Twnd_lazExt_CopyRAST_CORE.FormCreate(Sender: TObject);
 begin
     //---
     ItemsTreeView.Images:=IDEImages.Images_16;
-    vITV_BasePath:= IDEImages.LoadImage(16, 'folder');
+  {  vITV_BasePath:= IDEImages.LoadImage(16, 'folder');
     vITV_package := IDEImages.LoadImage(16, 'item_package');
     vITV_project := IDEImages.LoadImage(16, 'item_project');
     vITV_Folder  := IDEImages.LoadImage(16, 'folder');
@@ -176,7 +176,7 @@ begin
     ImageIndexConflict        := IDEImages.LoadImage(16, 'pkg_conflict');
     ImageIndexDirectory       := IDEImages.LoadImage(16, 'pkg_files');
     //---
-
+    }
 
 
 end;
@@ -290,7 +290,7 @@ function Twnd_lazExt_CopyRAST_CORE._ITV_getNodeImageIndex_(const TreeNode:tTreeN
 var tmp:tCopyRAST_node;
 begin
     result:=-1;
-    //---
+ {   //---
     if not Assigned(TreeNode) then EXIT;
     tmp:=tCopyRAST_node(TreeNode.Data);
     if not Assigned(tmp) then EXIT;
@@ -323,7 +323,7 @@ begin
             //--- теперь значек для РОДИТЕЛЯ вложэенного LFM
             if tCopyRAST_node_FILE(tmp).have_SingleLFM then Result:=ImageIndexLFM;
         end;
-    end;
+    end; }
 end;
 
 procedure Twnd_lazExt_CopyRAST_CORE._ITV_SetUp_nodeImage_(const TreeNode:tTreeNode);

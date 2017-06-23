@@ -10,11 +10,11 @@
       <SearchPaths>
         <IncludeFiles Value="srcPKG"/>
         <Libraries Value="srcPKG"/>
-        <OtherUnitFiles Value="srcPKG;srcPKG\srcTree;srcPKG\UI\cmp;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcPKG\OperationNODEs\Processing_ProjPack;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm;srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcExt\in0k-lazarusIdeSRC-SourceTREE;srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;srcExt\in0k-lazarusIdeSRC-SourceTREE-UI"/>
+        <OtherUnitFiles Value="srcPKG;srcPKG\srcTree;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcPKG\OperationNODEs\Processing_ProjPack;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm;srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcExt\in0k-lazarusIdeSRC-SourceTREE;srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;srcExt\in0k-lazarusIdeSRC-SourceTREE-UI"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="63">
+    <Files Count="70">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -268,6 +268,34 @@
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\in0k_lazIdeSRC_srcTree_item_Globals.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_item_Globals"/>
       </Item63>
+      <Item64>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler\srcTree_handler_CORE.pas"/>
+        <UnitName Value="srcTree_handler_CORE"/>
+      </Item64>
+      <Item65>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler\srcTree_handler_CORE_makeLIST.pas"/>
+        <UnitName Value="srcTree_handler_CORE_makeLIST"/>
+      </Item65>
+      <Item66>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build\in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_usesFile.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_usesFile"/>
+      </Item66>
+      <Item67>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler\srcTree_handler_CORE_makeListFsFILE.pas"/>
+        <UnitName Value="srcTree_handler_CORE_makeListFsFILE"/>
+      </Item67>
+      <Item68>
+        <Filename Value="srcPKG\srcTree\in0k_lazIdeSRC_CopyRAST_srcTree.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_CopyRAST_srcTree"/>
+      </Item68>
+      <Item69>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE\in0k_lazIdeSRC_srcTree_CORE_Processing.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_CORE_Processing"/>
+      </Item69>
+      <Item70>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler\srcTree_handler_CORE_fsFILE2CodeBUF.pas"/>
+        <UnitName Value="srcTree_handler_CORE_fsFILE2CodeBUF"/>
+      </Item70>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

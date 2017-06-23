@@ -27,7 +27,7 @@ type
   tOperationNode_CORE=class;
   tOperationNode_TYPE=class of tOperationNode_CORE;
 
-  tOperationNode_CORE=class
+ tOperationNode_CORE=class
   private
    _OWNER_:tOprNodeEXECUTOR;
    _PARNT_:tOperationNode_CORE;
@@ -104,6 +104,8 @@ type
 
 implementation
 
+// @prm Owner  владелец обработчик
+// @prm Parent выше стоящий УЗЕЛ обработки
 constructor tOperationNode_CORE.Create(const Owner:tOprNodeEXECUTOR; const Parent:tOperationNode_CORE);
 begin
    _OWNER_:=Owner;
