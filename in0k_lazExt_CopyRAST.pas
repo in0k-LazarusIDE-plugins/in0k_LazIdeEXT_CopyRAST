@@ -48,7 +48,9 @@ uses
   in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_usesFile, 
   srcTree_handler_CORE_makeListFsFILE, in0k_lazIdeSRC_CopyRAST_srcTree, 
   in0k_lazIdeSRC_srcTree_CORE_Processing, srcTree_handler_CORE_fsFILE2CodeBUF, 
-  LazarusPackageIntf;
+  in0k_lazIdeSRC_srcTree_FNK_rootFILE_FND, 
+  in0k_lazIdeSRC_srcTree_FNK_absPATH_FND, 
+  in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_files4INC, LazarusPackageIntf;
 
 implementation
 

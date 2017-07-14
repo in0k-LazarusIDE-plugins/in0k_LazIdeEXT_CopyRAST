@@ -8,6 +8,8 @@ interface
 //< Можно смело убирать, так как будеть работать только в моей специальной
 //< "системе имен и папок" `in0k_LazExt_..`.
 
+{$i in0k_lazIdeSRC_SETTINGs.inc} //< настройки компанента-Расширения.
+
 
 uses in0k_lazIdeSRC_ExpertCORE,
      {in0k_lazIdeSRC_ExpertCORE,}
@@ -95,7 +97,7 @@ begin
         tmp:=TIDEMenuCommand(sender).MenuItem;
     {$elseif (lcl_major=1) and (lcl_minor=6) and (lcl_release=4) and (lcl_patch=0)}
         tmp:=TIDEMenuCommand(sender).MenuItem;
-    {$elseif (lcl_major=1) and (lcl_minor=8) and (lcl_release=0) and (lcl_patch=2)}
+    {$elseif (lcl_major=1) and (lcl_minor=8) and (lcl_release=0)}
         tmp:=TIDEMenuCommand(sender).MenuItem;
     {$else} //< способ по умолчанию
         {$WARNING 'NOT Tested in this LazarusIDE version'}

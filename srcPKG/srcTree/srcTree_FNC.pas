@@ -4,7 +4,7 @@ unit srcTree_FNC;
 
 interface
 
-{$i in0k_lazIdeSRC_SETTINGs.inc} //< настройки компанента-Расширения.
+{$i in0k_lazIdeSRC_SETTINGs1.inc} {$i in0k_lazIdeSRC_SETTINGs.inc} //< настройки компанента-Расширения.
 //< Можно смело убирать, так как будеть работать только в моей специальной
 //< "системе имен и папок" `in0k_LazExt_..`.
 
@@ -21,19 +21,19 @@ uses
   in0k_lazIdeSRC_srcTree_FNK_relPATH_FND,
   Classes, SysUtils;
 
-function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_fsFLDR;
+//function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_fsFLDR;
 
 procedure SrcTreeROOT_toGourceLOG(const item:tSrcTree_item; const FileName:string);
 
 
 implementation
 
-function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_fsFLDR;
+{function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_fsFLDR;
 var lstDir:_tSrcTree_item_fsNodeFLDR_;
     mdlDir:string;
 begin
     result:=tSrcTree_fsFLDR(SrcTree_fndRelPATH(item,folder,lstDir,mdlDir));
-end;
+end;}
 
 const smb='|';
 //1275543595|andrew|A|src/main.cpp

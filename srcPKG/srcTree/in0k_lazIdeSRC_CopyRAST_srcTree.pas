@@ -12,7 +12,8 @@ uses
   srcTree_builder_4Package,
   srcTree_handler_CORE,
 
-  in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_usesFile;
+  in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_usesFile,
+  in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_files4INC;
 
 type
   tCopyRastNODE_ROOT=tSrcTree_ROOT;
@@ -48,7 +49,8 @@ implementation
 
 procedure tCopyRastSrcTree_P4Build._EXECUTE_;
 begin
-   _EXECUTE_4ROOT_(tSrcTree_itmHandler4Build__f8a_usesFile)
+ //  _EXECUTE_4ROOT_(tSrcTree_itmHandler4Build__f8a_usesFile);
+   _EXECUTE_4ROOT_(tSrcTree_itmHandler4Build__f8a_files4INC);
 end;
 
 end.
