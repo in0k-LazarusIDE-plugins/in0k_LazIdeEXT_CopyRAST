@@ -19,7 +19,7 @@ uses
   in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
   in0k_lazIdeSRC_srcTree_item_Globals,
   in0k_lazIdeSRC_srcTree_item_fsFolder,
-  in0k_lazIdeSRC_srcTree_FNK_relPATH_FND,
+  in0k_lazIdeSRC_srcTree_FNK_PATH_rel_FND,
   Classes, SysUtils;
 
 //function SrcTreeROOT_fnd_relPATH(const item:tSrcTree_ROOT; const folder:string):tSrcTree_fsFLDR;
@@ -33,7 +33,7 @@ implementation
 var lstDir:_tSrcTree_item_fsNodeFLDR_;
     mdlDir:string;
 begin
-    result:=tSrcTree_fsFLDR(SrcTree_fndRelPATH(item,folder,lstDir,mdlDir));
+    result:=tSrcTree_fsFLDR(SSrcTree_fndPathRELitem,folder,lstDir,mdlDir));
 end;}
 
 const smb='|';

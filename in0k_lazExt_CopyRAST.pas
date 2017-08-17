@@ -34,7 +34,7 @@ uses
         srcTree_builder_4Package, in0k_lazIdeSRC_srcTree_CORE_item, 
         in0k_lazIdeSRC_srcTree_item_fsFolder, 
         in0k_lazIdeSRC_srcTree_item_fsFile, 
-        in0k_lazIdeSRC_srcTree_FNK_relPATH_FND, 
+        in0k_lazIdeSRC_srcTree_FNK_PATH_rel_FND, 
         in0k_lazIdeSRC_srcTree_FNK_relPATH_Get, srcTree_FNC, 
         in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND, 
         in0k_lazIdeSRC_srcTree_FNK_baseDIR_GET, 
@@ -53,9 +53,9 @@ uses
         in0k_lazIdeSRC_srcTree_CORE_Processing, 
         srcTree_handler_CORE_fsFILE2CodeBUF, 
         in0k_lazIdeSRC_srcTree_FNK_rootFILE_FND, 
-        in0k_lazIdeSRC_srcTree_FNK_absPATH_FND, 
         in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_files4INC, 
-        in0k_lazIdeSRC_srcTree_FNK_absFILE_FND, LazarusPackageIntf;
+        in0k_lazIdeSRC_srcTree_FNK_PATH_abs_FND, 
+        in0k_lazIdeSRC_srcTree_FNK_FILE_abs_FND, LazarusPackageIntf;
 
 implementation
 
