@@ -4,7 +4,8 @@ unit srcTree_FNC;
 
 interface
 
-{$i in0k_lazIdeSRC_SETTINGs1.inc} {$i in0k_lazIdeSRC_SETTINGs.inc} //< настройки компанента-Расширения.
+  {$i in0k_lazIdeSRC_SETTINGs1.inc}
+{$i in0k_lazIdeSRC_SETTINGs.inc} //< настройки компанента-Расширения.
 //< Можно смело убирать, так как будеть работать только в моей специальной
 //< "системе имен и папок" `in0k_LazExt_..`.
 
