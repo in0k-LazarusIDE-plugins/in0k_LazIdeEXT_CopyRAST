@@ -5,12 +5,12 @@ unit uTST_001_srcTree_itemROOT__BaseDIR_fnk;
 interface
 
 uses
-  in0k_lazIdeSRC_srcTree_item_CORE,
-  in0k_lazIdeSRC_srcTree_item_coreFileSystem,
+  in0k_lazIdeSRC_srcTree_CORE_item,
+  in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
   in0k_lazIdeSRC_srcTree_item_Globals,
-  in0k_lazIdeSRC_srcTree_FNK_fndBaseDIR,
-  in0k_lazIdeSRC_srcTree_FNK_getBaseDIR,
-  in0k_lazIdeSRC_srcTree_FNK_setBaseDIR,
+  in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
+  in0k_lazIdeSRC_srcTree_FNK_baseDIR_GET,
+  in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
   //---
   Classes, SysUtils, fpcunit, testregistry;
 

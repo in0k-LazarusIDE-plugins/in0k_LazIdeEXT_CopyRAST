@@ -1,26 +1,28 @@
-unit uTST_003_srcTree_itemROOT__getRelPATH_____a_b_c;
+unit uTST_003_srcTree_itemROOT__get_relPATH_____a_b_c;
 
 {$mode objfpc}{$H+}
 
 interface
 
-uses srcTree_item_coreROOT,
-     srcTree_item_fsFolder,
-     in0k_srcTree_getRelPATH,
-     in0k_srcTree_fndBaseDIR,
-     in0k_srcTree_setBaseDIR,
-     srcTree_item_baseDIR,
-
-    Classes, SysUtils, fpcunit, testregistry;
+uses
+   in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
+   in0k_lazIdeSRC_srcTree_item_Globals,
+   in0k_lazIdeSRC_srcTree_item_fsFolder,
+   //
+   in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
+   in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
+   in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET,
+   //
+   SysUtils, fpcunit, testregistry;
 
 type
 
  tUTST_srcTree_itemROOT__get_relPATH_a_b_c=class(TTestCase)
  protected
     ROOT:tSrcTree_ROOT;
-    FldA:tSrcTree_item_fsNodeFLDR;
-    FldB:tSrcTree_item_fsNodeFLDR;
-    FldC:tSrcTree_item_fsNodeFLDR;
+    FldA:tSrcTree_fsFLDR;
+    FldB:tSrcTree_fsFLDR;
+    FldC:tSrcTree_fsFLDR;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
@@ -36,7 +38,7 @@ implementation
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_a_b_c.SetUp;
 begin
-    ROOT:=tSrcTree_ROOT.Create('ROOT');       //< собсно создаем
+    ROOT:=tSrcTree_ROOT.Create('ROOT');  //< собсно создаем
     SrcTree_setBaseDIR(ROOT,GetTempDir); //< устанавливаем ГЛАВНЫЙ путь
     FldA:=nil;
     FldB:=nil;
@@ -58,7 +60,7 @@ const
 //------------------------------------------------------------------------------
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_a_b_c.relPATH_get_empty;
-var res:tSrcTree_item_fsNodeFLDR;
+var res:_tSrcTree_item_fsNodeFLDR_;
 begin // должно возвращать BaseDIR
     res:=SrcTree_getRelPATH(root,'');
     //---

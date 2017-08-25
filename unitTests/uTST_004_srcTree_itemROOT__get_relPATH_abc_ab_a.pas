@@ -4,22 +4,25 @@ unit uTST_004_srcTree_itemROOT__get_relPATH_abc_ab_a;
 
 interface
 
-uses srcTree_item_coreROOT,
-     srcTree_item_coreFileSystem,
-     srcTree_item_fsFolder,
-     in0k_srcTree_getRelPATH,
-     in0k_srcTree_fndBaseDIR,
-     in0k_srcTree_setBaseDIR,
-  Classes, SysUtils, fpcunit, testutils, testregistry;
+uses
+   in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
+   in0k_lazIdeSRC_srcTree_item_Globals,
+   in0k_lazIdeSRC_srcTree_item_fsFolder,
+   //
+   in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
+   in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
+   in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET,
+   //
+   SysUtils, fpcunit, testregistry;
 
 type
 
  tUTST_srcTree_itemROOT__get_relPATH_abc_ab_a= class(TTestCase)
   protected
     ROOT:tSrcTree_ROOT;
-    FldA:tSrcTree_item_fsNodeFLDR;
-    FldB:tSrcTree_item_fsNodeFLDR;
-    FldC:tSrcTree_item_fsNodeFLDR;
+    FldA:tSrcTree_fsFLDR;
+    FldB:tSrcTree_fsFLDR;
+    FldC:tSrcTree_fsFLDR;
   protected
     procedure SetUp; override;
     procedure TearDown; override;

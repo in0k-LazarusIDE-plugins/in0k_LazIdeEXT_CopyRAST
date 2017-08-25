@@ -4,22 +4,25 @@ unit uTST_004_srcTree_itemROOT__get_relPATH_a_ab_abc;
 
 interface
 
-uses srcTree_item_coreROOT,
-     srcTree_item_coreFileSystem,
-     srcTree_item_fsFolder,
-     in0k_srcTree_getRelPATH,
-     in0k_srcTree_fndBaseDIR,
-     in0k_srcTree_setBaseDIR,
-    Classes, SysUtils, fpcunit, testutils, testregistry;
+uses
+   in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
+   in0k_lazIdeSRC_srcTree_item_Globals,
+   in0k_lazIdeSRC_srcTree_item_fsFolder,
+   //
+   in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
+   in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
+   in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET,
+   //
+   SysUtils, fpcunit, testregistry;
 
 type
 
  tUTST_srcTree_itemROOT__get_relPATH_a_ab_abc= class(TTestCase)
   protected
     ROOT:tSrcTree_ROOT;
-    FldA:tSrcTree_item_fsNodeFLDR;
-    FldB:tSrcTree_item_fsNodeFLDR;
-    FldC:tSrcTree_item_fsNodeFLDR;
+    FldA:tSrcTree_fsFLDR;
+    FldB:tSrcTree_fsFLDR;
+    FldC:tSrcTree_fsFLDR;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
@@ -166,9 +169,9 @@ procedure tUTST_srcTree_itemROOT__get_relPATH_a_ab_abc.relPATH_get_DEcrement_01;
 var tstFlder00:string;
     tstFlder01:string;
     tstFlder02:string;
-    resulGet00:tSrcTree_item_fsNodeFLDR;
-    resulGet01:tSrcTree_item_fsNodeFLDR;
-    resulGet02:tSrcTree_item_fsNodeFLDR;
+    resulGet00:tSrcTree_fsFLDR;
+    resulGet01:tSrcTree_fsFLDR;
+    resulGet02:tSrcTree_fsFLDR;
 begin
     tstFlder00:='a';
     tstFlder01:=tstFlder00+DirectorySeparator+'b';
@@ -200,9 +203,9 @@ procedure tUTST_srcTree_itemROOT__get_relPATH_a_ab_abc.relPATH_get_DEcrement_02;
 var tstFlder00:string;
     tstFlder01:string;
     tstFlder02:string;
-    resulGet00:tSrcTree_item_fsNodeFLDR;
-    resulGet01:tSrcTree_item_fsNodeFLDR;
-    resulGet02:tSrcTree_item_fsNodeFLDR;
+    resulGet00:tSrcTree_fsFLDR;
+    resulGet01:tSrcTree_fsFLDR;
+    resulGet02:tSrcTree_fsFLDR;
 begin
     tstFlder00:='TEST'+DirectorySeparator+'a';
     tstFlder01:=tstFlder00+DirectorySeparator+'b';
@@ -233,9 +236,9 @@ procedure tUTST_srcTree_itemROOT__get_relPATH_a_ab_abc.relPATH_get_DEcrement_03;
 var tstFlder00:string;
     tstFlder01:string;
     tstFlder02:string;
-    resulGet00:tSrcTree_item_fsNodeFLDR;
-    resulGet01:tSrcTree_item_fsNodeFLDR;
-    resulGet02:tSrcTree_item_fsNodeFLDR;
+    resulGet00:tSrcTree_fsFLDR;
+    resulGet01:tSrcTree_fsFLDR;
+    resulGet02:tSrcTree_fsFLDR;
 begin
     tstFlder00:='a';
     tstFlder01:=tstFlder00+DirectorySeparator+'TEST'+DirectorySeparator+'b';
@@ -266,9 +269,9 @@ procedure tUTST_srcTree_itemROOT__get_relPATH_a_ab_abc.relPATH_get_DEcrement_04;
 var tstFlder00:string;
     tstFlder01:string;
     tstFlder02:string;
-    resulGet00:tSrcTree_item_fsNodeFLDR;
-    resulGet01:tSrcTree_item_fsNodeFLDR;
-    resulGet02:tSrcTree_item_fsNodeFLDR;
+    resulGet00:tSrcTree_fsFLDR;
+    resulGet01:tSrcTree_fsFLDR;
+    resulGet02:tSrcTree_fsFLDR;
 begin
     tstFlder00:='a';
     tstFlder01:=tstFlder00+DirectorySeparator+'b';

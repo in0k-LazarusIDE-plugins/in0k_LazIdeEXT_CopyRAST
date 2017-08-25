@@ -4,13 +4,17 @@ unit uTST_004_srcTree_itemROOT__realCase_001;
 
 interface
 
-uses srcTree_item_coreROOT,
-     srcTree_item_coreFileSystem,
-     srcTree_item_fsFolder,
-     srcTree_FNC,
-     in0k_srcTree_getRelPATH,
-     in0k_srcTree_setBaseDIR,
-  Classes, SysUtils, fpcunit, testutils, testregistry;
+uses
+   in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
+   in0k_lazIdeSRC_srcTree_item_Globals,
+   in0k_lazIdeSRC_srcTree_item_fsFolder,
+   //
+   in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
+   in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
+   in0k_lazIdeSRC_srcTree_FNK_PATH_rel_FND,
+   in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET,
+   //
+   SysUtils, fpcunit, testregistry;
 
 type
 
@@ -41,7 +45,7 @@ end;
 //------------------------------------------------------------------------------
 
 procedure tUTST_srcTree_itemROOT__realCase_001.Test;
-var fldr:tSrcTree_item_fsNodeFLDR;
+var fldr:_tSrcTree_item_fsNodeFLDR_;
 begin
     SrcTree_getRelPATH(root,'srcPKG');
     SrcTree_getRelPATH(root,'srcPKG\srcTree');
@@ -57,7 +61,7 @@ begin
     SrcTree_getRelPATH(root,'srcPKG');
     SrcTree_getRelPATH(root,'srcPKG');
     //---
-    fldr:=SrcTreeROOT_fnd_relPATH(root,'srcPKG\UI\cmp');
+    fldr:=SrcTree_fndPathREL(root,'srcPKG\UI\cmp');
     //---
     AssertNotNull('`fldr` is NIL',fldr);
 
@@ -65,6 +69,5 @@ end;
 
 initialization
     RegisterTest(tUTST_srcTree_itemROOT__realCase_001);
-
 end.
 

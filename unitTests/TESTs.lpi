@@ -14,9 +14,6 @@
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>
@@ -39,7 +36,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="30">
+    <Units Count="32">
       <Unit0>
         <Filename Value="TESTs.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -49,117 +46,125 @@
         <IsPartOfProject Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\srcPKG\srcTree\Items\CORE\srcTree_item_coreROOT.pas"/>
+        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_____a_b_c.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
       <Unit3>
-        <Filename Value="..\srcPKG\srcTree\Items\srcTree_item_baseDIR.pas"/>
+        <Filename Value="uTST_004_srcTree_itemROOT__get_relPATH_a_ab_abc.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="uTST_003_srcTree_itemROOT__getRelPATH_____a_b_c.pas"/>
+        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_a_b_c__xn.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
       <Unit5>
-        <Filename Value="uTST_004_srcTree_itemROOT__get_relPATH_a_ab_abc.pas"/>
+        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_W_b_c__xn.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit5>
       <Unit6>
-        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_a_b_c__xn.pas"/>
+        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_a_W_c__xn.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit6>
       <Unit7>
-        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_W_b_c__xn.pas"/>
+        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_a_b_W__xn.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
       <Unit8>
-        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_a_W_c__xn.pas"/>
+        <Filename Value="uTST_001_srcTree_itemROOT__BaseDIR_fnk.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
       <Unit9>
-        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_a_b_W__xn.pas"/>
+        <Filename Value="uTST_004_srcTree_itemROOT__get_relPATH_abc_ab_a.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
       <Unit10>
-        <Filename Value="uTST_001_srcTree_itemROOT__BaseDIR_fnk.pas"/>
+        <Filename Value="uTST_004_srcTree_itemROOT__get_relPATH_ab_ac_ad.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit10>
       <Unit11>
-        <Filename Value="uTST_004_srcTree_itemROOT__get_relPATH_abc_ab_a.pas"/>
+        <Filename Value="uTST_004_srcTree_itemROOT__realCase_001.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit11>
       <Unit12>
-        <Filename Value="uTST_004_srcTree_itemROOT__get_relPATH_ab_ac_ad.pas"/>
+        <Filename Value="..\srcPKG\srcTree\srcTree_FNC.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit12>
       <Unit13>
-        <Filename Value="uTST_004_srcTree_itemROOT__realCase_001.pas"/>
+        <Filename Value="uTST_001_srcTree_itemROOT__BaseDIR_mtd.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit13>
       <Unit14>
-        <Filename Value="..\srcPKG\srcTree\srcTree_FNC.pas"/>
+        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_4m__a_b_c.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit14>
       <Unit15>
-        <Filename Value="..\srcPKG\srcTree\Items\CORE\in0k_srcTree_getRelPATH.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\in0k_lazIdeSRC_srcTree_item_Globals.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit15>
       <Unit16>
-        <Filename Value="..\srcPKG\srcTree\Items\CORE\in0k_srcTree_fndRelPATH.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE\in0k_lazIdeSRC_srcTree_CORE_item.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit16>
       <Unit17>
-        <Filename Value="..\srcPKG\srcTree\Items\CORE\in0k_srcTree_fndBaseDIR.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE\in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit17>
       <Unit18>
-        <Filename Value="..\srcPKG\srcTree\Items\CORE\in0k_srcTree_getBaseDIR.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit18>
       <Unit19>
-        <Filename Value="..\srcPKG\srcTree\Items\CORE\in0k_srcTree_setBaseDIR.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_baseDIR_GET.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit19>
       <Unit20>
-        <Filename Value="uTST_001_srcTree_itemROOT__BaseDIR_mtd.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit20>
       <Unit21>
-        <Filename Value="..\srcPKG\srcTree\Items\CORE\in0k_srcTree_addNodeFILE.inc"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_FILE_abs_FND.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit21>
       <Unit22>
-        <Filename Value="uTST_003_srcTree_itemROOT__getRelPATH_4m__a_b_c.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_mainFILE_FND.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit22>
       <Unit23>
-        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE\in0k_lazIdeSRC_srcTree_item_CORE.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_mainFILE_GET.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit23>
       <Unit24>
-        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE\in0k_lazIdeSRC_srcTree_item_coreFileSystem.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_mainFILE_SET.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit24>
       <Unit25>
-        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\in0k_lazIdeSRC_srcTree_item_Globals.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_nodeFILE_ADD.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit25>
       <Unit26>
-        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_coreFileSystemFNK.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_nodeFILE_FND.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit26>
       <Unit27>
-        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_fndBaseDIR.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_PATH_abs_FND.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit27>
       <Unit28>
-        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_getBaseDIR.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_PATH_rel_FND.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit28>
       <Unit29>
-        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_setBaseDIR.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit29>
+      <Unit30>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_rootFILE_FND.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_srchPATH_ADD.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit31>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

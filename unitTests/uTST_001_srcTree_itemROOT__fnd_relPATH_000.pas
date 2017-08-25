@@ -5,12 +5,15 @@ unit uTST_001_srcTree_itemROOT__fnd_relPATH_000;
 interface
 
 uses
-  in0k_lazIdeSRC_srcTree_item_CORE,
-  in0k_lazIdeSRC_srcTree_item_coreFileSystem,
-     srcTree_FNC,
-     in0k_srcTree_fndBaseDIR,
-     in0k_srcTree_setBaseDIR,
-    Classes, SysUtils, fpcunit, testregistry;
+    in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
+    in0k_lazIdeSRC_srcTree_item_Globals,
+    //
+    in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
+    in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
+    //
+    in0k_lazIdeSRC_srcTree_FNK_PATH_rel_FND,
+    //
+    SysUtils, fpcunit, testregistry;
 
 type
 
@@ -36,7 +39,7 @@ implementation
 
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.SetUp;
 begin
-    ROOT:=tSrcTree_ROOT.Create('ROOT');       //< собсно создаем
+    ROOT:=tSrcTree_ROOT.Create('ROOT');  //< собсно создаем
     SrcTree_setBaseDIR(ROOT,GetTempDir); //< устанавливаем ГЛАВНЫЙ путь
 end;
 
@@ -60,9 +63,9 @@ end;
 //==============================================================================
 
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_empty;
-var res:tSrcTree_item_fsNodeFLDR;
+var res:_tSrcTree_item_fsNodeFLDR_;
 begin // должно возвращать BaseDIR
-    res:=SrcTreeROOT_fnd_relPATH(root,'');
+    res:=SrcTree_fndPathREL(root,'');
     //---
     AssertNotNull('notFound',res);
     AssertSame   ('`res` must by BaseDIR',res,SrcTree_fndBaseDIR(ROOT));
@@ -71,41 +74,40 @@ end;
 //------------------------------------------------------------------------------
 
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_TEST;
-var res:tSrcTree_item_fsNodeFLDR;
+var res:_tSrcTree_item_fsNodeFLDR_;
 begin
-    res:=SrcTreeROOT_fnd_relPATH(root,'TEST');
+    res:=SrcTree_fndPathREL(root,'TEST');
     //---
     AssertNull   ('`res` must by NIL',res);
 end;
 
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_TEST_ds;
-var res:tSrcTree_item_fsNodeFLDR;
+var res:_tSrcTree_item_fsNodeFLDR_;
 begin
-    res:=SrcTreeROOT_fnd_relPATH(root,'TEST'+DirectorySeparator);
+    res:=SrcTree_fndPathREL(root,'TEST'+DirectorySeparator);
     //---
     AssertNull   ('`res` must by NIL',res);
 end;
 
 
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_TEST_ds_TEST;
-var res:tSrcTree_item_fsNodeFLDR;
+var res:_tSrcTree_item_fsNodeFLDR_;
 begin
-    res:=SrcTreeROOT_fnd_relPATH(root,'TEST'+DirectorySeparator+'TEST');
+    res:=SrcTree_fndPathREL(root,'TEST'+DirectorySeparator+'TEST');
     //---
     AssertNull   ('`res` must by NIL',res);
 end;
 
 procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_TEST_ds_TEST_ds;
-var res:tSrcTree_item_fsNodeFLDR;
+var res:_tSrcTree_item_fsNodeFLDR_;
 begin
-    res:=SrcTreeROOT_fnd_relPATH(root,'TEST'+DirectorySeparator+'TEST'+DirectorySeparator);
+    res:=SrcTree_fndPathREL(root,'TEST'+DirectorySeparator+'TEST'+DirectorySeparator);
     //---
     AssertNull   ('`res` must by NIL',res);
 end;
 
 
 initialization
-
     RegisterTest(tUTST_srcTree_itemROOT__fnd_relPATH_000);
 end.
 

@@ -4,22 +4,24 @@ unit uTST_003_srcTree_itemROOT__get_relPATH_W_b_c__xn;
 
 interface
 
-uses srcTree_item_coreROOT,
-     srcTree_item_coreFileSystem,
-     srcTree_item_fsFolder,
-     in0k_srcTree_getRelPATH,
-     in0k_srcTree_setBaseDIR,
-
-    Classes, SysUtils, fpcunit, testutils, testregistry;
+uses
+    in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
+    in0k_lazIdeSRC_srcTree_item_Globals,
+    in0k_lazIdeSRC_srcTree_item_fsFolder,
+    //
+    in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
+    in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET,
+    //
+    SysUtils, fpcunit, testregistry;
 
 type
 
  tUTST_srcTree_itemROOT__get_relPATH_W_b_c__xn= class(TTestCase)
   protected
     ROOT:tSrcTree_ROOT;
-    FldA:tSrcTree_item_fsNodeFLDR;
-    FldB:tSrcTree_item_fsNodeFLDR;
-    FldC:tSrcTree_item_fsNodeFLDR;
+    FldA:tSrcTree_fsFLDR;
+    FldB:tSrcTree_fsFLDR;
+    FldC:tSrcTree_fsFLDR;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
@@ -55,7 +57,7 @@ end;
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_W_b_c__xn.relPATH_get_Wbc_Wn;
 var tst__Flder:string;
-    resul__Get:tSrcTree_item_fsNodeFLDR;
+    resul__Get:_tSrcTree_item_fsNodeFLDR_;
 begin
     // собсно ТЕСТ должен СОЗДАТЬ новую
     tst__Flder:=c_FLDR_A+DirectorySeparator+'n';
@@ -67,7 +69,7 @@ end;
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_W_b_c__xn.relPATH_get_Wbc_bn;
 var tst__Flder:string;
-    resul__Get:tSrcTree_item_fsNodeFLDR;
+    resul__Get:_tSrcTree_item_fsNodeFLDR_;
 begin
     // собсно ТЕСТ должен СОЗДАТЬ новую
     tst__Flder:=c_FLDR_B+DirectorySeparator+'n';
@@ -79,7 +81,7 @@ end;
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_W_b_c__xn.relPATH_get_Wbc_cn;
 var tst__Flder:string;
-    resul__Get:tSrcTree_item_fsNodeFLDR;
+    resul__Get:_tSrcTree_item_fsNodeFLDR_;
 begin
     // собсно ТЕСТ должен СОЗДАТЬ новую
     tst__Flder:=c_FLDR_C+DirectorySeparator+'n';

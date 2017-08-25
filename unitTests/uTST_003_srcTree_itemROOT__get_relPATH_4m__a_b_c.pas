@@ -1,28 +1,29 @@
-unit uTST_003_srcTree_itemROOT__getRelPATH_4m__a_b_c;
+unit uTST_003_srcTree_itemROOT__get_relPATH_4m__a_b_c;
 
 {$mode objfpc}{$H+}
 
 interface
 
-uses srcTree_item_coreROOT,
-     srcTree_item_fsFolder,
-     in0k_srcTree_getRelPATH,
-     in0k_srcTree_fndBaseDIR,
-     in0k_srcTree_setBaseDIR,
-     srcTree_item_baseDIR,
-
-    Classes, SysUtils, fpcunit, testregistry;
+uses
+    in0k_lazIdeSRC_srcTree_item_Globals,
+    in0k_lazIdeSRC_srcTree_item_fsFolder,
+    //
+    in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
+    in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
+    in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET,
+    //
+    SysUtils, fpcunit, testregistry;
 
 type
 
- tUTST_srcTree_itemROOT__getRelPATH_4m__a_b_c=class(TTestCase)
+ tUTST_srcTree_itemROOT__get_relPATH_4m__a_b_c=class(TTestCase)
  protected
-    ROOT:tSrcTree_ROOT;
-    FldA:tSrcTree_item_fsNodeFLDR;
-    FldB:tSrcTree_item_fsNodeFLDR;
-    FldC:tSrcTree_item_fsNodeFLDR;
+   ROOT:tSrcTree_ROOT;
+   FldA:tSrcTree_fsFLDR;
+   FldB:tSrcTree_fsFLDR;
+   FldC:tSrcTree_fsFLDR;
   protected
-    function _CRT_(const relFolderName:string):tSrcTree_item_fsNodeFLDR;
+    function _CRT_(const relFolderName:string):tSrcTree_fsFLDR;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
@@ -36,25 +37,25 @@ type
 
 implementation
 
-procedure tUTST_srcTree_itemROOT__getRelPATH_4m__a_b_c.SetUp;
+procedure tUTST_srcTree_itemROOT__get_relPATH_4m__a_b_c.SetUp;
 begin
-    ROOT:=tSrcTree_ROOT.Create('ROOT');       //< собсно создаем
+    ROOT:=tSrcTree_ROOT.Create('ROOT');  //< собсно создаем
     SrcTree_setBaseDIR(ROOT,GetTempDir); //< устанавливаем ГЛАВНЫЙ путь
     FldA:=nil;
     FldB:=nil;
     FldC:=nil;
 end;
 
-procedure tUTST_srcTree_itemROOT__getRelPATH_4m__a_b_c.TearDown;
+procedure tUTST_srcTree_itemROOT__get_relPATH_4m__a_b_c.TearDown;
 begin
     ROOT.FREE;
 end;
 
 //==============================================================================
 
-function tUTST_srcTree_itemROOT__getRelPATH_4m__a_b_c._CRT_(const relFolderName:string):tSrcTree_item_fsNodeFLDR;
+function tUTST_srcTree_itemROOT__get_relPATH_4m__a_b_c._CRT_(const relFolderName:string):tSrcTree_fsFLDR;
 begin
-    result:=tSrcTree_item_fsNodeFLDR.Create(relFolderName);
+    result:=tSrcTree_fsFLDR.Create(relFolderName);
 end;
 
 const
@@ -64,8 +65,8 @@ const
 
 //------------------------------------------------------------------------------
 
-procedure tUTST_srcTree_itemROOT__getRelPATH_4m__a_b_c.relPATH_get_empty;
-var res:tSrcTree_item_fsNodeFLDR;
+procedure tUTST_srcTree_itemROOT__get_relPATH_4m__a_b_c.relPATH_get_empty;
+var res:tSrcTree_fsFLDR;
 begin // должно возвращать BaseDIR
     res:=SrcTree_getRelPATH(root,'',@_CRT_);
     //---
@@ -75,7 +76,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tUTST_srcTree_itemROOT__getRelPATH_4m__a_b_c.relPATH_get_a;
+procedure tUTST_srcTree_itemROOT__get_relPATH_4m__a_b_c.relPATH_get_a;
 begin
     FldA:=SrcTree_getRelPATH(root,c_FLDR_A,@_CRT_);
     //---
@@ -83,7 +84,7 @@ begin
     AssertSame   ('`FldA.PRNT` <> BaseDIR',FldA.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
 end;
 
-procedure tUTST_srcTree_itemROOT__getRelPATH_4m__a_b_c.relPATH_get_a_b;
+procedure tUTST_srcTree_itemROOT__get_relPATH_4m__a_b_c.relPATH_get_a_b;
 begin
     FldA:=SrcTree_getRelPATH(root,c_FLDR_A,@_CRT_);
     FldB:=SrcTree_getRelPATH(root,c_FLDR_B,@_CRT_);
@@ -93,7 +94,7 @@ begin
     AssertSame   ('`FldA.NEXT` <> FldB',   FldA.ItemNEXT,FldB);
 end;
 
-procedure tUTST_srcTree_itemROOT__getRelPATH_4m__a_b_c.relPATH_get_a_b_c;
+procedure tUTST_srcTree_itemROOT__get_relPATH_4m__a_b_c.relPATH_get_a_b_c;
 begin
     FldA:=SrcTree_getRelPATH(root,c_FLDR_A,@_CRT_);
     FldB:=SrcTree_getRelPATH(root,c_FLDR_B,@_CRT_);
@@ -107,7 +108,6 @@ begin
 end;
 
 initialization
-
-    RegisterTest(tUTST_srcTree_itemROOT__getRelPATH_4m__a_b_c);
+    RegisterTest(tUTST_srcTree_itemROOT__get_relPATH_4m__a_b_c);
 end.
 
