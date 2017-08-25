@@ -12,7 +12,7 @@ interface
 
 uses
   {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
-        in0k_lazIdeSRC_DEBUG,
+        //in0k_lazIdeSRC_DEBUG,
         //sysutils,
      {$endIf}
   in0k_lazIdeSRC_srcTree_CORE_item,
@@ -43,7 +43,7 @@ var tmp:tSrcTree_item;
 begin
     if item is _tStcTree_item_fsNode_ then begin
     	Strings.Add(inttostr(Strings.Count)+smb+smb+'A'+smb+'src\'+_tStcTree_item_fsNode_(item).src_PATH);
-    	DEBUG(inttostr(0)+smb+smb+'A'+smb+_tStcTree_item_fsNode_(item).src_PATH)
+    	//DEBUG(inttostr(0)+smb+smb+'A'+smb+_tStcTree_item_fsNode_(item).src_PATH)
     end;
     //---
     tmp:=item.ItemCHLD;
