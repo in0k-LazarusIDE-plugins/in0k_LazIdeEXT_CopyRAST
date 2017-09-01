@@ -21,7 +21,8 @@ uTST_003_srcTree_itemROOT__get_relPATH_a_b_W__xn,
 uTST_004_srcTree_itemROOT__get_relPATH_a_ab_abc,
 uTST_004_srcTree_itemROOT__get_relPATH_abc_ab_a,
 uTST_004_srcTree_itemROOT__get_relPATH_ab_ac_ad,
-uTST_004_srcTree_itemROOT__realCase_001;
+uTST_004_srcTree_itemROOT__realCase_001, 
+uTST_005_srcTree_itemROOT__fnd_absPATH_000;
 //
 {in0k_lazIdeSRC_srcTree_CORE_item,
 in0k_srcTree_getRelPATH,
