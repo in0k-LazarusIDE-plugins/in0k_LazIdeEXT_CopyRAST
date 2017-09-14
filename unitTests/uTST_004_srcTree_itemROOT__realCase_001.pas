@@ -11,7 +11,7 @@ uses
    //
    in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
    in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
-   in0k_lazIdeSRC_srcTree_FNK_PATH_rel_FND,
+   in0k_lazIdeSRC_srcTree_FNK_PATH_FND_rel,
    in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET,
    //
    SysUtils, fpcunit, testregistry;
