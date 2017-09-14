@@ -48,7 +48,7 @@ begin
     ROOT.FREE;
 end;
 
-//------------------------------------------------------------------------------
+//==============================================================================
 
 procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.itmROOT_is_Present;
 begin
@@ -60,7 +60,7 @@ begin
     AssertNotNull(SrcTree_fndBaseDIR(ROOT));
 end;
 
-//==============================================================================
+//------------------------------------------------------------------------------
 
 procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.find_empty;
 var res:_tSrcTree_item_fsNodeFLDR_;
