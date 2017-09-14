@@ -1,4 +1,4 @@
-unit uTST_005_srcTree_itemROOT__fnd_absPATH_000;
+unit uTST_006_srcTree_itemROOT__fnd_PATH;
 
 {$mode objfpc}{$H+}
 
@@ -12,15 +12,17 @@ uses
     in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
     in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
     //
+    in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET,
     in0k_lazIdeSRC_srcTree_FNK_PATH_FND_abs,
     //
     SysUtils, fpcunit, testregistry;
 
 type
 
- tTST_srcTree_itemROOT__fnd_absPATH_000= class(TTestCase)
+ tTST_srcTree_itemROOT__PATH_fnd_000= class(TTestCase)
   protected
     ROOT:tSrcTree_ROOT;
+    function _Root_clcBaseDIR_:string;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
@@ -33,20 +35,33 @@ type
 
 implementation
 
-procedure tTST_srcTree_itemROOT__fnd_absPATH_000.SetUp;
+function tTST_srcTree_itemROOT__PATH_fnd_000._Root_clcBaseDIR_:string;
 begin
-    ROOT:=tSrcTree_ROOT.Create('ROOT'); //< собсно создаем
-    SrcTree_setBaseDIR(ROOT,srcTree_fsFnk_ChompPathDelim(GetTempDir)+PathDelim+'A'); //< устанавливаем ГЛАВНЫЙ путь
+    result:=srcTree_fsFnk_ChompPathDelim(GetTempDir)+PathDelim+'BaseDir';
 end;
 
-procedure tTST_srcTree_itemROOT__fnd_absPATH_000.TearDown;
+
+
+procedure tTST_srcTree_itemROOT__PATH_fnd_000.SetUp;
+begin
+    ROOT:=tSrcTree_ROOT.Create('ROOT'); //< собсно создаем
+    SrcTree_setBaseDIR(ROOT,_Root_clcBaseDIR_); //< устанавливаем ГЛАВНЫЙ путь
+    SrcTree_getRelPATH(ROOT,PathDelim+'A');
+    SrcTree_getRelPATH(ROOT,PathDelim+'A'+PathDelim+'B');
+    SrcTree_getRelPATH(ROOT,PathDelim+'A'+PathDelim+'B'+PathDelim+'C');
+
+
+
+end;
+
+procedure tTST_srcTree_itemROOT__PATH_fnd_000.TearDown;
 begin
     ROOT.FREE;
 end;
 
 //==============================================================================
 
-procedure tTST_srcTree_itemROOT__fnd_absPATH_000.BaseDIR;
+procedure tTST_srcTree_itemROOT__PATH_fnd_000.BaseDIR;
 var res:_tSrcTree_item_fsNodeFLDR_;
    fldr: string;
 begin // ищем БАЗОВЫЙ путь
@@ -58,7 +73,7 @@ begin // ищем БАЗОВЫЙ путь
    AssertSame   ('`res` must by BaseDIR',res,SrcTree_fndBaseDIR(ROOT));
 end;
 
-procedure tTST_srcTree_itemROOT__fnd_absPATH_000.BaseDIR_prev;
+procedure tTST_srcTree_itemROOT__PATH_fnd_000.BaseDIR_prev;
 var res:_tSrcTree_item_fsNodeFLDR_;
    fldr: string;
 begin // ищем РОДИТЕЛЬСКУЮ для БАЗОВЫЙ путь
@@ -69,7 +84,7 @@ begin // ищем РОДИТЕЛЬСКУЮ для БАЗОВЫЙ путь
    AssertNull('Found',res);
 end;
 
-procedure tTST_srcTree_itemROOT__fnd_absPATH_000.BaseDIR_next;
+procedure tTST_srcTree_itemROOT__PATH_fnd_000.BaseDIR_next;
 var res:_tSrcTree_item_fsNodeFLDR_;
    fldr: string;
 begin // ищем ДОЧЕРНЮЮ для БАЗОВЫЙ путь
@@ -81,7 +96,7 @@ begin // ищем ДОЧЕРНЮЮ для БАЗОВЫЙ путь
 end;
 
 initialization
-    RegisterTest(tTST_srcTree_itemROOT__fnd_absPATH_000);
+    RegisterTest(tTST_srcTree_itemROOT__PATH_fnd_000);
 
 end.
 

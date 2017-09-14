@@ -36,7 +36,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="33">
+    <Units Count="35">
       <Unit0>
         <Filename Value="TESTs.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -146,11 +146,11 @@
         <IsPartOfProject Value="True"/>
       </Unit26>
       <Unit27>
-        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_PATH_abs_FND.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_PATH_FND_abs.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit27>
       <Unit28>
-        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_PATH_rel_FND.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_PATH_FND_rel.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit28>
       <Unit29>
@@ -169,6 +169,14 @@
         <Filename Value="uTST_005_srcTree_itemROOT__fnd_absPATH_000.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit32>
+      <Unit33>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_PATH_FND.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="uTST_006_srcTree_itemROOT__fnd_PATH.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit34>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

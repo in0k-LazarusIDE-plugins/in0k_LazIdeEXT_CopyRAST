@@ -24,11 +24,7 @@ type
     procedure SetUp; override;
     procedure TearDown; override;
   published
-    procedure itmROOT_is_Present;
-    procedure baseDIR_is_Present;
-  published
     procedure find_empty;
-  published
     procedure find_TEST;
     procedure find_TEST_ds;
     procedure find_TEST_ds_TEST;
@@ -49,18 +45,6 @@ begin
 end;
 
 //==============================================================================
-
-procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.itmROOT_is_Present;
-begin
-    AssertNotNull(ROOT);
-end;
-
-procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.baseDIR_is_Present;
-begin
-    AssertNotNull(SrcTree_fndBaseDIR(ROOT));
-end;
-
-//------------------------------------------------------------------------------
 
 procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.find_empty;
 var res:_tSrcTree_item_fsNodeFLDR_;
