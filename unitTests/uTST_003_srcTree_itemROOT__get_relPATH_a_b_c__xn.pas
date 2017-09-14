@@ -5,14 +5,14 @@ unit uTST_003_srcTree_itemROOT__get_relPATH_a_b_c__xn;
 interface
 
 uses
-	  in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
-	  in0k_lazIdeSRC_srcTree_item_Globals,
-	  in0k_lazIdeSRC_srcTree_item_fsFolder,
-	  //
-	  in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
-	  in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET,
-	  //
-	  SysUtils, fpcunit, testregistry;
+    in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
+    in0k_lazIdeSRC_srcTree_item_Globals,
+    in0k_lazIdeSRC_srcTree_item_fsFolder,
+    //
+    in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
+    in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET,
+    //
+    SysUtils, fpcunit, testregistry;
 
 type
 

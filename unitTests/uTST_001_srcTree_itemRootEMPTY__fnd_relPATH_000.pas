@@ -1,4 +1,4 @@
-unit uTST_001_srcTree_itemROOT__fnd_relPATH_000;
+unit uTST_001_srcTree_itemRootEMPTY__fnd_relPATH_000;
 
 {$mode objfpc}{$H+}
 
@@ -17,7 +17,7 @@ uses
 
 type
 
- tUTST_srcTree_itemROOT__fnd_relPATH_000= class(TTestCase)
+ tTST_srcTree_itemRootEMPTY__fnd_relPATH_000=class(TTestCase)
   protected
     ROOT:tSrcTree_ROOT;
   protected
@@ -27,42 +27,42 @@ type
     procedure itmROOT_is_Present;
     procedure baseDIR_is_Present;
   published
-    procedure relPATH_find_empty;
+    procedure find_empty;
   published
-    procedure relPATH_find_TEST;
-    procedure relPATH_find_TEST_ds;
-    procedure relPATH_find_TEST_ds_TEST;
-    procedure relPATH_find_TEST_ds_TEST_ds;
+    procedure find_TEST;
+    procedure find_TEST_ds;
+    procedure find_TEST_ds_TEST;
+    procedure find_TEST_ds_TEST_ds;
   end;
 
 implementation
 
-procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.SetUp;
+procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.SetUp;
 begin
     ROOT:=tSrcTree_ROOT.Create('ROOT');  //< собсно создаем
     SrcTree_setBaseDIR(ROOT,GetTempDir); //< устанавливаем ГЛАВНЫЙ путь
 end;
 
-procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.TearDown;
+procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.TearDown;
 begin
     ROOT.FREE;
 end;
 
 //------------------------------------------------------------------------------
 
-procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.itmROOT_is_Present;
+procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.itmROOT_is_Present;
 begin
     AssertNotNull(ROOT);
 end;
 
-procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.baseDIR_is_Present;
+procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.baseDIR_is_Present;
 begin
     AssertNotNull(SrcTree_fndBaseDIR(ROOT));
 end;
 
 //==============================================================================
 
-procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_empty;
+procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.find_empty;
 var res:_tSrcTree_item_fsNodeFLDR_;
 begin // должно возвращать BaseDIR
     res:=SrcTree_fndPathREL(root,'');
@@ -73,7 +73,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_TEST;
+procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.find_TEST;
 var res:_tSrcTree_item_fsNodeFLDR_;
 begin
     res:=SrcTree_fndPathREL(root,'TEST');
@@ -81,7 +81,7 @@ begin
     AssertNull   ('`res` must by NIL',res);
 end;
 
-procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_TEST_ds;
+procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.find_TEST_ds;
 var res:_tSrcTree_item_fsNodeFLDR_;
 begin
     res:=SrcTree_fndPathREL(root,'TEST'+DirectorySeparator);
@@ -90,7 +90,7 @@ begin
 end;
 
 
-procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_TEST_ds_TEST;
+procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.find_TEST_ds_TEST;
 var res:_tSrcTree_item_fsNodeFLDR_;
 begin
     res:=SrcTree_fndPathREL(root,'TEST'+DirectorySeparator+'TEST');
@@ -98,7 +98,7 @@ begin
     AssertNull   ('`res` must by NIL',res);
 end;
 
-procedure tUTST_srcTree_itemROOT__fnd_relPATH_000.relPATH_find_TEST_ds_TEST_ds;
+procedure tTST_srcTree_itemRootEMPTY__fnd_relPATH_000.find_TEST_ds_TEST_ds;
 var res:_tSrcTree_item_fsNodeFLDR_;
 begin
     res:=SrcTree_fndPathREL(root,'TEST'+DirectorySeparator+'TEST'+DirectorySeparator);
@@ -108,6 +108,6 @@ end;
 
 
 initialization
-    RegisterTest(tUTST_srcTree_itemROOT__fnd_relPATH_000);
+    RegisterTest(tTST_srcTree_itemRootEMPTY__fnd_relPATH_000);
 end.
 
