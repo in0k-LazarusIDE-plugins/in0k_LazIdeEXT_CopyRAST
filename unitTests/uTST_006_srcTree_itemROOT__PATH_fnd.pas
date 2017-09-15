@@ -1,4 +1,4 @@
-unit uTST_006_srcTree_itemROOT__fnd_PATH;
+unit uTST_006_srcTree_itemROOT__PATH_fnd;
 
 {$mode objfpc}{$H+}
 
@@ -9,11 +9,9 @@ uses
     in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
     in0k_lazIdeSRC_srcTree_item_Globals,
     //
-    in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
     in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
     //
     in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET,
-    in0k_lazIdeSRC_srcTree_FNK_PATH_FND_abs,
     in0k_lazIdeSRC_srcTree_FNK_PATH_FND,
     //
     Classes, SysUtils, fpcunit, testregistry;
@@ -58,41 +56,41 @@ begin
     SrcTree_setBaseDIR(ROOT,bDIR);      //< устанавливаем ГЛАВНЫЙ путь
     // добавляем тестовые пути
     lTST:=TStringList.Create;
+    //---
+    SetUp_lTST_addNode('A');
+    SetUp_lTST_addNode('A'+PD+'A');
+    SetUp_lTST_addNode('A'+PD+'A'+PD+'A');
+    SetUp_lTST_addNode('A'+PD+'A'+PD+'A'+PD+'A');
     //
-   { SetUp_lTST_addNode(PD+'A');
-    SetUp_lTST_addNode(PD+'A'+PD+'A');
-    SetUp_lTST_addNode(PD+'A'+PD+'A'+PD+'A');
-    SetUp_lTST_addNode(PD+'A'+PD+'A'+PD+'A'+PD+'A');
+    SetUp_lTST_addNode('B');
+    SetUp_lTST_addNode('B'+PD+'B');
+    SetUp_lTST_addNode('B'+PD+'B'+PD+'B');
+    SetUp_lTST_addNode('B'+PD+'B'+PD+'B'+PD+'B');
     //
-    SetUp_lTST_addNode(PD+'B');
-    SetUp_lTST_addNode(PD+'B'+PD+'B');
-    SetUp_lTST_addNode(PD+'B'+PD+'B'+PD+'B');
-    SetUp_lTST_addNode(PD+'B'+PD+'B'+PD+'B'+PD+'B');
+    SetUp_lTST_addNode('C');
+    SetUp_lTST_addNode('C'+PD+'C');
+    SetUp_lTST_addNode('C'+PD+'C'+PD+'C');
+    SetUp_lTST_addNode('C'+PD+'C'+PD+'C'+PD+'C');
     //
-    SetUp_lTST_addNode(PD+'C');
-    SetUp_lTST_addNode(PD+'C'+PD+'C');
-    SetUp_lTST_addNode(PD+'C'+PD+'C'+PD+'C');
-    SetUp_lTST_addNode(PD+'C'+PD+'C'+PD+'C'+PD+'C');
+    SetUp_lTST_addNode('D');
+    SetUp_lTST_addNode('D'+PD+'D');
+    SetUp_lTST_addNode('D'+PD+'D'+PD+'D');
+    SetUp_lTST_addNode('D'+PD+'D'+PD+'D'+PD+'D');
+    //---
+    SetUp_lTST_extNode('E');
+    SetUp_lTST_addNode('E'+PD+'E');
+    SetUp_lTST_addNode('E'+PD+'E'+PD+'E');
+    SetUp_lTST_addNode('E'+PD+'E'+PD+'E'+PD+'E');
     //
-    SetUp_lTST_addNode(PD+'D');
-    SetUp_lTST_addNode(PD+'D'+PD+'D');
-    SetUp_lTST_addNode(PD+'D'+PD+'D'+PD+'D');
-    SetUp_lTST_addNode(PD+'D'+PD+'D'+PD+'D'+PD+'D');   }
+    SetUp_lTST_extNode('F');
+    SetUp_lTST_extNode('F'+PD+'F');
+    SetUp_lTST_addNode('F'+PD+'F'+PD+'F');
+    SetUp_lTST_addNode('F'+PD+'F'+PD+'F'+PD+'F');
     //
-    {SetUp_lTST_extNode(PD+'E');
-    SetUp_lTST_addNode(PD+'E'+PD+'E');
-    SetUp_lTST_addNode(PD+'E'+PD+'E'+PD+'E');
-    SetUp_lTST_addNode(PD+'E'+PD+'E'+PD+'E'+PD+'E');
-    // }
-    SetUp_lTST_extNode(PD+'F');
-    SetUp_lTST_extNode(PD+'F'+PD+'F');
-    SetUp_lTST_addNode(PD+'F'+PD+'F'+PD+'F');
-    SetUp_lTST_addNode(PD+'F'+PD+'F'+PD+'F'+PD+'F');
-    //
-    SetUp_lTST_extNode(PD+'G');
-    SetUp_lTST_extNode(PD+'G'+PD+'G');
-    SetUp_lTST_extNode(PD+'G'+PD+'G'+PD+'G');
-    SetUp_lTST_addNode(PD+'G'+PD+'G'+PD+'G'+PD+'G');
+    SetUp_lTST_extNode('G');
+    SetUp_lTST_extNode('G'+PD+'G');
+    SetUp_lTST_extNode('G'+PD+'G'+PD+'G');
+    SetUp_lTST_addNode('G'+PD+'G'+PD+'G'+PD+'G');
 end;
 
 procedure tTST_srcTree_itemROOT__PATH_fnd_inBaseDIR.TearDown;
@@ -101,7 +99,7 @@ begin
     lTST.FREE;
 end;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+//==============================================================================
 
 procedure tTST_srcTree_itemROOT__PATH_fnd_inBaseDIR.asRelative;
 var res:_tSrcTree_item_fsNodeFLDR_;
@@ -123,7 +121,7 @@ var bDIR:string;
 begin
     bDIR:=srcTree_fsFnk_ChompPathDelim(GetTempDir);
     for i:=0 to lTST.Count-1 do begin
-        lTST.Strings[i]:=bDIR+lTST.Strings[i]; //< теперь этот путь АБСОЛЮТНЫЙ
+        lTST.Strings[i]:=bDIR+PathDelim+lTST.Strings[i]; //< теперь этот путь АБСОЛЮТНЫЙ
         //
         res:=SrcTree_fndPath(ROOT,lTST.Strings[i]);
         //--- от ДОЛЖЕН быть или НЕ быть
