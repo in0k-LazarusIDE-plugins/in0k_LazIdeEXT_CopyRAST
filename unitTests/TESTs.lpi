@@ -42,7 +42,7 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="uTST_001_srcTree_itemRootEMPTY__fnd_relPATH_000.pas"/>
+        <Filename Value="uTST_002_srcTree__PATH_fnd_REL.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
       <Unit2>
@@ -166,7 +166,7 @@
         <IsPartOfProject Value="True"/>
       </Unit31>
       <Unit32>
-        <Filename Value="uTST_005_srcTree_itemROOT__PATH_fnd_abs.pas"/>
+        <Filename Value="uTST_005_srcTree__PATH_fnd_ABS.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit32>
       <Unit33>
@@ -174,7 +174,7 @@
         <IsPartOfProject Value="True"/>
       </Unit33>
       <Unit34>
-        <Filename Value="uTST_006_srcTree_itemROOT__PATH_fnd.pas"/>
+        <Filename Value="uTST_006_srcTree__PATH_fnd__inBaseDIR.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit34>
     </Units>
@@ -204,7 +204,7 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
+    <Exceptions Count="4">
       <Item1>
         <Name Value="EAbort"/>
       </Item1>
@@ -214,6 +214,9 @@
       <Item3>
         <Name Value="EFOpenError"/>
       </Item3>
+      <Item4>
+        <Name Value="EAssertionFailedError"/>
+      </Item4>
     </Exceptions>
   </Debugging>
 </CONFIG>

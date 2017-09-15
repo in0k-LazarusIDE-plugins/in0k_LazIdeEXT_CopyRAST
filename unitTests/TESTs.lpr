@@ -8,7 +8,7 @@ uses
 
 uTST_001_srcTree_itemROOT__BaseDIR_fnk,
 uTST_001_srcTree_itemROOT__BaseDIR_mtd,
-uTST_001_srcTree_itemRootEMPTY__fnd_relPATH_000,
+uTST_002_srcTree__PATH_fnd_REL,
 //
 uTST_003_srcTree_itemROOT__get_relPATH_____a_b_c,
 uTST_003_srcTree_itemROOT__get_relPATH_4m__a_b_c,
@@ -22,8 +22,8 @@ uTST_004_srcTree_itemROOT__get_relPATH_a_ab_abc,
 uTST_004_srcTree_itemROOT__get_relPATH_abc_ab_a,
 uTST_004_srcTree_itemROOT__get_relPATH_ab_ac_ad,
 uTST_004_srcTree_itemROOT__realCase_001,
-uTST_005_srcTree_itemROOT__PATH_fnd_abs, in0k_lazIdeSRC_srcTree_FNK_PATH_FND,
-uTST_006_srcTree_itemROOT__PATH_fnd;
+uTST_005_srcTree__PATH_fnd_ABS, in0k_lazIdeSRC_srcTree_FNK_PATH_FND,
+uTST_006_srcTree__PATH_fnd__inBaseDIR;
 //
 {in0k_lazIdeSRC_srcTree_CORE_item,
 in0k_srcTree_getRelPATH,

@@ -12,13 +12,11 @@ uses
   in0k_lazIdeSRC_srcTree_FNK_baseDIR_GET,
   in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
   //---
-  //in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
-  //---
   Classes, SysUtils, fpcunit, testutils, testregistry;
 
 type
 
- tUTST_srcTree_itemROOT__BaseDIR_mtd=class(TTestCase)
+ tTST_srcTree__itemROOT__BaseDIR_mtd=class(TTestCase)
   protected
     ROOT:tSrcTree_ROOT;
   protected
@@ -38,33 +36,33 @@ type
 
 implementation
 
-procedure tUTST_srcTree_itemROOT__BaseDIR_mtd.SetUp;
+procedure tTST_srcTree__itemROOT__BaseDIR_mtd.SetUp;
 begin
     ROOT:=tSrcTree_ROOT.Create('ROOT');
 end;
 
-procedure tUTST_srcTree_itemROOT__BaseDIR_mtd.TearDown;
+procedure tTST_srcTree__itemROOT__BaseDIR_mtd.TearDown;
 begin
     ROOT.FREE;
 end;
 
 //------------------------------------------------------------------------------
 
-function tUTST_srcTree_itemROOT__BaseDIR_mtd._CRT_(const BaseDIR_PATH:string):tSrcTree_BASE;
+function tTST_srcTree__itemROOT__BaseDIR_mtd._CRT_(const BaseDIR_PATH:string):tSrcTree_BASE;
 begin
     result:= tSrcTree_BASE.Create(srcTree_fsFnk_ChompPathDelim(BaseDIR_PATH));
 end;
 
 //==============================================================================
 
-procedure tUTST_srcTree_itemROOT__BaseDIR_mtd.FND;
+procedure tTST_srcTree__itemROOT__BaseDIR_mtd.FND;
 var baseDir:tSrcTree_item;
 begin
     baseDir:=SrcTree_fndBaseDIR(ROOT);
     AssertNull('`baseDir` MUST be nil',baseDir);
 end;
 
-procedure tUTST_srcTree_itemROOT__BaseDIR_mtd.GET;
+procedure tTST_srcTree__itemROOT__BaseDIR_mtd.GET;
 var baseDir:tSrcTree_item;
 begin
     baseDir:=SrcTree_getBaseDIR(ROOT,@_CRT_);
@@ -74,7 +72,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tUTST_srcTree_itemROOT__BaseDIR_mtd.GET_FND;
+procedure tTST_srcTree__itemROOT__BaseDIR_mtd.GET_FND;
 var baseDir0:tSrcTree_item;
 var baseDir1:tSrcTree_item;
 begin
@@ -85,7 +83,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tUTST_srcTree_itemROOT__BaseDIR_mtd.SET_FND;
+procedure tTST_srcTree__itemROOT__BaseDIR_mtd.SET_FND;
 var baseDir:tSrcTree_item;
 begin
     SrcTree_setBaseDIR(ROOT,GetTempDir,@_CRT_);
@@ -95,7 +93,7 @@ begin
     AssertSame   ('`baseDir.parent` must be ROOT',baseDir.ItemPRNT,ROOT);
 end;
 
-procedure tUTST_srcTree_itemROOT__BaseDIR_mtd.SET_GET;
+procedure tTST_srcTree__itemROOT__BaseDIR_mtd.SET_GET;
 var baseDir:tSrcTree_item;
 begin
     SrcTree_setBaseDIR(ROOT,GetTempDir,@_CRT_);
@@ -108,5 +106,5 @@ end;
 //==============================================================================
 
 initialization
-    RegisterTest(tUTST_srcTree_itemROOT__BaseDIR_mtd);
+    RegisterTest(tTST_srcTree__itemROOT__BaseDIR_mtd);
 end.

@@ -1,4 +1,4 @@
-unit uTST_006_srcTree_itemROOT__PATH_fnd;
+unit uTST_006_srcTree__PATH_fnd__inBaseDIR;
 
 {$mode objfpc}{$H+}
 
@@ -18,7 +18,7 @@ uses
 
 type
 
- tTST_srcTree_itemROOT__PATH_fnd_inBaseDIR= class(TTestCase)
+ tTST_srcTree__PATH_fnd__inBaseDIR=class(TTestCase)
   protected
     lTST:TStrings;
     ROOT:tSrcTree_ROOT;
@@ -37,17 +37,17 @@ implementation
 
 const PD=PathDelim;
 
-procedure tTST_srcTree_itemROOT__PATH_fnd_inBaseDIR.SetUp_lTST_addNode(const lPath:string);
+procedure tTST_srcTree__PATH_fnd__inBaseDIR.SetUp_lTST_addNode(const lPath:string);
 begin // путь который ДОЛЖЕН находиться
     lTST.AddObject(lPath,SrcTree_getRelPATH(ROOT,lPath));
 end;
 
-procedure tTST_srcTree_itemROOT__PATH_fnd_inBaseDIR.SetUp_lTST_extNode(const lPath:string);
+procedure tTST_srcTree__PATH_fnd__inBaseDIR.SetUp_lTST_extNode(const lPath:string);
 begin // путь который НЕ должен находиться
     lTST.AddObject(lPath,nil);
 end;
 
-procedure tTST_srcTree_itemROOT__PATH_fnd_inBaseDIR.SetUp;
+procedure tTST_srcTree__PATH_fnd__inBaseDIR.SetUp;
 var bDIR:string;
 begin
     bDIR:=srcTree_fsFnk_ChompPathDelim(GetTempDir);
@@ -93,7 +93,7 @@ begin
     SetUp_lTST_addNode('G'+PD+'G'+PD+'G'+PD+'G');
 end;
 
-procedure tTST_srcTree_itemROOT__PATH_fnd_inBaseDIR.TearDown;
+procedure tTST_srcTree__PATH_fnd__inBaseDIR.TearDown;
 begin
     ROOT.FREE;
     lTST.FREE;
@@ -101,7 +101,7 @@ end;
 
 //==============================================================================
 
-procedure tTST_srcTree_itemROOT__PATH_fnd_inBaseDIR.asRelative;
+procedure tTST_srcTree__PATH_fnd__inBaseDIR.asRelative;
 var res:_tSrcTree_item_fsNodeFLDR_;
       i: integer;
 begin // ищем как ОТНОСИТЕЛЬНЫЕ
@@ -114,7 +114,7 @@ begin // ищем как ОТНОСИТЕЛЬНЫЕ
     end;
 end;
 
-procedure tTST_srcTree_itemROOT__PATH_fnd_inBaseDIR.asAbsolute;
+procedure tTST_srcTree__PATH_fnd__inBaseDIR.asAbsolute;
 var bDIR:string;
      res:_tSrcTree_item_fsNodeFLDR_;
        i: integer;
@@ -133,7 +133,7 @@ end;
 
 initialization//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    RegisterTest(tTST_srcTree_itemROOT__PATH_fnd_inBaseDIR);
+    RegisterTest(tTST_srcTree__PATH_fnd__inBaseDIR);
 
 end.
 
