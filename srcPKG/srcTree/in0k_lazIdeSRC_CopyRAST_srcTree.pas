@@ -12,6 +12,11 @@ uses
   srcTree_builder_4Package,
   srcTree_handler_CORE,
 
+  in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_CORE,
+  in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4INCs,
+  in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4USEs,
+
+
   in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_usesFile,
   in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_files4INC;
 
@@ -35,9 +40,15 @@ type
 
 type
 
+ tCopyRastSrcTree_f8a=class(tSrcTree_itmHandler4Build__f8a_CORE)
+  public
+    constructor Create(const Owner:tSrcTree_prcHandler; const Parent:tSrcTree_itmHandler); override;
+  end;
+
  tCopyRastSrcTree_P4Build=class(tSrcTree_prcHandler)
   protected
     procedure _EXECUTE_; override;
+
   end;
 
 // Processing
@@ -47,10 +58,19 @@ type
 
 implementation
 
+constructor tCopyRastSrcTree_f8a.Create(const Owner:tSrcTree_prcHandler; const Parent:tSrcTree_itmHandler);
+begin
+   inherited Create(Owner,Parent);
+   //
+   Handler_ADD(tSrcTree_itmHandler4Build__f8a_Item_4USEs);
+   Handler_ADD(tSrcTree_itmHandler4Build__f8a_Item_4INCs);
+end;
+
 procedure tCopyRastSrcTree_P4Build._EXECUTE_;
 begin
- //  _EXECUTE_4ROOT_(tSrcTree_itmHandler4Build__f8a_usesFile);
-   _EXECUTE_4ROOT_(tSrcTree_itmHandler4Build__f8a_files4INC);
+    //  _EXECUTE_4ROOT_(tSrcTree_itmHandler4Build__f8a_usesFile);
+    //_EXECUTE_4ROOT_(tSrcTree_itmHandler4Build__f8a_files4INC);
+   _EXECUTE_4ROOT_(tCopyRastSrcTree_f8a);
 end;
 
 end.
