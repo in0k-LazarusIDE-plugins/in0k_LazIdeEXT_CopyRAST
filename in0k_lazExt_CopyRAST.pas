@@ -56,7 +56,9 @@ uses
       in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_files4INC, 
       in0k_lazIdeSRC_srcTree_FNK_PATH_FND_abs, 
       in0k_lazIdeSRC_srcTree_FNK_FILE_abs_FND, 
-      in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_CORE, LazarusPackageIntf;
+      in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_CORE, 
+      in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4INCs, 
+      LazarusPackageIntf;
 
 implementation
 

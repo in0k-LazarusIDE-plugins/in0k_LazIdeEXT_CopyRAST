@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="76">
+    <Files Count="77">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -320,6 +320,10 @@
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build\in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_CORE.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_CORE"/>
       </Item76>
+      <Item77>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build\in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4INCs.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4INCs"/>
+      </Item77>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>
