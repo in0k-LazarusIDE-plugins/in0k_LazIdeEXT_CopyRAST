@@ -50,7 +50,7 @@ type
 
  tCopyRastSrcTree_f8a=class(tSrcTree_itmHandler4Build__f8a_CORE)
   protected
-    function _prc__execute_4FileName_(const srcName:string):boolean; override;
+    function _prc__fileName_Need_ADD_(const srcName:string):boolean; override;
   public
     constructor Create(const Owner:tSrcTree_prcHandler; const Parent:tSrcTree_itmHandler); override;
   end;
@@ -76,16 +76,15 @@ begin
    Handler_ADD(tSrcTree_itmHandler4Build__f8a_Item_4INCs);
 end;
 
-function tCopyRastSrcTree_f8a._prc__execute_4FileName_(const srcName:string):boolean;
-var fsFILE:tSrcTree_fsFILE;
-    fsFLDR:_tSrcTree_item_fsNodeFLDR_;
+function tCopyRastSrcTree_f8a._prc__fileName_Need_ADD_(const srcName:string):boolean;
+var fsFLDR:_tSrcTree_item_fsNodeFLDR_;
 begin
-    fsFILE:=SrcTree_fndFile(SrcTree_fndRootFILE(prcssdITEM), srcName);
-    if not Assigned(fsFILE) then begin
-        fsFLDR:=SrcTree_fndPath(SrcTree_fndRootFILE(prcssdITEM), srcTree_fsFnk_ExtractFileDir(srcName));
-        if Assigned(fsFLDR) then begin
-            writeLOG('LOST '+srcName);
-        end;
+    result:=false;
+    //----
+    fsFLDR:=SrcTree_fndPath(SrcTree_fndRootFILE(prcssdITEM), srcTree_fsFnk_ExtractFileDir(srcName));
+    if Assigned(fsFLDR) then begin
+        {todo: тут ДОЛЖНЫ быть какие-то ОГРАНИЧЕНИЯ на fsFLDR}
+        result:=TRUE;
     end;
 end;
 
