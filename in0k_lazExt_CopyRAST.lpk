@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="78">
+    <Files Count="81">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -313,8 +313,8 @@
         <Type Value="Binary"/>
       </Item74>
       <Item75>
-        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_FILE_abs_FND.pas"/>
-        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_FILE_abs_FND"/>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_FILE_FND_abs.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_FILE_FND_abs"/>
       </Item75>
       <Item76>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build\in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_CORE.pas"/>
@@ -328,6 +328,18 @@
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build\in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4USEs.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4USEs"/>
       </Item78>
+      <Item79>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_FILE_FND.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_FILE_FND"/>
+      </Item79>
+      <Item80>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE\in0k_lazIdeSRC_srcTree_CORE_filePkgType_FNK.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_CORE_filePkgType_FNK"/>
+      </Item80>
+      <Item81>
+        <Filename Value="asd.inc"/>
+        <Type Value="Include"/>
+      </Item81>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

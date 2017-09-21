@@ -6,8 +6,16 @@ interface
 
 uses
   in0k_lazIdeSRC_srcTree_item_Globals,
+  in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
   in0k_lazIdeSRC_srcTree_item_fsFolder,
   in0k_lazIdeSRC_srcTree_item_fsFile,
+
+  in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
+
+  in0k_lazIdeSRC_srcTree_FNK_FILE_FND,
+  in0k_lazIdeSRC_srcTree_FNK_PATH_FND,
+  in0k_lazIdeSRC_srcTree_FNK_rootFILE_FND,
+
 
   srcTree_builder_4Package,
   srcTree_handler_CORE,
@@ -41,6 +49,8 @@ type
 type
 
  tCopyRastSrcTree_f8a=class(tSrcTree_itmHandler4Build__f8a_CORE)
+  protected
+    function _prc__execute_4FileName_(const srcName:string):boolean; override;
   public
     constructor Create(const Owner:tSrcTree_prcHandler; const Parent:tSrcTree_itmHandler); override;
   end;
@@ -65,6 +75,20 @@ begin
    Handler_ADD(tSrcTree_itmHandler4Build__f8a_Item_4USEs);
    Handler_ADD(tSrcTree_itmHandler4Build__f8a_Item_4INCs);
 end;
+
+function tCopyRastSrcTree_f8a._prc__execute_4FileName_(const srcName:string):boolean;
+var fsFILE:tSrcTree_fsFILE;
+    fsFLDR:_tSrcTree_item_fsNodeFLDR_;
+begin
+    fsFILE:=SrcTree_fndFile(SrcTree_fndRootFILE(prcssdITEM), srcName);
+    if not Assigned(fsFILE) then begin
+        fsFLDR:=SrcTree_fndPath(SrcTree_fndRootFILE(prcssdITEM), srcTree_fsFnk_ExtractFileDir(srcName));
+        if Assigned(fsFLDR) then begin
+            writeLOG('LOST '+srcName);
+        end;
+    end;
+end;
+
 
 procedure tCopyRastSrcTree_P4Build._EXECUTE_;
 begin
