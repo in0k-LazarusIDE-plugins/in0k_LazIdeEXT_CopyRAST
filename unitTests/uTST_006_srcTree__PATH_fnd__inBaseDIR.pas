@@ -54,9 +54,9 @@ begin
     // делаем коренЬ
     ROOT:=tSrcTree_ROOT.Create('ROOT'); //< собсно создаем
     SrcTree_setBaseDIR(ROOT,bDIR);      //< устанавливаем ГЛАВНЫЙ путь
-    // добавляем тестовые пути
+    //--- ХРАНИТЕЛЬ тестовых путей
     lTST:=TStringList.Create;
-    //---
+    //--- добавляем тестовые пути
     SetUp_lTST_addNode('A');
     SetUp_lTST_addNode('A'+PD+'A');
     SetUp_lTST_addNode('A'+PD+'A'+PD+'A');

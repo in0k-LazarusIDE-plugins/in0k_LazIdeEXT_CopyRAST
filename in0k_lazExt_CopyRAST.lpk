@@ -253,8 +253,8 @@
         <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_srchPATH_ADD"/>
       </Item59>
       <Item60>
-        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_nodeFILE_FND.pas"/>
-        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_nodeFILE_FND"/>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_FILE_FND_rel.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_FILE_FND_rel"/>
       </Item60>
       <Item61>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_nodeFILE_ADD.pas"/>

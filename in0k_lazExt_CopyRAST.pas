@@ -39,7 +39,7 @@ uses
   in0k_lazIdeSRC_srcTree_FNK_mainFILE_FND, 
   in0k_lazIdeSRC_srcTree_FNK_mainFILE_SET, 
   in0k_lazIdeSRC_srcTree_FNK_srchPATH_ADD, 
-  in0k_lazIdeSRC_srcTree_FNK_nodeFILE_FND, 
+  in0k_lazIdeSRC_srcTree_FNK_FILE_FND_rel, 
   in0k_lazIdeSRC_srcTree_FNK_nodeFILE_ADD, 
   in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK, 
   in0k_lazIdeSRC_srcTree_item_Globals, srcTree_handler_CORE, 

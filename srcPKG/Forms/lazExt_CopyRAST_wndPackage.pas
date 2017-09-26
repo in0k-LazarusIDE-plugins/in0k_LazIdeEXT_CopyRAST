@@ -102,13 +102,14 @@ begin
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'Builder START at '{+DateTimeToStr(NOW)});{$endIf}
     cmpCopyRAST_Tree.Root:=Builder.MAKE_SourceTREE(_package_);
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'Builder END at '{+DateTimeToStr(NOW)});{$endIf}
-    Builder.FREE;
+
     // уточняем список по исходникам
     P4Build:=tCopyRastSrcTree_P4Build.Create;
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'P4Build START at '{+DateTimeToStr(NOW)});{$endIf}
-    P4Build.EXECUTE(cmpCopyRAST_Tree.Root);
+    P4Build.EXECUTE(Builder,cmpCopyRAST_Tree.Root);
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'P4Build END at '{+DateTimeToStr(NOW)});{$endIf}
     P4Build.FREE;
+    Builder.FREE;
 
 end;
 
