@@ -11,7 +11,7 @@ uses
     //
     in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
     //
-    in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET,
+    in0k_lazIdeSRC_srcTree_FNK_PATH_GET_rel,
     in0k_lazIdeSRC_srcTree_FNK_PATH_FND,
     //
     Classes, SysUtils, fpcunit, testregistry;
@@ -31,7 +31,6 @@ type
     procedure asRelative;
     procedure asAbsolute;
   end;
-
 
 implementation
 

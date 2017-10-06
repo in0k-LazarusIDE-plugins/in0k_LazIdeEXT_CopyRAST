@@ -10,7 +10,7 @@ uses
     in0k_lazIdeSRC_srcTree_item_fsFolder,
     //
     in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
-    in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET,
+    in0k_lazIdeSRC_srcTree_FNK_PATH_GET_rel,
     //
     SysUtils, fpcunit, testregistry;
 

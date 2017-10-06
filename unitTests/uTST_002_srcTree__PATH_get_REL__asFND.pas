@@ -1,4 +1,4 @@
-unit uTST_002_srcTree__PATH_fnd_REL;
+unit uTST_002_srcTree__PATH_get_REL__asFND;
 
 {$mode objfpc}{$H+}
 
@@ -12,19 +12,18 @@ uses
     in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
     in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
     //
-    in0k_lazIdeSRC_srcTree_FNK_PATH_FND_rel,
+    in0k_lazIdeSRC_srcTree_FNK_PATH_GET_rel,
     //
     Classes, SysUtils, fpcunit, testregistry;
 
 type
 
- tTST_srcTree__PATH_fnd_REL=class(TTestCase)
+ tTST_srcTree__PATH_get_REL__asFND=class(TTestCase)
   protected
     lTST:TStrings;
     ROOT:tSrcTree_ROOT;
   protected
     function  SetUp_lTST_addNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
-    function  SetUp_lTST_extNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
     procedure SetUp;    override;
     procedure TearDown; override;
   published
@@ -35,23 +34,16 @@ type
 
 implementation
 
-
 const PD=PathDelim;
 
-function tTST_srcTree__PATH_fnd_REL.SetUp_lTST_addNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
+function tTST_srcTree__PATH_get_REL__asFND.SetUp_lTST_addNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
 begin // путь который ДОЛЖЕН находиться
     result:=_tSrcTree_item_fsNodeFLDR_.Create(lPath);
     SrcTree_insert_ChldLast(prnt,result);
     lTST.AddObject(lPath,result);
 end;
 
-function tTST_srcTree__PATH_fnd_REL.SetUp_lTST_extNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
-begin // путь который НЕ должен находиться
-    result:=nil;
-    lTST.AddObject(lPath,result);
-end;
-
-procedure tTST_srcTree__PATH_fnd_REL.SetUp;
+procedure tTST_srcTree__PATH_get_REL__asFND.SetUp;
 var tmp:tSrcTree_item;
 begin
     // делаем коренЬ
@@ -77,33 +69,9 @@ begin
     tmp:=SetUp_lTST_addNode(tmp,'D'+PD+'D');
     tmp:=SetUp_lTST_addNode(tmp,'D'+PD+'D'+PD+'D');
     tmp:=SetUp_lTST_addNode(tmp,'D'+PD+'D'+PD+'D'+PD+'D');
-    //-
-    tmp:=SrcTree_fndBaseDIR(ROOT);
-    tmp:=SetUp_lTST_addNode(tmp,'E');
-    tmp:=SetUp_lTST_addNode(tmp,'E'+PD+'E');
-    tmp:=SetUp_lTST_addNode(tmp,'E'+PD+'E'+PD+'E');
-    tmp:=SetUp_lTST_extNode(tmp,'E'+PD+'E'+PD+'E'+PD+'E');
-    //
-    tmp:=SrcTree_fndBaseDIR(ROOT);
-    tmp:=SetUp_lTST_addNode(tmp,'F');
-    tmp:=SetUp_lTST_addNode(tmp,'F'+PD+'F');
-    tmp:=SetUp_lTST_extNode(tmp,'F'+PD+'F'+PD+'F');
-    tmp:=SetUp_lTST_extNode(tmp,'F'+PD+'F'+PD+'F'+PD+'F');
-    //
-    tmp:=SrcTree_fndBaseDIR(ROOT);
-    tmp:=SetUp_lTST_addNode(tmp,'G');
-    tmp:=SetUp_lTST_extNode(tmp,'G'+PD+'G');
-    tmp:=SetUp_lTST_extNode(tmp,'G'+PD+'G'+PD+'G');
-    tmp:=SetUp_lTST_extNode(tmp,'G'+PD+'G'+PD+'G'+PD+'G');
-    //
-    tmp:=SrcTree_fndBaseDIR(ROOT);
-    tmp:=SetUp_lTST_extNode(tmp,'H');
-    tmp:=SetUp_lTST_extNode(tmp,'H'+PD+'H');
-    tmp:=SetUp_lTST_extNode(tmp,'H'+PD+'H'+PD+'H');
-    tmp:=SetUp_lTST_extNode(tmp,'H'+PD+'H'+PD+'H'+PD+'H');
 end;
 
-procedure tTST_srcTree__PATH_fnd_REL.TearDown;
+procedure tTST_srcTree__PATH_get_REL__asFND.TearDown;
 begin
     ROOT.FREE;
     lTST.FREE;
@@ -111,12 +79,12 @@ end;
 
 //==============================================================================
 
-procedure tTST_srcTree__PATH_fnd_REL.asRelative;
+procedure tTST_srcTree__PATH_get_REL__asFND.asRelative;
 var res:_tSrcTree_item_fsNodeFLDR_;
       i: integer;
 begin // ищем как ОТНОСИТЕЛЬНЫЕ
     for i:=0 to lTST.Count-1 do begin
-        res:=SrcTree_fndPathREL(ROOT,lTST.Strings[i]);
+        res:=SrcTree_getRelPATH(ROOT,lTST.Strings[i]);
         //--- от ДОЛЖЕН быть или НЕ быть
         if Assigned(lTST.Objects[i])
         then AssertSame('`res` noFound PATH:"'+lTST.Strings[i]+'"',lTST.Objects[i],res)
@@ -126,6 +94,6 @@ end;
 
 
 initialization
-    RegisterTest(tTST_srcTree__PATH_fnd_REL);
+    RegisterTest(tTST_srcTree__PATH_get_REL__asFND);
 end.
 

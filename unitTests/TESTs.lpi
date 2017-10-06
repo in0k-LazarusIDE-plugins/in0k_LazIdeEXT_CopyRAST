@@ -36,7 +36,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="34">
+    <Units Count="35">
       <Unit0>
         <Filename Value="TESTs.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -150,7 +150,7 @@
         <IsPartOfProject Value="True"/>
       </Unit27>
       <Unit28>
-        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET.pas"/>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_PATH_GET_rel.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit28>
       <Unit29>
@@ -173,6 +173,10 @@
         <Filename Value="uTST_006_srcTree__PATH_fnd__inBaseDIR.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit33>
+      <Unit34>
+        <Filename Value="uTST_002_srcTree__PATH_get_REL__asFND.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit34>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

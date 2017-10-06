@@ -42,7 +42,7 @@ procedure _SrcTreeROOT_toGourceLOG_(const item:tSrcTree_item; const Strings:tStr
 var tmp:tSrcTree_item;
 begin
     if item is _tStcTree_item_fsNode_ then begin
-    	Strings.Add(inttostr(Strings.Count)+smb+smb+'A'+smb+'src\'+_tStcTree_item_fsNode_(item).src_PATH);
+    	Strings.Add(inttostr(Strings.Count)+smb+smb+'A'+smb+'src\'+_tStcTree_item_fsNode_(item).fsPath);
     	//DEBUG(inttostr(0)+smb+smb+'A'+smb+_tStcTree_item_fsNode_(item).src_PATH)
     end;
     //---

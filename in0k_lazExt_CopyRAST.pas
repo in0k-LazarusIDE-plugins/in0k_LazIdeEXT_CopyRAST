@@ -31,7 +31,7 @@ uses
   srcTree_builder_4Package, in0k_lazIdeSRC_srcTree_CORE_item, 
   in0k_lazIdeSRC_srcTree_item_fsFolder, in0k_lazIdeSRC_srcTree_item_fsFile, 
   in0k_lazIdeSRC_srcTree_FNK_PATH_FND_rel, 
-  in0k_lazIdeSRC_srcTree_FNK_PATH_rel_GET, srcTree_FNC, 
+  in0k_lazIdeSRC_srcTree_FNK_PATH_GET_rel, srcTree_FNC, 
   in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND, 
   in0k_lazIdeSRC_srcTree_FNK_baseDIR_GET, 
   in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET, 
