@@ -1,4 +1,6 @@
 unit uTST_002_srcTree__PATH_fnd_REL;
+// по ЗАРАНЕЕ созданому дереву
+// ищем "папки" по ОТНОСИТЕЛЬНОМУ пути, используем `SrcTree_fndPathREL`
 
 {$mode objfpc}{$H+}
 
@@ -28,16 +30,16 @@ type
     procedure SetUp;    override;
     procedure TearDown; override;
   published
-    procedure asRelative;
+    procedure find_relative_path;
   end;
-
-
 
 implementation
 
-
 const PD=PathDelim;
 
+//------------------------------------------------------------------------------
+
+// добавить путь в тестовый список (он ДОЛЖЕН быть найден)
 function tTST_srcTree__PATH_fnd_REL.SetUp_lTST_addNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
 begin // путь который ДОЛЖЕН находиться
     result:=_tSrcTree_item_fsNodeFLDR_.Create(lPath);
@@ -45,18 +47,21 @@ begin // путь который ДОЛЖЕН находиться
     lTST.AddObject(lPath,result);
 end;
 
+// добавить путь пустышку (такого НЕ должно быть найдено)
 function tTST_srcTree__PATH_fnd_REL.SetUp_lTST_extNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
 begin // путь который НЕ должен находиться
     result:=nil;
     lTST.AddObject(lPath,result);
 end;
 
+//------------------------------------------------------------------------------
+
 procedure tTST_srcTree__PATH_fnd_REL.SetUp;
 var tmp:tSrcTree_item;
 begin
     // делаем коренЬ
-    ROOT:=tSrcTree_ROOT.Create('ROOT'); //< собсно создаем
-    SrcTree_setBaseDIR(ROOT,GetTempDir);      //< устанавливаем ГЛАВНЫЙ путь
+    ROOT:=tSrcTree_ROOT.Create('ROOT');  //< собсно создаем
+    SrcTree_setBaseDIR(ROOT,GetTempDir); //< устанавливаем ГЛАВНЫЙ путь
     //--- ХРАНИТЕЛЬ тестовых путей
     lTST:=TStringList.Create;
     //--- добавляем тестовые пути
@@ -111,7 +116,7 @@ end;
 
 //==============================================================================
 
-procedure tTST_srcTree__PATH_fnd_REL.asRelative;
+procedure tTST_srcTree__PATH_fnd_REL.find_relative_path;
 var res:_tSrcTree_item_fsNodeFLDR_;
       i: integer;
 begin // ищем как ОТНОСИТЕЛЬНЫЕ
@@ -123,7 +128,6 @@ begin // ищем как ОТНОСИТЕЛЬНЫЕ
         else AssertNull('`res` mustNIL PATH:"'+lTST.Strings[i]+'"',res);
     end;
 end;
-
 
 initialization
     RegisterTest(tTST_srcTree__PATH_fnd_REL);

@@ -36,53 +36,53 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="35">
+    <Units Count="36">
       <Unit0>
         <Filename Value="TESTs.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="uTST_002_srcTree__PATH_fnd_REL.pas"/>
+        <Filename Value="new\uTST_002_srcTree__PATH_fnd_REL.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_____a_b_c.pas"/>
+        <Filename Value="old\uTST_003_srcTree_itemROOT__get_relPATH_____a_b_c.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
       <Unit3>
-        <Filename Value="uTST_004_srcTree_itemROOT__get_relPATH_a_ab_abc.pas"/>
+        <Filename Value="old\uTST_004_srcTree_itemROOT__get_relPATH_a_ab_abc.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_a_b_c__xn.pas"/>
+        <Filename Value="old\uTST_003_srcTree_itemROOT__get_relPATH_a_b_c__xn.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
       <Unit5>
-        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_W_b_c__xn.pas"/>
+        <Filename Value="old\uTST_003_srcTree_itemROOT__get_relPATH_W_b_c__xn.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit5>
       <Unit6>
-        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_a_W_c__xn.pas"/>
+        <Filename Value="old\uTST_003_srcTree_itemROOT__get_relPATH_a_W_c__xn.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit6>
       <Unit7>
-        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_a_b_W__xn.pas"/>
+        <Filename Value="old\uTST_003_srcTree_itemROOT__get_relPATH_a_b_W__xn.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit7>
       <Unit8>
-        <Filename Value="uTST_001_srcTree_itemROOT__BaseDIR_fnk.pas"/>
+        <Filename Value="new\uTST_001_srcTree_itemROOT__BaseDIR_fnk.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
       <Unit9>
-        <Filename Value="uTST_004_srcTree_itemROOT__get_relPATH_abc_ab_a.pas"/>
+        <Filename Value="old\uTST_004_srcTree_itemROOT__get_relPATH_abc_ab_a.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
       <Unit10>
-        <Filename Value="uTST_004_srcTree_itemROOT__get_relPATH_ab_ac_ad.pas"/>
+        <Filename Value="old\uTST_004_srcTree_itemROOT__get_relPATH_ab_ac_ad.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit10>
       <Unit11>
-        <Filename Value="uTST_004_srcTree_itemROOT__realCase_001.pas"/>
+        <Filename Value="old\uTST_004_srcTree_itemROOT__realCase_001.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit11>
       <Unit12>
@@ -90,11 +90,11 @@
         <IsPartOfProject Value="True"/>
       </Unit12>
       <Unit13>
-        <Filename Value="uTST_001_srcTree_itemROOT__BaseDIR_mtd.pas"/>
+        <Filename Value="new\uTST_001_srcTree_itemROOT__BaseDIR_mtd.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit13>
       <Unit14>
-        <Filename Value="uTST_003_srcTree_itemROOT__get_relPATH_4m__a_b_c.pas"/>
+        <Filename Value="old\uTST_003_srcTree_itemROOT__get_relPATH_4m__a_b_c.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit14>
       <Unit15>
@@ -174,9 +174,13 @@
         <IsPartOfProject Value="True"/>
       </Unit33>
       <Unit34>
-        <Filename Value="uTST_002_srcTree__PATH_get_REL__asFND.pas"/>
+        <Filename Value="new\uTST_002_srcTree__PATH_get_REL__asFND.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit34>
+      <Unit35>
+        <Filename Value="new\uTST_002_srcTree__PATH_get_REL__asNEW.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit35>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -184,7 +188,7 @@
     <PathDelim Value="\"/>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);.."/>
-      <OtherUnitFiles Value="..\srcPKG\srcTree\Items\CORE;..\srcPKG\srcTree\Items;..\srcPKG\srcTree;..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;..\srcExt\in0k-lazarusIdeSRC-SourceTREE;..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs"/>
+      <OtherUnitFiles Value="..\srcPKG\srcTree\Items\CORE;..\srcPKG\srcTree\Items;..\srcPKG\srcTree;..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;..\srcExt\in0k-lazarusIdeSRC-SourceTREE;..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;new;old"/>
       <UnitOutputDirectory Value="lib"/>
     </SearchPaths>
     <Parsing>

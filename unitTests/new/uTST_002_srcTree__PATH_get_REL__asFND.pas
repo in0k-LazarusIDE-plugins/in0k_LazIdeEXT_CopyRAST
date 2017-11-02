@@ -1,4 +1,6 @@
 unit uTST_002_srcTree__PATH_get_REL__asFND;
+// по ЗАРАНЕЕ созданому дереву
+// ищем "папки" по ОТНОСИТЕЛЬНОМУ пути, используем `SrcTree_getRelPATH`
 
 {$mode objfpc}{$H+}
 
@@ -30,12 +32,13 @@ type
     procedure asRelative;
   end;
 
-
-
 implementation
 
 const PD=PathDelim;
 
+//------------------------------------------------------------------------------
+
+// добавить путь в тестовый список (он ДОЛЖЕН быть найден)
 function tTST_srcTree__PATH_get_REL__asFND.SetUp_lTST_addNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
 begin // путь который ДОЛЖЕН находиться
     result:=_tSrcTree_item_fsNodeFLDR_.Create(lPath);
@@ -43,12 +46,14 @@ begin // путь который ДОЛЖЕН находиться
     lTST.AddObject(lPath,result);
 end;
 
+//------------------------------------------------------------------------------
+
 procedure tTST_srcTree__PATH_get_REL__asFND.SetUp;
 var tmp:tSrcTree_item;
 begin
     // делаем коренЬ
-    ROOT:=tSrcTree_ROOT.Create('ROOT'); //< собсно создаем
-    SrcTree_setBaseDIR(ROOT,GetTempDir);      //< устанавливаем ГЛАВНЫЙ путь
+    ROOT:=tSrcTree_ROOT.Create('ROOT');  //< собсно создаем
+    SrcTree_setBaseDIR(ROOT,GetTempDir); //< устанавливаем ГЛАВНЫЙ путь
     //--- ХРАНИТЕЛЬ тестовых путей
     lTST:=TStringList.Create;
     //--- добавляем тестовые пути
@@ -91,7 +96,6 @@ begin // ищем как ОТНОСИТЕЛЬНЫЕ
         else AssertNull('`res` mustNIL PATH:"'+lTST.Strings[i]+'"',res);
     end;
 end;
-
 
 initialization
     RegisterTest(tTST_srcTree__PATH_get_REL__asFND);
