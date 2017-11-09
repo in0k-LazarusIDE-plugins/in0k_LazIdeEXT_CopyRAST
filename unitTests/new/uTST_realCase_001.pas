@@ -178,6 +178,7 @@ end;
 
 //------------------------------------------------------------------------------
 
+
 procedure tTST_srcTree__realCase_001.fileFind_REL_4Root;
 var lst: tStrings;
     i  : integer;
@@ -200,10 +201,6 @@ end;
 initialization
     RegisterTest(tTST_srcTree__realCase_001);
 end.
-
-{
-}
-
 
 
 
