@@ -4,6 +4,7 @@
 
 unit in0k_lazExt_CopyRAST;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
