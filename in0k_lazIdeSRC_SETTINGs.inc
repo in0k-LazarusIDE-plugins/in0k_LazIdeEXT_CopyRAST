@@ -4,3 +4,9 @@
 {$define in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
 
 
+{$define in0k_lazExt_CopyRAST_cmpTree-DEBUG}
+
+
+
+
+
