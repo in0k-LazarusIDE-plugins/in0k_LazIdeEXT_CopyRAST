@@ -11,7 +11,12 @@ uTST_001_srcTree_itemROOT__BaseDIR_mtd,
 //
 uTST_002_srcTree__PATH_fnd_REL,
 uTST_002_srcTree__PATH_get_REL__asFND,
-uTST_002_srcTree__PATH_get_REL__asNEW, uTST_realCase_001
+uTST_002_srcTree__PATH_get_REL__asNEW,
+uTST_003_srcTree__PATH_fnd_ABS,
+uTST_003_srcTree__PATH_get_ABS__asFND,
+uTST_003_srcTree__PATH_get_ABS__asNEW,
+uTST_realCase_001
+
 //
 //uTST_003_srcTree_itemROOT__get_relPATH_____a_b_c,
 //uTST_003_srcTree_itemROOT__get_relPATH_4m__a_b_c,

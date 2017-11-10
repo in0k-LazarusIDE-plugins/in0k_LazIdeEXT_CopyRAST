@@ -15,6 +15,7 @@ uses
   //
   in0k_lazIdeSRC_srcTree_FNK_PATH_GET_rel,
   in0k_lazIdeSRC_srcTree_FNK_FILE_FND_rel,
+  in0k_lazIdeSRC_srcTree_FNK_FILE_FND_abs,
   //
   Classes, SysUtils, fpcunit, testregistry;
 
@@ -31,15 +32,15 @@ type
     procedure _fill_lsl_00_(const lst:TStrings);
     procedure _fill_lsl_01_(const lst:TStrings);
   protected
+    function  SetUp_lTST_nilNode_REL(const fileName:string):tSrcTree_item;
     function  SetUp_lTST_addNode_REL(const fileName:string):tSrcTree_item;
+  protected
     procedure SetUp;    override;
     procedure TearDown; override;
   published
+    procedure fileFind_REL_4Base;
     procedure fileFind_REL_4Root;
   end;
-
-
-
 
 implementation
 
@@ -168,6 +169,14 @@ end;
 
 //------------------------------------------------------------------------------
 
+// вставляем в список ПУСТЫШКУ
+function tTST_srcTree__realCase_001.SetUp_lTST_nilNode_REL(const fileName:string):tSrcTree_item;
+begin
+    result:=nil;
+    lTST.AddObject(fileName,result);
+end;
+
+// добавляем ОБЪЕКТ в структуру, и вставляем в список
 function tTST_srcTree__realCase_001.SetUp_lTST_addNode_REL(const fileName:string):tSrcTree_item;
 var fileNameREL:string;
 begin
@@ -178,29 +187,58 @@ end;
 
 //------------------------------------------------------------------------------
 
+procedure tTST_srcTree__realCase_001.fileFind_REL_4Base;
+var lst: tStrings;
+    i  : integer;
+tstFile:_tSrcTree_item_fsNodeFILE_;
+tstBase:tSrcTree_BASE;
+begin
+    //***** готовим тестовый набор
+    // #1 добавляем объекты, которые ДОЛЖНЫ быть найдены
+    lst:=TStringList.Create;
+   _fill_lsl_00_(lst);
+    for i:=0 to lst.Count-1 do SetUp_lTST_addNode_REL(lst.Strings[i]);
+    lst.FREE;
+    // #2 добавляем объекты ПУСТЫШКи, их мы НЕ должны находить
+    lst:=TStringList.Create;
+   _fill_lsl_01_(lst);
+    for i:=0 to lst.Count-1 do SetUp_lTST_nilNode_REL(lst.Strings[i]);
+    lst.FREE;
+    // собсно САМ тест
+    tstBase:=SrcTree_fndBaseDIR(ROOT);
+    for i:=0 to lTST.Count-1 do begin
+        tstFile:=SrcTree_fndFileREL(tstBase,srcTree_fsFnk_CreateRelativePath(lTST.Strings[i],_root_folder_));
+        AssertSame('`tstFile`:`'+lTST.Strings[i]+'` wrong: ',lTST.Objects[i],tstFile);
+    end;
+end;
 
 procedure tTST_srcTree__realCase_001.fileFind_REL_4Root;
 var lst: tStrings;
     i  : integer;
 tstFile:_tSrcTree_item_fsNodeFILE_;
 begin
-    // готовим тестовый набор
+    //***** готовим тестовый набор
+    // #1 добавляем объекты, которые ДОЛЖНЫ быть найдены
     lst:=TStringList.Create;
    _fill_lsl_00_(lst);
-   _fill_lsl_01_(lst);
     for i:=0 to lst.Count-1 do SetUp_lTST_addNode_REL(lst.Strings[i]);
     lst.FREE;
-    // собсно САМ тест
+    // #2 добавляем объекты ПУСТЫШКи, их мы НЕ должны находить
+    lst:=TStringList.Create;
+   _fill_lsl_01_(lst);
+    for i:=0 to lst.Count-1 do SetUp_lTST_nilNode_REL(lst.Strings[i]);
+    lst.FREE;
+    //***** собсно САМ тест
     for i:=0 to lTST.Count-1 do begin
         tstFile:=SrcTree_fndFileREL(ROOT,srcTree_fsFnk_CreateRelativePath(lTST.Strings[i],_root_folder_));
         AssertSame('`tstFile`:`'+lTST.Strings[i]+'` wrong: ',lTST.Objects[i],tstFile);
     end;
 end;
 
-
 initialization
     RegisterTest(tTST_srcTree__realCase_001);
 end.
+
 
 
 

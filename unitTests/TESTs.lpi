@@ -39,7 +39,7 @@
         <PackageName Value="FCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="37">
+    <Units Count="41">
       <Unit0>
         <Filename Value="TESTs.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -188,6 +188,22 @@
         <Filename Value="new\uTST_realCase_001.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit36>
+      <Unit37>
+        <Filename Value="new\uTST_003_srcTree__PATH_fnd_ABS.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_PATH_GET_abs.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="new\uTST_003_srcTree__PATH_get_ABS__asFND.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="new\uTST_003_srcTree__PATH_get_ABS__asNEW.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit40>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
