@@ -62,7 +62,7 @@ const
 procedure tUTST_srcTree_itemROOT__get_relPATH_a_b_c.relPATH_get_empty;
 var res:_tSrcTree_item_fsNodeFLDR_;
 begin // должно возвращать BaseDIR
-    res:=SrcTree_getRelPATH(root,'');
+    res:=SrcTree_getPathREL(root,'');
     //---
     AssertNotNull('notFound',res);
     AssertSame   ('`res` must by BaseDIR',res,SrcTree_fndBaseDIR(ROOT));
@@ -72,7 +72,7 @@ end;
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_a_b_c.relPATH_get_a;
 begin
-    FldA:=SrcTree_getRelPATH(root,c_FLDR_A);
+    FldA:=SrcTree_getPathREL(root,c_FLDR_A);
     //---
     AssertNotNull('`FldA` is NIL',FldA);
     AssertSame   ('`FldA.PRNT` <> BaseDIR',FldA.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
@@ -80,8 +80,8 @@ end;
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_a_b_c.relPATH_get_a_b;
 begin
-    FldA:=SrcTree_getRelPATH(root,c_FLDR_A);
-    FldB:=SrcTree_getRelPATH(root,c_FLDR_B);
+    FldA:=SrcTree_getPathREL(root,c_FLDR_A);
+    FldB:=SrcTree_getPathREL(root,c_FLDR_B);
     //---
     AssertNotNull('`FldB` is NIL',FldB);
     AssertSame   ('`FldB.PRNT` <> BaseDIR',FldB.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
@@ -90,9 +90,9 @@ end;
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_a_b_c.relPATH_get_a_b_c;
 begin
-    FldA:=SrcTree_getRelPATH(root,c_FLDR_A);
-    FldB:=SrcTree_getRelPATH(root,c_FLDR_B);
-    FldC:=SrcTree_getRelPATH(root,c_FLDR_C);
+    FldA:=SrcTree_getPathREL(root,c_FLDR_A);
+    FldB:=SrcTree_getPathREL(root,c_FLDR_B);
+    FldC:=SrcTree_getPathREL(root,c_FLDR_C);
     //---
     AssertNotNull('`FldC` is NIL',FldC);
     AssertSame   ('`FldC.PRNT` <> BaseDIR',FldC.ItemPRNT,SrcTree_fndBaseDIR(ROOT));

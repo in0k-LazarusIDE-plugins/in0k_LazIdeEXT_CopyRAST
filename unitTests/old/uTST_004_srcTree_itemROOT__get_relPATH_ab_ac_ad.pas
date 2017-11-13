@@ -73,20 +73,20 @@ begin //Проверка: #1(a/b) #2(a; a/b; a/c) #3(a; a/b; a/c; a/d)
     dirName3:=c_FLDR_A+DirectorySeparator+'D';
 
     //#1 - НОВАЯ
-    dir1:=SrcTree_getRelPATH(root,dirName1);
+    dir1:=SrcTree_getPathREL(root,dirName1);
     AssertNotNull('`dir1` is NIL',dir1);
     // проверим структуру
     AssertSame   ('wrong PARENT' ,dir1.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
 
     //#2 - НОВАЯ
-    dir2:=SrcTree_getRelPATH(root,dirName2);
+    dir2:=SrcTree_getPathREL(root,dirName2);
     AssertNotNull('`dir2` is NIL',dir2);
     // проверим структуру
     AssertNotSame('wrong PARENT',dir1.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
     AssertSame   ('wrong NEXT'  ,dir1.ItemNEXT,dir2);
 
     //--- должен СОЗДАТЬ новую
-    dir3:=SrcTree_getRelPATH(root,dirName3);
+    dir3:=SrcTree_getPathREL(root,dirName3);
     AssertNotNull('`dir3` is NIL',dir3);
 
     AssertSame   ('wrong NEXT'  ,dir2.ItemNEXT,dir3);

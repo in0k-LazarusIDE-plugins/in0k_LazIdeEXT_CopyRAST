@@ -147,7 +147,7 @@ end;
 function tTST_srcTree__realCase_001._lTST_addFile__findFldREL_crtFile_addObject_(const fileNameREL:string):_tSrcTree_item_fsNodeFILE_;
 var fldr:_tSrcTree_item_fsNodeFLDR_;
 begin
-    fldr:=SrcTree_getRelPATH(ROOT,srcTree_fsFnk_ChompPathDelim(srcTree_fsFnk_ExtractFilePath(fileNameREL)));
+    fldr:=SrcTree_getPathREL(ROOT,srcTree_fsFnk_ChompPathDelim(srcTree_fsFnk_ExtractFilePath(fileNameREL)));
     result:=_tSrcTree_item_fsNodeFILE_.Create(fileNameREL);
     SrcTree_insert_ChldLast(fldr,result);
 end;

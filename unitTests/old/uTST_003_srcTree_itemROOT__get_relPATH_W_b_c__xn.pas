@@ -43,9 +43,9 @@ begin
     ROOT:=tSrcTree_ROOT.Create('ROOT');       //< собсно создаем
     SrcTree_setBaseDIR(ROOT,GetTempDir); //< устанавливаем ГЛАВНЫЙ путь
     //---
-    FldA:=SrcTree_getRelPATH(root,c_FLDR_A);
-    FldB:=SrcTree_getRelPATH(root,c_FLDR_B);
-    FldC:=SrcTree_getRelPATH(root,c_FLDR_C);
+    FldA:=SrcTree_getPathRELSrcTree_getPathRELSrcTree_getPathREL(root,c_FLDR_A);
+    FldB:=SrcTree_getPathRELSrcTree_getPathRELSrcTree_getPathREL(root,c_FLDR_B);
+    FldC:=SrcTree_getPathRELSrcTree_getPathRELSrcTree_getPathREL(root,c_FLDR_C);
 end;
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_W_b_c__xn.TearDown;
@@ -61,7 +61,7 @@ var tst__Flder:string;
 begin
     // собсно ТЕСТ должен СОЗДАТЬ новую
     tst__Flder:=c_FLDR_A+DirectorySeparator+'n';
-    resul__Get:=SrcTree_getRelPATH(root,tst__Flder);
+    resul__Get:=SrcTree_getPathRELSrcTree_getPathRELSrcTree_getPathREL(root,tst__Flder);
     //
     AssertNotNull('`resul__Get` is NIL',resul__Get);
     AssertSame   ('wrong PARENT',resul__Get.ItemPRNT,FldA);
@@ -73,7 +73,7 @@ var tst__Flder:string;
 begin
     // собсно ТЕСТ должен СОЗДАТЬ новую
     tst__Flder:=c_FLDR_B+DirectorySeparator+'n';
-    resul__Get:=SrcTree_getRelPATH(root,tst__Flder);
+    resul__Get:=SrcTree_getPathRELSrcTree_getPathRELSrcTree_getPathREL(root,tst__Flder);
     //
     AssertNotNull('`resul__Get` is NIL',resul__Get);
     AssertSame   ('wrong PARENT',resul__Get.ItemPRNT,FldB);
@@ -85,7 +85,7 @@ var tst__Flder:string;
 begin
     // собсно ТЕСТ должен СОЗДАТЬ новую
     tst__Flder:=c_FLDR_C+DirectorySeparator+'n';
-    resul__Get:=SrcTree_getRelPATH(root,tst__Flder);
+    resul__Get:=SrcTree_getPathRELSrcTree_getPathRELSrcTree_getPathREL(root,tst__Flder);
     //
     AssertNotNull('`resul__Get` is NIL',resul__Get);
     AssertSame   ('wrong PARENT',resul__Get.ItemPRNT,FldC);

@@ -15,7 +15,7 @@ uTST_002_srcTree__PATH_get_REL__asNEW,
 uTST_003_srcTree__PATH_fnd_ABS,
 uTST_003_srcTree__PATH_get_ABS__asFND,
 uTST_003_srcTree__PATH_get_ABS__asNEW,
-uTST_realCase_001
+uTST_realCase_001, in0k_lazIdeSRC_srcTree_FNK_PATH_GET
 
 //
 //uTST_003_srcTree_itemROOT__get_relPATH_____a_b_c,

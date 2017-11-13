@@ -47,19 +47,19 @@ end;
 procedure tUTST_srcTree_itemROOT__realCase_001.Test;
 var fldr:_tSrcTree_item_fsNodeFLDR_;
 begin
-    SrcTree_getRelPATH(root,'srcPKG');
-    SrcTree_getRelPATH(root,'srcPKG\srcTree');
-    SrcTree_getRelPATH(root,'srcPKG\srcTree\Items\CORE');
-    SrcTree_getRelPATH(root,'srcPKG\srcTree\Items');
-    SrcTree_getRelPATH(root,'srcPKG\UI\cmp');
-    SrcTree_getRelPATH(root,'srcPKG\Forms');
-    SrcTree_getRelPATH(root,'srcPKG\Nodes');
-    SrcTree_getRelPATH(root,'srcPKG\OperationNODEs\Processing_ProjPack');
-    SrcTree_getRelPATH(root,'srcEXT\in0k-lazarusIdeSRC-wndDEBUG');
-    SrcTree_getRelPATH(root,'srcEXT\in0k-lazarusIdeSRC-FuckUpForm');
-    SrcTree_getRelPATH(root,'srcEXT\in0k-lazarusIdeSRC-ExpertCORE');
-    SrcTree_getRelPATH(root,'srcPKG');
-    SrcTree_getRelPATH(root,'srcPKG');
+    SrcTree_getPathREL(root,'srcPKG');
+    SrcTree_getPathREL(root,'srcPKG\srcTree');
+    SrcTree_getPathREL(root,'srcPKG\srcTree\Items\CORE');
+    SrcTree_getPathREL(root,'srcPKG\srcTree\Items');
+    SrcTree_getPathREL(root,'srcPKG\UI\cmp');
+    SrcTree_getPathREL(root,'srcPKG\Forms');
+    SrcTree_getPathREL(root,'srcPKG\Nodes');
+    SrcTree_getPathREL(root,'srcPKG\OperationNODEs\Processing_ProjPack');
+    SrcTree_getPathREL(root,'srcEXT\in0k-lazarusIdeSRC-wndDEBUG');
+    SrcTree_getPathREL(root,'srcEXT\in0k-lazarusIdeSRC-FuckUpForm');
+    SrcTree_getPathREL(root,'srcEXT\in0k-lazarusIdeSRC-ExpertCORE');
+    SrcTree_getPathREL(root,'srcPKG');
+    SrcTree_getPathREL(root,'srcPKG');
     //---
     fldr:=SrcTree_fndPathREL(root,'srcPKG\UI\cmp');
     //---

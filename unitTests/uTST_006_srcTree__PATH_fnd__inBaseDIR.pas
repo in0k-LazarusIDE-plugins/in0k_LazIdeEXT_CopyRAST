@@ -38,7 +38,7 @@ const PD=PathDelim;
 
 procedure tTST_srcTree__PATH_fnd__inBaseDIR.SetUp_lTST_addNode(const lPath:string);
 begin // путь который ДОЛЖЕН находиться
-    lTST.AddObject(lPath,SrcTree_getRelPATH(ROOT,lPath));
+    lTST.AddObject(lPath,SrcTree_getPathREL(ROOT,lPath));
 end;
 
 procedure tTST_srcTree__PATH_fnd__inBaseDIR.SetUp_lTST_extNode(const lPath:string);

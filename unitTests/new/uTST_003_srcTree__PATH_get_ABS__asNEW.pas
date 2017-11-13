@@ -143,7 +143,7 @@ var res:_tSrcTree_item_fsNodeFLDR_;
 begin
     // ищем по АБСОЛЮТНЫМ
     for i:=0 to lTST.Count-1 do begin
-        res:=SrcTree_getAbsPATH(ROOT,lTST.Strings[i]);
+        res:=SrcTree_getPathABS(ROOT,lTST.Strings[i]);
         //--- от ДОЛЖЕН быть или НЕ быть
         if Assigned(lTST.Objects[i])
         then AssertSame('`res` noFound PATH:"'+lTST.Strings[i]+'"',lTST.Objects[i],res)
@@ -162,7 +162,7 @@ var res:_tSrcTree_item_fsNodeFLDR_;
 begin
     // ищем по АБСОЛЮТНЫМ
     for i:=0 to lTST.Count-1 do begin
-        res:=SrcTree_getAbsPATH(ROOT,lTST.Strings[i]);
+        res:=SrcTree_getPathABS(ROOT,lTST.Strings[i]);
         //--- от ДОЛЖЕН быть или НЕ быть
         if Assigned(lTST.Objects[i])
         then AssertSame('`res` noFound PATH:"'+lTST.Strings[i]+'"',lTST.Objects[i],res)

@@ -127,7 +127,7 @@ var tmp:tSrcTree_item;
 begin
     // делаем коренЬ
     ROOT:=tSrcTree_ROOT.Create('ROOT');  //< собсно создаем
-    SrcTree_setBaseDIR(ROOT, GetTempDir+PD+RT); //< устанавливаем ГЛАВНЫЙ путь
+    SrcTree_setBaseDIR(ROOT, srcTree_fsFnk_ConcatPaths(GetTempDir,RT)); //< устанавливаем ГЛАВНЫЙ путь
     //--- ХРАНИТЕЛЬ тестовых путей
     lTST:=TStringList.Create;
 end;
