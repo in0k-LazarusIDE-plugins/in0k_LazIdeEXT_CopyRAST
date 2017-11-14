@@ -10,6 +10,7 @@ uses
     in0k_lazIdeSRC_srcTree_CORE_item,
     in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
     in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
+    in0k_lazIdeSRC_srcTree_item_fsFolder,
     in0k_lazIdeSRC_srcTree_item_Globals,
     //
     in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
@@ -54,7 +55,7 @@ const RT='ROOT';
 // добавить путь в тестовый список (он ДОЛЖЕН быть найден)
 function tTST_srcTree__PATH_fnd_ABS__asNEW.SetUp_lTST_addNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
 begin // путь который ДОЛЖЕН находиться
-    result:=_tSrcTree_item_fsNodeFLDR_.Create(lPath);
+    result:=tSrcTree_fsFLDR.Create(lPath);
     SrcTree_insert_ChldLast(prnt,result);
     lTST.AddObject(lPath,result);
 end;
