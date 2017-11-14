@@ -22,7 +22,7 @@ uses
 
 type
 
- tTST_srcTree__PATH_fnd_ABS__asNEW=class(TTestCase)
+ tTST_srcTree__PATH_get_ABS__asNEW=class(TTestCase)
   protected
     lTST:TStrings;
     ROOT:tSrcTree_ROOT;
@@ -53,7 +53,7 @@ const RT='ROOT';
 //------------------------------------------------------------------------------
 
 // добавить путь в тестовый список (он ДОЛЖЕН быть найден)
-function tTST_srcTree__PATH_fnd_ABS__asNEW.SetUp_lTST_addNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
+function tTST_srcTree__PATH_get_ABS__asNEW.SetUp_lTST_addNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
 begin // путь который ДОЛЖЕН находиться
     result:=tSrcTree_fsFLDR.Create(lPath);
     SrcTree_insert_ChldLast(prnt,result);
@@ -61,7 +61,7 @@ begin // путь который ДОЛЖЕН находиться
 end;
 
 // добавить путь пустышку (такого НЕ должно быть найдено)
-function tTST_srcTree__PATH_fnd_ABS__asNEW.SetUp_lTST_extNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
+function tTST_srcTree__PATH_get_ABS__asNEW.SetUp_lTST_extNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
 begin // путь который НЕ должен находиться
     result:=nil;
     lTST.AddObject(lPath,result);
@@ -69,7 +69,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tTST_srcTree__PATH_fnd_ABS__asNEW._setUp_(const item:tSrcTree_item; const preFix:string);
+procedure tTST_srcTree__PATH_get_ABS__asNEW._setUp_(const item:tSrcTree_item; const preFix:string);
 var tmp:tSrcTree_item;
     fld:string;
 begin
@@ -120,7 +120,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tTST_srcTree__PATH_fnd_ABS__asNEW.SetUp;
+procedure tTST_srcTree__PATH_get_ABS__asNEW.SetUp;
 var tmp:tSrcTree_item;
 begin
     // делаем коренЬ
@@ -130,7 +130,7 @@ begin
     lTST:=TStringList.Create;
 end;
 
-procedure tTST_srcTree__PATH_fnd_ABS__asNEW.TearDown;
+procedure tTST_srcTree__PATH_get_ABS__asNEW.TearDown;
 begin
     ROOT.FREE;
     lTST.FREE;
@@ -138,7 +138,7 @@ end;
 
 //==============================================================================
 
-procedure tTST_srcTree__PATH_fnd_ABS__asNEW._TEST_getAbsPATH_asNew_4BASE_;
+procedure tTST_srcTree__PATH_get_ABS__asNEW._TEST_getAbsPATH_asNew_4BASE_;
 var res:_tSrcTree_item_fsNodeFLDR_;
       i: integer;
 begin
@@ -157,7 +157,7 @@ begin
     end;
 end;
 
-procedure tTST_srcTree__PATH_fnd_ABS__asNEW._TEST_getAbsPATH_asNew_4OTHR_;
+procedure tTST_srcTree__PATH_get_ABS__asNEW._TEST_getAbsPATH_asNew_4OTHR_;
 var res:_tSrcTree_item_fsNodeFLDR_;
       i: integer;
 begin
@@ -178,7 +178,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tTST_srcTree__PATH_fnd_ABS__asNEW.getABS_base;
+procedure tTST_srcTree__PATH_get_ABS__asNEW.getABS_base;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(SrcTree_fndBaseDIR(ROOT),RT);
@@ -188,7 +188,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tTST_srcTree__PATH_fnd_ABS__asNEW.getABS_A;
+procedure tTST_srcTree__PATH_get_ABS__asNEW.getABS_A;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(ROOT,'A');
@@ -196,7 +196,7 @@ begin
    _TEST_getAbsPATH_asNew_4OTHR_;
 end;
 
-procedure tTST_srcTree__PATH_fnd_ABS__asNEW.getABS_AC;
+procedure tTST_srcTree__PATH_get_ABS__asNEW.getABS_AC;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(ROOT,'A');
@@ -205,7 +205,7 @@ begin
    _TEST_getAbsPATH_asNew_4OTHR_;
 end;
 
-procedure tTST_srcTree__PATH_fnd_ABS__asNEW.getABS_ACD;
+procedure tTST_srcTree__PATH_get_ABS__asNEW.getABS_ACD;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(ROOT,'A');
@@ -215,7 +215,7 @@ begin
    _TEST_getAbsPATH_asNew_4OTHR_;
 end;
 
-procedure tTST_srcTree__PATH_fnd_ABS__asNEW.getABS_ACDE;
+procedure tTST_srcTree__PATH_get_ABS__asNEW.getABS_ACDE;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(ROOT,'A');
@@ -227,6 +227,6 @@ begin
 end;
 
 initialization
-    RegisterTest(tTST_srcTree__PATH_fnd_ABS__asNEW);
+    RegisterTest(tTST_srcTree__PATH_get_ABS__asNEW);
 end.
 

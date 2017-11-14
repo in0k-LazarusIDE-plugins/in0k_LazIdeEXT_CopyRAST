@@ -1,6 +1,9 @@
 unit uTST_003_srcTree__PATH_get_ABS__asFND;
 // по ЗАРАНЕЕ созданому дереву
 // ищем "папки" по АБСОЛЮТНОМУ пути, используем `SrcTree_getPathABS`
+//------------------------------------------------------------------------------
+//  Тест функционала через тесты по "площадям"
+//------------------------------------------------------------------------------
 
 {$mode objfpc}{$H+}
 
@@ -22,7 +25,7 @@ uses
 
 type
 
- tTST_srcTree__PATH_fnd_ABS__asFND=class(TTestCase)
+ tTST_srcTree__PATH_get_ABS__asFND=class(TTestCase)
   protected
     lTST:TStrings;
     ROOT:tSrcTree_ROOT;
@@ -56,7 +59,7 @@ const RT='ROOT';
 //------------------------------------------------------------------------------
 
 // добавить путь в тестовый список (он ДОЛЖЕН быть найден)
-function tTST_srcTree__PATH_fnd_ABS__asFND.SetUp_lTST_addNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
+function tTST_srcTree__PATH_get_ABS__asFND.SetUp_lTST_addNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
 begin // путь который ДОЛЖЕН находиться
     result:=tSrcTree_fsFLDR.Create(lPath);
     SrcTree_insert_ChldLast(prnt,result);
@@ -64,7 +67,7 @@ begin // путь который ДОЛЖЕН находиться
 end;
 
 // добавить путь пустышку (такого НЕ должно быть найдено)
-function tTST_srcTree__PATH_fnd_ABS__asFND.SetUp_lTST_extNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
+function tTST_srcTree__PATH_get_ABS__asFND.SetUp_lTST_extNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
 begin // путь который НЕ должен находиться
     result:=nil;
     lTST.AddObject(lPath,result);
@@ -72,7 +75,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tTST_srcTree__PATH_fnd_ABS__asFND._setUp_(const item:tSrcTree_item; const preFix:string);
+procedure tTST_srcTree__PATH_get_ABS__asFND._setUp_(const item:tSrcTree_item; const preFix:string);
 var tmp:tSrcTree_item;
     fld:string;
 begin
@@ -95,35 +98,11 @@ begin
     tmp:=SetUp_lTST_addNode(tmp,fld+PD+'D'+PD+'D');
     tmp:=SetUp_lTST_addNode(tmp,fld+PD+'D'+PD+'D'+PD+'D');
     tmp:=SetUp_lTST_addNode(tmp,fld+PD+'D'+PD+'D'+PD+'D'+PD+'D');
-    //-
-    (*tmp:=item;
-    tmp:=SetUp_lTST_addNode(tmp,fld+PD+'E');
-    tmp:=SetUp_lTST_addNode(tmp,fld+PD+'E'+PD+'E');
-    tmp:=SetUp_lTST_addNode(tmp,fld+PD+'E'+PD+'E'+PD+'E');
-    tmp:=SetUp_lTST_extNode(tmp,fld+PD+'E'+PD+'E'+PD+'E'+PD+'E');
-    //
-    tmp:=item;
-    tmp:=SetUp_lTST_addNode(tmp,fld+PD+'F');
-    tmp:=SetUp_lTST_addNode(tmp,fld+PD+'F'+PD+'F');
-    tmp:=SetUp_lTST_extNode(tmp,fld+PD+'F'+PD+'F'+PD+'F');
-    tmp:=SetUp_lTST_extNode(tmp,fld+PD+'F'+PD+'F'+PD+'F'+PD+'F');
-    //
-    tmp:=item;
-    tmp:=SetUp_lTST_addNode(tmp,fld+PD+'G');
-    tmp:=SetUp_lTST_extNode(tmp,fld+PD+'G'+PD+'G');
-    tmp:=SetUp_lTST_extNode(tmp,fld+PD+'G'+PD+'G'+PD+'G');
-    tmp:=SetUp_lTST_extNode(tmp,fld+PD+'G'+PD+'G'+PD+'G'+PD+'G');
-    //
-    tmp:=item;
-    tmp:=SetUp_lTST_addNode(tmp,fld+PD+'H');
-    tmp:=SetUp_lTST_extNode(tmp,fld+PD+'H'+PD+'H');
-    tmp:=SetUp_lTST_extNode(tmp,fld+PD+'H'+PD+'H'+PD+'H');
-    tmp:=SetUp_lTST_extNode(tmp,fld+PD+'H'+PD+'H'+PD+'H'+PD+'H'); *)
 end;
 
 //------------------------------------------------------------------------------
 
-procedure tTST_srcTree__PATH_fnd_ABS__asFND.SetUp;
+procedure tTST_srcTree__PATH_get_ABS__asFND.SetUp;
 var tmp:tSrcTree_item;
 begin
     // делаем коренЬ
@@ -133,7 +112,7 @@ begin
     lTST:=TStringList.Create;
 end;
 
-procedure tTST_srcTree__PATH_fnd_ABS__asFND.TearDown;
+procedure tTST_srcTree__PATH_get_ABS__asFND.TearDown;
 begin
     ROOT.FREE;
     lTST.FREE;
@@ -141,7 +120,7 @@ end;
 
 //==============================================================================
 
-procedure tTST_srcTree__PATH_fnd_ABS__asFND._TEST_getAbsPATH_;
+procedure tTST_srcTree__PATH_get_ABS__asFND._TEST_getAbsPATH_;
 var res:_tSrcTree_item_fsNodeFLDR_;
       i: integer;
 begin
@@ -159,7 +138,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tTST_srcTree__PATH_fnd_ABS__asFND.getABS_base;
+procedure tTST_srcTree__PATH_get_ABS__asFND.getABS_base;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(SrcTree_fndBaseDIR(ROOT),RT);
@@ -167,7 +146,7 @@ begin
    _TEST_getAbsPATH_;
 end;
 
-procedure tTST_srcTree__PATH_fnd_ABS__asFND.getABS_b__A;
+procedure tTST_srcTree__PATH_get_ABS__asFND.getABS_b__A;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(SrcTree_fndBaseDIR(ROOT),RT);
@@ -176,7 +155,7 @@ begin
    _TEST_getAbsPATH_;
 end;
 
-procedure tTST_srcTree__PATH_fnd_ABS__asFND.getABS_b_AC;
+procedure tTST_srcTree__PATH_get_ABS__asFND.getABS_b_AC;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(SrcTree_fndBaseDIR(ROOT),RT);
@@ -186,7 +165,7 @@ begin
    _TEST_getAbsPATH_;
 end;
 
-procedure tTST_srcTree__PATH_fnd_ABS__asFND.getABS_A__b;
+procedure tTST_srcTree__PATH_get_ABS__asFND.getABS_A__b;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(ROOT,'A');
@@ -195,7 +174,7 @@ begin
    _TEST_getAbsPATH_;
 end;
 
-procedure tTST_srcTree__PATH_fnd_ABS__asFND.getABS_AC_b;
+procedure tTST_srcTree__PATH_get_ABS__asFND.getABS_AC_b;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(ROOT,'A');
@@ -207,7 +186,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tTST_srcTree__PATH_fnd_ABS__asFND.getABS_A_b_C;
+procedure tTST_srcTree__PATH_get_ABS__asFND.getABS_A_b_C;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(ROOT,'A');
@@ -217,7 +196,7 @@ begin
    _TEST_getAbsPATH_;
 end;
 
-procedure tTST_srcTree__PATH_fnd_ABS__asFND.getABS_ADb_C;
+procedure tTST_srcTree__PATH_get_ABS__asFND.getABS_ADb_C;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(ROOT,'A');
@@ -228,7 +207,7 @@ begin
    _TEST_getAbsPATH_;
 end;
 
-procedure tTST_srcTree__PATH_fnd_ABS__asFND.getABS_A_bEC;
+procedure tTST_srcTree__PATH_get_ABS__asFND.getABS_A_bEC;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(ROOT,'A');
@@ -239,7 +218,7 @@ begin
    _TEST_getAbsPATH_;
 end;
 
-procedure tTST_srcTree__PATH_fnd_ABS__asFND.getABS_ADbEC;
+procedure tTST_srcTree__PATH_get_ABS__asFND.getABS_ADbEC;
 begin
     // создаем ТЕСТОВЫЙ набор
    _setUp_(ROOT,'A');
@@ -252,6 +231,6 @@ begin
 end;
 
 initialization
-    RegisterTest(tTST_srcTree__PATH_fnd_ABS__asFND);
+    RegisterTest(tTST_srcTree__PATH_get_ABS__asFND);
 end.
 
