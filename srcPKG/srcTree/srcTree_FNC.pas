@@ -41,9 +41,9 @@ const smb='|';
 procedure _SrcTreeROOT_toGourceLOG_(const item:tSrcTree_item; const Strings:tStrings);
 var tmp:tSrcTree_item;
 begin
-    if item is _tStcTree_item_fsNode_ then begin
-    	Strings.Add(inttostr(Strings.Count)+smb+smb+'A'+smb+'src\'+_tStcTree_item_fsNode_(item).fsPath);
-    	//DEBUG(inttostr(0)+smb+smb+'A'+smb+_tStcTree_item_fsNode_(item).src_PATH)
+    if item is _tSrcTree_item_fsNode_ then begin
+    	Strings.Add(inttostr(Strings.Count)+smb+smb+'A'+smb+'src\'+_tSrcTree_item_fsNode_(item).fsPath);
+    	//DEBUG(inttostr(0)+smb+smb+'A'+smb+_tSrcTree_item_fsNode_(item).src_PATH)
     end;
     //---
     tmp:=item.ItemCHLD;

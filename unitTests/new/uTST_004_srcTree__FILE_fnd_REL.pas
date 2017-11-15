@@ -1,4 +1,4 @@
-unit uTST_realCase_001;
+unit uTST_004_srcTree__FILE_fnd_REL;
 
 {$mode objfpc}{$H+}
 
@@ -22,7 +22,7 @@ uses
 
 type
 
- tTST_srcTree__realCase_001=class(TTestCase)
+ tTST_srcTree__FILE_fnd_REL=class(TTestCase)
   protected
     lTST:TStrings;
     ROOT:tSrcTree_ROOT;
@@ -46,12 +46,12 @@ implementation
 
 {%region --- realCase data ---------------------------------------- /fold}
 
-function tTST_srcTree__realCase_001._root_folder_:string;
+function tTST_srcTree__FILE_fnd_REL._root_folder_:string;
 begin
     result:='D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST';
 end;
 
-procedure tTST_srcTree__realCase_001._fill_lsl_00_(const lst:TStrings);
+procedure tTST_srcTree__FILE_fnd_REL._fill_lsl_00_(const lst:TStrings);
 begin
     lst.Add('D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\asd.inc');
     lst.Add('D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcEXT\in0k-lazarusIdeSRC-SourceTREE\CORE\in0k_lazIdeSRC_srcTree_CORE_filePkgType_FNK.pas');
@@ -134,7 +134,7 @@ begin
     lst.Add('D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\REG.pas');
 end;
 
-procedure tTST_srcTree__realCase_001._fill_lsl_01_(const lst:TStrings);
+procedure tTST_srcTree__FILE_fnd_REL._fill_lsl_01_(const lst:TStrings);
 begin
     lst.Add('D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction\in0k_lazidesrc_srctree_textfunction__usessection.pas');
     lst.Add('D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build\in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_CORE.pas');
@@ -144,7 +144,7 @@ end;
 
 {%endregion}
 
-function tTST_srcTree__realCase_001._lTST_addFile__findFldREL_crtFile_addObject_(const fileNameREL:string):_tSrcTree_item_fsNodeFILE_;
+function tTST_srcTree__FILE_fnd_REL._lTST_addFile__findFldREL_crtFile_addObject_(const fileNameREL:string):_tSrcTree_item_fsNodeFILE_;
 var fldr:_tSrcTree_item_fsNodeFLDR_;
 begin
     fldr:=SrcTree_getPathREL(ROOT,srcTree_fsFnk_ChompPathDelim(srcTree_fsFnk_ExtractFilePath(fileNameREL)));
@@ -152,7 +152,7 @@ begin
     SrcTree_insert_ChldLast(fldr,result);
 end;
 
-procedure tTST_srcTree__realCase_001.SetUp;
+procedure tTST_srcTree__FILE_fnd_REL.SetUp;
 begin
     // делаем коренЬ
     ROOT:=tSrcTree_ROOT.Create('ROOT');     //< собсно создаем
@@ -161,7 +161,7 @@ begin
     lTST:=TStringList.Create;
 end;
 
-procedure tTST_srcTree__realCase_001.TearDown;
+procedure tTST_srcTree__FILE_fnd_REL.TearDown;
 begin
     ROOT.FREE;
     lTST.FREE;
@@ -170,14 +170,14 @@ end;
 //------------------------------------------------------------------------------
 
 // вставляем в список ПУСТЫШКУ
-function tTST_srcTree__realCase_001.SetUp_lTST_nilNode_REL(const fileName:string):tSrcTree_item;
+function tTST_srcTree__FILE_fnd_REL.SetUp_lTST_nilNode_REL(const fileName:string):tSrcTree_item;
 begin
     result:=nil;
     lTST.AddObject(fileName,result);
 end;
 
 // добавляем ОБЪЕКТ в структуру, и вставляем в список
-function tTST_srcTree__realCase_001.SetUp_lTST_addNode_REL(const fileName:string):tSrcTree_item;
+function tTST_srcTree__FILE_fnd_REL.SetUp_lTST_addNode_REL(const fileName:string):tSrcTree_item;
 var fileNameREL:string;
 begin
     fileNameREL:=srcTree_fsFnk_CreateRelativePath(fileName,_root_folder_);
@@ -187,7 +187,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tTST_srcTree__realCase_001.fileFind_REL_4Base;
+procedure tTST_srcTree__FILE_fnd_REL.fileFind_REL_4Base;
 var lst: tStrings;
     i  : integer;
 tstFile:_tSrcTree_item_fsNodeFILE_;
@@ -212,7 +212,7 @@ begin
     end;
 end;
 
-procedure tTST_srcTree__realCase_001.fileFind_REL_4Root;
+procedure tTST_srcTree__FILE_fnd_REL.fileFind_REL_4Root;
 var lst: tStrings;
     i  : integer;
 tstFile:_tSrcTree_item_fsNodeFILE_;
@@ -236,7 +236,7 @@ begin
 end;
 
 initialization
-    RegisterTest(tTST_srcTree__realCase_001);
+    RegisterTest(tTST_srcTree__FILE_fnd_REL);
 end.
 
 

@@ -4,6 +4,7 @@
 
 unit in0k_lazExt_CopyRAST;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
@@ -54,7 +55,8 @@ uses
   in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4INCs, 
   in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4USEs, 
   in0k_lazIdeSRC_srcTree_FNK_FILE_FND, 
-  in0k_lazIdeSRC_srcTree_CORE_filePkgType_FNK, LazarusPackageIntf;
+  in0k_lazIdeSRC_srcTree_CORE_filePkgType_FNK, 
+  in0k_lazIdeSRC_CopyRAST_srcTree_Nodes, LazarusPackageIntf;
 
 implementation
 

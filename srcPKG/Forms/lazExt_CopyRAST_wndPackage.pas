@@ -15,6 +15,9 @@ interface
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
         in0k_lazIdeSRC_DEBUG,
      {$endIf}
+
+        in0k_lazIdeSRC_CopyRAST_srcTree_Nodes,
+
     lazExt_CopyRAST_wndCORE,
      lazExt_CopyRAST_node_ROOT,
      lazExt_CopyRAST_node_ROOT_package,
@@ -65,7 +68,7 @@ procedure Twnd_lazExt_CopyRAST_Package.Button4Click(Sender: TObject);
 //var tmp:tSrcTree_ROOT;
 begin
    // if SaveDialog1.Execute then begin
-        SrcTreeROOT_toGourceLOG(cmpCopyRAST_Tree.Root,SaveDialog1.FileName);
+      //  SrcTreeROOT_toGourceLOG(cmpCopyRAST_Tree.Root,SaveDialog1.FileName);
     //end;
 
   //  tmp:=cmpCopyRAST_Tree.Root;
@@ -100,15 +103,18 @@ begin
     // формируем ПЕРВЫЧНЫЙ список файлов
     Builder:=tCopyRastSrcTree_Builder.Create;
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'Builder START at '{+DateTimeToStr(NOW)});{$endIf}
-    cmpCopyRAST_Tree.Root:=Builder.MAKE_SourceTREE(_package_);
+    treeCopyRAST_First.Root:=Builder.MAKE_SourceTREE(_package_);
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'Builder END at '{+DateTimeToStr(NOW)});{$endIf}
 
+
+    //
+    treeCopyRAST_Second.Root:=CopyRast_SrcTree_Copy(tCopyRastNODE_ROOT(treeCopyRAST_First.Root));
     // уточняем список по исходникам
-    P4Build:=tCopyRastSrcTree_P4Build.Create;
+   { P4Build:=tCopyRastSrcTree_P4Build.Create;
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'P4Build START at '{+DateTimeToStr(NOW)});{$endIf}
-    P4Build.EXECUTE(_package_,Builder,cmpCopyRAST_Tree.Root);
+    P4Build.EXECUTE(_package_,Builder,treeCopyRAST_Second.Root);
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'P4Build END at '{+DateTimeToStr(NOW)});{$endIf}
-    P4Build.FREE;
+    P4Build.FREE; }
     Builder.FREE;
 
 end;
