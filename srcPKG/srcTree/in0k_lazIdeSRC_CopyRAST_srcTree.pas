@@ -15,8 +15,8 @@ uses
 
   in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
 
-  in0k_lazIdeSRC_srcTree_FNK_FILE_FND,
-  in0k_lazIdeSRC_srcTree_FNK_PATH_FND,
+  //in0k_lazIdeSRC_srcTree_FNK_FILE_FND,
+  //in0k_lazIdeSRC_srcTree_FNK_PATH_FND,
   in0k_lazIdeSRC_srcTree_FNK_rootFILE_FND,
 
 
@@ -34,7 +34,7 @@ uses
 
 type
 
- tCopyRastSrcTree_Builder=class(tSrcTree_Builder_4Package)
+ tCopyRastSrcTree_Builder4Package=class(tSrcTree_Builder_4Package)
   protected
     function new_ROOT(const name:string):tSrcTree_ROOT; override;
     function new_Base(const name:string):tSrcTree_BASE; override;
@@ -47,7 +47,7 @@ type
 
  tCopyRastSrcTree_f8a=class(tSrcTree_itmHandler4Build__f8a_CORE)
   protected
-    function _prc__fileName_Need_ADD_(const srcName:string):boolean; override;
+    //function _prc__fileName_Need_ADD_(const srcName:string):boolean; override;
   public
     constructor Create(const Owner:tSrcTree_prcHandler; const Parent:tSrcTree_itmHandler); override;
   end;
@@ -65,27 +65,27 @@ type
 
 implementation
 
-function tCopyRastSrcTree_Builder.new_ROOT(const name:string):tSrcTree_ROOT;
+function tCopyRastSrcTree_Builder4Package.new_ROOT(const name:string):tSrcTree_ROOT;
 begin
-    result:=tCopyRastNODE_ROOT.Create(name);
+    result:=tCopyRastNODE_Root4Package.Create(name);
 end;
 
-function tCopyRastSrcTree_Builder.new_Base(const name:string):tSrcTree_BASE;
+function tCopyRastSrcTree_Builder4Package.new_Base(const name:string):tSrcTree_BASE;
 begin
     result:=tCopyRastNODE_BASE.Create(name);
 end;
 
-function tCopyRastSrcTree_Builder.new_Main(const name:string):tSrcTree_MAIN;
+function tCopyRastSrcTree_Builder4Package.new_Main(const name:string):tSrcTree_MAIN;
 begin
-    result:=tCopyRastNODE_MAIN.Create(name);
+    result:=tCopyRastNODE_Main4Package.Create(name);
 end;
 
-function tCopyRastSrcTree_Builder.new_FLDR(const name:string):tSrcTree_fsFLDR;
+function tCopyRastSrcTree_Builder4Package.new_FLDR(const name:string):tSrcTree_fsFLDR;
 begin
     result:=tCopyRastNODE_FLDR.Create(name);
 end;
 
-function tCopyRastSrcTree_Builder.new_FILE(const fileName:string; const fileKind:TPkgFileType):tSrcTree_fsFILE;
+function tCopyRastSrcTree_Builder4Package.new_FILE(const fileName:string; const fileKind:TPkgFileType):tSrcTree_fsFILE;
 begin
     result:=tCopyRastNODE_FILE.Create(fileName,fileKind);
 end;
@@ -108,7 +108,7 @@ begin
    Handler_ADD(tSrcTree_itmHandler4Build__f8a_Item_4INCs);
 end;
 
-function tCopyRastSrcTree_f8a._prc__fileName_Need_ADD_(const srcName:string):boolean;
+(*function tCopyRastSrcTree_f8a._prc__fileName_Need_ADD_(const srcName:string):boolean;
 var fsFLDR:_tSrcTree_item_fsNodeFLDR_;
 begin
     result:=false;
@@ -118,7 +118,7 @@ begin
         {todo: тут ДОЛЖНЫ быть какие-то ОГРАНИЧЕНИЯ на fsFLDR}
         result:=TRUE;
     end;
-end;
+end;*)
 
 
 procedure tCopyRastSrcTree_P4Build._EXECUTE_;

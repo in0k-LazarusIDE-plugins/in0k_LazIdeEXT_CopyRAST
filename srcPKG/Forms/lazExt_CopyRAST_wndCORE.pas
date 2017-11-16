@@ -36,7 +36,10 @@ type
 		Button3: TButton;
     PageControl1: TPageControl;
     Panel1: TPanel;
+    Panel2: TPanel;
     SaveDialog1: TSaveDialog;
+    Splitter1: TSplitter;
+    Splitter2: TSplitter;
     TabSheet1: TTabSheet;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -137,6 +140,7 @@ begin
        Parent:=TabSheet1;
        Align:=alRight;
   	end;
+    Splitter2.Align:=alRight;
 end;
 
 destructor Twnd_lazExt_CopyRAST_CORE.DESTROY;

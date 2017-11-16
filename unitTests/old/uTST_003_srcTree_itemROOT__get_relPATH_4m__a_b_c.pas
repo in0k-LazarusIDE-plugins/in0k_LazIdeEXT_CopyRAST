@@ -10,7 +10,7 @@ uses
     //
     in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
     in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
-    in0k_lazIdeSRC_srcTree_FNK_PATH_GET_rel,
+    in0k_lazIdeSRC_srcTree_FNK_fsFLDR_get_REL,
     //
     SysUtils, fpcunit, testregistry;
 
@@ -68,7 +68,7 @@ const
 procedure tUTST_srcTree_itemROOT__get_relPATH_4m__a_b_c.relPATH_get_empty;
 var res:tSrcTree_fsFLDR;
 begin // должно возвращать BaseDIR
-    res:=SrcTree_getPathREL(root,'',@_CRT_);
+    res:=SrcTree_getFsFldrREL(root,'',@_CRT_);
     //---
     AssertNotNull('notFound',res);
     AssertSame   ('`res` must by BaseDIR',res,SrcTree_fndBaseDIR(ROOT));
@@ -78,7 +78,7 @@ end;
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_4m__a_b_c.relPATH_get_a;
 begin
-    FldA:=SrcTree_getPathREL(root,c_FLDR_A,@_CRT_);
+    FldA:=SrcTree_getFsFldrREL(root,c_FLDR_A,@_CRT_);
     //---
     AssertNotNull('`FldA` is NIL',FldA);
     AssertSame   ('`FldA.PRNT` <> BaseDIR',FldA.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
@@ -86,8 +86,8 @@ end;
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_4m__a_b_c.relPATH_get_a_b;
 begin
-    FldA:=SrcTree_getPathREL(root,c_FLDR_A,@_CRT_);
-    FldB:=SrcTree_getPathREL(root,c_FLDR_B,@_CRT_);
+    FldA:=SrcTree_getFsFldrREL(root,c_FLDR_A,@_CRT_);
+    FldB:=SrcTree_getFsFldrREL(root,c_FLDR_B,@_CRT_);
     //---
     AssertNotNull('`FldB` is NIL',FldB);
     AssertSame   ('`FldB.PRNT` <> BaseDIR',FldB.ItemPRNT,SrcTree_fndBaseDIR(ROOT));
@@ -96,9 +96,9 @@ end;
 
 procedure tUTST_srcTree_itemROOT__get_relPATH_4m__a_b_c.relPATH_get_a_b_c;
 begin
-    FldA:=SrcTree_getPathREL(root,c_FLDR_A,@_CRT_);
-    FldB:=SrcTree_getPathREL(root,c_FLDR_B,@_CRT_);
-    FldC:=SrcTree_getPathREL(root,c_FLDR_C,@_CRT_);
+    FldA:=SrcTree_getFsFldrREL(root,c_FLDR_A,@_CRT_);
+    FldB:=SrcTree_getFsFldrREL(root,c_FLDR_B,@_CRT_);
+    FldC:=SrcTree_getFsFldrREL(root,c_FLDR_C,@_CRT_);
     //---
     AssertNotNull('`FldC` is NIL',FldC);
     AssertSame   ('`FldC.PRNT` <> BaseDIR',FldC.ItemPRNT,SrcTree_fndBaseDIR(ROOT));

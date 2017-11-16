@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="80">
+    <Files Count="79">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -209,133 +209,129 @@
         <UnitName Value="in0k_lazIdeSRC_srcTree_item_fsFile"/>
       </Item48>
       <Item49>
-        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1\in0k_lazIdeSRC_srcTree_FNK_PATH_FND_rel.pas"/>
-        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_PATH_FND_rel"/>
-      </Item49>
-      <Item50>
-        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1\in0k_lazIdeSRC_srcTree_FNK_PATH_GET_rel.pas"/>
-        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_PATH_GET_rel"/>
-      </Item50>
-      <Item51>
         <Filename Value="srcPKG\srcTree\srcTree_FNC.pas"/>
         <UnitName Value="srcTree_FNC"/>
-      </Item51>
-      <Item52>
+      </Item49>
+      <Item50>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND"/>
-      </Item52>
-      <Item53>
+      </Item50>
+      <Item51>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_baseDIR_GET.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_baseDIR_GET"/>
-      </Item53>
-      <Item54>
+      </Item51>
+      <Item52>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET"/>
-      </Item54>
-      <Item55>
+      </Item52>
+      <Item53>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_mainFILE_GET.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_mainFILE_GET"/>
-      </Item55>
-      <Item56>
+      </Item53>
+      <Item54>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_mainFILE_FND.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_mainFILE_FND"/>
-      </Item56>
-      <Item57>
+      </Item54>
+      <Item55>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_mainFILE_SET.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_mainFILE_SET"/>
-      </Item57>
-      <Item58>
+      </Item55>
+      <Item56>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_srchPATH_ADD.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_srchPATH_ADD"/>
-      </Item58>
-      <Item59>
-        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1\in0k_lazIdeSRC_srcTree_FNK_FILE_FND_rel.pas"/>
-        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_FILE_FND_rel"/>
-      </Item59>
-      <Item60>
-        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_nodeFILE_ADD.pas"/>
-        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_nodeFILE_ADD"/>
-      </Item60>
-      <Item61>
+      </Item56>
+      <Item57>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE\in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK"/>
-      </Item61>
-      <Item62>
+      </Item57>
+      <Item58>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\in0k_lazIdeSRC_srcTree_item_Globals.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_item_Globals"/>
-      </Item62>
-      <Item63>
+      </Item58>
+      <Item59>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler\srcTree_handler_CORE.pas"/>
         <UnitName Value="srcTree_handler_CORE"/>
-      </Item63>
-      <Item64>
+      </Item59>
+      <Item60>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler\srcTree_handler_CORE_makeLIST.pas"/>
         <UnitName Value="srcTree_handler_CORE_makeLIST"/>
-      </Item64>
-      <Item65>
+      </Item60>
+      <Item61>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build\in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_usesFile.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_usesFile"/>
-      </Item65>
-      <Item66>
+      </Item61>
+      <Item62>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler\srcTree_handler_CORE_makeListFsFILE.pas"/>
         <UnitName Value="srcTree_handler_CORE_makeListFsFILE"/>
-      </Item66>
-      <Item67>
+      </Item62>
+      <Item63>
         <Filename Value="srcPKG\srcTree\in0k_lazIdeSRC_CopyRAST_srcTree.pas"/>
         <UnitName Value="in0k_lazIdeSRC_CopyRAST_srcTree"/>
-      </Item67>
-      <Item68>
+      </Item63>
+      <Item64>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE\in0k_lazIdeSRC_srcTree_CORE_Processing.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_CORE_Processing"/>
-      </Item68>
-      <Item69>
+      </Item64>
+      <Item65>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler\srcTree_handler_CORE_fsFILE2CodeBUF.pas"/>
         <UnitName Value="srcTree_handler_CORE_fsFILE2CodeBUF"/>
-      </Item69>
-      <Item70>
+      </Item65>
+      <Item66>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_rootFILE_FND.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_rootFILE_FND"/>
-      </Item70>
-      <Item71>
+      </Item66>
+      <Item67>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build\in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_files4INC.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_files4INC"/>
-      </Item71>
-      <Item72>
-        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1\in0k_lazIdeSRC_srcTree_FNK_PATH_FND_abs.pas"/>
-        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_PATH_FND_abs"/>
-      </Item72>
-      <Item73>
+      </Item67>
+      <Item68>
         <Filename Value="in0k_lazIdeSRC_SETTINGs1.inc"/>
         <Type Value="Binary"/>
-      </Item73>
-      <Item74>
-        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1\in0k_lazIdeSRC_srcTree_FNK_FILE_FND_abs.pas"/>
-        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_FILE_FND_abs"/>
-      </Item74>
-      <Item75>
+      </Item68>
+      <Item69>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build\in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4INCs.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4INCs"/>
-      </Item75>
-      <Item76>
+      </Item69>
+      <Item70>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build\in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4USEs.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4USEs"/>
-      </Item76>
-      <Item77>
-        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1\in0k_lazIdeSRC_srcTree_FNK_FILE_FND.pas"/>
-        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_FILE_FND"/>
-      </Item77>
-      <Item78>
+      </Item70>
+      <Item71>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1\in0k_lazIdeSRC_srcTree_FNK_FsFILE_FND.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_FsFILE_FND"/>
+      </Item71>
+      <Item72>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE\in0k_lazIdeSRC_srcTree_CORE_filePkgType_FNK.pas"/>
         <UnitName Value="in0k_lazIdeSRC_srcTree_CORE_filePkgType_FNK"/>
-      </Item78>
-      <Item79>
+      </Item72>
+      <Item73>
         <Filename Value="asd.inc"/>
         <Type Value="Include"/>
-      </Item79>
-      <Item80>
+      </Item73>
+      <Item74>
         <Filename Value="srcPKG\srcTree\in0k_lazIdeSRC_CopyRAST_srcTree_Nodes.pas"/>
         <UnitName Value="in0k_lazIdeSRC_CopyRAST_srcTree_Nodes"/>
-      </Item80>
+      </Item74>
+      <Item75>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1\in0k_lazIdeSRC_srcTree_FNK_fsFLDR_add.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_fsFLDR_ADD"/>
+      </Item75>
+      <Item76>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1\in0k_lazIdeSRC_srcTree_FNK_fsFLDR_FND.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_fsFLDR_FND"/>
+      </Item76>
+      <Item77>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1\in0k_lazIdeSRC_srcTree_FNK_fsFLDR_GET.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_fsFLDR_GET"/>
+      </Item77>
+      <Item78>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1\in0k_lazIdeSRC_srcTree_FNK_fsFILE_ADD.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_fsFILE_ADD"/>
+      </Item78>
+      <Item79>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1\in0k_lazIdeSRC_srcTree_FNK_fsFILE_GET.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_FNK_fsFILE_GET"/>
+      </Item79>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

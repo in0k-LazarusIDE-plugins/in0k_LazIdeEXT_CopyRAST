@@ -59,6 +59,30 @@ object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
     TabOrder = 1
     object TabSheet1: TTabSheet
       Caption = 'TabSheet1'
+      ClientHeight = 393
+      ClientWidth = 654
+      object Splitter1: TSplitter
+        Left = 0
+        Height = 393
+        Top = 0
+        Width = 5
+      end
+      object Splitter2: TSplitter
+        Left = 5
+        Height = 393
+        Top = 0
+        Width = 5
+      end
+      object Panel2: TPanel
+        Left = 10
+        Height = 393
+        Top = 0
+        Width = 80
+        Align = alClient
+        Caption = 'Panel2'
+        Constraints.MaxWidth = 80
+        TabOrder = 2
+      end
     end
   end
   object SaveDialog1: TSaveDialog

@@ -13,9 +13,8 @@ uses
   in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
   in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
   //
-  in0k_lazIdeSRC_srcTree_FNK_PATH_GET_rel,
-  in0k_lazIdeSRC_srcTree_FNK_FILE_FND_rel,
-  in0k_lazIdeSRC_srcTree_FNK_FILE_FND_abs,
+  in0k_lazIdeSRC_srcTree_FNK_fsFLDR_get_REL,
+  in0k_lazIdeSRC_srcTree_FNK_fsFILE_fnd_REL,
   //
   Classes, SysUtils, fpcunit, testregistry;
 
@@ -147,7 +146,7 @@ end;
 function tTST_srcTree__FILE_fnd_REL._lTST_addFile__findFldREL_crtFile_addObject_(const fileNameREL:string):_tSrcTree_item_fsNodeFILE_;
 var fldr:_tSrcTree_item_fsNodeFLDR_;
 begin
-    fldr:=SrcTree_getPathREL(ROOT,srcTree_fsFnk_ChompPathDelim(srcTree_fsFnk_ExtractFilePath(fileNameREL)));
+    fldr:=SrcTree_getFsFldrREL(ROOT,srcTree_fsFnk_ChompPathDelim(srcTree_fsFnk_ExtractFilePath(fileNameREL)));
     result:=_tSrcTree_item_fsNodeFILE_.Create(fileNameREL);
     SrcTree_insert_ChldLast(fldr,result);
 end;
@@ -207,7 +206,7 @@ begin
     // собсно САМ тест
     tstBase:=SrcTree_fndBaseDIR(ROOT);
     for i:=0 to lTST.Count-1 do begin
-        tstFile:=SrcTree_fndFileREL(tstBase,srcTree_fsFnk_CreateRelativePath(lTST.Strings[i],_root_folder_));
+        tstFile:=SrcTree_fndFsFileREL(tstBase,srcTree_fsFnk_CreateRelativePath(lTST.Strings[i],_root_folder_));
         AssertSame('`tstFile`:`'+lTST.Strings[i]+'` wrong: ',lTST.Objects[i],tstFile);
     end;
 end;
@@ -230,7 +229,7 @@ begin
     lst.FREE;
     //***** собсно САМ тест
     for i:=0 to lTST.Count-1 do begin
-        tstFile:=SrcTree_fndFileREL(ROOT,srcTree_fsFnk_CreateRelativePath(lTST.Strings[i],_root_folder_));
+        tstFile:=SrcTree_fndFsFileREL(ROOT,srcTree_fsFnk_CreateRelativePath(lTST.Strings[i],_root_folder_));
         AssertSame('`tstFile`:`'+lTST.Strings[i]+'` wrong: ',lTST.Objects[i],tstFile);
     end;
 end;

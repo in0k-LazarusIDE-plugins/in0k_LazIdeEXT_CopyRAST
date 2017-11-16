@@ -96,12 +96,12 @@ var root:tCopyRAST_ROOT_package;
        i:integer;
 
 
- Builder:tCopyRastSrcTree_Builder;
+ Builder:tCopyRastSrcTree_Builder4Package;
  P4Build:tCopyRastSrcTree_P4Build;
 begin
     result:=nil;
     // формируем ПЕРВЫЧНЫЙ список файлов
-    Builder:=tCopyRastSrcTree_Builder.Create;
+    Builder:=tCopyRastSrcTree_Builder4Package.Create;
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'Builder START at '{+DateTimeToStr(NOW)});{$endIf}
     treeCopyRAST_First.Root:=Builder.MAKE_SourceTREE(_package_);
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'Builder END at '{+DateTimeToStr(NOW)});{$endIf}
@@ -110,11 +110,11 @@ begin
     //
     treeCopyRAST_Second.Root:=CopyRast_SrcTree_Copy(tCopyRastNODE_ROOT(treeCopyRAST_First.Root));
     // уточняем список по исходникам
-   { P4Build:=tCopyRastSrcTree_P4Build.Create;
+    P4Build:=tCopyRastSrcTree_P4Build.Create;
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'P4Build START at '{+DateTimeToStr(NOW)});{$endIf}
     P4Build.EXECUTE(_package_,Builder,treeCopyRAST_Second.Root);
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'P4Build END at '{+DateTimeToStr(NOW)});{$endIf}
-    P4Build.FREE; }
+    P4Build.FREE;
     Builder.FREE;
 
 end;

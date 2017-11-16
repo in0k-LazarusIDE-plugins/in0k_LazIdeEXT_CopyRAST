@@ -17,7 +17,7 @@ uTST_003_srcTree__PATH_get_ABS__asFND,
 uTST_003_srcTree__PATH_get_ABS__asNEW,
 uTST_004_srcTree__FILE_fnd_REL,
 
-in0k_lazIdeSRC_srcTree_FNK_PATH_GET
+in0k_lazIdeSRC_srcTree_FNK_fsFLDR_GET;
 
 //
 //uTST_003_srcTree_itemROOT__get_relPATH_____a_b_c,
@@ -42,7 +42,7 @@ in0k_srcTree_getRelPATH,
 in0k_srcTree_fndRelPATH,
 in0k_srcTree_fndBaseDIR,
 in0k_srcTree_setBaseDIR}
-  ;
+
 
 {$R *.res}
 

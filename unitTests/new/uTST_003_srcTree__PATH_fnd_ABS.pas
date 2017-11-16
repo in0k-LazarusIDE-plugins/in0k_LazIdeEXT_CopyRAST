@@ -16,7 +16,7 @@ uses
     in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
     in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
     //
-    in0k_lazIdeSRC_srcTree_FNK_PATH_FND_abs,
+    in0k_lazIdeSRC_srcTree_FNK_fsFLDR_fnd_ABS,
     //
     Classes, SysUtils, fpcunit, testregistry;
 
@@ -147,7 +147,7 @@ var res:_tSrcTree_item_fsNodeFLDR_;
 begin
     // ищем по АБСОЛЮТНЫМ
     for i:=0 to lTST.Count-1 do begin
-        res:=SrcTree_fndPathABS(ROOT,lTST.Strings[i]);
+        res:=SrcTree_fndFsFldrABS(ROOT,lTST.Strings[i]);
         //--- от ДОЛЖЕН быть или НЕ быть
         if Assigned(lTST.Objects[i])
         then AssertSame('`res` noFound PATH:"'+lTST.Strings[i]+'"',lTST.Objects[i],res)

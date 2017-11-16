@@ -11,8 +11,8 @@ uses
    //
    in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
    in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
-   in0k_lazIdeSRC_srcTree_FNK_PATH_FND_rel,
-   in0k_lazIdeSRC_srcTree_FNK_PATH_GET_rel,
+   in0k_lazIdeSRC_srcTree_FNK_fsFLDR_fnd_REL,
+   in0k_lazIdeSRC_srcTree_FNK_fsFLDR_get_REL,
    //
    SysUtils, fpcunit, testregistry;
 
@@ -47,21 +47,21 @@ end;
 procedure tUTST_srcTree_itemROOT__realCase_001.Test;
 var fldr:_tSrcTree_item_fsNodeFLDR_;
 begin
-    SrcTree_getPathREL(root,'srcPKG');
-    SrcTree_getPathREL(root,'srcPKG\srcTree');
-    SrcTree_getPathREL(root,'srcPKG\srcTree\Items\CORE');
-    SrcTree_getPathREL(root,'srcPKG\srcTree\Items');
-    SrcTree_getPathREL(root,'srcPKG\UI\cmp');
-    SrcTree_getPathREL(root,'srcPKG\Forms');
-    SrcTree_getPathREL(root,'srcPKG\Nodes');
-    SrcTree_getPathREL(root,'srcPKG\OperationNODEs\Processing_ProjPack');
-    SrcTree_getPathREL(root,'srcEXT\in0k-lazarusIdeSRC-wndDEBUG');
-    SrcTree_getPathREL(root,'srcEXT\in0k-lazarusIdeSRC-FuckUpForm');
-    SrcTree_getPathREL(root,'srcEXT\in0k-lazarusIdeSRC-ExpertCORE');
-    SrcTree_getPathREL(root,'srcPKG');
-    SrcTree_getPathREL(root,'srcPKG');
+    SrcTree_getFsFldrREL(root,'srcPKG');
+    SrcTree_getFsFldrREL(root,'srcPKG\srcTree');
+    SrcTree_getFsFldrREL(root,'srcPKG\srcTree\Items\CORE');
+    SrcTree_getFsFldrREL(root,'srcPKG\srcTree\Items');
+    SrcTree_getFsFldrREL(root,'srcPKG\UI\cmp');
+    SrcTree_getFsFldrREL(root,'srcPKG\Forms');
+    SrcTree_getFsFldrREL(root,'srcPKG\Nodes');
+    SrcTree_getFsFldrREL(root,'srcPKG\OperationNODEs\Processing_ProjPack');
+    SrcTree_getFsFldrREL(root,'srcEXT\in0k-lazarusIdeSRC-wndDEBUG');
+    SrcTree_getFsFldrREL(root,'srcEXT\in0k-lazarusIdeSRC-FuckUpForm');
+    SrcTree_getFsFldrREL(root,'srcEXT\in0k-lazarusIdeSRC-ExpertCORE');
+    SrcTree_getFsFldrREL(root,'srcPKG');
+    SrcTree_getFsFldrREL(root,'srcPKG');
     //---
-    fldr:=SrcTree_fndPathREL(root,'srcPKG\UI\cmp');
+    fldr:=SrcTree_fndFsFldrREL(root,'srcPKG\UI\cmp');
     //---
     AssertNotNull('`fldr` is NIL',fldr);
 
