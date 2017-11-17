@@ -53,9 +53,9 @@ object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
     Height = 421
     Top = 50
     Width = 662
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alClient
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 1
     object TabSheet1: TTabSheet
       Caption = 'TabSheet1'
@@ -83,6 +83,9 @@ object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
         Constraints.MaxWidth = 80
         TabOrder = 2
       end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'TabSheet2'
     end
   end
   object SaveDialog1: TSaveDialog

@@ -48,14 +48,16 @@ uses
   in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_files4INC, 
   in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4INCs, 
   in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4USEs, 
-  in0k_lazIdeSRC_srcTree_FNK_fsFILE_FND, 
+  in0k_lazIdeSRC_srcTree_FNK_FsFILE_FND, 
   in0k_lazIdeSRC_srcTree_CORE_filePkgType_FNK, 
   in0k_lazIdeSRC_CopyRAST_srcTree_Nodes, 
   in0k_lazIdeSRC_srcTree_FNK_fsFLDR_add, 
   in0k_lazIdeSRC_srcTree_FNK_fsFLDR_FND, 
   in0k_lazIdeSRC_srcTree_FNK_fsFLDR_GET, 
   in0k_lazIdeSRC_srcTree_FNK_fsFILE_ADD, 
-  in0k_lazIdeSRC_srcTree_FNK_fsFILE_GET, LazarusPackageIntf;
+  in0k_lazIdeSRC_srcTree_FNK_fsFILE_GET,
+  cmpCopyRAST_srcTree_approvedFiles,
+  cmpCopyRAST_srcTree_approvedNAMEs, LazarusPackageIntf;
 
 implementation
 

@@ -41,6 +41,7 @@ type
     Splitter1: TSplitter;
     Splitter2: TSplitter;
     TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
 		procedure Button3Click(Sender: TObject);

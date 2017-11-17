@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="2">
+    <Targets Count="3">
       <Target0 FileName="unitTests\TESTs.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target0>
       <Target1 FileName="in0k_lazExt_CopyRAST.lpk"/>
+      <Target2 FileName="TESTs\TestUiUx\Approved_Files2Names\Aapproved_Files2Names.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target2>
     </Targets>
   </ProjectGroup>
 </CONFIG>
