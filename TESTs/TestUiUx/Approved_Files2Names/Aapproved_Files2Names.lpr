@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, Unit1, makeTest_copyRastOBJ
+  Forms, Unit1, makeTest_copyRastOBJ, in0k_lazIdeSRC_CopyRAST_srcTree_HandlerReNAMEs
   { you can add units after this };
 
 {$R *.res}

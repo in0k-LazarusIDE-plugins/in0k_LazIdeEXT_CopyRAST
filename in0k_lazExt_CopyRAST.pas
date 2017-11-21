@@ -55,9 +55,9 @@ uses
   in0k_lazIdeSRC_srcTree_FNK_fsFLDR_FND, 
   in0k_lazIdeSRC_srcTree_FNK_fsFLDR_GET, 
   in0k_lazIdeSRC_srcTree_FNK_fsFILE_ADD, 
-  in0k_lazIdeSRC_srcTree_FNK_fsFILE_GET,
-  cmpCopyRAST_srcTree_approvedFiles,
-  cmpCopyRAST_srcTree_approvedNAMEs, LazarusPackageIntf;
+  in0k_lazIdeSRC_srcTree_FNK_fsFILE_GET, cmpCopyRAST_srcTree_approvedFiles, 
+  cmpCopyRAST_srcTree_approvedNAMEs, srcTree_handler4build_CORE, 
+  LazarusPackageIntf;
 
 implementation
 
