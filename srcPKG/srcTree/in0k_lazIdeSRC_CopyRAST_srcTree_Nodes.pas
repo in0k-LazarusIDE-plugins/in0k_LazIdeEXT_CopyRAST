@@ -9,7 +9,8 @@ uses     Dialogs,
   in0k_lazIdeSRC_srcTree_CORE_item,
   in0k_lazIdeSRC_srcTree_item_fsFolder,
   in0k_lazIdeSRC_srcTree_item_fsFile,
-  in0k_lazIdeSRC_srcTree_item_Globals;
+  in0k_lazIdeSRC_srcTree_item_Globals,
+  in0k_lazIdeSRC_srcTree_4Package;
 
 
 type
@@ -66,8 +67,8 @@ type
   tCopyRastNODE_Root4Package=tSrcTree_Root4Package;
   tCopyRastNODE_Main4Package=tSrcTree_Main4Package;
   //---
-  tCopyRastNODE_Root4Project=tSrcTree_Root4Project;
-  tCopyRastNODE_Main4Project=tSrcTree_Main4Project;
+ // tCopyRastNODE_Root4Project=tSrcTree_Root4Project;
+ // tCopyRastNODE_Main4Project=tSrcTree_Main4Project;
   //---
 
 
@@ -79,6 +80,15 @@ procedure CopyRastNODE_CopyData_FILE(const source,target:tCopyRastNODE_FILE);
 
 
 function  CopyRast_SrcTree_Copy(const source:tCopyRastNODE_ROOT):tCopyRastNODE_ROOT;
+
+
+
+procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_ROOT); overload;
+procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_BASE); overload;
+procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_MAIN); overload;
+procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_FLDR); overload;
+procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_FILE); overload;
+
 
 implementation
 
@@ -164,6 +174,40 @@ end;
 
 {%endregion}
 
+
+procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_ROOT);
+begin
+    leftSide.CR_DATA.sideRight:=rightSide;
+    rightSide.CR_DATA.sideLeft:=leftSide;
+end;
+
+procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_BASE);
+begin
+    leftSide.CR_DATA.sideRight:=rightSide;
+    rightSide.CR_DATA.sideLeft:=leftSide;
+end;
+
+procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_MAIN);
+begin
+    leftSide.CR_DATA.sideRight:=rightSide;
+    rightSide.CR_DATA.sideLeft:=leftSide;
+end;
+
+procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_FLDR);
+begin
+    if Assigned(rightSide.CR_DATA.sideLeft) then begin
+        rightSide.CR_DATA.sideLeft:=nil;
+    end
+    else rightSide.CR_DATA.sideLeft:=leftSide;
+    leftSide.CR_DATA.sideRight:=rightSide;
+end;
+
+procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_FILE);
+begin
+    leftSide.CR_DATA.sideRight:=rightSide;
+    rightSide.CR_DATA.sideLeft:=leftSide;
+end;
+
 {%region --- copyData ---------------------------------------------------}
 
 procedure CopyRastNODE_CopyData_ROOT(const source,target:tCopyRastNODE_ROOT);
@@ -228,7 +272,7 @@ end;
 function _CR_SrcTree_Copy_(const item:tSrcTree_item):tSrcTree_item;
 var chld:tSrcTree_item;
 begin
-    if item is tCopyRastNODE_FILE then begin
+ {   if item is tCopyRastNODE_FILE then begin
         result:=tCopyRastNODE_FILE.Create('');
         CopyRastNODE_CopyData_FILE(tCopyRastNODE_FILE(item),tCopyRastNODE_FILE(result));
     end
@@ -277,7 +321,7 @@ begin
         SrcTree_insert_ChldLast(result,_CR_SrcTree_Copy_(chld));
         //--->
         chld:=chld.ItemNEXT;
-    end;
+    end;  }
 end;
 
 function CopyRast_SrcTree_Copy(const source:tCopyRastNODE_ROOT):tCopyRastNODE_ROOT;

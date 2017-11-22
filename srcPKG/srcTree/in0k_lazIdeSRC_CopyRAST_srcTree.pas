@@ -20,7 +20,7 @@ uses
   in0k_lazIdeSRC_srcTree_FNK_rootFILE_FND,
 
 
-  srcTree_builder_4Package,
+  in0k_lazIdeSRC_srcTree_4Package,
   srcTree_handler_CORE,
 
   in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_CORE,
@@ -36,11 +36,11 @@ type
 
  tCopyRastSrcTree_Builder4Package=class(tSrcTree_Builder_4Package)
   protected
-    function new_ROOT(const name:string):tSrcTree_ROOT; override;
-    function new_Base(const name:string):tSrcTree_BASE; override;
-    function new_Main(const name:string):tSrcTree_MAIN; override;
-    function new_FLDR(const name:string):tSrcTree_fsFLDR; override;
-    function new_FILE(const fileName:string; const fileKind:TPkgFileType):tSrcTree_fsFILE; override;
+    function new_ROOT(const name:string):tSrcTree_ROOT;   override;
+    function new_Base(const path:string):tSrcTree_BASE;   override;
+    function new_Main(const name:string):tSrcTree_MAIN;   override;
+    function new_FLDR(const path:string):tSrcTree_fsFLDR; override;
+    function new_FILE(const path:string):tSrcTree_fsFILE; override;
   end;
 
 type
@@ -70,9 +70,9 @@ begin
     result:=tCopyRastNODE_Root4Package.Create(name);
 end;
 
-function tCopyRastSrcTree_Builder4Package.new_Base(const name:string):tSrcTree_BASE;
+function tCopyRastSrcTree_Builder4Package.new_Base(const path:string):tSrcTree_BASE;
 begin
-    result:=tCopyRastNODE_BASE.Create(name);
+    result:=tCopyRastNODE_BASE.Create(path);
 end;
 
 function tCopyRastSrcTree_Builder4Package.new_Main(const name:string):tSrcTree_MAIN;
@@ -80,14 +80,14 @@ begin
     result:=tCopyRastNODE_Main4Package.Create(name);
 end;
 
-function tCopyRastSrcTree_Builder4Package.new_FLDR(const name:string):tSrcTree_fsFLDR;
+function tCopyRastSrcTree_Builder4Package.new_FLDR(const path:string):tSrcTree_fsFLDR;
 begin
-    result:=tCopyRastNODE_FLDR.Create(name);
+    result:=tCopyRastNODE_FLDR.Create(path);
 end;
 
-function tCopyRastSrcTree_Builder4Package.new_FILE(const fileName:string; const fileKind:TPkgFileType):tSrcTree_fsFILE;
+function tCopyRastSrcTree_Builder4Package.new_FILE(const path:string):tSrcTree_fsFILE;
 begin
-    result:=tCopyRastNODE_FILE.Create(fileName,fileKind);
+    result:=tCopyRastNODE_FILE.Create(path);
 end;
 
 //==============================================================================

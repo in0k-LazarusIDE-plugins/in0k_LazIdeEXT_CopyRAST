@@ -193,8 +193,8 @@
         <UnitName Value="srcTree_builder_CORE"/>
       </Item44>
       <Item45>
-        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder\srcTree_builder_4Package.pas"/>
-        <UnitName Value="srcTree_builder_4Package"/>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\in0k_lazIdeSRC_srcTree_4Package.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_4Package"/>
       </Item45>
       <Item46>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE\in0k_lazIdeSRC_srcTree_CORE_item.pas"/>

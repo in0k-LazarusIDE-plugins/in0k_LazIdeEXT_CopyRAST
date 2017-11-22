@@ -5,6 +5,8 @@ unit Unit1;
 interface
 
 uses
+  in0k_lazIdeSRC_srcTree_4Package,
+
   in0k_lazIdeSRC_CopyRAST_srcTree,
   in0k_lazIdeSRC_CopyRAST_srcTree_Nodes,
   in0k_lazIdeSRC_CopyRAST_srcTree_HandlerReNAMEs,
@@ -35,6 +37,7 @@ type
     procedure _GO_reNAMEs_;
   public
     first:tCopyRastNODE_ROOT;
+    builder:tSrcTree_Builder_4Package;
 
 
 
@@ -52,7 +55,8 @@ implementation
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-    first:=makeTest_objCopyRAST;
+    builder:=tCopyRastSrcTree_Builder4Package.Create;
+    first:=makeTest_objCopyRAST(builder);
 
     approvedFILEs:=tCmpCopyRAST_srcTree_approvedFILEs.Create(self);
     with approvedFILEs do begin
@@ -86,6 +90,7 @@ end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
+    builder.Free;
 end;
 
 procedure TForm1.FormResize(Sender: TObject);
@@ -96,7 +101,6 @@ end;
 //------------------------------------------------------------------------------
 
 procedure TForm1._GO_reNAMEs_;
-var _builder_:tCopyRastSrcTree_Builder4Package;
 var _reNames_:tCopyRastSrcTree_H4ReNAMEs;
     _resRoot_:tCopyRastNODE_ROOT;
 begin
@@ -106,18 +110,11 @@ begin
    _resRoot_.FREE;
     //-------------------------------
 
-   _builder_:=tCopyRastSrcTree_Builder4Package.Create;
-   _reNames_:=tCopyRastSrcTree_H4ReNAMEs.Create(_builder_);
-
-
+   _reNames_:=tCopyRastSrcTree_H4ReNAMEs.Create(builder);
    _reNames_.EXECUTE(First,_resRoot_);
-
    _reNames_.FREE;
-   _builder_.FREE;
-
 
     approvedNAMEs.Root:=_resRoot_;
-
 end;
 
 end.
