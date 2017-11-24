@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="83">
+    <Files Count="85">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -348,6 +348,14 @@
         <Filename Value="srcPKG\srcTree_UI\cmpCopyRAST_srcTree.pas"/>
         <UnitName Value="cmpCopyRAST_srcTree"/>
       </Item83>
+      <Item84>
+        <Filename Value="srcPKG\xmlConfig\lazExt_CopyRAST__xmlConfig.pas"/>
+        <UnitName Value="lazExt_CopyRAST__xmlConfig"/>
+      </Item84>
+      <Item85>
+        <Filename Value="srcPKG\xmlConfig\lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs.pas"/>
+        <UnitName Value="lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs"/>
+      </Item85>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

@@ -9,6 +9,9 @@ uses
   in0k_lazIdeSRC_srcTree_item_Globals,
 
   in0k_lazIdeSRC_srcTree_4Package,
+  lazExt_CopyRAST__xmlConfig,
+
+  lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs,
 
   in0k_lazIdeSRC_CopyRAST_srcTree,
   in0k_lazIdeSRC_CopyRAST_srcTree_Nodes,
@@ -22,8 +25,8 @@ uses
   cmpCopyRAST_srcTree,
   //
 
-  Classes, SysUtils, XMLConf, FileUtil, Forms, Controls, Graphics, Dialogs,
-  ExtCtrls, StdCtrls, ComCtrls;
+  Classes, SysUtils, XMLConf, FileUtil, CheckBoxThemed, Forms, Controls,
+  Graphics, Dialogs, ExtCtrls, StdCtrls, ComCtrls;
 
 type
 
@@ -31,9 +34,9 @@ type
 
   TForm1 = class(TForm)
     Button1: TButton;
+    CheckBoxThemed1: TCheckBoxThemed;
     Panel1: TPanel;
     TreeView1: TTreeView;
-    XMLConfig1: TXMLConfig;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -51,13 +54,14 @@ type
     procedure TreeView0SelectionChanged(Sender: TObject);
   protected
     procedure _GO_reNAMEs_;
+
+  protected
+    cnfg:tLazExt_CopyRAST_CONFIG;
+
+
   public
     first:tCopyRastNODE_Root4Package;
     builder:tSrcTree_Builder_4Package;
-
-
-
-
   end;
 
 var
@@ -70,7 +74,13 @@ implementation
 { TForm1 }
 
 procedure TForm1.FormCreate(Sender: TObject);
+var s:string;
 begin
+
+    s:=ChangeFileExt(ParamStr(0),'.xml');
+    cnfg:=tLazExt_CopyRAST_CONFIG.Create(s,true);
+
+
     builder:=tCopyRastSrcTree_Builder4Package.Create;
     first  :=tCopyRastNODE_Root4Package(makeTest_objCopyRAST(builder));
 
@@ -111,6 +121,10 @@ end;
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
     builder.Free;
+//    XMLConfig1.Flush;
+
+    cnfg.FREE;
+
 end;
 
 procedure TForm1.FormResize(Sender: TObject);
