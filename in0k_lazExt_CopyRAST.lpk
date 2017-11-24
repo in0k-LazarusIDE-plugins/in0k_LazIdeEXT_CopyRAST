@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="82">
+    <Files Count="83">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -344,6 +344,10 @@
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build\srcTree_handler4build_CORE.pas"/>
         <UnitName Value="srcTree_handler4build_CORE"/>
       </Item82>
+      <Item83>
+        <Filename Value="srcPKG\srcTree_UI\cmpCopyRAST_srcTree.pas"/>
+        <UnitName Value="cmpCopyRAST_srcTree"/>
+      </Item83>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

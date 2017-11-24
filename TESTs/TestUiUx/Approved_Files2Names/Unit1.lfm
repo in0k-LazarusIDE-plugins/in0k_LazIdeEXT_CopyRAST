@@ -32,5 +32,23 @@ object Form1: TForm1
       OnClick = Button1Click
       TabOrder = 0
     end
+    object TreeView1: TTreeView
+      Left = 7
+      Height = 97
+      Top = 170
+      Width = 121
+      TabOrder = 1
+      OnAdvancedCustomDrawItem = TreeView1AdvancedCustomDrawItem
+      OnClick = TreeView1Click
+      OnCustomDrawItem = TreeView1CustomDrawItem
+      OnSelectionChanged = TreeView1SelectionChanged
+    end
+  end
+  object XMLConfig1: TXMLConfig
+    StartEmpty = False
+    RootName = 'CONFIG'
+    ReadOnly = False
+    left = 366
+    top = 84
   end
 end

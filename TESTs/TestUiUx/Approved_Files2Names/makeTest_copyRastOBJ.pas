@@ -9,6 +9,8 @@ uses
    PackageIntf,
 
 
+   in0k_lazIdeSRC_srcTree_CORE_item,
+   in0k_lazIdeSRC_srcTree_item_Globals,
    in0k_lazIdeSRC_srcTree_4Package,
    in0k_lazIdeSRC_srcTree_item_fsFolder,
    in0k_lazIdeSRC_srcTree_item_fsFile,
@@ -20,13 +22,13 @@ uses
    //
    in0k_lazIdeSRC_CopyRAST_srcTree_Nodes;
 
-function makeTest_objCopyRAST(builder:tSrcTree_Builder_4Package):tCopyRastNODE_ROOT;
+function makeTest_objCopyRAST(builder:tSrcTree_Builder_4Package):tSrcTree_ROOT;
 
 implementation
 
-function makeTest_objCopyRAST(builder:tSrcTree_Builder_4Package):tCopyRastNODE_ROOT;
+function makeTest_objCopyRAST(builder:tSrcTree_Builder_4Package):tSrcTree_ROOT;
 begin
-    result:=tCopyRastNODE_ROOT(builder.crt_ROOT('in0k_lazExt_CopyRAST'));
+    result:=builder.crt_ROOT('in0k_lazExt_CopyRAST');
     builder.set_BASE(result,'D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST');
     builder.set_MAIN(result,'in0k_lazExt_CopyRAST.lpi');
     //---

@@ -18,16 +18,17 @@ type
    sideLeft :tSrcTree_item;
    sideRight:tSrcTree_item;
   end;
+ pCopyRastNODE_DATA=^rCopyRastNODE_DATA;
 
 
 type
- tCopyRastNODE_ROOT=class(tSrcTree_ROOT)
+ {tCopyRastNODE_ROOT=class(tSrcTree_ROOT)
   public
     CR_DATA:rCopyRastNODE_DATA;
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
-  end;
+  end; }
 
  tCopyRastNODE_BASE=class(tSrcTree_BASE)
   public
@@ -37,14 +38,14 @@ type
     procedure BeforeDestruction; override;
   end;
 
- tCopyRastNODE_MAIN=class(tSrcTree_MAIN)
+ {tCopyRastNODE_MAIN=class(tSrcTree_MAIN)
   public
     CR_DATA:rCopyRastNODE_DATA;
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
   end;
-
+  }
  tCopyRastNODE_FLDR=class(tSrcTree_fsFLDR)
   public
     CR_DATA:rCopyRastNODE_DATA;
@@ -64,37 +65,254 @@ type
 
 
   //---
-  tCopyRastNODE_Root4Package=tSrcTree_Root4Package;
-  tCopyRastNODE_Main4Package=tSrcTree_Main4Package;
+  tCopyRastNODE_Root4Package=class(tSrcTree_ROOT)
+  public
+    CR_DATA:rCopyRastNODE_DATA;
+  public
+    procedure AfterConstruction; override;
+    procedure BeforeDestruction; override;
+  end;
+ tCopyRastNODE_Main4Package=class(tSrcTree_Main4Package)
+ public
+   CR_DATA:rCopyRastNODE_DATA;
+ public
+   procedure AfterConstruction; override;
+   procedure BeforeDestruction; override;
+ end;
+
   //---
- // tCopyRastNODE_Root4Project=tSrcTree_Root4Project;
- // tCopyRastNODE_Main4Project=tSrcTree_Main4Project;
+ tCopyRastNODE_Root4Project=class(tSrcTree_ROOT)
+  public
+    CR_DATA:rCopyRastNODE_DATA;
+  public
+    procedure AfterConstruction; override;
+    procedure BeforeDestruction; override;
+  end;
+
+  tCopyRastNODE_Main4Project=class(tSrcTree_Main4Project)
+  public
+    CR_DATA:rCopyRastNODE_DATA;
+  public
+    procedure AfterConstruction; override;
+    procedure BeforeDestruction; override;
+  end;
   //---
 
 
-procedure CopyRastNODE_CopyData_ROOT(const source,target:tCopyRastNODE_ROOT);
+
+function isCopyRastNODE   (const value:tObject      ):boolean; overload;
+function isCopyRastNODE   (const value:pointer      ):boolean; overload;
+function CopyRastNODE_DATA(const value:tObject      ):pCopyRastNODE_DATA;
+function CopyRastNODE_ROOT(const value:tSrcTree_item):tSrcTree_ROOT;
+
+function CopyRastNODE_useInLeft (const rootRight:tSrcTree_ROOT; const value:tSrcTree_item):tSrcTree_item;
+function CopyRastNODE_useInRight(const rootLeft :tSrcTree_ROOT; const value:tSrcTree_item):tSrcTree_item;
+
+procedure CopyRastNODE_LINK(const leftSide,rightSide:tSrcTree_item);
+
+
+
+
+
+//procedure CopyRastNODE_CopyData_ROOT(const source,target:tCopyRastNODE_ROOT);
 procedure CopyRastNODE_CopyData_BASE(const source,target:tCopyRastNODE_BASE);
-procedure CopyRastNODE_CopyData_MAIN(const source,target:tCopyRastNODE_MAIN);
+//procedure CopyRastNODE_CopyData_MAIN(const source,target:tCopyRastNODE_MAIN);
 procedure CopyRastNODE_CopyData_FLDR(const source,target:tCopyRastNODE_FLDR);
 procedure CopyRastNODE_CopyData_FILE(const source,target:tCopyRastNODE_FILE);
 
 
-function  CopyRast_SrcTree_Copy(const source:tCopyRastNODE_ROOT):tCopyRastNODE_ROOT;
+//function  CopyRast_SrcTree_Copy(const source:tCopyRastNODE_ROOT):tCopyRastNODE_ROOT;
 
 
 
-procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_ROOT); overload;
+//procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_ROOT); overload;
 procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_BASE); overload;
-procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_MAIN); overload;
+//procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_MAIN); overload;
 procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_FLDR); overload;
 procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_FILE); overload;
 
 
 implementation
 
+function isCopyRastNODE(const value:tObject):boolean;
+begin
+    {$ifOPT D+}
+    Assert(Assigned(value));
+    {$endIf}
+    result:=FALSE;
+    if value is tCopyRastNODE_FILE then exit(true);
+    if value is tCopyRastNODE_FLDR then exit(true);
+    if value is tCopyRastNODE_BASE then exit(true);
+    if value is tCopyRastNODE_Main4Package then exit(true);
+    if value is tCopyRastNODE_Root4Package then exit(true);
+    if value is tCopyRastNODE_Main4Project then exit(true);
+    if value is tCopyRastNODE_Root4Project then exit(true);
+end;
+
+function isCopyRastNODE(const value:pointer):boolean;
+begin
+    {$ifOPT D+}
+    Assert(Assigned(value));
+    {$endIf}
+    result:=isCopyRastNODE(TObject(value));
+end;
+
+function CopyRastNODE_DATA(const value:tObject):pCopyRastNODE_DATA;
+begin
+    {$ifOPT D+}
+    Assert(Assigned(value));
+    {$endIf}
+    result:=nil;
+    if value is tCopyRastNODE_FILE then exit(@tCopyRastNODE_FILE(value).CR_DATA);
+    if value is tCopyRastNODE_FLDR then exit(@tCopyRastNODE_FLDR(value).CR_DATA);
+    if value is tCopyRastNODE_BASE then exit(@tCopyRastNODE_BASE(value).CR_DATA);
+    if value is tCopyRastNODE_Main4Package then exit(@tCopyRastNODE_Main4Package(value).CR_DATA);
+    if value is tCopyRastNODE_Root4Package then exit(@tCopyRastNODE_Root4Package(value).CR_DATA);
+    if value is tCopyRastNODE_Main4Project then exit(@tCopyRastNODE_Main4Project(value).CR_DATA);
+    if value is tCopyRastNODE_Root4Project then exit(@tCopyRastNODE_Root4Project(value).CR_DATA);
+end;
+
+function CopyRastNODE_ROOT(const value:tSrcTree_item):tSrcTree_ROOT;
+begin
+    {$ifOPT D+}
+    Assert(Assigned(value));
+    {$endIf}
+    result:=tSrcTree_ROOT(value);
+    while Assigned(result) do begin
+        if tObject(result) is tSrcTree_ROOT then EXIT;
+        result:=tSrcTree_ROOT(tSrcTree_item(result).ItemPRNT);
+    end;
+end;
+
+//------------------------------------------------------------------------------
+
+function _useInLeft_(const right:tSrcTree_item; const value:tSrcTree_item):boolean; {$ifOPT D-}inline;{$endIf}
+var tmpDATA:pCopyRastNODE_DATA;
+begin
+    result:=false;
+    if isCopyRastNODE(right) then begin
+        tmpDATA:=CopyRastNODE_DATA(right);
+        if Assigned(tmpDATA) then begin
+            if tmpDATA^.sideLeft=value then begin
+                result:=TRUE;
+            end;
+        end;
+    end;
+end;
+
+function CopyRastNODE_useInLeft(const rootRight:tSrcTree_ROOT; const value:tSrcTree_item):tSrcTree_item;
+var tmp:tSrcTree_item;
+begin
+    {$ifOPT D+}
+    Assert(Assigned(rootRight));
+    Assert(isCopyRastNODE(rootRight));
+    Assert(Assigned(value));
+    Assert(isCopyRastNODE(value));
+    {$endIf}
+    result:=rootRight;
+    if _useInLeft_(result,value) then exit
+    else begin
+        result:=rootRight.ItemCHLD;
+        while Assigned(result) do begin
+            tmp:=CopyRastNODE_useInLeft(tSrcTree_ROOT(result),value);
+            if Assigned(tmp) then begin
+                result:=tmp;
+                BREAK;
+            end;
+            result:=result.ItemNEXT;
+        end;
+    end;
+end;
+
+//------------------------------------------------------------------------------
+
+function _useInRight_(const left:tSrcTree_item; const value:tSrcTree_item):boolean; {$ifOPT D-}inline;{$endIf}
+var tmpDATA:pCopyRastNODE_DATA;
+begin
+    result:=false;
+    if isCopyRastNODE(left) then begin
+        tmpDATA:=CopyRastNODE_DATA(left);
+        if Assigned(tmpDATA) then begin
+            if tmpDATA^.sideRight=value then begin
+                result:=TRUE;
+            end;
+        end;
+    end;
+end;
+
+function CopyRastNODE_useInRight(const rootLeft:tSrcTree_ROOT; const value:tSrcTree_item):tSrcTree_item;
+var tmp:tSrcTree_item;
+begin
+    {$ifOPT D+}
+    Assert(Assigned(rootLeft));
+    Assert(isCopyRastNODE(rootLeft),rootLeft.ClassName+'  is NOT CopyRastNODE');
+    Assert(Assigned(value));
+    Assert(isCopyRastNODE(value));
+    {$endIf}
+    result:=rootLeft;
+    if _useInLeft_(result,value) then exit
+    else begin
+        result:=rootLeft.ItemCHLD;
+        while Assigned(result) do begin
+            tmp:=CopyRastNODE_useInRight(tSrcTree_ROOT(result),value);
+            if Assigned(tmp) then begin
+                result:=tmp;
+                BREAK;
+            end;
+            result:=result.ItemNEXT;
+        end;
+    end;
+end;
+
+//------------------------------------------------------------------------------
+
+procedure CopyRastNODE_LINK(const leftSide,rightSide:tSrcTree_item);
+var tmpRootLeft :tSrcTree_ROOT;
+    tmpRootRight:tSrcTree_ROOT;
+var tmpItem:tSrcTree_item;
+    tmpDATA:pCopyRastNODE_DATA;
+begin
+    {$ifOPT D+}
+    Assert(Assigned(leftSide));
+    Assert(isCopyRastNODE(leftSide));
+    Assert(Assigned(rightSide));
+    Assert(isCopyRastNODE(rightSide));
+    {$endIf}
+    tmpRootLeft :=CopyRastNODE_ROOT(leftSide);
+    tmpRootRight:=CopyRastNODE_ROOT(rightSide);
+    if Assigned(tmpRootLeft) and Assigned(tmpRootRight) then begin
+        //
+        tmpItem:=CopyRastNODE_useInRight(tmpRootLeft,rightSide);
+        if Assigned(tmpItem) then begin
+            while Assigned(tmpItem) do begin
+                tmpDATA:=CopyRastNODE_DATA(tmpItem);
+                tmpDATA^.sideRight:=nil;
+                tmpItem:=CopyRastNODE_useInRight(tmpRootLeft,rightSide);
+            end;
+        end
+        else begin
+            tmpDATA:=CopyRastNODE_DATA(leftSide);
+            tmpDATA^.sideRight:=rightSide;
+        end;
+        //
+        tmpItem:=CopyRastNODE_useInLeft(tmpRootRight,leftSide);
+        if Assigned(tmpItem) then begin
+            while Assigned(tmpItem) do begin
+                tmpDATA:=CopyRastNODE_DATA(tmpItem);
+                tmpDATA^.sideLeft:=nil;
+                tmpItem:=CopyRastNODE_useInLeft(tmpRootRight,leftSide);
+            end;
+        end
+        else begin
+            tmpDATA:=CopyRastNODE_DATA(rightSide);
+            tmpDATA^.sideLeft:=leftSide;
+        end;
+    end;
+end;
+
 {%region --- CxDx -------------------------------------------------------}
 
-procedure tCopyRastNODE_ROOT.AfterConstruction;
+procedure tCopyRastNODE_Root4Project.AfterConstruction;
 begin
     inherited;
     with CR_DATA do begin
@@ -103,7 +321,51 @@ begin
     end;
 end;
 
-procedure tCopyRastNODE_ROOT.BeforeDestruction;
+procedure tCopyRastNODE_Root4Project.BeforeDestruction;
+begin
+    inherited;
+end;
+
+procedure tCopyRastNODE_Main4Project.AfterConstruction;
+begin
+    inherited;
+    with CR_DATA do begin
+        sideRight:=nil;
+        sideLeft :=nil;
+    end;
+end;
+
+procedure tCopyRastNODE_Main4Project.BeforeDestruction;
+begin
+    inherited;
+end;
+
+
+
+procedure tCopyRastNODE_Root4Package.AfterConstruction;
+begin
+    inherited;
+    with CR_DATA do begin
+        sideRight:=nil;
+        sideLeft :=nil;
+    end;
+end;
+
+procedure tCopyRastNODE_Root4Package.BeforeDestruction;
+begin
+    inherited;
+end;
+
+procedure tCopyRastNODE_Main4Package.AfterConstruction;
+begin
+    inherited;
+    with CR_DATA do begin
+        sideRight:=nil;
+        sideLeft :=nil;
+    end;
+end;
+
+procedure tCopyRastNODE_Main4Package.BeforeDestruction;
 begin
     inherited;
 end;
@@ -126,19 +388,19 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tCopyRastNODE_MAIN.AfterConstruction;
+{procedure tCopyRastNODE_MAIN.AfterConstruction;
 begin
     inherited;
     with CR_DATA do begin
         sideRight:=nil;
         sideLeft :=nil;
     end;
-end;
+end;}
 
-procedure tCopyRastNODE_MAIN.BeforeDestruction;
+{procedure tCopyRastNODE_MAIN.BeforeDestruction;
 begin
     inherited;
-end;
+end;}
 
 //------------------------------------------------------------------------------
 
@@ -175,11 +437,11 @@ end;
 {%endregion}
 
 
-procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_ROOT);
+{procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_ROOT);
 begin
     leftSide.CR_DATA.sideRight:=rightSide;
     rightSide.CR_DATA.sideLeft:=leftSide;
-end;
+end; }
 
 procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_BASE);
 begin
@@ -187,11 +449,11 @@ begin
     rightSide.CR_DATA.sideLeft:=leftSide;
 end;
 
-procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_MAIN);
+{procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_MAIN);
 begin
     leftSide.CR_DATA.sideRight:=rightSide;
     rightSide.CR_DATA.sideLeft:=leftSide;
-end;
+end;}
 
 procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_FLDR);
 begin
@@ -210,7 +472,7 @@ end;
 
 {%region --- copyData ---------------------------------------------------}
 
-procedure CopyRastNODE_CopyData_ROOT(const source,target:tCopyRastNODE_ROOT);
+{procedure CopyRastNODE_CopyData_ROOT(const source,target:tCopyRastNODE_ROOT);
 begin
   {$IfOpt D+}
     Assert(Assigned(source));
@@ -219,7 +481,7 @@ begin
   SrcTree_re_set_itemTEXT(target,source.ItemTEXT);
   source.CR_DATA.sideRight:=target;
   target.CR_DATA.sideLeft :=source;
-end;
+end;}
 
 procedure CopyRastNODE_CopyData_BASE(const source,target:tCopyRastNODE_BASE);
 begin
@@ -232,7 +494,7 @@ begin
   target.CR_DATA.sideLeft :=source;
 end;
 
-procedure CopyRastNODE_CopyData_MAIN(const source,target:tCopyRastNODE_MAIN);
+{procedure CopyRastNODE_CopyData_MAIN(const source,target:tCopyRastNODE_MAIN);
 begin
   {$IfOpt D+}
     Assert(Assigned(source));
@@ -241,7 +503,7 @@ begin
   SrcTree_re_set_itemTEXT(target,source.ItemTEXT);
   source.CR_DATA.sideRight:=target;
   target.CR_DATA.sideLeft :=source;
-end;
+end;}
 
 procedure CopyRastNODE_CopyData_FLDR(const source,target:tCopyRastNODE_FLDR);
 begin
@@ -324,10 +586,10 @@ begin
     end;  }
 end;
 
-function CopyRast_SrcTree_Copy(const source:tCopyRastNODE_ROOT):tCopyRastNODE_ROOT;
+{function CopyRast_SrcTree_Copy(const source:tCopyRastNODE_ROOT):tCopyRastNODE_ROOT;
 begin
     result:=tCopyRastNODE_ROOT(_CR_SrcTree_Copy_(source));
-end;
+end;  }
 
 end.
 

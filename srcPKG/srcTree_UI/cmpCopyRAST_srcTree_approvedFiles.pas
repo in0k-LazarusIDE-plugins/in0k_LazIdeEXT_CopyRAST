@@ -5,11 +5,11 @@ unit cmpCopyRAST_srcTree_approvedFiles;
 interface
 
 uses
-  in0k_lazExt_CopyRAST_cmpTree;
+  cmpCopyRAST_srcTree;
 
 type
 
-  tCmpCopyRAST_srcTree_approvedFILEs=class(tCmp_CopyRAST_Tree)
+  tCmpCopyRAST_srcTree_approvedFILEs=class(tCmpCopyRAST_srcTree)
 
    end;
 
