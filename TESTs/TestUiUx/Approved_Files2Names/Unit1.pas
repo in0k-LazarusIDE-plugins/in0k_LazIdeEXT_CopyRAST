@@ -8,6 +8,8 @@ uses
   in0k_lazIdeSRC_srcTree_CORE_item,
   in0k_lazIdeSRC_srcTree_item_Globals,
 
+  in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
+
   in0k_lazIdeSRC_srcTree_4Package,
   lazExt_CopyRAST__xmlConfig,
 
@@ -15,7 +17,7 @@ uses
 
   in0k_lazIdeSRC_CopyRAST_srcTree,
   in0k_lazIdeSRC_CopyRAST_srcTree_Nodes,
-  in0k_lazIdeSRC_CopyRAST_srcTree_HandlerReNAMEs,
+  in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs,
 
   makeTest_copyRastOBJ,
   //
@@ -24,7 +26,7 @@ uses
   //
   cmpCopyRAST_srcTree,
   //
-
+  //LazConfigStorage,
   Classes, SysUtils, XMLConf, FileUtil, CheckBoxThemed, Forms, Controls,
   Graphics, Dialogs, ExtCtrls, StdCtrls, ComCtrls;
 
@@ -56,7 +58,7 @@ type
     procedure _GO_reNAMEs_;
 
   protected
-    cnfg:tLazExt_CopyRAST_CONFIG;
+    cnfg:TXMLConfig;
 
 
   public
@@ -78,11 +80,19 @@ var s:string;
 begin
 
     s:=ChangeFileExt(ParamStr(0),'.xml');
-    cnfg:=tLazExt_CopyRAST_CONFIG.Create(s,true);
+    cnfg:=TXMLConfig.Create(self);//(s);
+    cnfg.LoadFromFile(s);
+
+    CRxC_aF2N_ROOT_newName__SET(cnfg,'asdasd');
+
 
 
     builder:=tCopyRastSrcTree_Builder4Package.Create;
     first  :=tCopyRastNODE_Root4Package(makeTest_objCopyRAST(builder));
+
+
+    CRxC_aF2N_BASE_newName__SET(cnfg,SrcTree_fndBaseDIR(first).fsPath);
+
 
     approvedFILEs:=tCmpCopyRAST_srcTree_approvedFILEs.Create(self);
     with approvedFILEs do begin
@@ -119,10 +129,11 @@ begin
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
+var s:string;
 begin
+    s:=ChangeFileExt(ParamStr(0),'.xml');
     builder.Free;
-//    XMLConfig1.Flush;
-
+    cnfg.SaveToFile(S);
     cnfg.FREE;
 
 end;
@@ -194,7 +205,7 @@ begin
     //-------------------------------
 
    _reNames_:=tCopyRastSrcTree_prcH4ReNAMEs.Create(builder);
-   _reNames_.EXECUTE(First,_resRoot_);
+   _reNames_.EXECUTE(First,cnfg,_resRoot_);
    _reNames_.FREE;
 
     approvedNAMEs.Root:=_resRoot_;

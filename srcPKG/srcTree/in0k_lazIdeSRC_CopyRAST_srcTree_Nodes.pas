@@ -5,7 +5,8 @@ unit in0k_lazIdeSRC_CopyRAST_srcTree_Nodes;
 interface
 
 uses     Dialogs,
-
+  {Classes,} contnrs,
+  in0k_lazIdeSRC_srcTree_itemsList,
   in0k_lazIdeSRC_srcTree_CORE_item,
   in0k_lazIdeSRC_srcTree_item_fsFolder,
   in0k_lazIdeSRC_srcTree_item_fsFile,
@@ -14,12 +15,23 @@ uses     Dialogs,
 
 
 type
+
+ eCopyRastNODE_KIND=(CRNK_notVerified);
+ tCopyRastNODE_KIND=set of eCopyRastNODE_KIND;
+
+
  rCopyRastNODE_DATA=record
    sideLeft :tSrcTree_item;
    sideRight:tSrcTree_item;
+   NodeSTATE:tCopyRastNODE_KIND;
+   NodeDATAs:pointer;
   end;
  pCopyRastNODE_DATA=^rCopyRastNODE_DATA;
 
+
+procedure CopyRastNodeDATA_Init     (const data:pCopyRastNODE_DATA);
+function  CopyRastNodeDATA_Datas_GET(const data:pCopyRastNODE_DATA):pointer;
+procedure CopyRastNodeDATA_Datas_SET(const data:pCopyRastNODE_DATA; const value:pointer);
 
 type
  {tCopyRastNODE_ROOT=class(tSrcTree_ROOT)
@@ -108,6 +120,10 @@ function CopyRastNODE_ROOT(const value:tSrcTree_item):tSrcTree_ROOT;
 function CopyRastNODE_useInLeft (const rootRight:tSrcTree_ROOT; const value:tSrcTree_item):tSrcTree_item;
 function CopyRastNODE_useInRight(const rootLeft :tSrcTree_ROOT; const value:tSrcTree_item):tSrcTree_item;
 
+procedure CopyRastNODE_listUseInLeft (const rootRight:tSrcTree_ROOT; const value:tSrcTree_item; const LIST:tSrcTree_listITEMs);
+procedure CopyRastNODE_listUseInRight(const rootLeft :tSrcTree_ROOT; const value:tSrcTree_item; const LIST:tSrcTree_listITEMs);
+
+
 procedure CopyRastNODE_LINK(const leftSide,rightSide:tSrcTree_item);
 
 
@@ -126,13 +142,35 @@ procedure CopyRastNODE_CopyData_FILE(const source,target:tCopyRastNODE_FILE);
 
 
 //procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_ROOT); overload;
-procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_BASE); overload;
+//procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_BASE); overload;
 //procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_MAIN); overload;
-procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_FLDR); overload;
-procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_FILE); overload;
+//procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_FLDR); overload;
+//procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_FILE); overload;
 
 
 implementation
+
+procedure CopyRastNodeDATA_Init(const data:pCopyRastNODE_DATA);
+begin
+    with data^ do begin
+        sideLeft :=nil;
+        sideRight:=nil;
+        NodeSTATE:=[];
+        NodeDATAs:=nil;
+    end;
+end;
+
+function CopyRastNodeDATA_Datas_GET(const data:pCopyRastNODE_DATA):pointer;
+begin
+    result:=data^.NodeDATAs;
+end;
+
+procedure CopyRastNodeDATA_Datas_SET(const data:pCopyRastNODE_DATA; const value:pointer);
+begin
+    data^.NodeDATAs:=value;
+end;
+
+//------------------------------------------------------------------------------
 
 function isCopyRastNODE(const value:tObject):boolean;
 begin
@@ -224,6 +262,29 @@ begin
     end;
 end;
 
+procedure CopyRastNODE_listUseInLeft (const rootRight:tSrcTree_ROOT; const value:tSrcTree_item; const LIST:tSrcTree_listITEMs);
+var tmp:tSrcTree_item;
+begin
+    {$ifOPT D+}
+    Assert(Assigned(rootRight));
+    Assert(isCopyRastNODE(rootRight));
+    Assert(Assigned(value));
+    Assert(isCopyRastNODE(value));
+    Assert(Assigned(LIST));
+    {$endIf}
+    tmp:=rootRight;
+    if _useInLeft_(tmp,value) then begin
+        LIST.Add(tmp);
+    end;
+    //---
+    tmp:=tmp.ItemCHLD;
+    while Assigned(tmp) do begin
+        CopyRastNODE_listUseInLeft(tSrcTree_ROOT(tmp),value,LIST);
+        tmp:=tmp.ItemNEXT;
+    end;
+end;
+
+
 //------------------------------------------------------------------------------
 
 function _useInRight_(const left:tSrcTree_item; const value:tSrcTree_item):boolean; {$ifOPT D-}inline;{$endIf}
@@ -264,6 +325,28 @@ begin
     end;
 end;
 
+procedure CopyRastNODE_listUseInRight(const rootLeft :tSrcTree_ROOT; const value:tSrcTree_item; const LIST:tSrcTree_listITEMs);
+var tmp:tSrcTree_item;
+begin
+    {$ifOPT D+}
+    Assert(Assigned(rootLeft));
+    Assert(isCopyRastNODE(rootLeft));
+    Assert(Assigned(value));
+    Assert(isCopyRastNODE(value));
+    Assert(Assigned(LIST));
+    {$endIf}
+    tmp:=rootLeft;
+    if _useInRight_(tmp,value) then begin
+        LIST.Add(tmp);
+    end;
+    //---
+    tmp:=tmp.ItemCHLD;
+    while Assigned(tmp) do begin
+        CopyRastNODE_listUseInRight(tSrcTree_ROOT(tmp),value,LIST);
+        tmp:=tmp.ItemNEXT;
+    end;
+end;
+
 //------------------------------------------------------------------------------
 
 procedure CopyRastNODE_LINK(const leftSide,rightSide:tSrcTree_item);
@@ -271,6 +354,8 @@ var tmpRootLeft :tSrcTree_ROOT;
     tmpRootRight:tSrcTree_ROOT;
 var tmpItem:tSrcTree_item;
     tmpDATA:pCopyRastNODE_DATA;
+    tmpLIST:tSrcTree_listITEMs;
+    i      :integer;
 begin
     {$ifOPT D+}
     Assert(Assigned(leftSide));
@@ -282,31 +367,41 @@ begin
     tmpRootRight:=CopyRastNODE_ROOT(rightSide);
     if Assigned(tmpRootLeft) and Assigned(tmpRootRight) then begin
         //
-        tmpItem:=CopyRastNODE_useInRight(tmpRootLeft,rightSide);
-        if Assigned(tmpItem) then begin
-            while Assigned(tmpItem) do begin
-                tmpDATA:=CopyRastNODE_DATA(tmpItem);
-                tmpDATA^.sideRight:=nil;
-                tmpItem:=CopyRastNODE_useInRight(tmpRootLeft,rightSide);
+        tmpLIST:=tSrcTree_listITEMs.Create;
+        CopyRastNODE_listUseInRight(tmpRootLeft,rightSide,tmpLIST);
+        if ((tmpLIST.Count=1)and(tmpLIST.Items[0]<>leftSide)) OR
+           ( tmpLIST.Count>1 )
+        then begin
+            for i:=0 to tmpLIST.Count-1 do begin
+                tmpDATA:=CopyRastNODE_DATA(tmpLIST.Items[i]);
+                tmpDATA^.sideRight:=tmpLIST.Items[i];
             end;
+            tmpDATA:=CopyRastNODE_DATA(leftSide);
+            tmpDATA^.sideRight:=leftSide;
         end
         else begin
             tmpDATA:=CopyRastNODE_DATA(leftSide);
             tmpDATA^.sideRight:=rightSide;
         end;
+        tmpLIST.FREE;
         //
-        tmpItem:=CopyRastNODE_useInLeft(tmpRootRight,leftSide);
-        if Assigned(tmpItem) then begin
-            while Assigned(tmpItem) do begin
-                tmpDATA:=CopyRastNODE_DATA(tmpItem);
-                tmpDATA^.sideLeft:=nil;
-                tmpItem:=CopyRastNODE_useInLeft(tmpRootRight,leftSide);
+        tmpLIST:=tSrcTree_listITEMs.Create;
+        CopyRastNODE_listUseInLeft(tmpRootRight,leftSide,tmpLIST);
+        if ((tmpLIST.Count=1)and(tmpLIST.Items[0]<>rightSide)) OR
+           ( tmpLIST.Count>1 )
+        then begin
+            for i:=0 to tmpLIST.Count-1 do begin
+                tmpDATA:=CopyRastNODE_DATA(tmpLIST.Items[i]);
+                tmpDATA^.sideLeft:=tmpLIST.Items[i];
             end;
+            tmpDATA:=CopyRastNODE_DATA(rightSide);
+            tmpDATA^.sideLeft:=rightSide;
         end
         else begin
             tmpDATA:=CopyRastNODE_DATA(rightSide);
             tmpDATA^.sideLeft:=leftSide;
         end;
+        tmpLIST.FREE;
     end;
 end;
 
@@ -315,10 +410,7 @@ end;
 procedure tCopyRastNODE_Root4Project.AfterConstruction;
 begin
     inherited;
-    with CR_DATA do begin
-        sideRight:=nil;
-        sideLeft :=nil;
-    end;
+    CopyRastNodeDATA_Init(@CR_DATA);
 end;
 
 procedure tCopyRastNODE_Root4Project.BeforeDestruction;
@@ -329,10 +421,7 @@ end;
 procedure tCopyRastNODE_Main4Project.AfterConstruction;
 begin
     inherited;
-    with CR_DATA do begin
-        sideRight:=nil;
-        sideLeft :=nil;
-    end;
+    CopyRastNodeDATA_Init(@CR_DATA);
 end;
 
 procedure tCopyRastNODE_Main4Project.BeforeDestruction;
@@ -345,10 +434,7 @@ end;
 procedure tCopyRastNODE_Root4Package.AfterConstruction;
 begin
     inherited;
-    with CR_DATA do begin
-        sideRight:=nil;
-        sideLeft :=nil;
-    end;
+    CopyRastNodeDATA_Init(@CR_DATA);
 end;
 
 procedure tCopyRastNODE_Root4Package.BeforeDestruction;
@@ -359,10 +445,7 @@ end;
 procedure tCopyRastNODE_Main4Package.AfterConstruction;
 begin
     inherited;
-    with CR_DATA do begin
-        sideRight:=nil;
-        sideLeft :=nil;
-    end;
+    CopyRastNodeDATA_Init(@CR_DATA);
 end;
 
 procedure tCopyRastNODE_Main4Package.BeforeDestruction;
@@ -375,10 +458,7 @@ end;
 procedure tCopyRastNODE_BASE.AfterConstruction;
 begin
     inherited;
-    with CR_DATA do begin
-        sideRight:=nil;
-        sideLeft :=nil;
-    end;
+    CopyRastNodeDATA_Init(@CR_DATA);
 end;
 
 procedure tCopyRastNODE_BASE.BeforeDestruction;
@@ -407,10 +487,7 @@ end;}
 procedure tCopyRastNODE_FLDR.AfterConstruction;
 begin
     inherited;
-    with CR_DATA do begin
-        sideRight:=nil;
-        sideLeft :=nil;
-    end;
+    CopyRastNodeDATA_Init(@CR_DATA);
 end;
 
 procedure tCopyRastNODE_FLDR.BeforeDestruction;
@@ -423,10 +500,7 @@ end;
 procedure tCopyRastNODE_FILE.AfterConstruction;
 begin
     inherited;
-    with CR_DATA do begin
-        sideRight:=nil;
-        sideLeft :=nil;
-    end;
+    CopyRastNodeDATA_Init(@CR_DATA);
 end;
 
 procedure tCopyRastNODE_FILE.BeforeDestruction;
@@ -592,4 +666,6 @@ begin
 end;  }
 
 end.
+
+
 

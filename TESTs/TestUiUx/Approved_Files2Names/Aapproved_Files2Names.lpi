@@ -39,7 +39,7 @@
         <PackageName Value="LCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="9">
+    <Units Count="11">
       <Unit0>
         <Filename Value="Aapproved_Files2Names.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -76,9 +76,17 @@
         <IsPartOfProject Value="True"/>
       </Unit7>
       <Unit8>
-        <Filename Value="..\..\..\srcPKG\srcTree\in0k_lazIdeSRC_CopyRAST_srcTree_HandlerReNAMEs.pas"/>
+        <Filename Value="..\..\..\srcPKG\srcTree\Handlers\reNames\in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="..\..\..\srcPKG\xmlConfig\lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\..\..\srcPKG\srcTree\Handlers\reNames\in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -89,7 +97,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;..\..\..\srcPKG\srcTree;..\..\..\srcPKG\srcTree_UI;..\..\..\srcPKG\xmlConfig"/>
+      <OtherUnitFiles Value="..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;..\..\..\srcPKG\srcTree;..\..\..\srcPKG\srcTree_UI;..\..\..\srcPKG\xmlConfig;..\..\..\srcPKG\srcTree\Handlers\reNames"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>

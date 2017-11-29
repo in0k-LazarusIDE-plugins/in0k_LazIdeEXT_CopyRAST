@@ -8,6 +8,7 @@ uses
   PackageIntf,
   in0k_lazIdeSRC_CopyRAST_srcTree_Nodes,
 
+  in0k_lazIdeSRC_srcTree_CORE_item,
   in0k_lazIdeSRC_srcTree_item_Globals,
   in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
   in0k_lazIdeSRC_srcTree_item_fsFolder,
@@ -41,6 +42,17 @@ type
     function new_Main(const name:string):tSrcTree_MAIN;   override;
     function new_FLDR(const path:string):tSrcTree_fsFLDR; override;
     function new_FILE(const path:string):tSrcTree_fsFILE; override;
+  protected
+    procedure Node_clrState__notVerified(const item:tSrcTree_item);
+  public
+    function set_BASE(const ROOT:tSrcTree_ROOT; const path:string):tSrcTree_BASE;                                 override;
+    function set_MAIN(const ROOT:tSrcTree_ROOT; const path:string):tSrcTree_MAIN;                                 override;
+  public
+    function add_FLDR(const ROOT:tSrcTree_ROOT; const path:string; const kind:eSrcTree_SrchPath):tSrcTree_fsFLDR; override;
+    function add_FLDR(const ROOT:tSrcTree_ROOT; const path:string; const KNDs:sSrcTree_SrchPath):tSrcTree_fsFLDR; override;
+    function add_FILE(const ROOT:tSrcTree_ROOT; const path:string; const kind:eSrcTree_FileType):tSrcTree_fsFILE; override;
+  public
+    procedure AllNodes_SetSTATE(const ROOT:tSrcTree_ROOT; const newState:tCopyRastNODE_KIND);
   end;
 
 type
@@ -88,6 +100,72 @@ end;
 function tCopyRastSrcTree_Builder4Package.new_FILE(const path:string):tSrcTree_fsFILE;
 begin
     result:=tCopyRastNODE_FILE.Create(path);
+end;
+
+//------------------------------------------------------------------------------
+
+procedure _AllNodes_SetSTATE_(const Item:tSrcTree_item; const newState:tCopyRastNODE_KIND);
+var tmp:tSrcTree_item;
+    tmq:pCopyRastNODE_DATA;
+begin
+    if isCopyRastNODE(Item) then begin
+        tmq:=CopyRastNODE_DATA(Item);
+        tmq^.NodeSTATE:=newState;
+    end;
+    //---
+    tmp:=Item.ItemCHLD;
+    while Assigned(tmp) do begin
+       _AllNodes_SetSTATE_(tmp,newState);
+        tmp:=tmp.ItemNEXT;
+    end;
+end;
+
+procedure tCopyRastSrcTree_Builder4Package.AllNodes_SetSTATE(const ROOT:tSrcTree_ROOT; const newState:tCopyRastNODE_KIND);
+begin
+   _AllNodes_SetSTATE_(ROOT,newState);
+end;
+
+//------------------------------------------------------------------------------
+
+procedure tCopyRastSrcTree_Builder4Package.Node_clrState__notVerified(const item:tSrcTree_item);
+var tmp:pCopyRastNODE_DATA;
+begin
+    if isCopyRastNODE(Item) then begin
+        tmp:=CopyRastNODE_DATA(Item);
+        tmp^.NodeSTATE:=tmp^.NodeSTATE-[CRNK_notVerified];
+    end;
+end;
+
+//------------------------------------------------------------------------------
+
+function tCopyRastSrcTree_Builder4Package.set_BASE(const ROOT:tSrcTree_ROOT; const path:string):tSrcTree_BASE;
+begin
+    result:=inherited;
+    Node_clrState__notVerified(result);
+end;
+
+function tCopyRastSrcTree_Builder4Package.set_MAIN(const ROOT:tSrcTree_ROOT; const path:string):tSrcTree_MAIN;
+begin
+    result:=inherited;
+    Node_clrState__notVerified(result);
+end;
+
+function tCopyRastSrcTree_Builder4Package.add_FLDR(const ROOT:tSrcTree_ROOT; const path:string; const kind:eSrcTree_SrchPath):tSrcTree_fsFLDR;
+begin
+    result:=inherited;
+    Node_clrState__notVerified(result);
+end;
+
+function tCopyRastSrcTree_Builder4Package.add_FLDR(const ROOT:tSrcTree_ROOT; const path:string; const KNDs:sSrcTree_SrchPath):tSrcTree_fsFLDR;
+begin
+    result:=inherited;
+    Node_clrState__notVerified(result);
+end;
+
+function tCopyRastSrcTree_Builder4Package.add_FILE(const ROOT:tSrcTree_ROOT; const path:string; const kind:eSrcTree_FileType):tSrcTree_fsFILE;
+begin
+    result:=inherited;
+    Node_clrState__notVerified(result);
 end;
 
 //==============================================================================

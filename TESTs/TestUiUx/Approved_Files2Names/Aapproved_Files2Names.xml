@@ -1,2 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CopyRAST asd="ssss"/>
+<CopyRAST asd="ssss">
+  <CopyRAST>
+    <approvedFILEs2NAMEs>
+      <ROOT newName="asdasd">
+        <newName Value="asdasd"/>
+      </ROOT>
+      <BASE>
+        <newName Value="D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST"/>
+        <newPath Value="D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST"/>
+      </BASE>
+    </approvedFILEs2NAMEs>
+  </CopyRAST>
+</CopyRAST>

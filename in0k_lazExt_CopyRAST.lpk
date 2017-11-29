@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="85">
+    <Files Count="86">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -356,6 +356,10 @@
         <Filename Value="srcPKG\xmlConfig\lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs.pas"/>
         <UnitName Value="lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs"/>
       </Item85>
+      <Item86>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\in0k_lazIdeSRC_srcTree_itemsList.pas"/>
+        <UnitName Value="in0k_lazIdeSRC_srcTree_itemsList"/>
+      </Item86>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

@@ -5,6 +5,7 @@
 
 
 {$define in0k_lazExt_CopyRAST_cmpTree-DEBUG}
+{$define in0k_lazExt_CopyRAST_cmpTree-UseIMG}
 
 
 

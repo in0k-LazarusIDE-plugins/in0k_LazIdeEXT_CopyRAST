@@ -8,7 +8,9 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, lazcontrols, Unit1, makeTest_copyRastOBJ,
-  in0k_lazIdeSRC_CopyRAST_srcTree_HandlerReNAMEs
+  in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs,
+  in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs,
+  lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs
   { you can add units after this };
 
 {$R *.res}
