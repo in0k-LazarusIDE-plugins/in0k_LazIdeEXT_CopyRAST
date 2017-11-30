@@ -39,7 +39,7 @@
         <PackageName Value="LCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="11">
+    <Units Count="12">
       <Unit0>
         <Filename Value="Aapproved_Files2Names.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -87,6 +87,12 @@
         <Filename Value="..\..\..\srcPKG\srcTree\Handlers\reNames\in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit10>
+      <Unit11>
+        <Filename Value="..\..\..\srcPKG\srcTree_UI\frmCopyRAST_srcTree_approvedFILEs2NAMEs.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmApprovedFILEs2NAMEs"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit11>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

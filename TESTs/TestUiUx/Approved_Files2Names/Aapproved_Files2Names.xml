@@ -2,10 +2,10 @@
 <CopyRAST asd="ssss">
   <CopyRAST>
     <approvedFILEs2NAMEs>
-      <ROOT newName="asdasd">
+      <ROOT Value="asdasd" newName="asdasd">
         <newName Value="asdasd"/>
       </ROOT>
-      <BASE>
+      <BASE Value="D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST">
         <newName Value="D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST"/>
         <newPath Value="D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST"/>
       </BASE>

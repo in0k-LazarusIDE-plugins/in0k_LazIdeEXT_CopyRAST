@@ -11,13 +11,31 @@ uses
 type
 
  tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME=class
-    newName:string;
-    cstName:boolean;
-    newPath:string;
-    cstPath:boolean;
+  public
+    nameNew:string;
+    nameCst:boolean;
+    pathNew:string;
+    pathCst:boolean;
+  public
+    function  SaveNEED:boolean;
+    procedure CLEAR;
   end;
 
 implementation
+
+procedure tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.CLEAR;
+begin
+    nameNew:='';
+    nameCst:=false;
+    pathNew:='';
+    pathCst:=false;
+end;
+
+function tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.SaveNEED:boolean;
+begin
+    result:=(nameNew<>'')or(pathNew<>'');
+end;
+
 
 end.
 

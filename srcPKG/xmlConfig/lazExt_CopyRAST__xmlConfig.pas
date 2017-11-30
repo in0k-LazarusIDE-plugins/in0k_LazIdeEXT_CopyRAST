@@ -16,26 +16,66 @@ type
 
 const
 
-  cXmlConfig_pathDELIM='/';
-  cXmlConfig_valueNAME='Value';
+  cXmlConfig_pathDELIM ='/';
+  cXmlConfig_valueNAME ='Value';
+  cXmlConfig_countNAME ='count';
+  cXmlConfig_itmCntNME='itemsCount';
 
   cLazExt_CopyRAST__xmlConfig_SECTION='CopyRAST';
 
 
-function lERxC_addValue (const s:string):string;
-function lERxC_addObjVal(const s:string; const lblObj,lblVal:string):string;
+function lERxC_sctn8Name(const section,name:string):string;                    inline;
+
+function lERxC_8Value(const section:string):string;                            inline;
+function lERxC_8Value(const section:string; const lblVal:string):string;       inline;
+function lERxC_8Value(const section:string; const lblObj,lblVal:string):string;inline;
+function lERxC_8Count(const section:string):string;                            inline;
+
+//function lERxC_8ItmCnt(const section:string):string;                            inline;
+
 
 implementation
 
-function lERxC_addValue(const s:string):string;
+//------------------------------------------------------------------------------
+
+function _n2n_(const n0,n1:string):string; inline;
 begin
-    result:=s+cXmlConfig_pathDELIM+cXmlConfig_valueNAME;
+    result:=n0+cXmlConfig_pathDELIM+n1;
 end;
 
-function lERxC_addObjVal(const s:string; const lblObj,lblVal:string):string;
+function lERxC_sctn8Name(const section,name:string):string;
 begin
-    result:=lERxC_addValue(s+cXmlConfig_pathDELIM+lblObj+cXmlConfig_pathDELIM+lblVal);
+    result:=_n2n_(section,name);
 end;
+
+//------------------------------------------------------------------------------
+
+function lERxC_8Value(const section:string):string;
+begin
+    result:=_n2n_(section,cXmlConfig_valueNAME);
+end;
+
+function lERxC_8Value(const section:string; const lblVal:string):string;
+begin
+    result:=lERxC_8Value(_n2n_(section,lblVal));
+end;
+
+function lERxC_8Value(const section:string; const lblObj,lblVal:string):string;
+begin
+    result:=lERxC_8Value(_n2n_(section,lblObj));
+end;
+
+//------------------------------------------------------------------------------
+
+function lERxC_8Count(const section:string):string;
+begin
+    result:=_n2n_(section,cXmlConfig_countNAME);
+end;
+
+{function lERxC_8ItmCnt(const section:string):string;
+begin
+    result:=_n2n_(section,cXmlConfig_itmCntNME);
+end;}
 
 end.
 

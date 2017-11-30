@@ -1,0 +1,84 @@
+object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
+  Left = 0
+  Height = 573
+  Top = 0
+  Width = 696
+  ClientHeight = 573
+  ClientWidth = 696
+  OnResize = FrameResize
+  TabOrder = 0
+  DesignLeft = 495
+  DesignTop = 267
+  object pnlPRP: TPanel
+    Left = 0
+    Height = 125
+    Top = 448
+    Width = 696
+    Align = alBottom
+    Caption = 'pnlPRP'
+    ClientHeight = 125
+    ClientWidth = 696
+    TabOrder = 0
+    OnResize = pnlPRPResize
+    object CheckBoxThemed2: TCheckBoxThemed
+      AnchorSideLeft.Control = pnlPRP
+      AnchorSideTop.Control = Edit1
+      AnchorSideTop.Side = asrCenter
+      Left = 1
+      Height = 19
+      Top = 3
+      Width = 95
+      Caption = 'custom Name'
+      TabOrder = 0
+    end
+    object Edit1: TEdit
+      AnchorSideTop.Control = pnlPRP
+      AnchorSideRight.Control = pnlPRP
+      AnchorSideRight.Side = asrBottom
+      Left = 104
+      Height = 23
+      Top = 1
+      Width = 591
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 1
+      Text = 'Edit1'
+    end
+    object CheckBoxThemed3: TCheckBoxThemed
+      AnchorSideLeft.Control = CheckBoxThemed2
+      AnchorSideTop.Control = Edit2
+      AnchorSideTop.Side = asrCenter
+      Left = 1
+      Height = 19
+      Top = 28
+      Width = 87
+      Caption = 'custom Path'
+      TabOrder = 2
+    end
+    object Edit2: TEdit
+      AnchorSideLeft.Control = Edit1
+      AnchorSideTop.Control = Edit1
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = Edit1
+      AnchorSideRight.Side = asrBottom
+      Left = 104
+      Height = 23
+      Top = 26
+      Width = 591
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Top = 2
+      TabOrder = 3
+      Text = 'Edit2'
+    end
+  end
+  object pnlMDL: TPanel
+    AnchorSideTop.Control = Owner
+    AnchorSideBottom.Control = pnlPRP
+    Left = 319
+    Height = 448
+    Top = 0
+    Width = 49
+    Anchors = [akTop, akLeft, akBottom]
+    Caption = 'pnlMDL'
+    TabOrder = 1
+  end
+end

@@ -1,55 +1,35 @@
 object Form1: TForm1
-  Left = 393
-  Height = 381
-  Top = 181
-  Width = 708
+  Left = 315
+  Height = 685
+  Top = 248
+  Width = 892
   Caption = 'Form1'
-  ClientHeight = 381
-  ClientWidth = 708
+  ClientHeight = 685
+  ClientWidth = 892
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
   LCLVersion = '1.8.0.5'
-  object Panel1: TPanel
-    AnchorSideTop.Control = Owner
-    AnchorSideBottom.Control = Owner
-    AnchorSideBottom.Side = asrBottom
-    Left = 264
-    Height = 381
-    Top = 0
-    Width = 176
-    Anchors = [akTop, akLeft, akBottom]
-    Caption = 'Panel1'
-    ClientHeight = 381
-    ClientWidth = 176
-    TabOrder = 0
-    object Button1: TButton
-      Left = 8
-      Height = 25
-      Top = 40
-      Width = 75
-      Caption = 'Button1'
-      OnClick = Button1Click
-      TabOrder = 0
+  inline frmApprovedFILEs2NAMEs1: TfrmApprovedFILEs2NAMEs
+    Height = 685
+    Width = 892
+    Align = alClient
+    ClientHeight = 685
+    ClientWidth = 892
+    inherited pnlPRP: TPanel
+      Top = 560
+      Width = 892
+      ClientWidth = 892
+      inherited Edit1: TEdit
+        Width = 787
+      end
+      inherited Edit2: TEdit
+        Width = 787
+      end
     end
-    object TreeView1: TTreeView
-      Left = 7
-      Height = 97
-      Top = 170
-      Width = 121
-      TabOrder = 1
-      OnAdvancedCustomDrawItem = TreeView1AdvancedCustomDrawItem
-      OnClick = TreeView1Click
-      OnCustomDrawItem = TreeView1CustomDrawItem
-      OnSelectionChanged = TreeView1SelectionChanged
-    end
-    object CheckBoxThemed1: TCheckBoxThemed
-      Left = 29
-      Height = 19
-      Top = 88
-      Width = 122
-      Caption = 'CheckBoxThemed1'
-      TabOrder = 2
+    inherited pnlMDL: TPanel
+      AnchorSideTop.Control = frmApprovedFILEs2NAMEs1
+      Height = 560
     end
   end
 end

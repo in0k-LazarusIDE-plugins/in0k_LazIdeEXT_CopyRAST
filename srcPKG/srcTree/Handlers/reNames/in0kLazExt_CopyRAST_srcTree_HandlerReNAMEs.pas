@@ -83,6 +83,14 @@ type
   public
     constructor Create(const BUILDer:tSrcTree_Builder_CORE); override;
     destructor DESTROY; override;
+  protected
+   _CNFGs4NAME_:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
+  public
+    procedure CNFGs4NAME_SET(const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+    function  CNFGs4NAME_GET(const item:tSrcTree_item):tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
+  public
+    property ROOT_old:tSrcTree_item read _nodeRoot_ write _nodeRoot_;
+    property ROOT_NEW:tSrcTree_ROOT read _newROOT_;
   end;
 
 implementation
@@ -121,7 +129,7 @@ end;}
 
 function tCopyRastSrcTree_itmH4ReNAMEs_ITEM.newRoot:tSrcTree_ROOT;
 begin
-    result:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._newROOT_;
+    result:=tSrcTree_ROOT(tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._newROOT_);
 end;
 
 function tCopyRastSrcTree_itmH4ReNAMEs_ITEM._newFLDR_:tCopyRastNODE_FLDR;
@@ -174,12 +182,14 @@ begin
     inherited;
    _regExpr_ :=TRegExpr.Create;
    _cnfNAMEs_:=TStringList.Create;
+   _CNFGs4NAME_:=tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.Create;
 end;
 
 destructor tCopyRastSrcTree_prcH4ReNAMEs.DESTROY;
 begin
    _cnfNAMEs_.FREE;
    _regExpr_ .FREE;
+   _CNFGs4NAME_.FREE;
     inherited;
 end;
 
@@ -313,6 +323,19 @@ begin
     NewROOT:=_newROOT_;
 end;
 
+
+//------------------------------------------------------------------------------
+
+procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFGs4NAME_SET(const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+begin
+    //
+end;
+
+function tCopyRastSrcTree_prcH4ReNAMEs.CNFGs4NAME_GET(const item:tSrcTree_item):tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
+begin
+   _CNFGs4NAME_.CLEAR;
+    result:=_CNFGs4NAME_;
+end;
 
 end.
 
