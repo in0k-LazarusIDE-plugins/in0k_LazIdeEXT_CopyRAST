@@ -24,6 +24,8 @@ const
   cLazExt_CopyRAST__xmlConfig_SECTION='CopyRAST';
 
 
+  cXmlConfig_itm_ROOT_name='ROOT';
+
 function lERxC_sctn8Name(const section,name:string):string;                    inline;
 
 function lERxC_8Value(const section:string):string;                            inline;

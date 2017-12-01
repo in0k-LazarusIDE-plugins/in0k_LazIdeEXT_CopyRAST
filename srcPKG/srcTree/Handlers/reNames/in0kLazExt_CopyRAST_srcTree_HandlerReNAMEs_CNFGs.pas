@@ -19,9 +19,18 @@ type
   public
     function  SaveNEED:boolean;
     procedure CLEAR;
+  public
+    procedure Copy(const Target:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+  public
+    destructor DESTROY; override;
   end;
 
 implementation
+
+destructor tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.DESTROY;
+begin
+    inherited;
+end;
 
 procedure tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.CLEAR;
 begin
@@ -36,6 +45,13 @@ begin
     result:=(nameNew<>'')or(pathNew<>'');
 end;
 
+procedure tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.Copy(const Target:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+begin
+    nameNew:=Target.nameNew;
+    nameCst:=Target.nameCst;
+    pathNew:=Target.pathNew;
+    pathCst:=Target.pathCst;
+end;
 
 end.
 

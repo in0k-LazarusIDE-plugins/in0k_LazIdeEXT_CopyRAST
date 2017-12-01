@@ -35,9 +35,15 @@ procedure CRxC_aF2N_lazObj_NewName__SET(const CNF:tLazExt_CopyRAST_CONFIG; const
 
           //lECRxCaF2N_newName
 
+
+procedure CRxC_aF2N__namesROOT_Load(const CNF:tLazExt_CopyRAST_CONFIG; const obj:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+procedure CRxC_aF2N__namesROOT_Save(const CNF:tLazExt_CopyRAST_CONFIG; const obj:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+
 procedure CRxC_aF2N__namesFILE_Load(const CNF:tLazExt_CopyRAST_CONFIG; const Names:TStrings);
 procedure CRxC_aF2N__namesFILE_Save(const CNF:tLazExt_CopyRAST_CONFIG; const Names:TStrings);
 
+procedure CRxC_aF2N__namesFLDR_Load(const CNF:tLazExt_CopyRAST_CONFIG; const Names:TStrings);
+procedure CRxC_aF2N__namesFLDR_Save(const CNF:tLazExt_CopyRAST_CONFIG; const Names:TStrings);
 
 implementation
 
@@ -56,7 +62,7 @@ end;
 
 function CopyRast_xmlCNFG_approvedFILEs2NAMEs_SECTION:string;
 begin
-    result:=cLazExt_CopyRAST__xmlConfig_SECTION+cXmlConfig_pathDELIM+cCopyRast_xmlCNFG_approvedFILEs2NAMEs_SECTION;
+    result:=cCopyRast_xmlCNFG_approvedFILEs2NAMEs_SECTION;
 end;
 
 //------------------------------------------------------------------------------
@@ -100,7 +106,6 @@ begin
     result:=CNF.GetValue( CopyRast_xmlCNFG_approvedFILEs2NAMEs_SECTION+cXmlConfig_pathDELIM+cCopyRast_xmlCNFG_approvedFILEs2NAMEs_newName+cXmlConfig_pathDELIM+cXmlConfig_valueNAME, cCopyRast_xmlCNFG_approvedFILEs2NAMEs_newName_DEF);
 end;
 
-
 procedure CRxC_aF2N_lazObj_NewName__SET(const CNF:tLazExt_CopyRAST_CONFIG; const value:string);
 begin
     CNF.SetDeleteValue( CopyRast_xmlCNFG_approvedFILEs2NAMEs_SECTION+cXmlConfig_pathDELIM+cCopyRast_xmlCNFG_approvedFILEs2NAMEs_newName+cXmlConfig_pathDELIM+cXmlConfig_valueNAME, value, cCopyRast_xmlCNFG_approvedFILEs2NAMEs_newName_DEF);
@@ -109,29 +114,29 @@ end;
 //------------------------------------------------------------------------------
 
 const
-  _objNames_cstName_='NameCustom';
-  _objNames_newName_='NameNew';
-  _objNames_cstPath_='PathCustom';
-  _objNames_newPath_='PathNew';
+   _objNames_cstName_='NameCustom';
+   _objNames_newName_='NameNew';
+   _objNames_cstPath_='PathCustom';
+   _objNames_newPath_='PathNew';
 
 procedure CRxC_aF2N__names_Load_obj(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; out obj:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
 begin
     obj:=tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.Create;
     //---
-    obj.nameCst:=CNF.GetValue( lERxC_8Value(Section,_objNames_cstName_),true);
     obj.nameNew:=CNF.GetValue( lERxC_8Value(Section,_objNames_newName_),'');
+    obj.nameCst:=CNF.GetValue( lERxC_8Value(Section,_objNames_cstName_),obj.nameNew<>'');
     //--
-    obj.pathCst:=CNF.GetValue( lERxC_8Value(Section,_objNames_cstPath_),true);
     obj.pathNew:=CNF.GetValue( lERxC_8Value(Section,_objNames_newPath_),'');
+    obj.pathCst:=CNF.GetValue( lERxC_8Value(Section,_objNames_cstPath_),obj.pathNew<>'');
 end;
 
 procedure CRxC_aF2N__names_Save_obj(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const obj:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
 begin
-    CNF.SetDeleteValue( lERxC_8Value(Section,_objNames_cstName_),obj.nameCst,true);
     CNF.SetDeleteValue( lERxC_8Value(Section,_objNames_newName_),obj.nameNew,'');
+    CNF.SetDeleteValue( lERxC_8Value(Section,_objNames_cstName_),obj.nameCst,obj.nameNew<>'');
     //--
-    CNF.SetDeleteValue( lERxC_8Value(Section,_objNames_cstPath_),obj.pathCst,true);
     CNF.SetDeleteValue( lERxC_8Value(Section,_objNames_newPath_),obj.pathNew,'');
+    CNF.SetDeleteValue( lERxC_8Value(Section,_objNames_cstPath_),obj.pathCst,obj.pathNew<>'');
 end;
 
 //------------------------------------------------------------------------------
@@ -174,10 +179,29 @@ end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+function _namesROOT_Section_:string;
+begin
+    result:=CopyRast_xmlCNFG_approvedFILEs2NAMEs_SECTION;
+    result:=lERxC_sctn8Name(result,cXmlConfig_itm_ROOT_name);
+end;
+
+procedure CRxC_aF2N__namesROOT_Load(const CNF:tLazExt_CopyRAST_CONFIG; const obj:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+var tmp:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
+begin
+    CRxC_aF2N__names_Load_obj(cnf,_namesROOT_Section_,tmp);
+    obj.Copy(tmp);
+    tmp.FREE;
+end;
+
+procedure CRxC_aF2N__namesROOT_Save(const CNF:tLazExt_CopyRAST_CONFIG; const obj:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+begin
+    CRxC_aF2N__names_Save_obj(cnf,_namesROOT_Section_,obj);
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 const
   _objNames_FILEs_='FILEs';
-  _objNames_FLDRs_='FLDRs';
-
 
 function _namesFILE_Section_:string;
 begin
@@ -193,10 +217,30 @@ end;
 
 procedure CRxC_aF2N__namesFILE_Save(const CNF:tLazExt_CopyRAST_CONFIG; const Names:TStrings);
 begin
-    _names_Save_(CNF,_namesFILE_Section_,Names);
+   _names_Save_(CNF,_namesFILE_Section_,Names);
 end;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+const
+  _objNames_FLDRs_='FLDRs';
+
+function _namesFLDR_Section_:string;
+begin
+    result:=CopyRast_xmlCNFG_approvedFILEs2NAMEs_SECTION;
+    result:=lERxC_sctn8Name(result,cCopyRast_xmlCNFG_approvedFILEs2NAMEs_Names);
+    result:=lERxC_sctn8Name(result,_objNames_FLDRs_);
+end;
+
+procedure CRxC_aF2N__namesFLDR_Load(const CNF:tLazExt_CopyRAST_CONFIG; const Names:TStrings);
+begin
+    _names_Load_(CNF,_namesFLDR_Section_,Names);
+end;
+
+procedure CRxC_aF2N__namesFLDR_Save(const CNF:tLazExt_CopyRAST_CONFIG; const Names:TStrings);
+begin
+    _names_Save_(CNF,_namesFLDR_Section_,Names);
+end;
 
 end.
 

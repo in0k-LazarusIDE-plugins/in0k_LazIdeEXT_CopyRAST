@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CopyRAST asd="ssss">
-  <CopyRAST>
-    <approvedFILEs2NAMEs>
-      <ROOT Value="asdasd" newName="asdasd">
-        <newName Value="asdasd"/>
+  <approvedFILEs2NAMEs>
+    <Names>
+      <ROOT>
+        <NameNew Value="sdf asdf asdf asdf"/>
+        <PathNew Value="asdfasdf asdf asdf as"/>
       </ROOT>
-      <BASE Value="D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST">
-        <newName Value="D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST"/>
-        <newPath Value="D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST"/>
-      </BASE>
-    </approvedFILEs2NAMEs>
-  </CopyRAST>
+      <FLDRs count="2">
+        <item0 Path="srcEXT\in0k-lazarusIdeSRC-SourceTREE">
+          <PathNew Value="klklklklklghghgh"/>
+        </item0>
+        <item1 Path="srcEXT\in0k-lazarusIdeSRC-SourceTREE-UI">
+          <NameNew Value="klklklkl"/>
+        </item1>
+      </FLDRs>
+      <FILEs count="2">
+        <item0 Path="in0k_lazIdeSRC_SETTINGs1.inc">
+          <PathNew Value="uyiouyio"/>
+        </item0>
+        <item1 Path="REG.pas">
+          <NameNew Value="uyuio"/>
+        </item1>
+      </FILEs>
+    </Names>
+    <ROOT>
+      <NameNew Value="jkjkjk"/>
+      <PathNew Value="ghghgh"/>
+    </ROOT>
+  </approvedFILEs2NAMEs>
 </CopyRAST>

@@ -60,7 +60,17 @@ type
   protected
    _newROOT_:tSrcTree_ROOT;
    _regExpr_:TRegExpr;
-   _cnfNAMEs_:TStringList;
+  protected
+   _NMsROOT_:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
+   _NMsFILE_:TStringList;
+   _NMsFLDR_:TStringList;
+    procedure _NMsLIST_CRT_(out list:TStringList);
+    procedure _NMsLIST_DST_(var list:TStringList);
+    procedure _NMsXXXX_CRT_;
+    procedure _NMsXXXX_DST_;
+    //--
+    procedure _NMsXXXX_save_(const cnfg:tLazExt_CopyRAST_CONFIG);
+    procedure _NMsXXXX_load_(const cnfg:tLazExt_CopyRAST_CONFIG);
   protected
     function  _get_newFLDR_(const item:tSrcTree_item; out fldrPATH:string; out fldrKIND:sSrcTree_SrchPath; out leftFLDR:tCopyRastNODE_FLDR):boolean;
     function  _get_newNAME_(const item:tSrcTree_item; out fileName:string; out fileKIND:eSrcTree_FileType):boolean;
@@ -79,12 +89,17 @@ type
   protected
     procedure _EXECUTE_; override;
   public
+    procedure CNFGs_LOAD(const Configs:tLazExt_CopyRAST_CONFIG);
+    procedure CNFGs_SAVE(const Configs:tLazExt_CopyRAST_CONFIG);
     procedure EXECUTE(const nodeRoot:tSrcTree_ROOT; const Configs:tLazExt_CopyRAST_CONFIG; out NewROOT:tSrcTree_ROOT); overload;
   public
     constructor Create(const BUILDer:tSrcTree_Builder_CORE); override;
     destructor DESTROY; override;
   protected
    _CNFGs4NAME_:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
+  protected
+    procedure _CNFGs4NAME_SET_(const List:TStringList; const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+    procedure _CNFGs4NAME_GET_(const List:TStringList; const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
   public
     procedure CNFGs4NAME_SET(const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
     function  CNFGs4NAME_GET(const item:tSrcTree_item):tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
@@ -181,16 +196,20 @@ constructor tCopyRastSrcTree_prcH4ReNAMEs.Create(const BUILDer:tSrcTree_Builder_
 begin
     inherited;
    _regExpr_ :=TRegExpr.Create;
-   _cnfNAMEs_:=TStringList.Create;
+    //---
+   _NMsXXXX_CRT_;
+    //---
    _CNFGs4NAME_:=tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.Create;
 end;
 
 destructor tCopyRastSrcTree_prcH4ReNAMEs.DESTROY;
 begin
-   _cnfNAMEs_.FREE;
-   _regExpr_ .FREE;
-   _CNFGs4NAME_.FREE;
     inherited;
+
+   _NMsXXXX_DST_;
+
+   _regExpr_.FREE;
+   _CNFGs4NAME_.FREE;
 end;
 
 //------------------------------------------------------------------------------
@@ -323,18 +342,167 @@ begin
     NewROOT:=_newROOT_;
 end;
 
+procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFGs_LOAD(const Configs:tLazExt_CopyRAST_CONFIG);
+begin
+   _NMsXXXX_load_(Configs);
+end;
+
+procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFGs_SAVE(const Configs:tLazExt_CopyRAST_CONFIG);
+begin
+   _NMsXXXX_save_(Configs);
+end;
 
 //------------------------------------------------------------------------------
 
+procedure tCopyRastSrcTree_prcH4ReNAMEs._CNFGs4NAME_SET_(const List:TStringList; const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+var tmpIndx:integer;
+    tmpData:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
+begin
+    {$ifOPT D+}
+    Assert(Assigned(List));
+    Assert(Assigned(item));
+    Assert(Assigned(reNames));
+    {$endIf}
+    if List.Find(tSrcTree_fsFILE(item).fsBase,tmpIndx) then begin
+        if reNames.SaveNEED then begin //< ищем и заполняем
+            tmpData:=tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME(List.Objects[tmpIndx]);
+            tmpData.Copy(reNames);
+        end
+        else begin //< его почистили, надо УДАЛИТЬ
+            List.Objects[tmpIndx].FREE;
+            List.Delete(tmpIndx);
+        end;
+    end
+    else begin
+        if reNames.SaveNEED then begin //< создаем и заполняем
+            tmpData:=tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.Create;
+            tmpData.Copy(reNames);
+            List.AddObject(tSrcTree_fsFILE(item).fsBase, tmpData);
+        end;
+    end;
+end;
+
+procedure tCopyRastSrcTree_prcH4ReNAMEs._CNFGs4NAME_GET_(const List:TStringList; const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+var tmpIndx:integer;
+    tmpData:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
+begin
+    {$ifOPT D+}
+    Assert(Assigned(List));
+    Assert(Assigned(item));
+    {$endIf}
+    if List.Find(tSrcTree_fsFILE(item).fsBase,tmpIndx) then begin
+        tmpData:=tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME(List.Objects[tmpIndx]);
+        reNames.Copy(tmpData);
+    end;
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFGs4NAME_SET(const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
 begin
-    //
+    if not Assigned(item) then EXIT;
+    //---
+    if item is tSrcTree_ROOT then begin
+       _NMsROOT_.Copy(reNames);
+    end
+   else
+    if item is tSrcTree_BASE then begin
+       _NMsROOT_.Copy(reNames);
+    end
+   else
+    if item is tSrcTree_MAIN then begin
+       _NMsROOT_.Copy(reNames);
+    end
+   else
+    if item is tSrcTree_fsFILE then begin
+       _CNFGs4NAME_SET_(_NMsFILE_,item,reNames);
+    end
+   else
+    if item is tSrcTree_fsFLDR then begin
+       _CNFGs4NAME_SET_(_NMsFLDR_,item,reNames);
+    end
 end;
 
 function tCopyRastSrcTree_prcH4ReNAMEs.CNFGs4NAME_GET(const item:tSrcTree_item):tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
 begin
    _CNFGs4NAME_.CLEAR;
     result:=_CNFGs4NAME_;
+    if not Assigned(item) then EXIT;
+    //---
+    if item is tSrcTree_ROOT then begin
+        result.Copy(_NMsROOT_);
+    end
+   else
+    if item is tSrcTree_BASE then begin
+        result.Copy(_NMsROOT_);
+    end
+   else
+    if item is tSrcTree_MAIN then begin
+        result.Copy(_NMsROOT_);
+    end
+   else
+    if item is tSrcTree_fsFILE then begin
+        _CNFGs4NAME_GET_(_NMsFILE_,item,result);
+    end
+   else
+    if item is tSrcTree_fsFLDR then begin
+        _CNFGs4NAME_GET_(_NMsFLDR_,item,result);
+    end
+end;
+
+//------------------------------------------------------------------------------
+
+procedure tCopyRastSrcTree_prcH4ReNAMEs._NMsLIST_CRT_(out list:TStringList);
+begin
+   list:=TStringList.Create;
+   list.Sorted:=TRUE;
+end;
+
+procedure tCopyRastSrcTree_prcH4ReNAMEs._NMsLIST_DST_(var list:TStringList);
+begin
+    with list do begin
+        while Count>0 do begin
+            Objects[0].FREE;
+            Delete(0);
+        end;
+        FREE;
+    end;
+    list:=nil;
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+procedure tCopyRastSrcTree_prcH4ReNAMEs._NMsXXXX_CRT_;
+begin
+   _NMsROOT_:=tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.Create;
+    //
+   _NMsLIST_CRT_(_NMsFLDR_);
+   _NMsLIST_CRT_(_NMsFILE_);
+end;
+
+procedure tCopyRastSrcTree_prcH4ReNAMEs._NMsXXXX_DST_;
+begin
+   _NMsROOT_.FREE;
+   _NMsROOT_:=nil;
+    //--
+   _NMsLIST_DST_(_NMsFLDR_);
+   _NMsLIST_DST_(_NMsFILE_);
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+procedure tCopyRastSrcTree_prcH4ReNAMEs._NMsXXXX_save_(const cnfg:tLazExt_CopyRAST_CONFIG);
+begin
+    CRxC_aF2N__namesROOT_Save(cnfg,_NMsROOT_);
+    CRxC_aF2N__namesFLDR_Save(cnfg,_NMsFLDR_);
+    CRxC_aF2N__namesFILE_Save(cnfg,_NMsFILE_);
+end;
+
+procedure tCopyRastSrcTree_prcH4ReNAMEs._NMsXXXX_load_(const cnfg:tLazExt_CopyRAST_CONFIG);
+begin
+    CRxC_aF2N__namesROOT_Load(cnfg,_NMsROOT_);
+    CRxC_aF2N__namesFLDR_Load(cnfg,_NMsFLDR_);
+    CRxC_aF2N__namesFILE_Load(cnfg,_NMsFILE_);
 end;
 
 end.

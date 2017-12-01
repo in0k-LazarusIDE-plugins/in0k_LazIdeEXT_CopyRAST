@@ -91,6 +91,7 @@
         <Filename Value="..\..\..\srcPKG\srcTree_UI\frmCopyRAST_srcTree_approvedFILEs2NAMEs.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmApprovedFILEs2NAMEs"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit11>
     </Units>

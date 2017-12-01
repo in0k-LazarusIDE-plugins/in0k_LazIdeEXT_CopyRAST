@@ -5,6 +5,7 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
   Width = 696
   ClientHeight = 573
   ClientWidth = 696
+  LCLVersion = '1.8.0.5'
   OnResize = FrameResize
   TabOrder = 0
   DesignLeft = 495
@@ -20,9 +21,9 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
     ClientWidth = 696
     TabOrder = 0
     OnResize = pnlPRPResize
-    object CheckBoxThemed2: TCheckBoxThemed
+    object cntrl_nameCST: TCheckBoxThemed
       AnchorSideLeft.Control = pnlPRP
-      AnchorSideTop.Control = Edit1
+      AnchorSideTop.Control = cntrl_nameNEW
       AnchorSideTop.Side = asrCenter
       Left = 1
       Height = 19
@@ -30,8 +31,9 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       Width = 95
       Caption = 'custom Name'
       TabOrder = 0
+      OnClick = cntrl_nameCSTClick
     end
-    object Edit1: TEdit
+    object cntrl_nameNEW: TEdit
       AnchorSideTop.Control = pnlPRP
       AnchorSideRight.Control = pnlPRP
       AnchorSideRight.Side = asrBottom
@@ -41,11 +43,11 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       Width = 591
       Anchors = [akTop, akLeft, akRight]
       TabOrder = 1
-      Text = 'Edit1'
+      Text = 'cntrl_nameNEW'
     end
-    object CheckBoxThemed3: TCheckBoxThemed
-      AnchorSideLeft.Control = CheckBoxThemed2
-      AnchorSideTop.Control = Edit2
+    object cntrl_pathCST: TCheckBoxThemed
+      AnchorSideLeft.Control = cntrl_nameCST
+      AnchorSideTop.Control = cntrl_pathNEW
       AnchorSideTop.Side = asrCenter
       Left = 1
       Height = 19
@@ -53,12 +55,13 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       Width = 87
       Caption = 'custom Path'
       TabOrder = 2
+      OnClick = cntrl_pathCSTClick
     end
-    object Edit2: TEdit
-      AnchorSideLeft.Control = Edit1
-      AnchorSideTop.Control = Edit1
+    object cntrl_pathNEW: TEdit
+      AnchorSideLeft.Control = cntrl_nameNEW
+      AnchorSideTop.Control = cntrl_nameNEW
       AnchorSideTop.Side = asrBottom
-      AnchorSideRight.Control = Edit1
+      AnchorSideRight.Control = cntrl_nameNEW
       AnchorSideRight.Side = asrBottom
       Left = 104
       Height = 23
@@ -67,7 +70,7 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Top = 2
       TabOrder = 3
-      Text = 'Edit2'
+      Text = 'cntrl_pathNEW'
     end
   end
   object pnlMDL: TPanel
@@ -80,5 +83,13 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
     Anchors = [akTop, akLeft, akBottom]
     Caption = 'pnlMDL'
     TabOrder = 1
+  end
+  object TreeView1: TTreeView
+    Left = 58
+    Height = 97
+    Top = 92
+    Width = 121
+    TabOrder = 2
+    OnChanging = TreeView1Changing
   end
 end

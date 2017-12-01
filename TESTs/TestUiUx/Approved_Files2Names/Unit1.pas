@@ -36,6 +36,7 @@ type
 
   TForm1 = class(TForm)
     frmApprovedFILEs2NAMEs1: TfrmApprovedFILEs2NAMEs;
+    XMLConfig1: TXMLConfig;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -60,6 +61,8 @@ type
   public
     first:tCopyRastNODE_Root4Package;
     builder:tSrcTree_Builder_4Package;
+  public
+    destructor DESTROY; override;
   end;
 
 var
@@ -78,57 +81,21 @@ begin
     builder:=tCopyRastSrcTree_Builder4Package.Create;
     reNames:=tCopyRastSrcTree_prcH4ReNAMEs.Create(builder);
 
-    first  :=tCopyRastNODE_Root4Package(makeTest_objCopyRAST(builder)); ;
+    first  :=tCopyRastNODE_Root4Package(makeTest_objCopyRAST(builder));
 
     reNames.ROOT_old:=first;
+
+
+
 
     frmApprovedFILEs2NAMEs1.Handler:=reNames;
 
 
- {   s:=ChangeFileExt(ParamStr(0),'.xml');
-    cnfg:=TXMLConfig.Create(self);//(s);
-    cnfg.LoadFromFile(s);
-
-    CRxC_aF2N_ROOT_newName__SET(cnfg,'asdasd');
-
-
-
-    first  :=tCopyRastNODE_Root4Package(makeTest_objCopyRAST(builder));
-
-
-    CRxC_aF2N_BASE_newName__SET(cnfg,SrcTree_fndBaseDIR(first).fsPath);
-
-            }
-{    approvedFILEs:=tCmpCopyRAST_srcTree_approvedFILEs.Create(self);
-    with approvedFILEs do begin
-        Parent:=self;
-        Align :=alLeft;
-        //
-        AnchorSide[akRight].Control:=Panel1;
-        AnchorSide[akRight].Side   :=asrLeft;
-        Anchors:=Anchors+[akRight];
-        //
-        AnchorSide[akBottom].Control:=Panel2;
-        //
-        OnSelectionChanged:=@TreeView0SelectionChanged;
-    end;  }
-    //---
-{    approvedFILEs.Root:=first;
-    //---
-    approvedNAMEs:=tCmpCopyRAST_srcTree_approvedNAMEs.Create(self);
-    with approvedNAMEs do begin
-        Parent:=self;
-        Align :=alRight;
-        //
-        AnchorSide[akLeft].Control:=Panel1;
-        AnchorSide[akLeft].Side   :=asrRight;
-        Anchors:=Anchors+[akLeft];
-        //
-        AnchorSide[akBottom].Control:=Panel2;
-        //
-//        OnClick           :=@TreeView1Click;
-        OnSelectionChanged:=@TreeView1SelectionChanged;
-    end;  }
+    s:=ChangeFileExt(ParamStr(0),'.xml');
+    XMLConfig1.Filename:=(s);
+    reNames.CNFGs_LOAD(XMLConfig1);
+    //cnfg:=TXMLConfig.Create(Self);//(s);
+    //cnfg.LoadFromFile(s);
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -136,17 +103,33 @@ begin
     _GO_reNAMEs_;
 end;
 
+
+destructor TForm1.DESTROY;
+begin
+    inherited;
+    reNames.FREE;
+    builder.FREE;
+    first.FREE;
+end;
+
 procedure TForm1.FormDestroy(Sender: TObject);
 var s:string;
 begin
-    first.FREE;
-    reNames.FREE;
-    builder.FREE;
- {   s:=ChangeFileExt(ParamStr(0),'.xml');
-    builder.Free;
-    cnfg.SaveToFile(S);
-    cnfg.FREE;
-                }
+    reNames.CNFGs_SAVE(XMLConfig1);
+    //s:=ChangeFileExt(ParamStr(0),'.xml');
+    XMLConfig1.Flush;
+
+    frmApprovedFILEs2NAMEs1.Handler:=nil;
+
+    frmApprovedFILEs2NAMEs1.FREE;
+    frmApprovedFILEs2NAMEs1:=nil;
+
+
+    //cnfg.SaveToFile(S);
+    //cnfg.Flush;
+    //cnfg.FREE;
+    //---
+    inherited;
 end;
 
 procedure TForm1.FormResize(Sender: TObject);
