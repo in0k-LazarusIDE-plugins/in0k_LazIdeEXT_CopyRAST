@@ -17,7 +17,6 @@ uses
 
   sysutils,
 
-
   in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
   in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
 
@@ -64,6 +63,7 @@ type
    _NMsROOT_:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
    _NMsFILE_:TStringList;
    _NMsFLDR_:TStringList;
+   _NMsTMPL_:TStringList;
     procedure _NMsLIST_CRT_(out list:TStringList);
     procedure _NMsLIST_DST_(var list:TStringList);
     procedure _NMsXXXX_CRT_;
@@ -100,9 +100,11 @@ type
   protected
     procedure _CNFGs4NAME_SET_(const List:TStringList; const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
     procedure _CNFGs4NAME_GET_(const List:TStringList; const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+    procedure _TMPLs4NAME_SET_(const List:TStringList; const item:tSrcTree_item; const value:tCopyRAST_Handler_ReNAMEs_CNFGs4NameLAER);
   public
     procedure CNFGs4NAME_SET(const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
     function  CNFGs4NAME_GET(const item:tSrcTree_item):tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
+    procedure TMPLs4NAME_SET(const item:tSrcTree_item; const value:tCopyRAST_Handler_ReNAMEs_CNFGs4NameLAER);
   public
     property ROOT_old:tSrcTree_item read _nodeRoot_ write _nodeRoot_;
     property ROOT_NEW:tSrcTree_ROOT read _newROOT_;
@@ -345,11 +347,13 @@ end;
 procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFGs_LOAD(const Configs:tLazExt_CopyRAST_CONFIG);
 begin
    _NMsXXXX_load_(Configs);
+    CRxC_aF2N__templates_Load(Configs,_NMsTMPL_);
 end;
 
 procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFGs_SAVE(const Configs:tLazExt_CopyRAST_CONFIG);
 begin
    _NMsXXXX_save_(Configs);
+    CRxC_aF2N__templates_Save(Configs,_NMsTMPL_);
 end;
 
 //------------------------------------------------------------------------------
@@ -398,6 +402,42 @@ end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+procedure tCopyRastSrcTree_prcH4ReNAMEs._TMPLs4NAME_SET_(const List:TStringList; const item:tSrcTree_item; const value:tCopyRAST_Handler_ReNAMEs_CNFGs4NameLAER);
+var tmpIndx:integer;
+    tmpData:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
+begin
+    {$ifOPT D+}
+    Assert(Assigned(List));
+    Assert(Assigned(item));
+    Assert(Assigned(value));
+    {$endIf}
+    if List.Find(tSrcTree_fsFILE(item).fsBase,tmpIndx) then begin
+        List.Objects[tmpIndx].FREE;
+        List.Delete(tmpIndx);
+    end;
+    List.AddObject(tSrcTree_fsFILE(item).fsBase, value);
+
+{    if List.Find(tSrcTree_fsFILE(item).fsBase,tmpIndx) then begin
+        if reNames.SaveNEED then begin //< ищем и заполняем
+            tmpData:=tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME(List.Objects[tmpIndx]);
+            tmpData.Copy(reNames);
+        end
+        else begin //< его почистили, надо УДАЛИТЬ
+            List.Objects[tmpIndx].FREE;
+            List.Delete(tmpIndx);
+        end;
+    end
+    else begin
+        if reNames.SaveNEED then begin //< создаем и заполняем
+            tmpData:=tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.Create;
+            tmpData.Copy(reNames);
+            List.AddObject(tSrcTree_fsFILE(item).fsBase, tmpData);
+        end;
+    end;}
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFGs4NAME_SET(const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
 begin
     if not Assigned(item) then EXIT;
@@ -422,6 +462,14 @@ begin
        _CNFGs4NAME_SET_(_NMsFLDR_,item,reNames);
     end
 end;
+
+procedure tCopyRastSrcTree_prcH4ReNAMEs.TMPLs4NAME_SET(const item:tSrcTree_item; const value:tCopyRAST_Handler_ReNAMEs_CNFGs4NameLAER);
+begin
+    if not Assigned(item) then EXIT;
+    //---
+   _TMPLs4NAME_SET_(_NMsTMPL_,item,value);
+end;
+
 
 function tCopyRastSrcTree_prcH4ReNAMEs.CNFGs4NAME_GET(const item:tSrcTree_item):tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
 begin
@@ -449,6 +497,7 @@ begin
         _CNFGs4NAME_GET_(_NMsFLDR_,item,result);
     end
 end;
+
 
 //------------------------------------------------------------------------------
 
@@ -478,6 +527,7 @@ begin
     //
    _NMsLIST_CRT_(_NMsFLDR_);
    _NMsLIST_CRT_(_NMsFILE_);
+   _NMsLIST_CRT_(_NMsTMPL_);
 end;
 
 procedure tCopyRastSrcTree_prcH4ReNAMEs._NMsXXXX_DST_;
@@ -487,6 +537,7 @@ begin
     //--
    _NMsLIST_DST_(_NMsFLDR_);
    _NMsLIST_DST_(_NMsFILE_);
+   _NMsLIST_DST_(_NMsTMPL_);
 end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -9,6 +9,9 @@ uses
   in0k_lazIdeSRC_srcTree_item_Globals,
 
   in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
+  in0k_lazIdeSRC_srcTree_FNK_fsFLDR_FND,
+
+  in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs,
 
   in0k_lazIdeSRC_srcTree_4Package,
   lazExt_CopyRAST__xmlConfig,
@@ -36,11 +39,14 @@ type
 
   TForm1 = class(TForm)
     frmApprovedFILEs2NAMEs1: TfrmApprovedFILEs2NAMEs;
+    ListView1: TListView;
     XMLConfig1: TXMLConfig;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure ListView1Editing(Sender: TObject; Item: TListItem;
+      var AllowEdit: Boolean);
     procedure TreeView1AdvancedCustomDrawItem(Sender: TCustomTreeView;
       Node: TTreeNode; State: TCustomDrawState; Stage: TCustomDrawStage;
       var PaintImages, DefaultDraw: Boolean);
@@ -76,6 +82,9 @@ implementation
 
 procedure TForm1.FormCreate(Sender: TObject);
 var s:string;
+  tmp:tCopyRAST_Handler_ReNAMEs_template;
+  asd:tCopyRAST_Handler_ReNAMEs_CNFGs4NameLAER;
+  itm:tSrcTree_item;
 begin
     inherited;
     builder:=tCopyRastSrcTree_Builder4Package.Create;
@@ -94,6 +103,19 @@ begin
     s:=ChangeFileExt(ParamStr(0),'.xml');
     XMLConfig1.Filename:=(s);
     reNames.CNFGs_LOAD(XMLConfig1);
+
+    asd:=tCopyRAST_Handler_ReNAMEs_CNFGs4NameLAER.Create;
+    tmp:=tCopyRAST_Handler_ReNAMEs_template.Create;
+    tmp.nameNew:='^in0k_lazIdeSRC_(\w+)(\.pas)$';
+    tmp.pathNew:='asdf$1$2';
+    asd.Add(tmp);
+    tmp:=tCopyRAST_Handler_ReNAMEs_template.Create;
+    tmp.nameNew:='^inasdfasdf0k_lazIdeSRC_(\w+)(\.pas)$';
+    tmp.pathNew:='afffffffsdf$1$2';
+    asd.Add(tmp);
+
+    reNames.TMPLs4NAME_SET( SrcTree_fndFsFLDR(first,'D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcPKG\OperationNODEs'),asd);
+
     //cnfg:=TXMLConfig.Create(Self);//(s);
     //cnfg.LoadFromFile(s);
 end;
@@ -135,6 +157,12 @@ end;
 procedure TForm1.FormResize(Sender: TObject);
 begin
     //Panel1.Left:=(Form1.Width-panel1.Width) div 2;;
+end;
+
+procedure TForm1.ListView1Editing(Sender: TObject; Item: TListItem;
+  var AllowEdit: Boolean);
+begin
+   AllowEdit:=true;
 end;
 
 procedure TForm1.TreeView1AdvancedCustomDrawItem(Sender: TCustomTreeView;

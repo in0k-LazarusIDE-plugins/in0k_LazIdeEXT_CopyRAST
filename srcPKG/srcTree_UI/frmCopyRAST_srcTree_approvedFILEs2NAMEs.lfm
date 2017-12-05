@@ -5,7 +5,6 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
   Width = 696
   ClientHeight = 573
   ClientWidth = 696
-  LCLVersion = '1.8.0.5'
   OnResize = FrameResize
   TabOrder = 0
   DesignLeft = 495
@@ -71,6 +70,56 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       BorderSpacing.Top = 2
       TabOrder = 3
       Text = 'cntrl_pathNEW'
+    end
+    object pnlPRP_1: TPanel
+      AnchorSideTop.Control = cntrl_pathNEW
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = pnlPRP
+      AnchorSideRight.Side = asrBottom
+      AnchorSideBottom.Control = pnlPRP
+      AnchorSideBottom.Side = asrBottom
+      Left = 345
+      Height = 73
+      Top = 51
+      Width = 350
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      BorderSpacing.Top = 2
+      Caption = 'pnlPRP_1'
+      ClientHeight = 73
+      ClientWidth = 350
+      TabOrder = 4
+      object Label1: TLabel
+        Left = 11
+        Height = 15
+        Top = 10
+        Width = 34
+        Caption = 'Label1'
+        ParentColor = False
+      end
+      object Edit1: TEdit
+        Left = 48
+        Height = 23
+        Top = 2
+        Width = 289
+        TabOrder = 0
+        Text = 'Edit1'
+      end
+      object Edit2: TEdit
+        Left = 49
+        Height = 23
+        Top = 31
+        Width = 288
+        TabOrder = 1
+        Text = 'Edit2'
+      end
+      object Label2: TLabel
+        Left = 11
+        Height = 15
+        Top = 38
+        Width = 34
+        Caption = 'Label2'
+        ParentColor = False
+      end
     end
   end
   object pnlMDL: TPanel

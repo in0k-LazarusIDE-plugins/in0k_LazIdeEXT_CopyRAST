@@ -39,7 +39,7 @@
         <PackageName Value="LCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="12">
+    <Units Count="13">
       <Unit0>
         <Filename Value="Aapproved_Files2Names.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -94,6 +94,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit11>
+      <Unit12>
+        <Filename Value="..\..\..\srcPKG\srcTree_UI\cmpCopyRAST_srcTree_nameTemplates.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

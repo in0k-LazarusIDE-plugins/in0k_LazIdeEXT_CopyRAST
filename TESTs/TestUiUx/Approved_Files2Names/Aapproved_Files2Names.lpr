@@ -10,7 +10,8 @@ uses
   Forms, lazcontrols, Unit1, makeTest_copyRastOBJ,
   in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs,
   in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs,
-  lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs, frmCopyRAST_srcTree_approvedFILEs2NAMEs
+  lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs,
+  frmCopyRAST_srcTree_approvedFILEs2NAMEs, cmpCopyRAST_srcTree_nameTemplates
   { you can add units after this };
 
 {$R *.res}

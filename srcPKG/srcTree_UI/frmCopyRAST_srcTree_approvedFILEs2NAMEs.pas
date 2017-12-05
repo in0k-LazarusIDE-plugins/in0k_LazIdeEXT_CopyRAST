@@ -7,6 +7,10 @@ interface
 uses
   Classes, SysUtils, FileUtil, CheckBoxThemed, Forms, Controls, ExtCtrls,
   StdCtrls, ComCtrls, cmpCopyRAST_srcTree_approvedFiles,
+
+  in0k_lazIdeSRC_srcTree_CORE_item,
+
+  cmpCopyRAST_srcTree_nameTemplates,
   cmpCopyRAST_srcTree_approvedNAMEs,
   in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs,
   in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs;
@@ -20,6 +24,11 @@ type
     cntrl_pathCST: TCheckBoxThemed;
     cntrl_nameNEW: TEdit;
     cntrl_pathNEW: TEdit;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    pnlPRP_1: TPanel;
     pnlMDL: TPanel;
     pnlPRP: TPanel;
     TreeView1: TTreeView;
@@ -31,7 +40,16 @@ type
       var AllowChange: Boolean);
 
  private
+   _editItem_:tSrcTree_item;
+    procedure _editItem_SET_(const value:tSrcTree_item);
+    procedure _editItem_onCHG_;
+
+    //procedure _itemEditor_Lock_(const value:boolean);
+
+
+ private
    _CNFGs4NAME_:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
+    procedure _CNFGs4NAME_SET_(const value:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
 
     function  _CNFGs4NAME_validate_nameNew_(const value:string):boolean;
     function  _CNFGs4NAME_validate_pathNew_(const value:string):boolean;
@@ -56,6 +74,10 @@ type
   private
    _HNDLR_:tCopyRastSrcTree_prcH4ReNAMEs;
     procedure _HNDLR_set_(const value:tCopyRastSrcTree_prcH4ReNAMEs);
+
+  private
+   _tmplt_:tCmpCopyRAST_srcTree_nameTemplates;
+
   public
     constructor Create(AOwner:TComponent); override;
     destructor DESTROY; override;
@@ -126,11 +148,37 @@ begin
         //
         Anchors:=[akTop, akLeft, akRight, akBottom];
     end;
-
     //---
    _CNFGs4NAME_:=NIL;
    _CNFGs4NAME_frm_toNullState_;
    _CNFGs4NAME_frm_validate_;
+
+    //----------------
+
+   _tmplt_:=tCmpCopyRAST_srcTree_nameTemplates.Create(self);
+    with _tmplt_ do begin
+        Parent:=pnlPRP;
+        //
+        with AnchorSide[akLeft] do begin
+            Control:=pnlPRP;
+            Side   :=asrLeft;
+        end;
+        with AnchorSide[akTop] do begin
+            Control:=cntrl_pathNEW;
+            Side   :=asrBottom;
+        end;
+        with AnchorSide[akRight] do begin
+            Control:=pnlPRP_1;
+            Side   :=asrLeft;
+        end;
+        with AnchorSide[akBottom] do begin
+            Control:=pnlPRP;
+            Side   :=asrBottom;
+        end;
+        //
+        Anchors:=[akTop, akLeft, akRight, akBottom];
+    end;
+
 end;
 
 //------------------------------------------------------------------------------
@@ -150,8 +198,51 @@ end;
 
 //------------------------------------------------------------------------------
 
+procedure TfrmApprovedFILEs2NAMEs._editItem_SET_(const value:tSrcTree_item);
+begin
+    if Assigned(value) then begin
+       _editItem_:=value;
+       _CNFGs4NAME_SET_(_HNDLR_.CNFGs4NAME_GET(_editItem_));
+    end
+    else begin
+       _editItem_:=nil;
+       _CNFGs4NAME_SET_(nil);
+    end;
+end;
+
+procedure TfrmApprovedFILEs2NAMEs._editItem_onCHG_;
+begin
+    if Assigned(_editItem_) then begin
+        if Assigned(_CNFGs4NAME_) then begin
+           _CNFGs4NAME_frm2obj_;
+           _HNDLR_.CNFGs4NAME_SET(_editItem_,_CNFGs4NAME_);
+        end;
+    end;
+end;
+
+
+{procedure TfrmApprovedFILEs2NAMEs._itemEditor_Lock_(const value:boolean);
+begin
+    if value then _CNFGs4NAME_frm_toNullState_;
+   _CNFGs4NAME_frm_SetOnChange_(not value);
+   _CNFGs4NAME_frm_SetEnabled_ (not value);
+end;}
+
+//------------------------------------------------------------------------------
+
 procedure TfrmApprovedFILEs2NAMEs._treeL_SelectionChanged_(Sender:TObject);
 begin
+    if csDestroying in _treeL_.ComponentState then EXIT;
+    //---
+    if Assigned(_treeL_.SelectedITEM) then begin
+       _editItem_SET_(_treeL_.SelectedITEM);
+    end
+    else begin
+       _editItem_SET_(NIL);
+    end;
+    (*
+
+
     if csDestroying in _treeL_.ComponentState then EXIT;
     //---
     if Assigned(_HNDLR_) and Assigned(_treeL_.Selected) then begin
@@ -160,17 +251,25 @@ begin
     else begin
        _CNFGs4NAME_:=nil;
     end;
-   _CNFGs4NAME_obj2frm_;
+   _CNFGs4NAME_obj2frm_;*)
 end;
 
 procedure TfrmApprovedFILEs2NAMEs._treeL_Changing(Sender:TObject; Node:TTreeNode; var AllowChange:Boolean);
 begin
-    if csDestroying in _treeL_.ComponentState then EXIT;
+    {if csDestroying in _treeL_.ComponentState then EXIT;
     //---
+    if Assigned(_treeL_.SelectedITEM) then begin
+       _editItem_SET_(_treeL_.SelectedITEM);
+    end
+    else begin
+       _editItem_SET_(NIL);
+    end;}
+    {
     if Assigned(_CNFGs4NAME_) and Assigned(_treeL_.SelectedITEM) then begin
        _CNFGs4NAME_frm2obj_;
        _HNDLR_.CNFGs4NAME_SET(_treeL_.SelectedITEM,_CNFGs4NAME_);
     end;
+    }
 end;
 
 //------------------------------------------------------------------------------
@@ -222,6 +321,12 @@ begin
 end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+procedure TfrmApprovedFILEs2NAMEs._CNFGs4NAME_SET_(const value:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+begin
+   _CNFGs4NAME_:=value;
+   _CNFGs4NAME_obj2frm_;
+end;
 
 procedure TfrmApprovedFILEs2NAMEs._CNFGs4NAME_obj2frm_;
 begin
@@ -280,6 +385,7 @@ begin
                       cntrl_pathCST.State:=cbChecked;
                   end;
     end;
+   _editItem_onCHG_;
 end;
 
 //------------------------------------------------------------------------------
@@ -303,6 +409,7 @@ end;
 
 procedure TfrmApprovedFILEs2NAMEs.cntrl_nameCSTClick(Sender: TObject);
 begin
+    if not tCheckBoxThemed(sender).Focused then EXIT;
     case tCheckBoxThemed(Sender).State of
       cbUnchecked: ;
       cbChecked,
@@ -312,6 +419,7 @@ end;
 
 procedure TfrmApprovedFILEs2NAMEs.cntrl_pathCSTClick(Sender: TObject);
 begin
+    if not tCheckBoxThemed(sender).Focused then EXIT;
     case tCheckBoxThemed(Sender).State of
       cbUnchecked: ;
       cbChecked,
@@ -326,17 +434,12 @@ begin
     _CNFGs4NAME_frm_validate_;
 end;
 
-
-
-
 //------------------------------------------------------------------------------
 
 procedure TfrmApprovedFILEs2NAMEs.FrameResize(Sender: TObject);
 begin
     pnlMDL.Left:=(TFrame(Sender).Width-pnlMDL.Width) div 2;
 end;
-
-
 
 procedure TfrmApprovedFILEs2NAMEs.pnlPRPResize(Sender: TObject);
 var w:integer;
