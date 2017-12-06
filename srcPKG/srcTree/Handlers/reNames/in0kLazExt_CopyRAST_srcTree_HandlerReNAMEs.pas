@@ -64,6 +64,7 @@ type
    _cnfg_customer_ROOT_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
    _cnfg_customer_FILE_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER;
    _cnfg_customer_FLDR_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER;
+   _cnfg_template_ROOT_:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
    _cnfg_template_LAER_:tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR;
     procedure _cnfg_XXXX_CRT_;
     procedure _cnfg_XXXX_DST_;
@@ -494,7 +495,12 @@ begin
     Assert(Assigned(item));
     Assert(item is _tSrcTree_item_fsNodeFLDR_);
     {$endIf}
-   _cnfg_template_LAER_.CNFG_SET(_tSrcTree_item_fsNodeFLDR_(item).fsBase, value);
+    if item is tSrcTree_ROOT then begin
+       _cnfg_template_ROOT_.COPY(value);
+    end
+   else begin
+       _cnfg_template_LAER_.CNFG_SET(_tSrcTree_item_fsNodeFLDR_(item).fsBase, value);
+    end;
 end;
 
 function tCopyRastSrcTree_prcH4ReNAMEs.CNFG_template_GET(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
@@ -503,7 +509,13 @@ begin
     Assert(Assigned(item));
     //Assert(item is _tSrcTree_item_fsNodeFLDR_);
     {$endIf}
-   _cnfg_template_LAER_.CNFG_GET(_tSrcTree_item_fsNodeFLDR_(item).fsBase);
+    if item is tSrcTree_ROOT then begin
+        result:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
+        result.COPY(_cnfg_template_ROOT_);
+    end
+   else begin
+        result:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(_cnfg_template_LAER_.CNFG_GET(_tSrcTree_item_fsNodeFLDR_(item).fsBase));
+    end;
 end;
 
 
@@ -542,6 +554,7 @@ begin
    _cnfg_customer_FLDR_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER.Create;
    _cnfg_customer_FILE_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER.Create;
     //---
+   _cnfg_template_ROOT_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
    _cnfg_template_LAER_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR.Create;
 end;
 
@@ -550,7 +563,8 @@ begin
    _cnfg_customer_ROOT_.FREE;
    _cnfg_customer_FLDR_.FREE;
    _cnfg_customer_FILE_.FREE;
-   //---
+    //---
+   _cnfg_template_ROOT_.FREE;
    _cnfg_template_LAER_.FREE;
 end;
 
