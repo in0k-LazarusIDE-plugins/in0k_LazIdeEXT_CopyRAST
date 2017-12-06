@@ -39,7 +39,7 @@
         <PackageName Value="LCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="13">
+    <Units Count="14">
       <Unit0>
         <Filename Value="Aapproved_Files2Names.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -98,6 +98,10 @@
         <Filename Value="..\..\..\srcPKG\srcTree_UI\cmpCopyRAST_srcTree_nameTemplates.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit12>
+      <Unit13>
+        <Filename Value="..\..\..\srcPKG\srcTree\Handlers\CopyRAST_srcTree_4Handler_CNFGs.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -108,7 +112,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;..\..\..\srcPKG\srcTree;..\..\..\srcPKG\srcTree_UI;..\..\..\srcPKG\xmlConfig;..\..\..\srcPKG\srcTree\Handlers\reNames"/>
+      <OtherUnitFiles Value="..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;..\..\..\srcPKG\srcTree;..\..\..\srcPKG\srcTree_UI;..\..\..\srcPKG\xmlConfig;..\..\..\srcPKG\srcTree\Handlers\reNames;..\..\..\srcPKG\srcTree\Handlers"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>

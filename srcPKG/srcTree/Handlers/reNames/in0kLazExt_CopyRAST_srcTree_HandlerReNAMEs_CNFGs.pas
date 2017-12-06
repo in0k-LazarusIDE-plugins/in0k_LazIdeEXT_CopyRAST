@@ -5,120 +5,150 @@ unit in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs;
 interface
 
 uses
+  CopyRAST_srcTree_4Handler_CNFGs,
+
   contnrs,
   Classes, SysUtils;
 
+type //=========================================================================
 
-type
-
- tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME=class
-  public
-    nameNew:string;
-    nameCst:boolean;
-    pathNew:string;
-    pathCst:boolean;
-  public
-    function  SaveNEED:boolean;
-    procedure CLEAR;
-  public
-    procedure Copy(const Target:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
-  public
-    destructor DESTROY; override;
-  end;
-
-
-
- tCopyRAST_Handler_ReNAMEs_template=class(tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
-
- tCopyRAST_Handler_ReNAMEs_CNFGs4NameLAER=class(TObjectList)
+ tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node=class(tCopyRAST_srcTree_4Handler_CNFGsNode)
   protected
-    function GetItem(Index: Integer): tCopyRAST_Handler_ReNAMEs_template;
-    procedure SetItem(Index: Integer; AObject: tCopyRAST_Handler_ReNAMEs_template);
+   _nameStated_:string;
+   _pathStated_:string;
+   _nameCustom_:boolean;
+   _pathCustom_:boolean;
+  public
+    property NameCustom:boolean read _nameCustom_ write _nameCustom_;
+    property NameStated:string  read _nameStated_ write _nameStated_;
+    property PathCustom:boolean read _pathCustom_ write _pathCustom_;
+    property PathStated:string  read _pathStated_ write _pathStated_;
   public
     constructor Create;
     destructor DESTROY; override;
-  private
-    property OwnsObjects;
   public
-    function Add(AObject:tCopyRAST_Handler_ReNAMEs_template): Integer;
-    property Items[Index:Integer]:tCopyRAST_Handler_ReNAMEs_template read GetItem write SetItem;
+    procedure COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode); override;
+    function needSAVE:boolean;                                         override;
   end;
 
- tCopyRAST_Handler_ReNAMEs_CNFGs4NameLIST=class(tCopyRAST_Handler_ReNAMEs_CNFGs4NameLAER)
+ tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER=class(tCopyRAST_srcTree_4Handler_CNFGs)
+  protected
+    function _CNFG_CRT_:tCopyRAST_srcTree_4Handler_CNFGsNode; override;
+  end;
+
+type //=========================================================================
+
+ tCopyRAST_Handler_ReNAMEs_template=class(tCopyRAST_srcTree_4Handler_CNFGsNode)
+  protected
+   _template_:string;
+   _exchange_:string;
+  public
+    property Template:string read _template_ write _template_;
+    property Exchange:string read _exchange_ write _exchange_;
   public
     constructor Create;
+    destructor DESTROY; override;
+  public
+    procedure COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode); override;
+    function needSAVE:boolean;                                         override;
   end;
 
+ tCopyRAST_HandlerCNFGs_ReNAMEs_template_List=class(tCopyRAST_srcTree_4Handler_CNFGsLAIR)
+  end;
 
-
+ tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR=class(tCopyRAST_srcTree_4Handler_CNFGs)
+  protected
+    function _CNFG_CRT_:tCopyRAST_srcTree_4Handler_CNFGsNode; override;
+  end;
 
 implementation
 
-destructor tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.DESTROY;
+{%region --- customer ---------------------------------------------------}
+
+constructor tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node.Create;
+begin
+   _nameCustom_:=false;
+   _nameStated_:='';
+   _pathCustom_:=false;
+   _pathStated_:='';
+end;
+
+destructor tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node.DESTROY;
 begin
     inherited;
-end;
-
-procedure tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.CLEAR;
-begin
-    nameNew:='';
-    nameCst:=false;
-    pathNew:='';
-    pathCst:=false;
-end;
-
-function tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.SaveNEED:boolean;
-begin
-    result:=(nameNew<>'')or(pathNew<>'');
-end;
-
-procedure tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.Copy(const Target:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
-begin
-    nameNew:=Target.nameNew;
-    nameCst:=Target.nameCst;
-    pathNew:=Target.pathNew;
-    pathCst:=Target.pathCst;
-end;
-
-//==============================================================================
-
-constructor tCopyRAST_Handler_ReNAMEs_CNFGs4NameLAER.Create;
-begin
-    inherited;
-    OwnsObjects:=TRUE;
-end;
-
-destructor tCopyRAST_Handler_ReNAMEs_CNFGs4NameLAER.DESTROY;
-begin
-    inherited;
-end;
-
-//------------------------------------------------------------------------------
-
-function tCopyRAST_Handler_ReNAMEs_CNFGs4NameLAER.Add(AObject:tCopyRAST_Handler_ReNAMEs_template):Integer;
-begin
-    result:=inherited Add(AObject);
 end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function tCopyRAST_Handler_ReNAMEs_CNFGs4NameLAER.GetItem(Index: Integer): tCopyRAST_Handler_ReNAMEs_template;
+procedure tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node.COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode);
 begin
-    result:=tCopyRAST_Handler_ReNAMEs_template(inherited GetItem(index));
+    {$ifOpt D+}
+    Assert(Assigned(Source));
+    Assert(Source is tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
+    {$endIf}
+   _nameCustom_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node(Source).NameCustom;
+   _nameStated_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node(Source).NameStated;
+   _pathCustom_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node(Source).PathCustom;
+   _pathStated_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node(Source).PathStated;
 end;
 
-procedure tCopyRAST_Handler_ReNAMEs_CNFGs4NameLAER.SetItem(Index: Integer; AObject: tCopyRAST_Handler_ReNAMEs_template);
+function tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node.needSAVE:boolean;
 begin
-    inherited SetItem(index, AObject);
+    result:= NOT // ОТРИЦАЕМ состояние "НУЛИВОВГО состояния" (не заданного)
+             (
+                (_nameStated_='')and(_nameCustom_=false)
+                AND
+                (_pathStated_='')and(_pathCustom_=false)
+             );
 end;
 
 //==============================================================================
 
-constructor tCopyRAST_Handler_ReNAMEs_CNFGs4NameLIST.Create;
+function tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER._CNFG_CRT_:tCopyRAST_srcTree_4Handler_CNFGsNode;
+begin
+    result:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node.Create;
+end;
+
+{%endregion}
+
+{%region --- template ---------------------------------------------------}
+
+constructor tCopyRAST_Handler_ReNAMEs_template.Create;
+begin
+   _template_:='';
+   _exchange_:='';
+end;
+
+destructor tCopyRAST_Handler_ReNAMEs_template.DESTROY;
 begin
     inherited;
-    OwnsObjects:=FALSE;
 end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+procedure tCopyRAST_Handler_ReNAMEs_template.COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode);
+begin
+    {$ifOpt D+}
+    Assert(Assigned(Source));
+    Assert(Source is tCopyRAST_Handler_ReNAMEs_template);
+    {$endIf}
+   _template_:=tCopyRAST_Handler_ReNAMEs_template(Source).Template;
+   _exchange_:=tCopyRAST_Handler_ReNAMEs_template(Source).Exchange;
+end;
+
+function tCopyRAST_Handler_ReNAMEs_template.needSAVE:boolean;
+begin
+    result:=(_template_<>'')or(_exchange_<>'');
+end;
+
+//==============================================================================
+
+function tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR._CNFG_CRT_:tCopyRAST_srcTree_4Handler_CNFGsNode;
+begin
+    result:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
+end;
+
+{%endregion}
 
 end.
 

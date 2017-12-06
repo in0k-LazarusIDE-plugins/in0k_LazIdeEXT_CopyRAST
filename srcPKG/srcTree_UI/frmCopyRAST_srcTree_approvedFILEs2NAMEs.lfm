@@ -22,7 +22,7 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
     OnResize = pnlPRPResize
     object cntrl_nameCST: TCheckBoxThemed
       AnchorSideLeft.Control = pnlPRP
-      AnchorSideTop.Control = cntrl_nameNEW
+      AnchorSideTop.Control = cntrl_nameStated
       AnchorSideTop.Side = asrCenter
       Left = 1
       Height = 19
@@ -32,7 +32,7 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       TabOrder = 0
       OnClick = cntrl_nameCSTClick
     end
-    object cntrl_nameNEW: TEdit
+    object cntrl_nameStated: TEdit
       AnchorSideTop.Control = pnlPRP
       AnchorSideRight.Control = pnlPRP
       AnchorSideRight.Side = asrBottom
@@ -42,11 +42,11 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       Width = 591
       Anchors = [akTop, akLeft, akRight]
       TabOrder = 1
-      Text = 'cntrl_nameNEW'
+      Text = 'cntrl_nameStated'
     end
     object cntrl_pathCST: TCheckBoxThemed
       AnchorSideLeft.Control = cntrl_nameCST
-      AnchorSideTop.Control = cntrl_pathNEW
+      AnchorSideTop.Control = cntrl_pathStated
       AnchorSideTop.Side = asrCenter
       Left = 1
       Height = 19
@@ -56,11 +56,11 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       TabOrder = 2
       OnClick = cntrl_pathCSTClick
     end
-    object cntrl_pathNEW: TEdit
-      AnchorSideLeft.Control = cntrl_nameNEW
-      AnchorSideTop.Control = cntrl_nameNEW
+    object cntrl_pathStated: TEdit
+      AnchorSideLeft.Control = cntrl_nameStated
+      AnchorSideTop.Control = cntrl_nameStated
       AnchorSideTop.Side = asrBottom
-      AnchorSideRight.Control = cntrl_nameNEW
+      AnchorSideRight.Control = cntrl_nameStated
       AnchorSideRight.Side = asrBottom
       Left = 104
       Height = 23
@@ -69,10 +69,10 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Top = 2
       TabOrder = 3
-      Text = 'cntrl_pathNEW'
+      Text = 'cntrl_pathStated'
     end
     object pnlPRP_1: TPanel
-      AnchorSideTop.Control = cntrl_pathNEW
+      AnchorSideTop.Control = cntrl_pathStated
       AnchorSideTop.Side = asrBottom
       AnchorSideRight.Control = pnlPRP
       AnchorSideRight.Side = asrBottom

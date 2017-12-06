@@ -11,7 +11,8 @@ uses
   in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs,
   in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs,
   lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs,
-  frmCopyRAST_srcTree_approvedFILEs2NAMEs, cmpCopyRAST_srcTree_nameTemplates
+  frmCopyRAST_srcTree_approvedFILEs2NAMEs, cmpCopyRAST_srcTree_nameTemplates,
+  CopyRAST_srcTree_4Handler_CNFGs
   { you can add units after this };
 
 {$R *.res}

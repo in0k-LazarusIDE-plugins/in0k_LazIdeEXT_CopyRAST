@@ -22,8 +22,8 @@ type
  TfrmApprovedFILEs2NAMEs = class(TFrame)
     cntrl_nameCST: TCheckBoxThemed;
     cntrl_pathCST: TCheckBoxThemed;
-    cntrl_nameNEW: TEdit;
-    cntrl_pathNEW: TEdit;
+    cntrl_nameStated: TEdit;
+    cntrl_pathStated: TEdit;
     Edit1: TEdit;
     Edit2: TEdit;
     Label1: TLabel;
@@ -43,14 +43,10 @@ type
    _editItem_:tSrcTree_item;
     procedure _editItem_SET_(const value:tSrcTree_item);
     procedure _editItem_onCHG_;
-
-    //procedure _itemEditor_Lock_(const value:boolean);
-
-
  private
-   _CNFGs4NAME_:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
-    procedure _CNFGs4NAME_SET_(const value:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
-
+   _customer_node_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
+    procedure _customer_node_SET_(const value:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
+ private
     function  _CNFGs4NAME_validate_nameNew_(const value:string):boolean;
     function  _CNFGs4NAME_validate_pathNew_(const value:string):boolean;
 
@@ -62,8 +58,8 @@ type
     procedure _CNFGs4NAME_frm_SetEnabled_ (const value:boolean);
     procedure _CNFGs4NAME_frm_SetOnChange_(const value:boolean);
 
-    procedure _CNFGs4NAME_obj2frm_;
-    procedure _CNFGs4NAME_frm2obj_;
+    procedure _customer_node_obj2frm_;
+    procedure _customer_node_frm2obj_;
  private
    _treeL_:tCmpCopyRAST_srcTree_approvedFILEs;
    _treeR_:tCmpCopyRAST_srcTree_approvedNAMEs;
@@ -149,7 +145,7 @@ begin
         Anchors:=[akTop, akLeft, akRight, akBottom];
     end;
     //---
-   _CNFGs4NAME_:=NIL;
+   _customer_node_:=NIL;
    _CNFGs4NAME_frm_toNullState_;
    _CNFGs4NAME_frm_validate_;
 
@@ -164,7 +160,7 @@ begin
             Side   :=asrLeft;
         end;
         with AnchorSide[akTop] do begin
-            Control:=cntrl_pathNEW;
+            Control:=cntrl_pathStated;
             Side   :=asrBottom;
         end;
         with AnchorSide[akRight] do begin
@@ -202,20 +198,20 @@ procedure TfrmApprovedFILEs2NAMEs._editItem_SET_(const value:tSrcTree_item);
 begin
     if Assigned(value) then begin
        _editItem_:=value;
-       _CNFGs4NAME_SET_(_HNDLR_.CNFGs4NAME_GET(_editItem_));
+       _customer_node_SET_(_HNDLR_.CNFG_customer_GET(_editItem_));
     end
     else begin
        _editItem_:=nil;
-       _CNFGs4NAME_SET_(nil);
+       _customer_node_SET_(nil);
     end;
 end;
 
 procedure TfrmApprovedFILEs2NAMEs._editItem_onCHG_;
 begin
     if Assigned(_editItem_) then begin
-        if Assigned(_CNFGs4NAME_) then begin
-           _CNFGs4NAME_frm2obj_;
-           _HNDLR_.CNFGs4NAME_SET(_editItem_,_CNFGs4NAME_);
+        if Assigned(_customer_node_) then begin
+           _customer_node_frm2obj_;
+           _HNDLR_.CNFG_customer_SET(_editItem_,_customer_node_);
         end;
     end;
 end;
@@ -246,10 +242,10 @@ begin
     if csDestroying in _treeL_.ComponentState then EXIT;
     //---
     if Assigned(_HNDLR_) and Assigned(_treeL_.Selected) then begin
-       _CNFGs4NAME_:=_HNDLR_.CNFGs4NAME_GET(_treeL_.SelectedITEM);
+       _customer_node_:=_HNDLR_.CNFGs4NAME_GET(_treeL_.SelectedITEM);
     end
     else begin
-       _CNFGs4NAME_:=nil;
+       _customer_node_:=nil;
     end;
    _CNFGs4NAME_obj2frm_;*)
 end;
@@ -265,9 +261,9 @@ begin
        _editItem_SET_(NIL);
     end;}
     {
-    if Assigned(_CNFGs4NAME_) and Assigned(_treeL_.SelectedITEM) then begin
+    if Assigned(_customer_node_) and Assigned(_treeL_.SelectedITEM) then begin
        _CNFGs4NAME_frm2obj_;
-       _HNDLR_.CNFGs4NAME_SET(_treeL_.SelectedITEM,_CNFGs4NAME_);
+       _HNDLR_.CNFG_customer_SET(_treeL_.SelectedITEM,_customer_node_);
     end;
     }
 end;
@@ -290,9 +286,9 @@ end;
 
 procedure TfrmApprovedFILEs2NAMEs._CNFGs4NAME_frm_toNullState_;
 begin
-    cntrl_nameNEW.text:='';
+    cntrl_nameStated.text:='';
     cntrl_nameCST.Checked:=false;
-    cntrl_pathNEW.text:='';
+    cntrl_pathStated.text:='';
     cntrl_pathCST.Checked:=false;
 end;
 
@@ -300,8 +296,8 @@ procedure TfrmApprovedFILEs2NAMEs._CNFGs4NAME_frm_SetEnabled_ (const value:boole
 begin
     cntrl_nameCST.Enabled:=value;
     cntrl_pathCST.Enabled:=value;
-    cntrl_nameNEW.Enabled:=value;
-    cntrl_pathNEW.Enabled:=value;
+    cntrl_nameStated.Enabled:=value;
+    cntrl_pathStated.Enabled:=value;
 end;
 
 procedure TfrmApprovedFILEs2NAMEs._CNFGs4NAME_frm_SetOnChange_(const value:boolean);
@@ -309,48 +305,49 @@ begin
     if value then begin
         cntrl_nameCST.OnChange:=@_CNFGs4NAME_xxxxCST_onChange_;
         cntrl_pathCST.OnChange:=@_CNFGs4NAME_xxxxCST_onChange_;
-        cntrl_nameNEW.OnChange:=@_CNFGs4NAME_xxxxNEW_onChange_;
-        cntrl_pathNEW.OnChange:=@_CNFGs4NAME_xxxxNEW_onChange_;
+        cntrl_nameStated.OnChange:=@_CNFGs4NAME_xxxxNEW_onChange_;
+        cntrl_pathStated.OnChange:=@_CNFGs4NAME_xxxxNEW_onChange_;
     end
     else begin
         cntrl_nameCST.OnChange:=nil;
         cntrl_pathCST.OnChange:=nil;
-        cntrl_nameNEW.OnChange:=nil;
-        cntrl_pathNEW.OnChange:=nil;
+        cntrl_nameStated.OnChange:=nil;
+        cntrl_pathStated.OnChange:=nil;
     end;
 end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-procedure TfrmApprovedFILEs2NAMEs._CNFGs4NAME_SET_(const value:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+procedure TfrmApprovedFILEs2NAMEs._customer_node_SET_(const value:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
 begin
-   _CNFGs4NAME_:=value;
-   _CNFGs4NAME_obj2frm_;
+   _customer_node_.Free;
+   _customer_node_:=value;
+   _customer_node_obj2frm_;
 end;
 
-procedure TfrmApprovedFILEs2NAMEs._CNFGs4NAME_obj2frm_;
+procedure TfrmApprovedFILEs2NAMEs._customer_node_obj2frm_;
 begin
    _CNFGs4NAME_frm_SetOnChange_(false);
    _CNFGs4NAME_frm_toNullState_;
     //---
-    if Assigned(_CNFGs4NAME_) then begin
+    if Assigned(_customer_node_) then begin
         //
-        cntrl_nameNEW.Text   :=_CNFGs4NAME_.nameNew;
-        cntrl_nameCST.Checked:=_CNFGs4NAME_.nameCst;
-        cntrl_pathNEW.Text   :=_CNFGs4NAME_.pathNew;
-        cntrl_pathCST.Checked:=_CNFGs4NAME_.pathCst;
+        cntrl_nameStated.Text:=_customer_node_.NameStated;
+        cntrl_nameCST.Checked:=_customer_node_.NameCustom;
+        cntrl_pathStated.Text:=_customer_node_.PathStated;
+        cntrl_pathCST.Checked:=_customer_node_.PathCustom;
         //
        _CNFGs4NAME_frm_validate_;
        _CNFGs4NAME_frm_SetOnChange_(true);
      end;
 end;
 
-procedure TfrmApprovedFILEs2NAMEs._CNFGs4NAME_frm2obj_;
+procedure TfrmApprovedFILEs2NAMEs._customer_node_frm2obj_;
 begin
-    _CNFGs4NAME_.nameNew := cntrl_nameNEW.Text;
-    _CNFGs4NAME_.nameCst := cntrl_nameCST.Checked;
-    _CNFGs4NAME_.pathNew := cntrl_pathNEW.Text;
-    _CNFGs4NAME_.pathCst := cntrl_pathCST.Checked;
+    _customer_node_.NameStated:=cntrl_nameStated.Text;
+    _customer_node_.NameCustom:=cntrl_nameCST.Checked;
+    _customer_node_.PathStated:=cntrl_pathStated.Text;
+    _customer_node_.PathCustom:=cntrl_pathCST.Checked;
 end;
 
 //------------------------------------------------------------------------------
@@ -359,11 +356,11 @@ procedure TfrmApprovedFILEs2NAMEs._CNFGs4NAME_frm_validate_;
 var isValid:boolean;
 begin
     case cntrl_nameCST.State of
-      cbUnchecked:cntrl_nameNEW.Enabled:=false;
-      cbChecked  :cntrl_nameNEW.Enabled:=true;
-      cbGrayed   :cntrl_nameNEW.Enabled:=true;
+      cbUnchecked:cntrl_nameStated.Enabled:=false;
+      cbChecked  :cntrl_nameStated.Enabled:=true;
+      cbGrayed   :cntrl_nameStated.Enabled:=true;
     end;
-    isValid:=_CNFGs4NAME_validate_nameNew_(cntrl_nameNEW.Text);
+    isValid:=_CNFGs4NAME_validate_nameNew_(cntrl_nameStated.Text);
     case cntrl_nameCST.State of
       cbChecked  :if not isValid then cntrl_nameCST.State:=cbGrayed;
       cbGrayed   :if isValid then begin
@@ -373,11 +370,11 @@ begin
     end;
     //
     case cntrl_pathCST.State of
-      cbUnchecked:cntrl_pathNEW.Enabled:=false;
-      cbChecked  :cntrl_pathNEW.Enabled:=true;
-      cbGrayed   :cntrl_pathNEW.Enabled:=true;
+      cbUnchecked:cntrl_pathStated.Enabled:=false;
+      cbChecked  :cntrl_pathStated.Enabled:=true;
+      cbGrayed   :cntrl_pathStated.Enabled:=true;
     end;
-    isValid:=_CNFGs4NAME_validate_pathNew_(cntrl_pathNEW.Text);
+    isValid:=_CNFGs4NAME_validate_pathNew_(cntrl_pathStated.Text);
     case cntrl_pathCST.State of
       cbChecked  :if not isValid then cntrl_pathCST.State:=cbGrayed;
       cbGrayed   :if isValid then begin
@@ -413,7 +410,7 @@ begin
     case tCheckBoxThemed(Sender).State of
       cbUnchecked: ;
       cbChecked,
-      cbGrayed   : if cntrl_nameNEW.Enabled then cntrl_nameNEW.SetFocus;
+      cbGrayed   : if cntrl_nameStated.Enabled then cntrl_nameStated.SetFocus;
     end;
 end;
 
@@ -423,7 +420,7 @@ begin
     case tCheckBoxThemed(Sender).State of
       cbUnchecked: ;
       cbChecked,
-      cbGrayed   : if cntrl_pathNEW.Enabled then cntrl_pathNEW.SetFocus;
+      cbGrayed   : if cntrl_pathStated.Enabled then cntrl_pathStated.SetFocus;
     end;
 end;
 
@@ -447,7 +444,7 @@ begin
     w:=0;
     if w<cntrl_nameCST.Width then w:=cntrl_nameCST.Width;
     if w<cntrl_pathCST.Width then w:=cntrl_pathCST.Width;
-    cntrl_nameNEW.Left:=w+2;
+    cntrl_nameStated.Left:=w+2;
 end;
 
 procedure TfrmApprovedFILEs2NAMEs.TreeView1Changing(Sender: TObject;

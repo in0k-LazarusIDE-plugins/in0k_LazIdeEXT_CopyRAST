@@ -1,45 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CopyRAST asd="ssss">
   <approvedFILEs2NAMEs>
-    <Names>
-      <FLDRs count="2">
-        <item0 Path="srcEXT\in0k-lazarusIdeSRC-SourceTREE">
-          <PathNew Value="klklklklklghghgh"/>
-        </item0>
-        <item1 Path="srcEXT\in0k-lazarusIdeSRC-SourceTREE-UI">
-          <NameNew Value="klklklkl"/>
-        </item1>
-      </FLDRs>
+    <ROOT>
+      <nameStated Value="dfgddfg"/>
+      <pathStated Value="dfgd dfg dfg dfg d"/>
+    </ROOT>
+    <Customers>
       <FILEs count="3">
         <item0 Path="in0k_lazIdeSRC_SETTINGs.inc">
-          <NameNew Value="xcxzxc"/>
-          <NameCustom Value="False"/>
-          <PathNew Value="zxcvxzcv"/>
-          <PathCustom Value="False"/>
+          <pathStated Value="dfgdfg"/>
         </item0>
         <item1 Path="in0k_lazIdeSRC_SETTINGs1.inc">
-          <PathNew Value="uyiouyio"/>
+          <nameStated Value="dfgdfg"/>
+          <pathStated Value="dfgdfg"/>
         </item1>
         <item2 Path="REG.pas">
-          <NameNew Value="uyuio"/>
+          <nameStated Value="dfgd"/>
         </item2>
       </FILEs>
-    </Names>
-    <ROOT>
-      <NameNew Value="jkjkjk"/>
-      <PathNew Value="ghghgh"/>
-    </ROOT>
-  </approvedFILEs2NAMEs>
-  <Templates count="1">
-    <item0 Path="srcPKG\OperationNODEs" count="2">
-      <item0>
-        <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
-        <exchange Value="asdf$1$2"/>
+    </Customers>
+    <Templates count="1">
+      <item0 Path="srcPKG\OperationNODEs" count="2">
+        <item0>
+          <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
+          <exchange Value="asdf$1$2"/>
+        </item0>
+        <item1>
+          <template Value="^inasdfasdf0k_lazIdeSRC_(\w+)(\.pas)$"/>
+          <exchange Value="afffffffsdf$1$2"/>
+        </item1>
       </item0>
-      <item1>
-        <template Value="^inasdfasdf0k_lazIdeSRC_(\w+)(\.pas)$"/>
-        <exchange Value="afffffffsdf$1$2"/>
-      </item1>
-    </item0>
-  </Templates>
+    </Templates>
+  </approvedFILEs2NAMEs>
 </CopyRAST>

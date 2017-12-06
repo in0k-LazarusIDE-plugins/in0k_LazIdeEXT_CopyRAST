@@ -17,27 +17,33 @@ object Form1: TForm1
     ClientHeight = 685
     ClientWidth = 892
     inherited pnlPRP: TPanel
-      Height = 285
-      Top = 400
+      Height = 277
+      Top = 408
       Width = 892
-      ClientHeight = 285
+      ClientHeight = 277
       ClientWidth = 892
-      inherited cntrl_nameNEW: TEdit
+      inherited cntrl_nameStated: TEdit
         Width = 787
       end
-      inherited cntrl_pathNEW: TEdit
+      inherited cntrl_pathStated: TEdit
         Width = 787
+      end
+      inherited pnlPRP_1: TPanel
+        Height = 225
+        Width = 546
+        ClientHeight = 225
+        ClientWidth = 546
       end
     end
     inherited pnlMDL: TPanel
       AnchorSideTop.Control = frmApprovedFILEs2NAMEs1
-      Height = 400
+      Height = 408
     end
   end
   object ListView1: TListView
-    Left = 328
+    Left = 160
     Height = 150
-    Top = 176
+    Top = 224
     Width = 250
     AutoWidthLastColumn = True
     Checkboxes = True
@@ -66,6 +72,41 @@ object Form1: TForm1
     TabOrder = 1
     ViewStyle = vsReport
     OnEditing = ListView1Editing
+  end
+  object StringGrid1: TStringGrid
+    Left = 456
+    Height = 156
+    Top = 136
+    Width = 336
+    ColCount = 4
+    Columns = <    
+      item
+        Title.Caption = 'Title'
+        Width = 64
+      end    
+      item
+        Title.Caption = 'Title'
+        Width = 64
+      end    
+      item
+        Title.Caption = 'Title'
+        Width = 64
+      end>
+    TabOrder = 2
+    TitleStyle = tsNative
+    OnCellProcess = StringGrid1CellProcess
+    Cells = (
+      3
+      1
+      1
+      'dfgh'
+      2
+      2
+      'fdgh'
+      2
+      3
+      'dfgh'
+    )
   end
   object XMLConfig1: TXMLConfig
     StartEmpty = False
