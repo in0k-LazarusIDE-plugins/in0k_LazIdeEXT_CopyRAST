@@ -7,8 +7,8 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
   ClientWidth = 696
   OnResize = FrameResize
   TabOrder = 0
-  DesignLeft = 495
-  DesignTop = 267
+  DesignLeft = 492
+  DesignTop = 36
   object pnlPRP: TPanel
     Left = 0
     Height = 125
@@ -30,7 +30,6 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       Width = 95
       Caption = 'custom Name'
       TabOrder = 0
-      OnClick = cntrl_nameCSTClick
     end
     object cntrl_nameStated: TEdit
       AnchorSideTop.Control = pnlPRP
@@ -54,7 +53,6 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       Width = 87
       Caption = 'custom Path'
       TabOrder = 2
-      OnClick = cntrl_pathCSTClick
     end
     object cntrl_pathStated: TEdit
       AnchorSideLeft.Control = cntrl_nameStated
@@ -138,6 +136,7 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
     Height = 97
     Top = 92
     Width = 121
+    DefaultItemHeight = 18
     TabOrder = 2
     OnChanging = TreeView1Changing
   end

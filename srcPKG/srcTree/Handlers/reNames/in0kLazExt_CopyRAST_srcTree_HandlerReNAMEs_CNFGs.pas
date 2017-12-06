@@ -38,7 +38,7 @@ type //=========================================================================
 
 type //=========================================================================
 
- tCopyRAST_Handler_ReNAMEs_template=class(tCopyRAST_srcTree_4Handler_CNFGsNode)
+ tCopyRAST_HandlerCNFGs_ReNAMEs_template_node=class(tCopyRAST_srcTree_4Handler_CNFGsNode)
   protected
    _template_:string;
    _exchange_:string;
@@ -113,30 +113,30 @@ end;
 
 {%region --- template ---------------------------------------------------}
 
-constructor tCopyRAST_Handler_ReNAMEs_template.Create;
+constructor tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.Create;
 begin
    _template_:='';
    _exchange_:='';
 end;
 
-destructor tCopyRAST_Handler_ReNAMEs_template.DESTROY;
+destructor tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.DESTROY;
 begin
     inherited;
 end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-procedure tCopyRAST_Handler_ReNAMEs_template.COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode);
+procedure tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode);
 begin
     {$ifOpt D+}
     Assert(Assigned(Source));
-    Assert(Source is tCopyRAST_Handler_ReNAMEs_template);
+    Assert(Source is tCopyRAST_HandlerCNFGs_ReNAMEs_template_node);
     {$endIf}
-   _template_:=tCopyRAST_Handler_ReNAMEs_template(Source).Template;
-   _exchange_:=tCopyRAST_Handler_ReNAMEs_template(Source).Exchange;
+   _template_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node(Source).Template;
+   _exchange_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node(Source).Exchange;
 end;
 
-function tCopyRAST_Handler_ReNAMEs_template.needSAVE:boolean;
+function tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.needSAVE:boolean;
 begin
     result:=(_template_<>'')or(_exchange_<>'');
 end;

@@ -103,7 +103,8 @@ type
   public
     procedure CNFG_customer_SET(const item:tSrcTree_item; const CNFG:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
     function  CNFG_customer_GET(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
-    procedure TMPLs4NAME_SET(const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+    procedure CNFG_template_SET(const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+    function  CNFG_template_GET(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
   public
     property ROOT_old:tSrcTree_item read _nodeRoot_ write _nodeRoot_;
     property ROOT_NEW:tSrcTree_ROOT read _newROOT_;
@@ -487,12 +488,23 @@ end;
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-procedure tCopyRastSrcTree_prcH4ReNAMEs.TMPLs4NAME_SET(const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFG_template_SET(const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
 begin
-    if not Assigned(item) then EXIT;
+    {$ifOpt D+}
+    Assert(Assigned(item));
+    Assert(item is _tSrcTree_item_fsNodeFLDR_);
+    {$endIf}
    _cnfg_template_LAER_.CNFG_SET(_tSrcTree_item_fsNodeFLDR_(item).fsBase, value);
 end;
 
+function tCopyRastSrcTree_prcH4ReNAMEs.CNFG_template_GET(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+begin
+    {$ifOpt D+}
+    Assert(Assigned(item));
+    //Assert(item is _tSrcTree_item_fsNodeFLDR_);
+    {$endIf}
+   _cnfg_template_LAER_.CNFG_GET(_tSrcTree_item_fsNodeFLDR_(item).fsBase);
+end;
 
 
 {function tCopyRastSrcTree_prcH4ReNAMEs.CNFGs4NAME_GET(const item:tSrcTree_item):tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;

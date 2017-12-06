@@ -2,21 +2,34 @@
 <CopyRAST asd="ssss">
   <approvedFILEs2NAMEs>
     <ROOT>
-      <nameStated Value="dfgddfg"/>
       <pathStated Value="dfgd dfg dfg dfg d"/>
     </ROOT>
     <Customers>
-      <FILEs count="3">
+      <FLDRs count="3">
+        <item0 Path="srcEXT\in0k-lazarusIdeSRC-ExpertCORE">
+          <nameStated Value="zxcz"/>
+          <nameCustom Value="False"/>
+          <pathStated Value="xvxcv"/>
+        </item0>
+        <item1 Path="srcEXT\in0k-lazarusIdeSRC-FuckUpForm">
+          <nameStated Value="zxzxc"/>
+          <nameCustom Value="False"/>
+          <pathStated Value="qwqwe"/>
+        </item1>
+        <item2 Path="srcEXT\in0k-lazarusIdeSRC-SourceTREE">
+          <pathStated Value="asdas"/>
+        </item2>
+      </FLDRs>
+      <FILEs count="2">
         <item0 Path="in0k_lazIdeSRC_SETTINGs.inc">
           <pathStated Value="dfgdfg"/>
+          <pathCustom Value="False"/>
         </item0>
         <item1 Path="in0k_lazIdeSRC_SETTINGs1.inc">
           <nameStated Value="dfgdfg"/>
+          <nameCustom Value="False"/>
           <pathStated Value="dfgdfg"/>
         </item1>
-        <item2 Path="REG.pas">
-          <nameStated Value="dfgd"/>
-        </item2>
       </FILEs>
     </Customers>
     <Templates count="1">

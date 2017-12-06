@@ -260,8 +260,8 @@ const
 
 procedure CRxC_aF2N__templateNode__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; out node:tCopyRAST_srcTree_4Handler_CNFGsNode);
 begin
-    node:=tCopyRAST_Handler_ReNAMEs_template.Create;
-    with tCopyRAST_Handler_ReNAMEs_template(node) do begin
+    node:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.Create;
+    with tCopyRAST_HandlerCNFGs_ReNAMEs_template_node(node) do begin
         Template:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_template_),'');
         Exchange:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_exchange_),'');
     end;
@@ -270,7 +270,7 @@ end;
 procedure CRxC_aF2N__templateNode__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const node:tCopyRAST_srcTree_4Handler_CNFGsNode);
 begin
     //CNF.DeletePath(Section); {todo: ДУМАТЬ, а это Надо?}
-    with tCopyRAST_Handler_ReNAMEs_template(node) do begin
+    with tCopyRAST_HandlerCNFGs_ReNAMEs_template_node(node) do begin
         CNF.SetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_template_),Template);
         CNF.SetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_exchange_),Exchange);
     end;

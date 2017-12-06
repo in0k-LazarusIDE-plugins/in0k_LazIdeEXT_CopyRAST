@@ -48,8 +48,6 @@ type
     procedure FormResize(Sender: TObject);
     procedure ListView1Editing(Sender: TObject; Item: TListItem;
       var AllowEdit: Boolean);
-    procedure StringGrid1CellProcess(Sender: TObject; aCol, aRow: Integer;
-      processType: TCellProcessType; var aValue: string);
     procedure TreeView1AdvancedCustomDrawItem(Sender: TCustomTreeView;
       Node: TTreeNode; State: TCustomDrawState; Stage: TCustomDrawStage;
       var PaintImages, DefaultDraw: Boolean);
@@ -85,7 +83,7 @@ implementation
 
 procedure TForm1.FormCreate(Sender: TObject);
 var s:string;
-  tmp:tCopyRAST_Handler_ReNAMEs_template;
+  tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_node;
   asd:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
   itm:tSrcTree_item;
 begin
@@ -108,16 +106,16 @@ begin
     reNames.CNFGs_LOAD(XMLConfig1);
 
     {asd:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
-    tmp:=tCopyRAST_Handler_ReNAMEs_template.Create;
+    tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.Create;
     tmp.Template:='^in0k_lazIdeSRC_(\w+)(\.pas)$';
     tmp.Exchange:='asdf$1$2';
     asd.Add(tmp);
-    tmp:=tCopyRAST_Handler_ReNAMEs_template.Create;
+    tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.Create;
     tmp.Template:='^inasdfasdf0k_lazIdeSRC_(\w+)(\.pas)$';
     tmp.Exchange:='afffffffsdf$1$2';
     asd.Add(tmp);
 
-    reNames.TMPLs4NAME_SET( SrcTree_fndFsFLDR(first,'D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcPKG\OperationNODEs'),asd);
+    reNames.CNFG_template_SET( SrcTree_fndFsFLDR(first,'D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcPKG\OperationNODEs'),asd);
     asd.FREE;    }
     //cnfg:=TXMLConfig.Create(Self);//(s);
     //cnfg.LoadFromFile(s);
@@ -168,11 +166,6 @@ begin
    AllowEdit:=true;
 end;
 
-procedure TForm1.StringGrid1CellProcess(Sender: TObject; aCol, aRow: Integer;
-  processType: TCellProcessType; var aValue: string);
-begin
-
-end;
 
 procedure TForm1.TreeView1AdvancedCustomDrawItem(Sender: TCustomTreeView;
   Node: TTreeNode; State: TCustomDrawState; Stage: TCustomDrawStage;
