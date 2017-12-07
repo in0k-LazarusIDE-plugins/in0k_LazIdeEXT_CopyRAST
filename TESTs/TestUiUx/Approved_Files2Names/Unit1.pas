@@ -31,7 +31,8 @@ uses
   //
   //LazConfigStorage,
   Classes, SysUtils, XMLConf, FileUtil, CheckBoxThemed, ExtendedTabControls,
-  Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls, ComCtrls, Grids;
+  ListViewFilterEdit, Forms, Controls, Graphics, Dialogs, ExtCtrls, StdCtrls,
+  ComCtrls, Grids;
 
 type
 
@@ -40,7 +41,6 @@ type
   TForm1 = class(TForm)
     frmApprovedFILEs2NAMEs1: TfrmApprovedFILEs2NAMEs;
     ListView1: TListView;
-    StringGrid1: TStringGrid;
     XMLConfig1: TXMLConfig;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -115,8 +115,8 @@ begin
     tmp.Exchange:='afffffffsdf$1$2';
     asd.Add(tmp);
 
-    reNames.CNFG_template_SET( SrcTree_fndFsFLDR(first,'D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcPKG\OperationNODEs'),asd);
-    asd.FREE;    }
+    reNames.CNFG_template_SET(first{ SrcTree_fndFsFLDR(first,'D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcPKG\OperationNODEs')},asd);
+    asd.FREE; }
     //cnfg:=TXMLConfig.Create(Self);//(s);
     //cnfg.LoadFromFile(s);
 end;

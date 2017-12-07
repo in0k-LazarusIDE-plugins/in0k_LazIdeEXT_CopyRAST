@@ -15,8 +15,8 @@ uses
 procedure CRxC_aF2N__customerROOT__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const node:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
 procedure CRxC_aF2N__customerROOT__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const node:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
 
-procedure CRxC_aF2N__customerNode__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; out   node:tCopyRAST_srcTree_4Handler_CNFGsNode);
-procedure CRxC_aF2N__customerNode__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const node:tCopyRAST_srcTree_4Handler_CNFGsNode);
+//procedure CRxC_aF2N__customerNode__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; out   node:tCopyRAST_srcTree_4Handler_CNFGsNode);
+//procedure CRxC_aF2N__customerNode__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const node:tCopyRAST_srcTree_4Handler_CNFGsNode);
 
 procedure CRxC_aF2N__customerFILE__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const LAIR:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER);
 procedure CRxC_aF2N__customerFILE__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const LAIR:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER);
@@ -26,11 +26,14 @@ procedure CRxC_aF2N__customerFLDR__Save(const CNF:tLazExt_CopyRAST_CONFIG; const
 
 // шаблоны ПЕРЕИМЕНОВАНИЯ
 
-procedure CRxC_aF2N__templateNode__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; out   node:tCopyRAST_srcTree_4Handler_CNFGsNode);
-procedure CRxC_aF2N__templateNode__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const node:tCopyRAST_srcTree_4Handler_CNFGsNode);
+procedure CRxC_aF2N__templateROOT__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const List:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+procedure CRxC_aF2N__templateROOT__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const List:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
 
-procedure CRxC_aF2N__templateList__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; out   List:tCopyRAST_srcTree_4Handler_CNFGsNode);
-procedure CRxC_aF2N__templateList__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const List:tCopyRAST_srcTree_4Handler_CNFGsNode);
+//procedure CRxC_aF2N__templateNode__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; out   node:tCopyRAST_srcTree_4Handler_CNFGsNode);
+//procedure CRxC_aF2N__templateNode__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const node:tCopyRAST_srcTree_4Handler_CNFGsNode);
+
+//procedure CRxC_aF2N__templateList__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; out   List:tCopyRAST_srcTree_4Handler_CNFGsNode);
+//procedure CRxC_aF2N__templateList__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const List:tCopyRAST_srcTree_4Handler_CNFGsNode);
 
 procedure CRxC_aF2N__templateLAIR__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const LAIR:tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR);
 procedure CRxC_aF2N__templateLAIR__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const LAIR:tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR);
@@ -40,6 +43,13 @@ implementation
 const
  _cMainSection_='approvedFILEs2NAMEs';
  _cSectionROOT_=cXmlConfig_itm_ROOT_name;
+
+
+function _cSection_ROOT_(const Section:string):string;
+begin
+    result:=lERxC_sctn8Name(_cMainSection_,_cSectionROOT_);
+end;
+
 
 //const
 // _cObjNames_ITEM_='item';
@@ -184,11 +194,6 @@ end;
 *)
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function _cSection_ROOT_(const Section:string):string;
-begin
-    result:=lERxC_sctn8Name(_cMainSection_,_cSectionROOT_);
-end;
-
 procedure CRxC_aF2N__customerROOT__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const node:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
 var tmp:tCopyRAST_srcTree_4Handler_CNFGsNode;
 begin
@@ -302,6 +307,23 @@ end;
 procedure CRxC_aF2N__templateLAIR__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const LAIR:tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR);
 begin
     lazExt_CopyRAST__ConfigSAVE(CNF,lERxC_sctn8Name(_cMainSection_,_cSection_templates_),LAIR,@CRxC_aF2N__templateList__Save)
+end;
+
+//------------------------------------------------------------------------------
+
+procedure CRxC_aF2N__templateROOT__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const List:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+var tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+begin
+   //
+    tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
+    lazExt_CopyRAST__ConfigLOAD(CNF,lERxC_sctn8Name(_cSection_ROOT_(Section),_cSection_templates_),tmp,@CRxC_aF2N__templateNode__Load);
+    List.COPY(tmp);
+    tmp.FREE;
+end;
+
+procedure CRxC_aF2N__templateROOT__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const List:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+begin
+    lazExt_CopyRAST__ConfigSAVE(CNF,lERxC_sctn8Name(_cSection_ROOT_(Section),_cSection_templates_),List,@CRxC_aF2N__templateNode__Save)
 end;
 
 end.

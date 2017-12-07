@@ -40,6 +40,8 @@ type //=========================================================================
 
  tCopyRAST_HandlerCNFGs_ReNAMEs_template_node=class(tCopyRAST_srcTree_4Handler_CNFGsNode)
   protected
+   _prntITEM_:pointer; //< это с родительского
+  protected
    _template_:string;
    _exchange_:string;
   public
@@ -54,6 +56,14 @@ type //=========================================================================
   end;
 
  tCopyRAST_HandlerCNFGs_ReNAMEs_template_List=class(tCopyRAST_srcTree_4Handler_CNFGsLAIR)
+  protected
+    function  _item_GET_(Index:Integer):tCopyRAST_HandlerCNFGs_ReNAMEs_template_node;
+    procedure _item_SET_(Index:Integer; value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_node);
+  protected
+    procedure Add4Parent(const parent:pointer; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+  public
+    property Items[Index:integer]:tCopyRAST_HandlerCNFGs_ReNAMEs_template_node read _item_GET_ write _item_SET_;
+    function needSAVE:boolean; override;
   end;
 
  tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR=class(tCopyRAST_srcTree_4Handler_CNFGs)
@@ -138,7 +148,48 @@ end;
 
 function tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.needSAVE:boolean;
 begin
-    result:=(_template_<>'')or(_exchange_<>'');
+    result:=((_template_<>'')or(_exchange_<>''))and(not Assigned(_prntITEM_));
+end;
+
+//==============================================================================
+
+function tCopyRAST_HandlerCNFGs_ReNAMEs_template_List._item_GET_(Index:Integer):tCopyRAST_HandlerCNFGs_ReNAMEs_template_node;
+begin
+    result:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node(inherited _item_GET_(Index));
+end;
+
+procedure tCopyRAST_HandlerCNFGs_ReNAMEs_template_List._item_SET_(Index:Integer; value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_node);
+begin
+    inherited _item_SET_(Index,value);
+end;
+
+//------------------------------------------------------------------------------
+
+function tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.needSAVE:boolean;
+var i:integer;
+  tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_node;
+begin
+    result:=false;
+    for i:=0 to _LAIR_CNT_-1 do begin
+        if Items[i].needSAVE then begin
+            result:=true;
+            Break;
+        end;
+    end;
+end;
+
+//------------------------------------------------------------------------------
+
+procedure tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Add4Parent(const parent:pointer; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+var i:integer;
+  tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_node;
+begin
+    for i:=0 to list.Count-1 do begin
+        tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.Create;
+        tmp.COPY(list.Items[i]);
+        tmp._prntITEM_:=parent;
+       _item_ADD_(tmp);
+    end;
 end;
 
 //==============================================================================

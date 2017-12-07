@@ -5,6 +5,7 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
   Width = 696
   ClientHeight = 573
   ClientWidth = 696
+  LCLVersion = '1.8.0.5'
   OnResize = FrameResize
   TabOrder = 0
   DesignLeft = 492
@@ -136,7 +137,6 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
     Height = 97
     Top = 92
     Width = 121
-    DefaultItemHeight = 18
     TabOrder = 2
     OnChanging = TreeView1Changing
   end

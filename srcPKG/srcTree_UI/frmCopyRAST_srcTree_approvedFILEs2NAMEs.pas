@@ -542,15 +542,7 @@ begin
    _cnfg_template_.Free;
    _cnfg_template_:=value;
     //_cnfg_customer_obj2ctrl_;
-   _tmplt_.Items.Clear;
-    if Assigned(_cnfg_template_) then begin
-        for i:=0 to _cnfg_template_.Count-1 do begin
-        _tmplt_.Items.AddChild(nil,'asdf');
-        end;
-    end;
-
-
-
+   _tmplt_.Templates:=_cnfg_template_;
 end;
 
 

@@ -3,6 +3,16 @@
   <approvedFILEs2NAMEs>
     <ROOT>
       <pathStated Value="dfgd dfg dfg dfg d"/>
+      <Templates count="2">
+        <item0>
+          <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
+          <exchange Value="asdf$1$2"/>
+        </item0>
+        <item1>
+          <template Value="^inasdfasdf0k_lazIdeSRC_(\w+)(\.pas)$"/>
+          <exchange Value="afffffffsdf$1$2"/>
+        </item1>
+      </Templates>
     </ROOT>
     <Customers>
       <FLDRs count="3">

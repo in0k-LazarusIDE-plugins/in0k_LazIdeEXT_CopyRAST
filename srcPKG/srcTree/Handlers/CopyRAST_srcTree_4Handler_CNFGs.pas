@@ -49,6 +49,7 @@ type
     procedure CNFGS_Item(const index:integer; out   Path:string; out   Item:tCopyRAST_srcTree_4Handler_CNFGsNode);
     procedure CNFGS_Add (out   index:integer; const Path:string; const Item:tCopyRAST_srcTree_4Handler_CNFGsNode); overload;
     procedure CNFGS_Add (const Path:string; const Item:tCopyRAST_srcTree_4Handler_CNFGsNode);                      overload;
+    function  CNFGS_GET (const path:string):tCopyRAST_srcTree_4Handler_CNFGsLAIR;
   public
     function  CNFG_GET(const path:string):tObject;
     procedure CNFG_GET(const path:string; out   Item:tObject);
@@ -211,6 +212,15 @@ begin
     Item:=_CNFG_CRT_;
     if _LIST_.Find(path,i) then begin
         tCopyRAST_srcTree_4Handler_CNFGsNode(Item).COPY(tCopyRAST_srcTree_4Handler_CNFGsNode(_LIST_.Objects[i]));
+    end
+end;
+
+function tCopyRAST_srcTree_4Handler_CNFGs.CNFGS_GET(const path:string):tCopyRAST_srcTree_4Handler_CNFGsLAIR;
+var i:integer;
+begin
+    result:=nil;
+    if _LIST_.Find(path,i) then begin
+        result:=tCopyRAST_srcTree_4Handler_CNFGsLAIR(_LIST_.Objects[i])
     end
 end;
 

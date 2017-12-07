@@ -493,7 +493,6 @@ procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFG_template_SET(const item:tSrcTree_it
 begin
     {$ifOpt D+}
     Assert(Assigned(item));
-    Assert(item is _tSrcTree_item_fsNodeFLDR_);
     {$endIf}
     if item is tSrcTree_ROOT then begin
        _cnfg_template_ROOT_.COPY(value);
@@ -507,7 +506,6 @@ function tCopyRastSrcTree_prcH4ReNAMEs.CNFG_template_GET(const item:tSrcTree_ite
 begin
     {$ifOpt D+}
     Assert(Assigned(item));
-    //Assert(item is _tSrcTree_item_fsNodeFLDR_);
     {$endIf}
     if item is tSrcTree_ROOT then begin
         result:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
@@ -576,6 +574,7 @@ begin
     CRxC_aF2N__customerFLDR__Load(cnfgs,'',_cnfg_customer_FLDR_);
     CRxC_aF2N__customerFILE__Load(cnfgs,'',_cnfg_customer_FILE_);
     //
+    CRxC_aF2N__templateROOT__Load(cnfgs,'',_cnfg_template_ROOT_);
     CRxC_aF2N__templateLAIR__Load(cnfgs,'',_cnfg_template_LAER_);
 end;
 
@@ -585,6 +584,7 @@ begin
     CRxC_aF2N__customerFLDR__Save(cnfgs,'',_cnfg_customer_FLDR_);
     CRxC_aF2N__customerFILE__Save(cnfgs,'',_cnfg_customer_FILE_);
     //
+    CRxC_aF2N__templateROOT__Save(cnfgs,'',_cnfg_template_ROOT_);
     CRxC_aF2N__templateLAIR__Save(cnfgs,'',_cnfg_template_LAER_);
 end;
 
