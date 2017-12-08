@@ -1,23 +1,22 @@
 object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
   Left = 0
-  Height = 573
+  Height = 713
   Top = 0
   Width = 696
-  ClientHeight = 573
+  ClientHeight = 713
   ClientWidth = 696
-  LCLVersion = '1.8.0.5'
   OnResize = FrameResize
   TabOrder = 0
   DesignLeft = 492
   DesignTop = 36
   object pnlPRP: TPanel
     Left = 0
-    Height = 125
-    Top = 448
+    Height = 353
+    Top = 360
     Width = 696
     Align = alBottom
     Caption = 'pnlPRP'
-    ClientHeight = 125
+    ClientHeight = 353
     ClientWidth = 696
     TabOrder = 0
     OnResize = pnlPRPResize
@@ -71,21 +70,21 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       Text = 'cntrl_pathStated'
     end
     object pnlPRP_1: TPanel
-      AnchorSideTop.Control = cntrl_pathStated
-      AnchorSideTop.Side = asrBottom
+      AnchorSideLeft.Control = Panel1
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = Panel1
       AnchorSideRight.Control = pnlPRP
       AnchorSideRight.Side = asrBottom
       AnchorSideBottom.Control = pnlPRP
       AnchorSideBottom.Side = asrBottom
-      Left = 345
-      Height = 73
-      Top = 51
-      Width = 350
+      Left = 400
+      Height = 299
+      Top = 53
+      Width = 295
       Anchors = [akTop, akLeft, akRight, akBottom]
-      BorderSpacing.Top = 2
       Caption = 'pnlPRP_1'
-      ClientHeight = 73
-      ClientWidth = 350
+      ClientHeight = 299
+      ClientWidth = 295
       TabOrder = 4
       object Label1: TLabel
         Left = 11
@@ -120,12 +119,59 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
         ParentColor = False
       end
     end
+    object Splitter1: TSplitter
+      AnchorSideTop.Control = Panel1
+      AnchorSideBottom.Control = pnlPRP
+      AnchorSideBottom.Side = asrBottom
+      Left = 336
+      Height = 299
+      Top = 53
+      Width = 5
+      Align = alNone
+      Anchors = [akTop, akLeft, akBottom]
+    end
+    object Panel1: TPanel
+      AnchorSideLeft.Control = Splitter1
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = cntrl_pathStated
+      AnchorSideTop.Side = asrBottom
+      AnchorSideBottom.Control = pnlPRP
+      AnchorSideBottom.Side = asrBottom
+      Left = 341
+      Height = 299
+      Top = 53
+      Width = 59
+      Anchors = [akTop, akLeft, akBottom]
+      BorderSpacing.Top = 4
+      Caption = 'Panel1'
+      ClientHeight = 299
+      ClientWidth = 59
+      TabOrder = 6
+      object Button1: TButton
+        Left = 8
+        Height = 25
+        Top = 10
+        Width = 32
+        Caption = 'Button1'
+        OnClick = Button1Click
+        TabOrder = 0
+      end
+      object Button2: TButton
+        Left = 8
+        Height = 25
+        Top = 38
+        Width = 31
+        Caption = 'Button2'
+        OnClick = Button2Click
+        TabOrder = 1
+      end
+    end
   end
   object pnlMDL: TPanel
     AnchorSideTop.Control = Owner
     AnchorSideBottom.Control = pnlPRP
     Left = 319
-    Height = 448
+    Height = 360
     Top = 0
     Width = 49
     Anchors = [akTop, akLeft, akBottom]
@@ -138,6 +184,5 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
     Top = 92
     Width = 121
     TabOrder = 2
-    OnChanging = TreeView1Changing
   end
 end

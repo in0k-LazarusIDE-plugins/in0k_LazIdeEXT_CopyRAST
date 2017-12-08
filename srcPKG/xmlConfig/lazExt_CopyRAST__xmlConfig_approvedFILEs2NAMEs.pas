@@ -260,24 +260,37 @@ end;
 //------------------------------------------------------------------------------
 
 const
- _cCRxC_aF2N__tmplItem_template_='template';
- _cCRxC_aF2N__tmplItem_exchange_='exchange';
+ _cCRxC_aF2N__tmplItem_type_='type';
+ _cCRxC_aF2N__tmplItem_type_inherited_='inherited';
+
+ _cCRxC_aF2N__tmplItem_template_ ='template';
+ _cCRxC_aF2N__tmplItem_exchange_ ='exchange';
 
 procedure CRxC_aF2N__templateNode__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; out node:tCopyRAST_srcTree_4Handler_CNFGsNode);
 begin
-    node:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.Create;
-    with tCopyRAST_HandlerCNFGs_ReNAMEs_template_node(node) do begin
-        Template:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_template_),'');
-        Exchange:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_exchange_),'');
+    if _cCRxC_aF2N__tmplItem_type_inherited_=CNF.GetValue( lERxC_sctn8Name(Section,_cCRxC_aF2N__tmplItem_type_),'') then begin
+        node:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_prnt.Create;
+    end
+   else begin
+        node:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.Create;
+        with tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(node) do begin
+            Template:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_template_),'');
+            Exchange:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_exchange_),'');
+        end;
     end;
 end;
 
 procedure CRxC_aF2N__templateNode__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const node:tCopyRAST_srcTree_4Handler_CNFGsNode);
 begin
     //CNF.DeletePath(Section); {todo: ДУМАТЬ, а это Надо?}
-    with tCopyRAST_HandlerCNFGs_ReNAMEs_template_node(node) do begin
-        CNF.SetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_template_),Template);
-        CNF.SetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_exchange_),Exchange);
+    if not tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(node).isInherited_MARK then begin
+        with tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(node) do begin
+            CNF.SetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_template_),Template);
+            CNF.SetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_exchange_),Exchange);
+        end;
+    end
+    else begin
+        CNF.SetValue(lERxC_sctn8Name(Section,_cCRxC_aF2N__tmplItem_type_),_cCRxC_aF2N__tmplItem_type_inherited_);
     end;
 end;
 

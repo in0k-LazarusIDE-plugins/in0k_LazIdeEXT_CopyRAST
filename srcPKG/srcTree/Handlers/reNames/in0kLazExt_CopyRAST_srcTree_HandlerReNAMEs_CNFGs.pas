@@ -38,37 +38,60 @@ type //=========================================================================
 
 type //=========================================================================
 
- tCopyRAST_HandlerCNFGs_ReNAMEs_template_node=class(tCopyRAST_srcTree_4Handler_CNFGsNode)
+ tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule=class(tCopyRAST_srcTree_4Handler_CNFGsNode)
   protected
-   _prntITEM_:pointer; //< это с родительского
+   _prntITEM_:tObject; //< это с родительского
+    function _isInherited_MARK_:boolean;
+    function _isInherited_RULE_:boolean;
   protected
    _template_:string;
    _exchange_:string;
+   _ruleUSED_:boolean;
   public
-    property Template:string read _template_ write _template_;
-    property Exchange:string read _exchange_ write _exchange_;
+    property Template:string  read _template_ write _template_;
+    property Exchange:string  read _exchange_ write _exchange_;
+    property Enabled :boolean read _ruleUSED_ write _ruleUSED_;
   public
-    constructor Create;
+    constructor Create(const ParentItem:tObject=nil);
     destructor DESTROY; override;
+  public
+    property isInherited_MARK:boolean read _isInherited_MARK_;
+    property isInherited_RULE:boolean read _isInherited_RULE_;
   public
     procedure COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode); override;
     function needSAVE:boolean;                                         override;
   end;
 
+ tCopyRAST_HandlerCNFGs_ReNAMEs_template_prnt=class(tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule)
+  public
+   constructor Create;
+  end;
+
+
+
  tCopyRAST_HandlerCNFGs_ReNAMEs_template_List=class(tCopyRAST_srcTree_4Handler_CNFGsLAIR)
   protected
-    function  _item_GET_(Index:Integer):tCopyRAST_HandlerCNFGs_ReNAMEs_template_node;
-    procedure _item_SET_(Index:Integer; value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_node);
+   _usePrntRules_:boolean;
   protected
-    procedure Add4Parent(const parent:pointer; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+    function  _item_GET_(Index:Integer):tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
+    procedure _item_SET_(Index:Integer; value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule);
+  protected
+    procedure AddAsParent(const parent:tObject; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
   public
-    property Items[Index:integer]:tCopyRAST_HandlerCNFGs_ReNAMEs_template_node read _item_GET_ write _item_SET_;
+    property Items[Index:integer]:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule read _item_GET_ write _item_SET_;
     function needSAVE:boolean; override;
+  public
+    constructor Create;
+  public
+    property PrntRules_USE:boolean read _usePrntRules_ write _usePrntRules_;
+    function PrntRules_MarkPRESENT:boolean;
   end;
 
  tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR=class(tCopyRAST_srcTree_4Handler_CNFGs)
   protected
     function _CNFG_CRT_:tCopyRAST_srcTree_4Handler_CNFGsNode; override;
+  public
+    function CNFGS_GET(const path:string):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
   end;
 
 implementation
@@ -123,42 +146,72 @@ end;
 
 {%region --- template ---------------------------------------------------}
 
-constructor tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.Create;
+constructor tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.Create(const ParentItem:tObject=nil);
 begin
    _template_:='';
    _exchange_:='';
+   _prntITEM_:=ParentItem;
+   _ruleUSED_:=TRUE;
 end;
 
-destructor tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.DESTROY;
+destructor tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.DESTROY;
 begin
     inherited;
 end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-procedure tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode);
+procedure tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode);
 begin
     {$ifOpt D+}
     Assert(Assigned(Source));
-    Assert(Source is tCopyRAST_HandlerCNFGs_ReNAMEs_template_node);
+    Assert(Source is tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule);
     {$endIf}
-   _template_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node(Source).Template;
-   _exchange_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node(Source).Exchange;
+   _template_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(Source).Template;
+   _exchange_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(Source).Exchange;
 end;
 
-function tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.needSAVE:boolean;
+function tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.needSAVE:boolean;
 begin
     result:=((_template_<>'')or(_exchange_<>''))and(not Assigned(_prntITEM_));
 end;
 
-//==============================================================================
+//------------------------------------------------------------------------------
 
-function tCopyRAST_HandlerCNFGs_ReNAMEs_template_List._item_GET_(Index:Integer):tCopyRAST_HandlerCNFGs_ReNAMEs_template_node;
+function tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule._isInherited_MARK_:boolean;
 begin
-    result:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node(inherited _item_GET_(Index));
+    result:=Assigned(_prntITEM_)and(_prntITEM_=self);
 end;
 
-procedure tCopyRAST_HandlerCNFGs_ReNAMEs_template_List._item_SET_(Index:Integer; value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_node);
+function tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule._isInherited_RULE_:boolean;
+begin
+    result:=Assigned(_prntITEM_)and(_prntITEM_<>self);
+end;
+
+//==============================================================================
+
+constructor tCopyRAST_HandlerCNFGs_ReNAMEs_template_prnt.Create;
+begin
+    inherited Create;
+   _prntITEM_:=self;
+end;
+
+//==============================================================================
+
+constructor tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
+begin
+    inherited;
+   _usePrntRules_:=TRUE;
+end;
+
+//------------------------------------------------------------------------------
+
+function tCopyRAST_HandlerCNFGs_ReNAMEs_template_List._item_GET_(Index:Integer):tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
+begin
+    result:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(inherited _item_GET_(Index));
+end;
+
+procedure tCopyRAST_HandlerCNFGs_ReNAMEs_template_List._item_SET_(Index:Integer; value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule);
 begin
     inherited _item_SET_(Index,value);
 end;
@@ -167,7 +220,7 @@ end;
 
 function tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.needSAVE:boolean;
 var i:integer;
-  tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_node;
+  tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
 begin
     result:=false;
     for i:=0 to _LAIR_CNT_-1 do begin
@@ -178,14 +231,26 @@ begin
     end;
 end;
 
+function tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.PrntRules_MarkPRESENT:boolean;
+var i:integer;
+begin
+    result:=false;
+    for i:=0 to _LAIR_CNT_-1 do begin
+        if Items[i].isInherited_MARK then begin
+            result:=true;
+            break;
+        end;
+    end;
+end;
+
 //------------------------------------------------------------------------------
 
-procedure tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Add4Parent(const parent:pointer; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+procedure tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.AddAsParent(const parent:tObject; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
 var i:integer;
-  tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_node;
+  tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
 begin
     for i:=0 to list.Count-1 do begin
-        tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.Create;
+        tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.Create;
         tmp.COPY(list.Items[i]);
         tmp._prntITEM_:=parent;
        _item_ADD_(tmp);
@@ -197,6 +262,13 @@ end;
 function tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR._CNFG_CRT_:tCopyRAST_srcTree_4Handler_CNFGsNode;
 begin
     result:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
+end;
+
+//------------------------------------------------------------------------------
+
+function tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR.CNFGS_GET(const path:string):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+begin
+    result:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(inherited CNFGS_GET(path));
 end;
 
 {%endregion}

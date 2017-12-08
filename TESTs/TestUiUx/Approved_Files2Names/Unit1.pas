@@ -46,14 +46,17 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure ListView1AdvancedCustomDrawItem(Sender: TCustomListView;
+        Item: TListItem; State: TCustomDrawState; Stage: TCustomDrawStage;
+        var DefaultDraw: Boolean);
+    procedure ListView1CustomDrawItem(Sender: TCustomListView; Item: TListItem;
+        State: TCustomDrawState; var DefaultDraw: Boolean);
     procedure ListView1Editing(Sender: TObject; Item: TListItem;
       var AllowEdit: Boolean);
     procedure TreeView1AdvancedCustomDrawItem(Sender: TCustomTreeView;
       Node: TTreeNode; State: TCustomDrawState; Stage: TCustomDrawStage;
       var PaintImages, DefaultDraw: Boolean);
     procedure TreeView1Click(Sender: TObject);
-    procedure TreeView1CustomDrawItem(Sender: TCustomTreeView; Node: TTreeNode;
-      State: TCustomDrawState; var DefaultDraw: Boolean);
     procedure TreeView1SelectionChanged(Sender: TObject);
   private
     procedure TreeView0SelectionChanged(Sender: TObject);
@@ -83,7 +86,7 @@ implementation
 
 procedure TForm1.FormCreate(Sender: TObject);
 var s:string;
-  tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_node;
+  tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
   asd:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
   itm:tSrcTree_item;
 begin
@@ -106,11 +109,11 @@ begin
     reNames.CNFGs_LOAD(XMLConfig1);
 
     {asd:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
-    tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.Create;
+    tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.Create;
     tmp.Template:='^in0k_lazIdeSRC_(\w+)(\.pas)$';
     tmp.Exchange:='asdf$1$2';
     asd.Add(tmp);
-    tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_node.Create;
+    tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.Create;
     tmp.Template:='^inasdfasdf0k_lazIdeSRC_(\w+)(\.pas)$';
     tmp.Exchange:='afffffffsdf$1$2';
     asd.Add(tmp);
@@ -160,6 +163,30 @@ begin
     //Panel1.Left:=(Form1.Width-panel1.Width) div 2;;
 end;
 
+procedure TForm1.ListView1AdvancedCustomDrawItem(Sender: TCustomListView;
+    Item: TListItem; State: TCustomDrawState; Stage: TCustomDrawStage;
+    var DefaultDraw: Boolean);
+begin
+//    DefaultDraw:=false;
+    if Stage=cdPrePaint then
+
+    //item.
+
+    sender.Canvas.brush.color:=clGray;
+    //Sender.Canvas.font.color:=clgreen;
+end;
+
+procedure TForm1.ListView1CustomDrawItem(Sender: TCustomListView;
+    Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
+begin
+//
+
+   // Sender.
+     Sender.Canvas.font.color:=clRed;
+
+     //DefaultDraw:=false;
+end;
+
 procedure TForm1.ListView1Editing(Sender: TObject; Item: TListItem;
   var AllowEdit: Boolean);
 begin
@@ -187,12 +214,6 @@ begin
             else approvedFILEs.Select_4Right(tmpItem)
         end;
     end;}
-end;
-
-procedure TForm1.TreeView1CustomDrawItem(Sender: TCustomTreeView;
-  Node: TTreeNode; State: TCustomDrawState; var DefaultDraw: Boolean);
-begin
-
 end;
 
 procedure TForm1.TreeView0SelectionChanged(Sender: TObject);

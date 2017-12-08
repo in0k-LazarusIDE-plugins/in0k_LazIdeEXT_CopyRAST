@@ -20,6 +20,8 @@ type
  { TfrmApprovedFILEs2NAMEs }
 
  TfrmApprovedFILEs2NAMEs = class(TFrame)
+     Button1: TButton;
+     Button2: TButton;
     cntrl_nameCST: TCheckBoxThemed;
     cntrl_pathCST: TCheckBoxThemed;
     cntrl_nameStated: TEdit;
@@ -28,16 +30,16 @@ type
     Edit2: TEdit;
     Label1: TLabel;
     Label2: TLabel;
+    Panel1: TPanel;
     pnlPRP_1: TPanel;
     pnlMDL: TPanel;
     pnlPRP: TPanel;
+    Splitter1: TSplitter;
     TreeView1: TTreeView;
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
     procedure FrameResize(Sender: TObject);
     procedure pnlPRPResize(Sender: TObject);
-    procedure TreeView1Changing(Sender: TObject; Node: TTreeNode;
-      var AllowChange: Boolean);
-
-
  private
    _cnfg_template_:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
     procedure _cnfg_template_SET_(const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
@@ -185,11 +187,11 @@ begin
             Side   :=asrLeft;
         end;
         with AnchorSide[akTop] do begin
-            Control:=cntrl_pathStated;
-            Side   :=asrBottom;
+            Control:=Panel1;
+            Side   :=asrTop;
         end;
         with AnchorSide[akRight] do begin
-            Control:=pnlPRP_1;
+            Control:=Splitter1;
             Side   :=asrLeft;
         end;
         with AnchorSide[akBottom] do begin
@@ -554,6 +556,18 @@ begin
     pnlMDL.Left:=(TFrame(Sender).Width-pnlMDL.Width) div 2;
 end;
 
+procedure TfrmApprovedFILEs2NAMEs.Button1Click(Sender: TObject);
+begin
+   _tmplt_.SendToBack;
+   _tmplt_.Anchors:=_tmplt_.Anchors-[akRight];
+end;
+
+procedure TfrmApprovedFILEs2NAMEs.Button2Click(Sender: TObject);
+begin
+    Splitter1.Left:=_tmplt_.Width+_tmplt_.Left;
+   _tmplt_.Anchors:=_tmplt_.Anchors+[akRight];
+end;
+
 procedure TfrmApprovedFILEs2NAMEs.pnlPRPResize(Sender: TObject);
 var w:integer;
 begin
@@ -562,15 +576,6 @@ begin
     if w<cntrl_pathCST.Width then w:=cntrl_pathCST.Width;
     cntrl_nameStated.Left:=w+2;
 end;
-
-procedure TfrmApprovedFILEs2NAMEs.TreeView1Changing(Sender: TObject;
-  Node: TTreeNode; var AllowChange: Boolean);
-begin
-
-end;
-
-
-
 
 end.
 

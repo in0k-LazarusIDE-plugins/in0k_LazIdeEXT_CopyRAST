@@ -101,6 +101,11 @@ type
     //procedure _CNFGs4NAME_SET_(const List:TStringList; const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
     //procedure _CNFGs4NAME_GET_(const List:TStringList; const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
     //procedure _TMPLs4NAME_SET_(const List:TStringList; const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+    function  _template_GET_link_(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+    procedure _template_MakeLIST_(const item:tSrcTree_item; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; const ENABLED_only:boolean; const asParent,asEnable:boolean);
+
+
+
   public
     procedure CNFG_customer_SET(const item:tSrcTree_item; const CNFG:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
     function  CNFG_customer_GET(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
@@ -486,8 +491,7 @@ begin
     end
 end;
 
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+//------------------------------------------------------------------------------
 
 procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFG_template_SET(const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
 begin
@@ -502,18 +506,83 @@ begin
     end;
 end;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+function tCopyRastSrcTree_prcH4ReNAMEs._template_GET_link_(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+begin
+    {$ifOpt D+}
+    Assert(Assigned(item));
+    {$endIf}
+    if Assigned(item.ItemPRNT) then begin
+        result:=_cnfg_template_LAER_.CNFGS_GET(_tSrcTree_item_fsNodeFLDR_(item).fsBase);
+	end
+    else begin // нет родителя => берем типа ВЕРХНИЙ
+        result:=_cnfg_template_ROOT_;
+	end;
+end;
+
+
+procedure tCopyRastSrcTree_prcH4ReNAMEs._template_MakeLIST_(const item:tSrcTree_item; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; const ENABLED_only:boolean; const asParent,asEnable:boolean);
+var as_Prnt:tSrcTree_item;
+    itmList:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+    tmpRule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
+var i:integer;
+begin
+    if not Assigned(item) then EXIT;
+    //------------------------------
+
+    // метка про РОДИТЕЛЯ
+    if asParent then as_Prnt:=item
+    else as_Prnt:=nil;
+
+    // посик ЛИЧНОГО списка
+    itmList:=_template_GET_link_(item);
+
+    // Формирование списка
+    if not Assigned(itmList) then begin
+        // НИКАИХ правил НЕ указано => ПО УМОЛЧАНИЮ => добавляем родительские
+       _template_MakeLIST_(item.ItemPRNT,list,ENABLED_only,TRUE,TRUE);
+	end
+    else begin
+        if not itmList.PrntRules_MarkPRESENT then begin
+           // Меток родительского НЕТ => добавляем родительские в НАЧАЛО
+           if itmList.PrntRules_USE or (not ENABLED_only) then begin
+              _template_MakeLIST_(item.ItemPRNT,list,ENABLED_only,TRUE, itmList.PrntRules_USE);
+		   end;
+		end;
+        for i:=0 to itmList.Count-1 do begin
+            if itmList.Items[i].isInherited_MARK then begin
+                // встретили метку для РОДИТЕЛЬСКИХ
+                if itmList.PrntRules_USE or (not ENABLED_only) then begin
+                   _template_MakeLIST_(item.ItemPRNT,list,ENABLED_only,TRUE, itmList.PrntRules_USE);
+                end;
+            end
+            else begin
+                tmpRule:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.Create(as_Prnt);
+                tmpRule.COPY(itmList.Items[i]);
+                tmpRule.Enabled:=asEnable;
+                list.Add(tmpRule);
+            end;
+		end;
+	end;
+end;
+
 function tCopyRastSrcTree_prcH4ReNAMEs.CNFG_template_GET(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
 begin
     {$ifOpt D+}
     Assert(Assigned(item));
     {$endIf}
+    result:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
+   _template_MakeLIST_(item,result,FALSE,false,true);
+   {
+
     if item is tSrcTree_ROOT then begin
         result:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
         result.COPY(_cnfg_template_ROOT_);
     end
    else begin
         result:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(_cnfg_template_LAER_.CNFG_GET(_tSrcTree_item_fsNodeFLDR_(item).fsBase));
-    end;
+    end; }
 end;
 
 
