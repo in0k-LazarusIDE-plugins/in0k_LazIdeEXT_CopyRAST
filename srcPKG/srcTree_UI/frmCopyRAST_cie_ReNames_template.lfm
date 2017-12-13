@@ -1,0 +1,75 @@
+inherited frmCopyRAST_cie_ReNamesTemplate: TfrmCopyRAST_cie_ReNamesTemplate
+  Height = 259
+  Width = 505
+  ClientHeight = 259
+  ClientWidth = 505
+  DesignLeft = 541
+  DesignTop = 365
+  object Panel1: TPanel[0]
+    Left = 408
+    Height = 259
+    Top = 0
+    Width = 97
+    Align = alRight
+    Caption = 'Panel1'
+    ClientHeight = 259
+    ClientWidth = 97
+    TabOrder = 0
+    object BitBtn1: TBitBtn
+      Left = 8
+      Height = 30
+      Top = 104
+      Width = 75
+      Action = a_moveUP
+      TabOrder = 0
+    end
+    object BitBtn2: TBitBtn
+      Left = 8
+      Height = 30
+      Top = 136
+      Width = 75
+      Action = a_moveDW
+      TabOrder = 1
+    end
+    object BitBtn3: TBitBtn
+      Left = 8
+      Height = 30
+      Top = 32
+      Width = 75
+      Action = a_deleTE
+      TabOrder = 2
+    end
+    object BitBtn4: TBitBtn
+      Left = 8
+      Height = 30
+      Top = 64
+      Width = 75
+      Action = a_newCNFG
+      TabOrder = 3
+    end
+  end
+  object ActionList1: TActionList[1]
+    left = 8
+    top = 8
+    object a_moveUP: TAction
+      Caption = 'a_move_UP'
+      OnExecute = a_moveUPExecute
+      OnUpdate = a_moveUPUpdate
+    end
+    object a_moveDW: TAction
+      Caption = 'a_move_DW'
+      OnExecute = a_moveDWExecute
+      OnUpdate = a_moveDWUpdate
+    end
+    object a_deleTE: TAction
+      Caption = 'a_deleTE'
+      OnExecute = a_deleTEExecute
+      OnUpdate = a_deleTEUpdate
+    end
+    object a_newCNFG: TAction
+      Caption = 'a_newCNFG'
+      OnExecute = a_newCNFGExecute
+      OnUpdate = a_newCNFGUpdate
+    end
+  end
+end

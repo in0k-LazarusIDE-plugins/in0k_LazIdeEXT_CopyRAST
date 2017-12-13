@@ -297,9 +297,13 @@ end;
 //------------------------------------------------------------------------------
 
 procedure CRxC_aF2N__templateList__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; out List:tCopyRAST_srcTree_4Handler_CNFGsNode);
-begin
+var tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+begin // !!! через копирование !!! избавляемся от ДВОЙНЫХ меток РОДИТЕЛЬСКИХ
+    tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
+    lazExt_CopyRAST__ConfigLOAD(CNF,Section,tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(tmp),@CRxC_aF2N__templateNode__Load);
     List:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
-    lazExt_CopyRAST__ConfigLOAD(CNF,Section,tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(List),@CRxC_aF2N__templateNode__Load)
+    List.COPY(tmp);
+    tmp.FREE;
 end;
 
 procedure CRxC_aF2N__templateList__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const List:tCopyRAST_srcTree_4Handler_CNFGsNode);
@@ -327,7 +331,6 @@ end;
 procedure CRxC_aF2N__templateROOT__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const List:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
 var tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
 begin
-   //
     tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
     lazExt_CopyRAST__ConfigLOAD(CNF,lERxC_sctn8Name(_cSection_ROOT_(Section),_cSection_templates_),tmp,@CRxC_aF2N__templateNode__Load);
     List.COPY(tmp);

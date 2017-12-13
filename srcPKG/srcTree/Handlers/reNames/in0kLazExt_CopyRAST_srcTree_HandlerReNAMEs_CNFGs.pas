@@ -62,12 +62,11 @@ type //=========================================================================
     function needSAVE:boolean;                                         override;
   end;
 
+  // маркер РОДИТЕЛЬСКИХ правил
  tCopyRAST_HandlerCNFGs_ReNAMEs_template_prnt=class(tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule)
   public
    constructor Create;
   end;
-
-
 
  tCopyRAST_HandlerCNFGs_ReNAMEs_template_List=class(tCopyRAST_srcTree_4Handler_CNFGsLAIR)
   protected
@@ -82,6 +81,7 @@ type //=========================================================================
     function needSAVE:boolean; override;
   public
     constructor Create;
+    procedure COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode); override;
   public
     property PrntRules_USE:boolean read _usePrntRules_ write _usePrntRules_;
     function PrntRules_MarkPRESENT:boolean;
@@ -202,6 +202,38 @@ constructor tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
 begin
     inherited;
    _usePrntRules_:=TRUE;
+end;
+
+//------------------------------------------------------------------------------
+
+procedure tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode);
+var i:integer;
+  tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
+    b:boolean;
+begin // ВМЕСТО ВСЕХ родительских, ДОЛЖНЫ записать только ОДНУ метку
+    {$ifOpt D+}
+    Assert(Assigned(_LAIR_));
+    Assert(Assigned(Source));
+    Assert(Source is tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+    {$endIf}
+   _LAIR_.Clear;
+    b:=true;
+    for i:=0 to tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(Source)._LAIR_CNT_-1 do begin
+        tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(Source)._item_GET_(i);
+        if (tmp.isInherited_RULE)or(tmp.isInherited_MARK) then begin
+            if b then begin
+                // ВМЕСТО ПЕРВОЙ встреченой вставляем ОДНУ метку
+                tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_prnt.Create;
+                b:=FALSE;
+            end
+            else tmp:=nil
+        end
+        else begin
+            tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(tmp.ClassType.Create);
+            tmp.COPY(tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(Source)._item_GET_(i));
+        end;
+        if Assigned(tmp) then _item_ADD_(tmp);
+    end;
 end;
 
 //------------------------------------------------------------------------------

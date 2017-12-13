@@ -3,23 +3,24 @@
   <approvedFILEs2NAMEs>
     <ROOT>
       <pathStated Value="dfgd dfg dfg dfg d"/>
+      <pathCustom Value="False"/>
       <Templates count="2">
         <item0>
-          <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
-          <exchange Value="asdf$1$2"/>
-        </item0>
-        <item1>
           <template Value="^inasdfasdf0k_lazIdeSRC_(\w+)(\.pas)$"/>
           <exchange Value="afffffffsdf$1$2"/>
+        </item0>
+        <item1>
+          <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
+          <exchange Value="asdf$1$2"/>
         </item1>
       </Templates>
     </ROOT>
     <Customers>
-      <FLDRs count="3">
+      <FLDRs count="4">
         <item0 Path="srcEXT\in0k-lazarusIdeSRC-ExpertCORE">
           <nameStated Value="zxcz"/>
           <nameCustom Value="False"/>
-          <pathStated Value="xvxcv"/>
+          <pathStated Value="vbncvbn"/>
         </item0>
         <item1 Path="srcEXT\in0k-lazarusIdeSRC-FuckUpForm">
           <nameStated Value="zxzxc"/>
@@ -29,6 +30,10 @@
         <item2 Path="srcEXT\in0k-lazarusIdeSRC-SourceTREE">
           <pathStated Value="asdas"/>
         </item2>
+        <item3 Path="srcPKG">
+          <nameStated Value="xcvbxcvb"/>
+          <pathStated Value="cvbxcvbxcvbcxvb"/>
+        </item3>
       </FLDRs>
       <FILEs count="2">
         <item0 Path="in0k_lazIdeSRC_SETTINGs.inc">
@@ -43,15 +48,16 @@
       </FILEs>
     </Customers>
     <Templates count="1">
-      <item0 Path="srcPKG\OperationNODEs" count="2">
+      <item0 Path="srcPKG\OperationNODEs" count="3">
         <item0>
-          <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
-          <exchange Value="asdf$1$2"/>
-        </item0>
-        <item1>
           <template Value="^inasdfasdf0k_lazIdeSRC_(\w+)(\.pas)$"/>
           <exchange Value="afffffffsdf$1$2"/>
-        </item1>
+        </item0>
+        <item1 type="inherited"/>
+        <item2>
+          <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
+          <exchange Value="asdf$1$2"/>
+        </item2>
       </item0>
     </Templates>
   </approvedFILEs2NAMEs>

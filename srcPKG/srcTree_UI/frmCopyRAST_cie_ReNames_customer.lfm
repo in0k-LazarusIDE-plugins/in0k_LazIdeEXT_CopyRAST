@@ -1,0 +1,58 @@
+inherited frmCopyRAST_cie_ReNamesCustomer: TfrmCopyRAST_cie_ReNamesCustomer
+  Height = 59
+  Width = 679
+  AutoSize = True
+  ClientHeight = 59
+  ClientWidth = 679
+  OnResize = FrameResize
+  object cntrl_nameCST: TCheckBoxThemed[0]
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = cntrl_nameStated
+    AnchorSideTop.Side = asrCenter
+    Left = 0
+    Height = 19
+    Top = 2
+    Width = 95
+    Caption = 'custom Name'
+    TabOrder = 0
+  end
+  object cntrl_pathCST: TCheckBoxThemed[1]
+    AnchorSideLeft.Control = cntrl_nameCST
+    AnchorSideTop.Control = cntrl_pathStated
+    AnchorSideTop.Side = asrCenter
+    Left = 0
+    Height = 19
+    Top = 27
+    Width = 87
+    Caption = 'custom Path'
+    TabOrder = 1
+  end
+  object cntrl_pathStated: TEdit[2]
+    AnchorSideLeft.Control = cntrl_nameStated
+    AnchorSideTop.Control = cntrl_nameStated
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = cntrl_nameStated
+    AnchorSideRight.Side = asrBottom
+    Left = 104
+    Height = 23
+    Top = 25
+    Width = 575
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Top = 2
+    TabOrder = 2
+    Text = 'cntrl_pathStated'
+  end
+  object cntrl_nameStated: TEdit[3]
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 104
+    Height = 23
+    Top = 0
+    Width = 575
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Left = 4
+    TabOrder = 3
+    Text = 'cntrl_nameStated'
+  end
+end

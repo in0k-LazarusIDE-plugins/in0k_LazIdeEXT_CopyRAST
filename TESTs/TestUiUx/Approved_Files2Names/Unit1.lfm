@@ -16,72 +16,55 @@ object Form1: TForm1
     Align = alClient
     ClientHeight = 685
     ClientWidth = 892
-    inherited pnlPRP: TPanel
-      Height = 277
-      Top = 408
-      Width = 892
-      ClientHeight = 277
-      ClientWidth = 892
-      inherited cntrl_nameStated: TEdit
-        Width = 787
-      end
-      inherited cntrl_pathStated: TEdit
-        Width = 787
-      end
-      inherited pnlPRP_1: TPanel
-        Height = 225
-        Width = 546
-        ClientHeight = 225
-        ClientWidth = 546
-      end
-    end
     inherited pnlMDL: TPanel
       AnchorSideTop.Control = frmApprovedFILEs2NAMEs1
-      Height = 408
+      Height = 332
     end
-  end
-  object ListView1: TListView
-    Left = 160
-    Height = 150
-    Top = 224
-    Width = 250
-    AutoWidthLastColumn = True
-    Checkboxes = True
-    Columns = <    
-      item
-        AutoSize = True
-        Caption = 'asdasdasd'
-        Width = 77
-      end    
-      item
-        AutoSize = True
-        Width = 65
-      end    
-      item
-        Width = 104
-      end>
-    GridLines = True
-    Items.LazData = {
-      C100000002000000FFFFFFFFFFFFFFFFFFFFFFFF040000000F000000D0ADD0BB
-      D0B5D0BCD0B5D0BDD182300F000000D0ADD0BBD0B5D0BCD0B5D0BDD182310F00
-      0000D0ADD0BBD0B5D0BCD0B5D0BDD182320F000000D0ADD0BBD0B5D0BCD0B5D0
-      BDD182350F000000D0ADD0BBD0B5D0BCD0B5D0BDD18236FFFFFFFFFFFFFFFFFF
-      FFFFFF010000000F000000D0ADD0BBD0B5D0BCD0B5D0BDD182330F000000D0AD
-      D0BBD0B5D0BCD0B5D0BDD18234FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      FF
-    }
-    RowSelect = True
-    TabOrder = 1
-    ViewStyle = vsReport
-    OnAdvancedCustomDrawItem = ListView1AdvancedCustomDrawItem
-    OnCustomDrawItem = ListView1CustomDrawItem
-    OnEditing = ListView1Editing
+    inherited pnlPRP: TPanel
+      Top = 332
+      Width = 892
+      ClientWidth = 892
+      inherited frmCopyRAST_cie_ReNamesCustomer1: TfrmCopyRAST_cie_ReNamesCustomer
+        Height = 48
+        Width = 892
+        Align = alTop
+        ClientHeight = 48
+        ClientWidth = 892
+        inherited cntrl_nameCST: TCheckBoxThemed
+          AnchorSideLeft.Control = frmApprovedFILEs2NAMEs1.frmCopyRAST_cie_ReNamesCustomer1
+        end
+        inherited cntrl_pathStated: TEdit
+          Width = 788
+        end
+        inherited cntrl_nameStated: TEdit
+          AnchorSideTop.Control = frmApprovedFILEs2NAMEs1.frmCopyRAST_cie_ReNamesCustomer1
+          AnchorSideRight.Control = frmApprovedFILEs2NAMEs1.frmCopyRAST_cie_ReNamesCustomer1
+          Width = 788
+        end
+      end
+      inherited frmCopyRAST_cie_ReNamesTemplate1: TfrmCopyRAST_cie_ReNamesTemplate
+        Height = 305
+        Top = 48
+        Width = 892
+        Align = alClient
+        ClientHeight = 305
+        ClientWidth = 892
+        TabOrder = 1
+        DesignLeft = 468
+        DesignTop = 400
+        inherited Panel1: TPanel
+          Left = 795
+          Height = 305
+          ClientHeight = 305
+        end
+      end
+    end
   end
   object XMLConfig1: TXMLConfig
     StartEmpty = False
-    RootName = 'CopyRAST'
+    RootName = 'CONFIG'
     ReadOnly = False
-    left = 332
-    top = 48
+    left = 70
+    top = 24
   end
 end

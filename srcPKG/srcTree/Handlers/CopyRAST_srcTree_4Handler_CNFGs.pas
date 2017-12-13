@@ -23,17 +23,19 @@ type
     procedure _item_SET_(Index:Integer; value:tCopyRAST_srcTree_4Handler_CNFGsNode);
     function  _item_ADD_(value:tCopyRAST_srcTree_4Handler_CNFGsNode):integer;
   public
+    procedure CLEAR(const withOutData:boolean=false);
     procedure COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode); override;
   public
     property Count:integer read _LAIR_CNT_;
     property Items[Index:integer]:tCopyRAST_srcTree_4Handler_CNFGsNode read _item_GET_ write _item_SET_;
-    function Add(const item:tCopyRAST_srcTree_4Handler_CNFGsNode):integer;
+  public
+    function  IndexOf(const item:tCopyRAST_srcTree_4Handler_CNFGsNode):integer;
+    function  Add    (const item:tCopyRAST_srcTree_4Handler_CNFGsNode):integer;
+    procedure Delete (const indx:integer);
   public
     constructor Create;
     destructor DESTROY; override;
   end;
-
-
 
  tCopyRAST_srcTree_4Handler_CNFGs=class
   protected
@@ -122,12 +124,38 @@ begin
     result:=_LAIR_.Add(value);
 end;
 
+//------------------------------------------------------------------------------
+
 function tCopyRAST_srcTree_4Handler_CNFGsLAIR.Add(const item:tCopyRAST_srcTree_4Handler_CNFGsNode):integer;
 begin
     result:=_item_ADD_(item);
 end;
 
+function tCopyRAST_srcTree_4Handler_CNFGsLAIR.IndexOf(const item:tCopyRAST_srcTree_4Handler_CNFGsNode):Integer;
+begin
+    result:=_LAIR_.IndexOf(item);
+end;
+
+procedure tCopyRAST_srcTree_4Handler_CNFGsLAIR.Delete(const indx:integer);
+begin
+   _LAIR_.Delete(indx);
+end;
+
 //------------------------------------------------------------------------------
+
+
+procedure tCopyRAST_srcTree_4Handler_CNFGsLAIR.CLEAR(const withOutData:boolean=false);
+var i:integer;
+begin
+    if withOutData then begin
+       _LAIR_.OwnsObjects:=FALSE;
+       _LAIR_.Clear;
+       _LAIR_.OwnsObjects:=TRUE;
+    end
+    else begin
+       _LAIR_.Clear;
+    end;
+end;
 
 procedure tCopyRAST_srcTree_4Handler_CNFGsLAIR.COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode);
 var i:integer;
@@ -140,7 +168,8 @@ begin
     {$endIf}
    _LAIR_.Clear;
     for i:=0 to tCopyRAST_srcTree_4Handler_CNFGsLAIR(Source)._LAIR_CNT_-1 do begin
-        tmp:=tCopyRAST_srcTree_4Handler_CNFGsNode(tCopyRAST_srcTree_4Handler_CNFGsLAIR(Source)._item_GET_(i).ClassType.Create);
+        tmp:=tCopyRAST_srcTree_4Handler_CNFGsLAIR(Source)._item_GET_(i);
+        tmp:=tCopyRAST_srcTree_4Handler_CNFGsNode(tmp.ClassType.Create);
         tmp.COPY(tCopyRAST_srcTree_4Handler_CNFGsLAIR(Source)._item_GET_(i));
        _item_ADD_(tmp);
     end;
