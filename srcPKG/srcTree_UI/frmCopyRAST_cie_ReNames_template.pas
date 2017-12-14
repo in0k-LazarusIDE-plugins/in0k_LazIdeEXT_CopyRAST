@@ -6,8 +6,8 @@ interface
 
 uses
   in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs,
-  cmpCopyRAST_srcTree_nameTemplates,
-
+  cmpCopyRAST_srcTree_nameTemplates, frmCopyRAST_cie_ReNames_tmpltRule,
+    ComCtrls,
 
     Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
     Buttons, ActnList, frmCopyRAST_CnfgItem_EDIT;
@@ -26,8 +26,11 @@ type
       BitBtn2: TBitBtn;
       BitBtn3: TBitBtn;
       BitBtn4: TBitBtn;
+      BitBtn5: TBitBtn;
     cntrl_Template:tCmpCopyRAST_srcTree_nameTemplates;
-    Panel1: TPanel;
+    frmCopyRAST_cie_ReNamesTmpltRULE1: TfrmCopyRAST_cie_ReNamesTmpltRULE;
+    pnl_BTTNs: TPanel;
+    Splitter1: TSplitter;
     procedure a_deleTEExecute(Sender: TObject);
     procedure a_deleTEUpdate(Sender: TObject);
     procedure a_moveDWExecute(Sender: TObject);
@@ -36,6 +39,24 @@ type
     procedure a_moveUPUpdate(Sender: TObject);
     procedure a_newCNFGExecute(Sender: TObject);
     procedure a_newCNFGUpdate(Sender: TObject);
+
+  protected
+
+
+  protected
+    procedure _TemplateAPPLAY_SET_(const value:mTemplateAPPLAY);
+    function  _TemplateAPPLAY_GET_:mTemplateAPPLAY;
+    procedure _TmpltApplaySTR_SET_(const value:string);
+    function  _TmpltApplaySTR_GET_:string;
+  public
+    property TemplateAPPLAY_FNK:mTemplateAPPLAY read _TemplateAPPLAY_GET_ write _TemplateAPPLAY_SET_;
+    property TemplateAPPLAY_STR:string          read _TmpltApplaySTR_GET_ write _TmpltApplaySTR_SET_;
+
+
+  protected
+    procedure _cntrl_Templates_onSelectItem_(Sender:TObject; Item:TListItem; Selected:Boolean);
+  protected
+    procedure _onChange_tmpltRULE_(const Sender:tObject; const value:pointer);
   protected
     function  _itemCNFG_GET_:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
     procedure _itemCNFG_SET_(const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
@@ -68,8 +89,7 @@ begin
     with cntrl_Template do begin
         Parent:=self;
         //
-        Align:=alClient;
-        {with AnchorSide[akLeft] do begin
+        with AnchorSide[akLeft] do begin
             Control:=self;
             Side   :=asrLeft;
         end;
@@ -78,16 +98,18 @@ begin
             Side   :=asrTop;
         end;
         with AnchorSide[akRight] do begin
-            Control:=self;
-            Side   :=asrRight;
+            Control:=Splitter1;
+            Side   :=asrLeft;
         end;
         with AnchorSide[akBottom] do begin
             Control:=self;
             Side   :=asrBottom;
         end;
         //
-        Anchors:=[akTop, akLeft, akRight, akBottom];}
+        Anchors:=[akTop, akLeft, akRight, akBottom];
     end;
+    //---
+    frmCopyRAST_cie_ReNamesTmpltRULE1.ItemCNFG_OnChange:=@_onChange_tmpltRULE_;
 
 end;
 
@@ -115,11 +137,13 @@ end;
 procedure TfrmCopyRAST_cie_ReNamesTemplate._cnfg_nil2ctrl_;
 begin
     cntrl_Template.Templates:=nil;
+    frmCopyRAST_cie_ReNamesTmpltRULE1.ItemCNFG:=NIL;
 end;
 
 procedure TfrmCopyRAST_cie_ReNamesTemplate._cnfg_itm2ctrl_(const item:pointer);
 begin
     cntrl_Template.Templates:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(item);
+    frmCopyRAST_cie_ReNamesTmpltRULE1.ItemCNFG:=NIL;
 
     with tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(item) do begin
         {cntrl_nameStated.Text:=NameStated;
@@ -154,6 +178,7 @@ end;
 
 procedure TfrmCopyRAST_cie_ReNamesTemplate._ctrl_eventSet_onChange_;
 begin
+    cntrl_Template.OnSelectItem:=@_cntrl_Templates_onSelectItem_;
  {   cntrl_nameCST.OnChange   :=@_ctrl_xxxxCST_onChange_;
     cntrl_nameCST.OnClick    :=@_ctrl_nameCST_onClick_;
     cntrl_pathCST.OnChange   :=@_ctrl_xxxxCST_onChange_;
@@ -164,6 +189,8 @@ end;
 
 procedure TfrmCopyRAST_cie_ReNamesTemplate._ctrl_eventClr_onChange_;
 begin
+    cntrl_Template.OnSelectItem:=nil;//@_cntrl_Templates_onSelectItem_;
+
   {  cntrl_nameCST.OnChange:=nil;
     cntrl_nameCST.OnClick :=nil;
     cntrl_pathCST.OnChange:=nil;
@@ -178,6 +205,24 @@ procedure TfrmCopyRAST_cie_ReNamesTemplate._ctrl_validate_;
 begin
     //
 end;
+
+//==============================================================================
+
+procedure TfrmCopyRAST_cie_ReNamesTemplate._cntrl_Templates_onSelectItem_(Sender:TObject; Item:TListItem; Selected:Boolean);
+var rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
+begin
+    if Selected then begin
+        rule:=tCmpCopyRAST_srcTree_nameTemplates(sender).itemData(Item);
+        frmCopyRAST_cie_ReNamesTmpltRULE1.ItemCNFG:=rule;
+    end;
+end;
+
+procedure TfrmCopyRAST_cie_ReNamesTemplate._onChange_tmpltRULE_(const Sender:tObject; const value:pointer);
+begin
+   _CNFG_do_OnCHANGE_;
+    cntrl_Template.Update_Template(tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(value));
+end;
+
 
 //==============================================================================
 
@@ -233,6 +278,30 @@ begin
     cntrl_Template.new_Cnfg_Create;
     cntrl_Template.SetFocus;
    _CNFG_do_OnCHANGE_;
+end;
+
+//==============================================================================
+
+procedure TfrmCopyRAST_cie_ReNamesTemplate._TemplateAPPLAY_SET_(const value:mTemplateAPPLAY);
+begin
+    cntrl_Template.TemplateAPPLAY_FNK:=value;
+end;
+
+function TfrmCopyRAST_cie_ReNamesTemplate._TemplateAPPLAY_GET_:mTemplateAPPLAY;
+begin
+    result:=cntrl_Template.TemplateAPPLAY_FNK;
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+procedure TfrmCopyRAST_cie_ReNamesTemplate._TmpltApplaySTR_SET_(const value:string);
+begin
+    cntrl_Template.TemplateAPPLAY_STR:=value;
+end;
+
+function TfrmCopyRAST_cie_ReNamesTemplate._TmpltApplaySTR_GET_:string;
+begin
+    result:=cntrl_Template.TemplateAPPLAY_STR;
 end;
 
 end.

@@ -263,8 +263,15 @@ const
  _cCRxC_aF2N__tmplItem_type_='type';
  _cCRxC_aF2N__tmplItem_type_inherited_='inherited';
 
+ _cCRxC_aF2N__tmplItem_Enabled_  ='enabled';
+
+ _cCRxC_aF2N__tmplItem_regExUSE_ ='regExUSE';
  _cCRxC_aF2N__tmplItem_template_ ='template';
  _cCRxC_aF2N__tmplItem_exchange_ ='exchange';
+
+ _cCRxC_aF2N__tmplItem_Use4FILE_ ='_Use4FILE_';
+ _cCRxC_aF2N__tmplItem_Use4FLDR_ ='_Use4FLDR_';
+ _cCRxC_aF2N__tmplItem_use_Last_ ='_use_Last_';
 
 procedure CRxC_aF2N__templateNode__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; out node:tCopyRAST_srcTree_4Handler_CNFGsNode);
 begin
@@ -274,8 +281,16 @@ begin
    else begin
         node:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.Create;
         with tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(node) do begin
+            Enabled :=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_Enabled_),TRUE);
+            //
+            RegExUSE:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_regExUSE_),TRUE);
             Template:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_template_),'');
             Exchange:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_exchange_),'');
+            //
+            Use4FILE:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_Use4FILE_),TRUE);
+            Use4FLDR:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_Use4FLDR_),false);
+            //
+            use_Last:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_use_Last_),false);
         end;
     end;
 end;
@@ -285,8 +300,16 @@ begin
     //CNF.DeletePath(Section); {todo: ДУМАТЬ, а это Надо?}
     if not tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(node).isInherited_MARK then begin
         with tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(node) do begin
-            CNF.SetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_template_),Template);
-            CNF.SetValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_exchange_),Exchange);
+            CNF.SetDeleteValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_template_),Enabled,true);
+
+            CNF.SetDeleteValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_regExUSE_),RegExUSE,true);
+            CNF.SetDeleteValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_template_),Template,'');
+            CNF.SetDeleteValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_exchange_),Exchange,'');
+
+            CNF.SetDeleteValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_Use4FILE_),Use4FILE,true);
+            CNF.SetDeleteValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_Use4FLDR_),Use4FLDR,false);
+
+            CNF.SetDeleteValue( lERxC_8Value(Section,_cCRxC_aF2N__tmplItem_use_Last_),use_Last,false);
         end;
     end
     else begin

@@ -40,6 +40,7 @@ type
 
   TForm1 = class(TForm)
     frmApprovedFILEs2NAMEs1: TfrmApprovedFILEs2NAMEs;
+    ListView1: TListView;
     XMLConfig1: TXMLConfig;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -191,7 +192,6 @@ procedure TForm1.ListView1Editing(Sender: TObject; Item: TListItem;
 begin
    AllowEdit:=true;
 end;
-
 
 procedure TForm1.TreeView1AdvancedCustomDrawItem(Sender: TCustomTreeView;
   Node: TTreeNode; State: TCustomDrawState; Stage: TCustomDrawStage;

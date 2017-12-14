@@ -6,12 +6,12 @@
       <pathCustom Value="False"/>
       <Templates count="2">
         <item0>
-          <template Value="^inasdfasdf0k_lazIdeSRC_(\w+)(\.pas)$"/>
+          <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
           <exchange Value="afffffffsdf$1$2"/>
         </item0>
         <item1>
-          <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
-          <exchange Value="asdf$1$2"/>
+          <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$dsasdf"/>
+          <exchange Value="asdf$1$2wadfasdfsadfasdf"/>
         </item1>
       </Templates>
     </ROOT>

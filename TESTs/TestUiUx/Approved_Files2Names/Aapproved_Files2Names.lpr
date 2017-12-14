@@ -13,7 +13,7 @@ uses
   lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs,
   frmCopyRAST_srcTree_approvedFILEs2NAMEs, cmpCopyRAST_srcTree_nameTemplates,
   CopyRAST_srcTree_4Handler_CNFGs, frmCopyRAST_CnfgItem_EDIT,
-  frmCopyRAST_cie_ReNames_customer, frmCopyRAST_cie_ReNames_template
+  frmCopyRAST_cie_ReNames_customer, frmCopyRAST_cie_ReNames_template, frmCopyRAST_cie_ReNames_tmpltRule
   { you can add units after this };
 
 {$R *.res}

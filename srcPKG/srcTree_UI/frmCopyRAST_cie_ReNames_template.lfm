@@ -5,69 +5,153 @@ inherited frmCopyRAST_cie_ReNamesTemplate: TfrmCopyRAST_cie_ReNamesTemplate
   ClientWidth = 505
   DesignLeft = 541
   DesignTop = 365
-  object Panel1: TPanel[0]
-    Left = 408
+  object pnl_BTTNs: TPanel[0]
+    AnchorSideLeft.Control = Splitter1
+    AnchorSideLeft.Side = asrBottom
+    Left = 317
     Height = 259
     Top = 0
-    Width = 97
-    Align = alRight
-    Caption = 'Panel1'
+    Width = 32
+    Anchors = [akTop, akLeft, akBottom]
+    AutoSize = True
+    BevelOuter = bvNone
     ClientHeight = 259
-    ClientWidth = 97
+    ClientWidth = 32
     TabOrder = 0
     object BitBtn1: TBitBtn
-      Left = 8
+      AnchorSideLeft.Control = BitBtn5
+      AnchorSideTop.Control = BitBtn5
+      AnchorSideTop.Side = asrBottom
+      Left = 0
       Height = 30
-      Top = 104
-      Width = 75
+      Top = 34
+      Width = 32
       Action = a_moveUP
+      BorderSpacing.Top = 4
       TabOrder = 0
     end
     object BitBtn2: TBitBtn
-      Left = 8
+      AnchorSideLeft.Control = BitBtn5
+      AnchorSideTop.Control = BitBtn1
+      AnchorSideTop.Side = asrBottom
+      Left = 0
       Height = 30
-      Top = 136
-      Width = 75
+      Top = 64
+      Width = 32
       Action = a_moveDW
       TabOrder = 1
     end
     object BitBtn3: TBitBtn
-      Left = 8
+      AnchorSideLeft.Control = BitBtn5
+      AnchorSideTop.Control = BitBtn2
+      AnchorSideTop.Side = asrBottom
+      Left = 0
       Height = 30
-      Top = 32
-      Width = 75
+      Top = 98
+      Width = 32
       Action = a_deleTE
+      BorderSpacing.Top = 4
       TabOrder = 2
     end
     object BitBtn4: TBitBtn
-      Left = 8
+      AnchorSideLeft.Control = BitBtn5
+      AnchorSideTop.Control = BitBtn3
+      AnchorSideTop.Side = asrBottom
+      Left = 0
       Height = 30
-      Top = 64
-      Width = 75
+      Top = 128
+      Width = 32
       Action = a_newCNFG
       TabOrder = 3
     end
+    object BitBtn5: TBitBtn
+      AnchorSideLeft.Control = pnl_BTTNs
+      AnchorSideTop.Control = pnl_BTTNs
+      Left = 0
+      Height = 30
+      Top = 0
+      Width = 32
+      Caption = 'use'
+      TabOrder = 4
+    end
   end
-  object ActionList1: TActionList[1]
+  object Splitter1: TSplitter[1]
+    AnchorSideTop.Control = Owner
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 312
+    Height = 259
+    Top = 0
+    Width = 5
+    Align = alNone
+    Anchors = [akTop, akLeft, akBottom]
+  end
+  inline frmCopyRAST_cie_ReNamesTmpltRULE1: TfrmCopyRAST_cie_ReNamesTmpltRULE[2]
+    AnchorSideLeft.Control = pnl_BTTNs
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 349
+    Height = 259
+    Width = 156
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    ClientHeight = 259
+    ClientWidth = 156
+    TabOrder = 2
+    inherited GroupBox1: TGroupBox
+      Height = 259
+      Width = 156
+      ClientHeight = 239
+      ClientWidth = 152
+      inherited Label1: TLabel
+        Left = 114
+        Top = -1
+      end
+      inherited CheckBoxThemed2: TCheckBoxThemed
+        Left = -382
+      end
+      inherited Edit1: TEdit
+        Left = -382
+        Width = 534
+      end
+      inherited Edit2: TEdit
+        Left = -382
+        Width = 534
+      end
+      inherited CheckBoxThemed3: TCheckBoxThemed
+        Left = -382
+      end
+      inherited CheckBoxThemed4: TCheckBoxThemed
+        Left = -340
+      end
+      inherited CheckBoxThemed5: TCheckBoxThemed
+        Left = -382
+      end
+    end
+  end
+  object ActionList1: TActionList[3]
     left = 8
     top = 8
     object a_moveUP: TAction
-      Caption = 'a_move_UP'
+      Caption = 'UP'
       OnExecute = a_moveUPExecute
       OnUpdate = a_moveUPUpdate
     end
     object a_moveDW: TAction
-      Caption = 'a_move_DW'
+      Caption = 'DW'
       OnExecute = a_moveDWExecute
       OnUpdate = a_moveDWUpdate
     end
     object a_deleTE: TAction
-      Caption = 'a_deleTE'
+      Caption = 'DEL'
       OnExecute = a_deleTEExecute
       OnUpdate = a_deleTEUpdate
     end
     object a_newCNFG: TAction
-      Caption = 'a_newCNFG'
+      Caption = 'NEW'
       OnExecute = a_newCNFGExecute
       OnUpdate = a_newCNFGUpdate
     end

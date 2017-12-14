@@ -112,6 +112,11 @@ type
     procedure CNFG_template_SET(const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
     function  CNFG_template_GET(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
   public
+    function  Validate_FLDR(const value:string):boolean;
+    function  Validate_FILE(const value:string):boolean;
+  public
+    function  Template_APPLAY(const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; var itemName:string):integer;
+  public
     property ROOT_old:tSrcTree_item read _nodeRoot_ write _nodeRoot_;
     property ROOT_NEW:tSrcTree_ROOT read _newROOT_;
   end;
@@ -655,6 +660,41 @@ begin
     //
     CRxC_aF2N__templateROOT__Save(cnfgs,'',_cnfg_template_ROOT_);
     CRxC_aF2N__templateLAIR__Save(cnfgs,'',_cnfg_template_LAER_);
+end;
+
+//------------------------------------------------------------------------------
+
+function tCopyRastSrcTree_prcH4ReNAMEs.Validate_FLDR(const value:string):boolean;
+begin {todo: добавить СЕРЪЕЗНУЮ проверку}
+    result:=Trim(value)<>'';
+end;
+
+function tCopyRastSrcTree_prcH4ReNAMEs.Validate_FILE(const value:string):boolean;
+begin {todo: добавить СЕРЪЕЗНУЮ проверку}
+    result:=Trim(value)<>'';
+end;
+
+//------------------------------------------------------------------------------
+
+const
+
+  c_notFound=0;
+
+function tCopyRastSrcTree_prcH4ReNAMEs.Template_APPLAY(const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; var itemName:string):integer;
+var tmp:string;
+begin
+
+    _regExpr_.InputString:=itemName;
+    _regExpr_.Expression :=rule.Template; // шаблон поиска
+     if _regExpr_.Exec(1) then begin
+         tmp:=_regExpr_.Replace(itemName,'asdf$1$2',true);
+         //
+         itemName:=tmp;
+     end
+     else begin
+         result:=c_notFound;
+         //tmp   :=itemName;
+     end;
 end;
 
 end.

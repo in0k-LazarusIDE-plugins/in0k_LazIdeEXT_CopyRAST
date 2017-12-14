@@ -155,6 +155,7 @@ begin
     //---
     frmCopyRAST_cie_ReNamesCustomer1.ItemCNFG_OnChange:=@_onChange_customer_;
     frmCopyRAST_cie_ReNamesTemplate1.ItemCNFG_OnChange:=@_onChange_template_;
+    frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=NIL;
 end;
 
 //------------------------------------------------------------------------------
@@ -165,10 +166,12 @@ begin
     if Assigned(_HNDLR_) then begin
        _treeL_.Root:=_HNDLR_.ROOT_old;
        _treeR_.Root:=_HNDLR_.ROOT_NEW;
+        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=@(_HNDLR_.Template_APPLAY);
     end
     else begin
        _treeL_.Root:=nil;
        _treeR_.Root:=nil;
+        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=nil;
     end;
 end;
 
@@ -178,11 +181,14 @@ procedure TfrmApprovedFILEs2NAMEs._editItem_SET_(const value:tSrcTree_item);
 begin
     if Assigned(value) then begin
        _editItem_:=value;
+        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_STR:='';
         frmCopyRAST_cie_ReNamesCustomer1.ItemCNFG:=_HNDLR_.CNFG_customer_GET(_editItem_);
         frmCopyRAST_cie_ReNamesTemplate1.ItemCNFG:=_HNDLR_.CNFG_template_GET(_editItem_);
+        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_STR:=_editItem_.ItemNAME;
     end
     else begin
        _editItem_        :=nil ;
+        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_STR:='';
         frmCopyRAST_cie_ReNamesCustomer1.ItemCNFG:=nil;
         frmCopyRAST_cie_ReNamesTemplate1.ItemCNFG:=nil;
        _cnfg_template_SET_(nil);

@@ -41,20 +41,30 @@ type //=========================================================================
  tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule=class(tCopyRAST_srcTree_4Handler_CNFGsNode)
   protected
    _prntITEM_:tObject; //< это с родительского
-    function _isInherited_MARK_:boolean;
-    function _isInherited_RULE_:boolean;
+    function _isInherited_     :boolean; {$ifOpt D-}inline;{$endIf}
+    function _isInherited_MARK_:boolean; {$ifOpt D-}inline;{$endIf}
+    function _isInherited_RULE_:boolean; {$ifOpt D-}inline;{$endIf}
   protected
    _template_:string;
    _exchange_:string;
    _ruleUSED_:boolean;
+   _regExUSE_:boolean;
+   _Use4FILE_:boolean;
+   _Use4FLDR_:boolean;
+   _use_Last_:boolean;
   public
+    property Enabled :boolean read _ruleUSED_ write _ruleUSED_;
+    property RegExUSE:boolean read _regExUSE_ write _regExUSE_;
     property Template:string  read _template_ write _template_;
     property Exchange:string  read _exchange_ write _exchange_;
-    property Enabled :boolean read _ruleUSED_ write _ruleUSED_;
+    property Use4FILE:boolean read _Use4FILE_ write _Use4FILE_;
+    property Use4FLDR:boolean read _Use4FLDR_ write _Use4FLDR_;
+    property use_Last:boolean read _use_Last_ write _use_Last_;
   public
     constructor Create(const ParentItem:tObject=nil);
     destructor DESTROY; override;
   public
+    property isInherited     :boolean read _isInherited_;
     property isInherited_MARK:boolean read _isInherited_MARK_;
     property isInherited_RULE:boolean read _isInherited_RULE_;
   public
@@ -152,6 +162,10 @@ begin
    _exchange_:='';
    _prntITEM_:=ParentItem;
    _ruleUSED_:=TRUE;
+   _regExUSE_:=TRUE;
+   _Use4FILE_:=TRUE;
+   _Use4FLDR_:=false;
+   _use_Last_:=false;
 end;
 
 destructor tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.DESTROY;
@@ -167,8 +181,17 @@ begin
     Assert(Assigned(Source));
     Assert(Source is tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule);
     {$endIf}
+   _ruleUSED_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(Source).Enabled;
+    //---
+   _regExUSE_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(Source).RegExUSE;
    _template_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(Source).Template;
    _exchange_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(Source).Exchange;
+    //---
+   _Use4FILE_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(Source).Use4FILE;
+   _Use4FLDR_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(Source).Use4FLDR;
+    //---
+   _use_Last_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(Source).use_Last;
+    //---
 end;
 
 function tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.needSAVE:boolean;
@@ -178,14 +201,19 @@ end;
 
 //------------------------------------------------------------------------------
 
+function tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule._isInherited_:boolean;
+begin
+    result:=Assigned(_prntITEM_);
+end;
+
 function tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule._isInherited_MARK_:boolean;
 begin
-    result:=Assigned(_prntITEM_)and(_prntITEM_=self);
+    result:=_isInherited_ and(_prntITEM_=self);
 end;
 
 function tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule._isInherited_RULE_:boolean;
 begin
-    result:=Assigned(_prntITEM_)and(_prntITEM_<>self);
+    result:=_isInherited_ and(_prntITEM_<>self);
 end;
 
 //==============================================================================
@@ -220,7 +248,7 @@ begin // ВМЕСТО ВСЕХ родительских, ДОЛЖНЫ запис
     b:=true;
     for i:=0 to tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(Source)._LAIR_CNT_-1 do begin
         tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(Source)._item_GET_(i);
-        if (tmp.isInherited_RULE)or(tmp.isInherited_MARK) then begin
+        if tmp.isInherited then begin
             if b then begin
                 // ВМЕСТО ПЕРВОЙ встреченой вставляем ОДНУ метку
                 tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_prnt.Create;

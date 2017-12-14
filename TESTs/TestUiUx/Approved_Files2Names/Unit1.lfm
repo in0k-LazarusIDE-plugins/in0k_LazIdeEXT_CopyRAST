@@ -52,13 +52,48 @@ object Form1: TForm1
         TabOrder = 1
         DesignLeft = 468
         DesignTop = 400
-        inherited Panel1: TPanel
-          Left = 795
+        inherited Splitter1: TSplitter
+          AnchorSideTop.Control = frmApprovedFILEs2NAMEs1.frmCopyRAST_cie_ReNamesTemplate1
+          AnchorSideBottom.Control = frmApprovedFILEs2NAMEs1.frmCopyRAST_cie_ReNamesTemplate1
           Height = 305
+        end
+        inherited frmCopyRAST_cie_ReNamesTmpltRULE1: TfrmCopyRAST_cie_ReNamesTmpltRULE
+          AnchorSideLeft.Control = frmApprovedFILEs2NAMEs1.frmCopyRAST_cie_ReNamesTemplate1.pnl_BTTNs
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = frmApprovedFILEs2NAMEs1.frmCopyRAST_cie_ReNamesTemplate1
+          AnchorSideRight.Control = frmApprovedFILEs2NAMEs1.frmCopyRAST_cie_ReNamesTemplate1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = frmApprovedFILEs2NAMEs1.frmCopyRAST_cie_ReNamesTemplate1
+          AnchorSideBottom.Side = asrBottom
+          Left = 349
+          Height = 305
+          Width = 543
+          Anchors = [akTop, akLeft, akRight, akBottom]
           ClientHeight = 305
+          ClientWidth = 543
+          TabOrder = 2
+          inherited GroupBox1: TGroupBox
+            Height = 305
+            Width = 543
+            ClientHeight = 285
+            ClientWidth = 539
+            OnResize = nil
+            inherited Label1: TLabel
+              Left = 501
+              Top = -18
+            end
+          end
         end
       end
     end
+  end
+  object ListView1: TListView
+    Left = 412
+    Height = 150
+    Top = 79
+    Width = 250
+    Columns = <>
+    TabOrder = 1
   end
   object XMLConfig1: TXMLConfig
     StartEmpty = False

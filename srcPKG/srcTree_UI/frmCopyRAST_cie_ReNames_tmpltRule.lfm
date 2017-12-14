@@ -1,0 +1,177 @@
+inherited frmCopyRAST_cie_ReNamesTmpltRULE: TfrmCopyRAST_cie_ReNamesTmpltRULE
+  Height = 315
+  Width = 562
+  ClientHeight = 315
+  ClientWidth = 562
+  OnResize = FrameResize
+  object GroupBox1: TGroupBox[0]
+    Left = 0
+    Height = 315
+    Top = 0
+    Width = 562
+    Align = alClient
+    Anchors = [akLeft, akRight, akBottom]
+    BorderSpacing.InnerBorder = 4
+    Caption = 'GroupBox1'
+    ClientHeight = 295
+    ClientWidth = 558
+    TabOrder = 0
+    OnResize = GroupBox1Resize
+    object Label1: TLabel
+      AnchorSideRight.Control = GroupBox1
+      AnchorSideRight.Side = asrBottom
+      Left = 520
+      Height = 15
+      Top = 0
+      Width = 34
+      Anchors = [akRight]
+      BorderSpacing.Right = 4
+      Caption = 'Label1'
+      Color = clDefault
+      ParentColor = False
+      Transparent = False
+    end
+    object Label2: TLabel
+      AnchorSideLeft.Control = GroupBox1
+      AnchorSideTop.Control = Edit1
+      AnchorSideTop.Side = asrCenter
+      Left = 0
+      Height = 15
+      Top = 46
+      Width = 50
+      Caption = 'Template'
+      ParentColor = False
+    end
+    object Label3: TLabel
+      AnchorSideLeft.Control = GroupBox1
+      AnchorSideTop.Control = Edit2
+      AnchorSideTop.Side = asrCenter
+      Left = 0
+      Height = 15
+      Top = 71
+      Width = 50
+      Caption = 'Exchange'
+      ParentColor = False
+    end
+    object CheckBoxThemed1: TCheckBoxThemed
+      AnchorSideLeft.Control = GroupBox1
+      AnchorSideTop.Control = GroupBox1
+      Left = 0
+      Height = 19
+      Top = 0
+      Width = 62
+      Caption = 'Enabled'
+      TabOrder = 0
+    end
+    object CheckBoxThemed2: TCheckBoxThemed
+      AnchorSideLeft.Control = Edit1
+      AnchorSideTop.Control = CheckBoxThemed1
+      AnchorSideTop.Side = asrBottom
+      Left = 56
+      Height = 19
+      Top = 23
+      Width = 39
+      BorderSpacing.Top = 4
+      Caption = 'Use'
+      TabOrder = 1
+    end
+    object Edit1: TEdit
+      AnchorSideTop.Control = CheckBoxThemed2
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = GroupBox1
+      AnchorSideRight.Side = asrBottom
+      Left = 56
+      Height = 23
+      Top = 42
+      Width = 502
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 2
+      Text = 'Edit1'
+    end
+    object Edit2: TEdit
+      AnchorSideLeft.Control = Edit1
+      AnchorSideTop.Control = Edit1
+      AnchorSideTop.Side = asrBottom
+      AnchorSideRight.Control = GroupBox1
+      AnchorSideRight.Side = asrBottom
+      Left = 56
+      Height = 23
+      Top = 67
+      Width = 502
+      Anchors = [akTop, akLeft, akRight]
+      BorderSpacing.Top = 2
+      TabOrder = 3
+      Text = 'Edit2'
+    end
+    object Label4: TLabel
+      AnchorSideLeft.Control = GroupBox1
+      AnchorSideTop.Control = CheckBoxThemed2
+      AnchorSideTop.Side = asrCenter
+      Left = 0
+      Height = 15
+      Top = 25
+      Width = 42
+      Caption = 'RegExpr'
+      ParentColor = False
+    end
+    object Label5: TLabel
+      AnchorSideLeft.Control = GroupBox1
+      AnchorSideTop.Control = CheckBoxThemed3
+      AnchorSideTop.Side = asrCenter
+      Left = 0
+      Height = 15
+      Top = 96
+      Width = 38
+      Caption = 'use For'
+      ParentColor = False
+    end
+    object Label6: TLabel
+      AnchorSideLeft.Control = GroupBox1
+      AnchorSideTop.Control = CheckBoxThemed5
+      AnchorSideTop.Side = asrCenter
+      Left = 0
+      Height = 15
+      Top = 119
+      Width = 24
+      Caption = 'Kind'
+      ParentColor = False
+    end
+    object CheckBoxThemed3: TCheckBoxThemed
+      AnchorSideLeft.Control = Edit1
+      AnchorSideTop.Control = Edit2
+      AnchorSideTop.Side = asrBottom
+      Left = 56
+      Height = 19
+      Top = 94
+      Width = 38
+      BorderSpacing.Top = 4
+      Caption = 'File'
+      TabOrder = 4
+    end
+    object CheckBoxThemed4: TCheckBoxThemed
+      AnchorSideLeft.Control = CheckBoxThemed3
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = CheckBoxThemed3
+      AnchorSideTop.Side = asrCenter
+      Left = 98
+      Height = 19
+      Top = 94
+      Width = 53
+      BorderSpacing.Left = 4
+      Caption = 'Folder'
+      TabOrder = 5
+    end
+    object CheckBoxThemed5: TCheckBoxThemed
+      AnchorSideLeft.Control = Edit1
+      AnchorSideTop.Control = CheckBoxThemed3
+      AnchorSideTop.Side = asrBottom
+      Left = 56
+      Height = 19
+      Top = 117
+      Width = 89
+      BorderSpacing.Top = 4
+      Caption = 'last in Queue'
+      TabOrder = 6
+    end
+  end
+end
