@@ -23,11 +23,10 @@ type
  { TfrmApprovedFILEs2NAMEs }
 
  TfrmApprovedFILEs2NAMEs = class(TFrame)
-     frmCopyRAST_cie_ReNamesCustomer1: TfrmCopyRAST_cie_ReNamesCustomer;
-     frmCopyRAST_cie_ReNamesTemplate1: TfrmCopyRAST_cie_ReNamesTemplate;
+    frmCopyRAST_cie_ReNamesCustomer1: TfrmCopyRAST_cie_ReNamesCustomer;
+    frmCopyRAST_cie_ReNamesTemplate1: TfrmCopyRAST_cie_ReNamesTemplate;
     pnlMDL: TPanel;
     pnlPRP: TPanel;
-    TreeView1: TTreeView;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     //procedure FrameResize(Sender: TObject);
@@ -44,19 +43,7 @@ type
   private
     procedure _onChange_customer_(const Sender:tObject; const itemCnfg:pointer);
     procedure _onChange_template_(const Sender:tObject; const itemCnfg:pointer);
-
-
-
-//  private
-//   _cnfg_customer_lockOnChange_Counter_:integer;
-
-
-
-
-
-
-
- private
+  private
    _treeL_:tCmpCopyRAST_srcTree_approvedFILEs;
    _treeR_:tCmpCopyRAST_srcTree_approvedNAMEs;
 
@@ -181,14 +168,14 @@ procedure TfrmApprovedFILEs2NAMEs._editItem_SET_(const value:tSrcTree_item);
 begin
     if Assigned(value) then begin
        _editItem_:=value;
-        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_STR:='';
+        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_ITM:=nil;
         frmCopyRAST_cie_ReNamesCustomer1.ItemCNFG:=_HNDLR_.CNFG_customer_GET(_editItem_);
         frmCopyRAST_cie_ReNamesTemplate1.ItemCNFG:=_HNDLR_.CNFG_template_GET(_editItem_);
-        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_STR:=_editItem_.ItemNAME;
+        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_ITM:=_editItem_;
     end
     else begin
        _editItem_        :=nil ;
-        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_STR:='';
+        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_ITM:=nil;
         frmCopyRAST_cie_ReNamesCustomer1.ItemCNFG:=nil;
         frmCopyRAST_cie_ReNamesTemplate1.ItemCNFG:=nil;
        _cnfg_template_SET_(nil);

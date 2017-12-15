@@ -104,6 +104,9 @@ type
     function  _template_GET_link_(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
     procedure _template_MakeLIST_(const item:tSrcTree_item; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; const ENABLED_only:boolean; const asParent,asEnable:boolean);
 
+  protected
+    function  _template_APPLAY_RULE_(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer;
+    function  _template_APPLAY_LIST_(const srcItem:tSrcTree_item; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; out outName:string):integer;
 
 
   public
@@ -115,7 +118,7 @@ type
     function  Validate_FLDR(const value:string):boolean;
     function  Validate_FILE(const value:string):boolean;
   public
-    function  Template_APPLAY(const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; var itemName:string):integer;
+    function  Template_APPLAY(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer;
   public
     property ROOT_old:tSrcTree_item read _nodeRoot_ write _nodeRoot_;
     property ROOT_NEW:tSrcTree_ROOT read _newROOT_;
@@ -228,9 +231,22 @@ end;
 //------------------------------------------------------------------------------
 
 function tCopyRastSrcTree_prcH4ReNAMEs._get_newFLDR_(const item:tSrcTree_item; out fldrPATH:string; out fldrKIND:sSrcTree_SrchPath; out leftFLDR:tCopyRastNODE_FLDR):boolean;
-var tmp:tSrcTree_item;
+var ctm:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
+    tmp:tSrcTree_item;
 begin
     result:=false;
+
+    {ctm:=CNFG_customer_GET(item);
+    if (Assigned(ctm))and(ctm.PathCustom) then begin
+
+
+
+    end;}
+
+
+
+
+
     tmp:=SrcTree_fsFolder__fnd_PARENT(item);
     if Assigned(tmp) then begin
         fldrPATH:=tSrcTree_fsFLDR(tmp).fsBase;
@@ -241,15 +257,32 @@ begin
 end;
 
 function tCopyRastSrcTree_prcH4ReNAMEs._get_newNAME_(const item:tSrcTree_item; out fileName:string; out fileKIND:eSrcTree_FileType):boolean;
+var ctm:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
+    lst:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
 begin
     fileName:=item.ItemNAME;
+    //
+    ctm:=CNFG_customer_GET(item);
+    if (Assigned(ctm))and(ctm.NameCustom) then begin
+        fileName:=ctm.NameStated;
+        result:=true;
+    end
+    else begin
+        // надо строить правила изменения и т.д.
+        lst:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
+       _template_MakeLIST_(item,lst,TRUE,false,true);
+       _template_APPLAY_LIST_(item,lst,fileName);
+    end;
+
+
+    {
     if item is tSrcTree_fsFILE then begin
         _regExpr_.InputString:=item.ItemNAME;
         _regExpr_.Expression :='^in0k_lazIdeSRC_(\w+)(\.pas)$';
          if _regExpr_.Exec(1) then begin
              fileName:=_regExpr_.Replace(item.ItemNAME,'asdf$1$2',true);
          end
-    end;
+    end; }
     result:=true;
 end;
 
@@ -565,7 +598,7 @@ begin
             else begin
                 tmpRule:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.Create(as_Prnt);
                 tmpRule.COPY(itmList.Items[i]);
-                tmpRule.Enabled:=asEnable;
+                tmpRule.Enabled:=tmpRule.Enabled and asEnable;
                 list.Add(tmpRule);
             end;
 		end;
@@ -677,24 +710,53 @@ end;
 //------------------------------------------------------------------------------
 
 const
+  c_Replaced=0;
+  c_NoNEED  =1;
+  c_notFound=2;
 
-  c_notFound=0;
 
-function tCopyRastSrcTree_prcH4ReNAMEs.Template_APPLAY(const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; var itemName:string):integer;
-var tmp:string;
+function tCopyRastSrcTree_prcH4ReNAMEs._template_APPLAY_RULE_(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer;
 begin
+    outName:=srcName;
+    result :=c_NoNEED;
+    //---
+    if not rule.Enabled then EXIT;
+    //---
+    if (srcItem is tCopyRastNODE_Root4Package) then EXIT;
+    if (srcItem is tCopyRastNODE_Root4Project) then EXIT;
+    if (srcItem is tCopyRastNODE_BASE)         then EXIT;
+    if (srcItem is tCopyRastNODE_Main4Package) then EXIT;
+    if (srcItem is tCopyRastNODE_Main4Project) then EXIT;
+    //
+    if (srcItem is tCopyRastNODE_FILE)and(not rule.Use4FILE) then EXIT;
+    if (srcItem is tCopyRastNODE_FLDR)and(not rule.Use4FLDR) then EXIT;
+    //---
+   _regExpr_.InputString:=srcName;
+   _regExpr_.Expression :=rule.Template; // шаблон поиска
+    if _regExpr_.Exec(1) then begin
+        outName:=_regExpr_.Replace(srcName,rule.Exchange,true);
+        result :=c_Replaced;
+    end
+    else begin
+        result :=c_notFound;
+    end;
+end;
 
-    _regExpr_.InputString:=itemName;
-    _regExpr_.Expression :=rule.Template; // шаблон поиска
-     if _regExpr_.Exec(1) then begin
-         tmp:=_regExpr_.Replace(itemName,'asdf$1$2',true);
-         //
-         itemName:=tmp;
-     end
-     else begin
-         result:=c_notFound;
-         //tmp   :=itemName;
-     end;
+function tCopyRastSrcTree_prcH4ReNAMEs._template_APPLAY_LIST_(const srcItem:tSrcTree_item; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; out outName:string):integer;
+var srcName:string;
+    i      :integer;
+    rule   :tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
+begin
+    srcName:=srcItem.ItemNAME;
+    for i:=0 to list.Count-1 do begin
+        rule:=list.Items[i];
+        result:=_template_APPLAY_RULE_(srcItem,srcName,rule,outName)
+    end;
+end;
+
+function tCopyRastSrcTree_prcH4ReNAMEs.Template_APPLAY(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer;
+begin
+    result:=_template_APPLAY_RULE_(srcItem,srcName,rule,outName);
 end;
 
 end.

@@ -5,6 +5,9 @@ unit frmCopyRAST_cie_ReNames_template;
 interface
 
 uses
+
+    in0k_lazIdeSRC_srcTree_CORE_item,
+
   in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs,
   cmpCopyRAST_srcTree_nameTemplates, frmCopyRAST_cie_ReNames_tmpltRule,
     ComCtrls,
@@ -44,13 +47,13 @@ type
 
 
   protected
-    procedure _TemplateAPPLAY_SET_(const value:mTemplateAPPLAY);
-    function  _TemplateAPPLAY_GET_:mTemplateAPPLAY;
-    procedure _TmpltApplaySTR_SET_(const value:string);
-    function  _TmpltApplaySTR_GET_:string;
+    procedure _templateAPPLAY_FNK_SET_(const value:mTemplateAPPLAY);
+    function  _templateAPPLAY_FNK_GET_:mTemplateAPPLAY;
+    procedure _templateAPPLAY_ITM_SET_(const value:tSrcTree_item);
+    function  _templateAPPLAY_ITM_GET_:tSrcTree_item;
   public
-    property TemplateAPPLAY_FNK:mTemplateAPPLAY read _TemplateAPPLAY_GET_ write _TemplateAPPLAY_SET_;
-    property TemplateAPPLAY_STR:string          read _TmpltApplaySTR_GET_ write _TmpltApplaySTR_SET_;
+    property TemplateAPPLAY_FNK:mTemplateAPPLAY read _templateAPPLAY_FNK_GET_ write _templateAPPLAY_FNK_SET_;
+    property TemplateAPPLAY_ITM:tSrcTree_item   read _templateAPPLAY_ITM_GET_ write _templateAPPLAY_ITM_SET_;
 
 
   protected
@@ -282,26 +285,26 @@ end;
 
 //==============================================================================
 
-procedure TfrmCopyRAST_cie_ReNamesTemplate._TemplateAPPLAY_SET_(const value:mTemplateAPPLAY);
+procedure TfrmCopyRAST_cie_ReNamesTemplate._templateAPPLAY_FNK_SET_(const value:mTemplateAPPLAY);
 begin
     cntrl_Template.TemplateAPPLAY_FNK:=value;
 end;
 
-function TfrmCopyRAST_cie_ReNamesTemplate._TemplateAPPLAY_GET_:mTemplateAPPLAY;
+function TfrmCopyRAST_cie_ReNamesTemplate._templateAPPLAY_FNK_GET_:mTemplateAPPLAY;
 begin
     result:=cntrl_Template.TemplateAPPLAY_FNK;
 end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-procedure TfrmCopyRAST_cie_ReNamesTemplate._TmpltApplaySTR_SET_(const value:string);
+procedure TfrmCopyRAST_cie_ReNamesTemplate._templateAPPLAY_ITM_SET_(const value:tSrcTree_item);
 begin
-    cntrl_Template.TemplateAPPLAY_STR:=value;
+    cntrl_Template.TemplateAPPLAY_ITM:=value;
 end;
 
-function TfrmCopyRAST_cie_ReNamesTemplate._TmpltApplaySTR_GET_:string;
+function TfrmCopyRAST_cie_ReNamesTemplate._templateAPPLAY_ITM_GET_:tSrcTree_item;
 begin
-    result:=cntrl_Template.TemplateAPPLAY_STR;
+    result:=cntrl_Template.TemplateAPPLAY_ITM;
 end;
 
 end.

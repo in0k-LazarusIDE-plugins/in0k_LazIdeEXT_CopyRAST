@@ -3,14 +3,16 @@
   <approvedFILEs2NAMEs>
     <ROOT>
       <pathStated Value="dfgd dfg dfg dfg d"/>
-      <pathCustom Value="False"/>
+      <nameStated Value="uioui"/>
       <Templates count="2">
         <item0>
           <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
-          <exchange Value="afffffffsdf$1$2"/>
+          <exchange Value="adffdfffffsdf$1$2"/>
+          <_Use4FILE_ Value="False"/>
+          <_Use4FLDR_ Value="True"/>
         </item0>
         <item1>
-          <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$dsasdf"/>
+          <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
           <exchange Value="asdf$1$2wadfasdfsadfasdf"/>
         </item1>
       </Templates>
@@ -47,8 +49,15 @@
         </item1>
       </FILEs>
     </Customers>
-    <Templates count="1">
-      <item0 Path="srcPKG\OperationNODEs" count="3">
+    <Templates count="2">
+      <item0 Path="srcEXT\in0k-lazarusIdeSRC-ExpertCORE\in0k_lazIdeSRC_ExpertCORE.pas" count="2">
+        <item0 type="inherited"/>
+        <item1>
+          <template Value="sdfg"/>
+          <exchange Value="ghdfgh"/>
+        </item1>
+      </item0>
+      <item1 Path="srcPKG\OperationNODEs" count="3">
         <item0>
           <template Value="^inasdfasdf0k_lazIdeSRC_(\w+)(\.pas)$"/>
           <exchange Value="afffffffsdf$1$2"/>
@@ -58,7 +67,7 @@
           <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
           <exchange Value="asdf$1$2"/>
         </item2>
-      </item0>
+      </item1>
     </Templates>
   </approvedFILEs2NAMEs>
 </CopyRAST>

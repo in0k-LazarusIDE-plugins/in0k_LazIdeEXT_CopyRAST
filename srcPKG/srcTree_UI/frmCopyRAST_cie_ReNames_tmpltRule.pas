@@ -114,7 +114,7 @@ begin
         Edit2.Text:=Exchange;
         //
         CheckBoxThemed3.Checked:=Use4FILE;
-        CheckBoxThemed4.Checked:=Use4FILE;
+        CheckBoxThemed4.Checked:=Use4FLDR;
         //
         CheckBoxThemed5.Checked:=use_Last;
     end;
@@ -131,7 +131,7 @@ begin
        Exchange := Edit2.Text;
        //
        Use4FILE := CheckBoxThemed3.Checked;
-       Use4FILE := CheckBoxThemed4.Checked;
+       Use4FLDR := CheckBoxThemed4.Checked;
        //
        use_Last := CheckBoxThemed5.Checked;
    end;

@@ -40,7 +40,6 @@ type
 
   TForm1 = class(TForm)
     frmApprovedFILEs2NAMEs1: TfrmApprovedFILEs2NAMEs;
-    ListView1: TListView;
     XMLConfig1: TXMLConfig;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -71,6 +70,7 @@ type
   public
     first:tCopyRastNODE_Root4Package;
     builder:tSrcTree_Builder_4Package;
+    right:tCopyRastNODE_Root4Package;
   public
     destructor DESTROY; override;
   end;
@@ -107,6 +107,32 @@ begin
     s:=ChangeFileExt(ParamStr(0),'.xml');
     XMLConfig1.Filename:=(s);
     reNames.CNFGs_LOAD(XMLConfig1);
+
+
+    reNames.EXECUTE(first,XMLConfig1,tSrcTree_ROOT(right));
+
+    frmApprovedFILEs2NAMEs1.Handler:=reNames;
+
+
+    //var _reNames_:tCopyRastSrcTree_prcH4ReNAMEs;
+    //_resRoot_:tSrcTree_ROOT;
+   { begin
+
+        frmApprovedFILEs2NAMEs1.
+
+    //   _resRoot_:=tCopyRastNODE_Root4Package(approvedNAMEs.Root);
+        approvedNAMEs.Root:=nil;
+        //---
+       _resRoot_.FREE;
+        //-------------------------------
+
+       _reNames_:=tCopyRastSrcTree_prcH4ReNAMEs.Create(builder);
+       _reNames_.EXECUTE(First,cnfg,_resRoot_);
+       _reNames_.FREE;
+
+        approvedNAMEs.Root:=_resRoot_; }
+
+
 
     {asd:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
     tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule.Create;
