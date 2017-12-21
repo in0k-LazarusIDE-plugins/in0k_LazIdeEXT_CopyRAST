@@ -9,6 +9,8 @@ uses
   Graphics,
   ComCtrls,
 
+  in0k_colors4StdSheme,
+
   in0k_lazIdeSRC_srcTree_CORE_item,
 
   in0k_lazIdeSRC_CopyRAST_srcTree_Nodes,
@@ -117,10 +119,10 @@ begin
         if Assigned(tmpNode) and isCopyRastNODE(tmpNode) then begin
             tmpData:=CopyRastNODE_DATA(tmpNode);
             if _lftSide_mustNotNIL_ and not Assigned(tmpData^.sideLeft)
-            then Canvas.Font.Color:=clGray
+            then Canvas.Font.Color:=clGrayText//in0k_colors4StdSheme__getRed//clGray
            else
             if _rhtSide_mustNotNIL_ and not Assigned(tmpData^.sideRight)
-            then Canvas.Font.Color:=clGray
+            then Canvas.Font.Color:=clGrayText//in0k_colors4StdSheme__getRed//clGray
         end;
     end;
 end;

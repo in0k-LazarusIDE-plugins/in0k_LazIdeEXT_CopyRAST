@@ -39,7 +39,7 @@
         <PackageName Value="LCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="18">
+    <Units Count="19">
       <Unit0>
         <Filename Value="Aapproved_Files2Names.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -130,6 +130,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit17>
+      <Unit18>
+        <Filename Value="..\..\..\srcExt\in0k-colors4StdSheme\in0k_colors4StdSheme.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit18>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -140,7 +144,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;..\..\..\srcPKG\srcTree;..\..\..\srcPKG\srcTree_UI;..\..\..\srcPKG\xmlConfig;..\..\..\srcPKG\srcTree\Handlers\reNames;..\..\..\srcPKG\srcTree\Handlers;..\..\..\srcPKG\UI"/>
+      <OtherUnitFiles Value="..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;..\..\..\srcPKG\srcTree;..\..\..\srcPKG\srcTree_UI;..\..\..\srcPKG\xmlConfig;..\..\..\srcPKG\srcTree\Handlers\reNames;..\..\..\srcPKG\srcTree\Handlers;..\..\..\srcPKG\UI;..\..\..\srcExt\in0k-colors4StdSheme"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>
