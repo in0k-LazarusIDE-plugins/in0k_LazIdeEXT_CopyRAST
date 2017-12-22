@@ -7,13 +7,13 @@
       <Templates count="2">
         <item0>
           <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
-          <exchange Value="adffdfffffsdf$1$2"/>
-          <_Use4FILE_ Value="False"/>
-          <_Use4FLDR_ Value="True"/>
+          <exchange Value="asdf$1$2wadfasdfsadfasdf"/>
         </item0>
         <item1>
           <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
-          <exchange Value="asdf$1$2wadfasdfsadfasdf"/>
+          <exchange Value="adffdfffffsdf$1$2"/>
+          <_Use4FILE_ Value="False"/>
+          <_Use4FLDR_ Value="True"/>
         </item1>
       </Templates>
     </ROOT>

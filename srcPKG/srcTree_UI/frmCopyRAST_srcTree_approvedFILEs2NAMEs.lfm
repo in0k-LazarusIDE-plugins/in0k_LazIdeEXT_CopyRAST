@@ -87,6 +87,7 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
           ClientWidth = 317
           inherited Label1: TLabel
             Left = 279
+            Top = -1
           end
           inherited CheckBoxThemed2: TCheckBoxThemed
             Left = -382

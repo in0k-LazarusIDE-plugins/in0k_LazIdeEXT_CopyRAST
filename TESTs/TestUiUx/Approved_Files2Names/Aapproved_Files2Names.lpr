@@ -14,7 +14,8 @@ uses
   frmCopyRAST_srcTree_approvedFILEs2NAMEs, cmpCopyRAST_srcTree_nameTemplates,
   CopyRAST_srcTree_4Handler_CNFGs, frmCopyRAST_CnfgItem_EDIT,
   frmCopyRAST_cie_ReNames_customer, frmCopyRAST_cie_ReNames_template,
-  frmCopyRAST_cie_ReNames_tmpltRule, in0k_colors4StdSheme
+  frmCopyRAST_cie_ReNames_tmpltRule, in0k_colors4StdSheme,
+  lazExt_CopyRAST_clcNotRenamed, frmCopyRAST_EDIT
   { you can add units after this };
 
 {$R *.res}

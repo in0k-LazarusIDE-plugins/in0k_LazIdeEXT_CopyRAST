@@ -191,11 +191,11 @@ end;
 procedure tFrmCopyRAST_cie_ReNamesCustomer._ctrl_xxxxNEW_onChange_(Sender: TObject);
 begin
     if _ctrl_OnChange_LOCKED_ then exit;
-   _ctrl_OnChange_setLOCK_(true);
+   _ctrl_OnChange_LOCK_(true);
     //---
    _ctrl_validate_;
     //---
-   _ctrl_OnChange_setLOCK_(false);
+   _ctrl_OnChange_LOCK_(false);
    _CNFG_do_OnCHANGE_;
 end;
 
@@ -204,7 +204,7 @@ end;
 procedure tFrmCopyRAST_cie_ReNamesCustomer._ctrl_xxxxCST_onChange_(Sender: TObject);
 begin
     if _ctrl_OnChange_LOCKED_ then exit;
-   _ctrl_OnChange_setLOCK_(true);
+   _ctrl_OnChange_LOCK_(true);
     //---
     if TCheckBoxThemed(Sender).Tag=1 then begin
         TCheckBoxThemed(Sender).Tag:=0;
@@ -221,14 +221,14 @@ begin
         end;
     end;
     //---
-   _ctrl_OnChange_setLOCK_(false);
+   _ctrl_OnChange_LOCK_(false);
    _CNFG_do_OnCHANGE_;
 end;
 
 procedure tFrmCopyRAST_cie_ReNamesCustomer._ctrl_nameCST_onClick_(Sender: TObject);
 begin
     if _ctrl_OnChange_LOCKED_ then exit;
-   _ctrl_OnChange_setLOCK_(true);
+   _ctrl_OnChange_LOCK_(true);
     //---
     case tCheckBoxThemed(Sender).State of
       cbUnchecked: ;
@@ -236,14 +236,14 @@ begin
       cbGrayed   : if cntrl_nameStated.Enabled then cntrl_nameStated.SetFocus;
     end;
     //---
-   _ctrl_OnChange_setLOCK_(false);
+   _ctrl_OnChange_LOCK_(false);
    _CNFG_do_OnCHANGE_;
 end;
 
 procedure tFrmCopyRAST_cie_ReNamesCustomer._ctrl_pathCST_onClick_(Sender: TObject);
 begin
     if _ctrl_OnChange_LOCKED_ then exit;
-   _ctrl_OnChange_setLOCK_(true);
+   _ctrl_OnChange_LOCK_(true);
     //---
     case tCheckBoxThemed(Sender).State of
       cbUnchecked: ;
@@ -251,7 +251,7 @@ begin
       cbGrayed   : if cntrl_pathStated.Enabled then cntrl_pathStated.SetFocus;
     end;
     //---
-   _ctrl_OnChange_setLOCK_(false);
+   _ctrl_OnChange_LOCK_(false);
    _CNFG_do_OnCHANGE_;
 end;
 

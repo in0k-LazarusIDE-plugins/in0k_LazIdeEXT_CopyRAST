@@ -6,8 +6,13 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, CheckBoxThemed, Forms, Controls, ExtCtrls,
-  StdCtrls, ComCtrls, cmpCopyRAST_srcTree_approvedFiles,
+  StdCtrls, ComCtrls,
 
+
+
+  frmCopyRAST_EDIT,
+
+  cmpCopyRAST_srcTree_approvedFiles,
   in0k_lazIdeSRC_srcTree_CORE_item,
 
   frmCopyRAST_CnfgItem_EDIT,
@@ -22,41 +27,36 @@ type
 
  { TfrmApprovedFILEs2NAMEs }
 
- TfrmApprovedFILEs2NAMEs = class(TFrame)
+ TfrmApprovedFILEs2NAMEs = class(tFrmCopyRastEDIT)
     frmCopyRAST_cie_ReNamesCustomer1: TfrmCopyRAST_cie_ReNamesCustomer;
     frmCopyRAST_cie_ReNamesTemplate1: TfrmCopyRAST_cie_ReNamesTemplate;
     pnlMDL: TPanel;
     pnlPRP: TPanel;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    //procedure FrameResize(Sender: TObject);
- private
+  protected
+    procedure _ctrl_Enabled_SET_(const value:boolean); override;
+    //procedure _ctrl_validate_;                         virtual; {$ifOpt D-}abstract;{$endIf}
+    procedure _ctrl_eventSet_onChange_; override;
+    procedure _ctrl_eventClr_onChange_; override;
+  private
    _cnfg_template_:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
     procedure _cnfg_template_SET_(const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
-
   private
    _editItem_:tSrcTree_item;
     procedure _editItem_SET_(const value:tSrcTree_item);
-   // procedure _editItem_onCHG_template;
-
-
   private
     procedure _onChange_customer_(const Sender:tObject; const itemCnfg:pointer);
     procedure _onChange_template_(const Sender:tObject; const itemCnfg:pointer);
   private
    _treeL_:tCmpCopyRAST_srcTree_approvedFILEs;
-   _treeR_:tCmpCopyRAST_srcTree_approvedNAMEs;
-
     procedure _treeL_SelectionChanged_(Sender:TObject);
-    procedure _treeL_Changing(Sender:TObject; Node:TTreeNode; var AllowChange:Boolean);
-
+  private
+   _treeR_:tCmpCopyRAST_srcTree_approvedNAMEs;
+    procedure _treeR_SelectionChanged_(Sender:TObject);
   private
    _HNDLR_:tCopyRastSrcTree_prcH4ReNAMEs;
     procedure _HNDLR_set_(const value:tCopyRastSrcTree_prcH4ReNAMEs);
-
-  private
-   //_tmplt_:tCmpCopyRAST_srcTree_nameTemplates;
-
   public
     constructor Create(AOwner:TComponent); override;
     destructor DESTROY; override;
@@ -101,8 +101,6 @@ begin
         end;
         Anchors:=[akTop, akLeft, akRight, akBottom];
         //
-        OnSelectionChanged:=@_treeL_SelectionChanged_;
-        OnChanging:=@_treeL_Changing;
     end;
     //---
    _treeR_:=tCmpCopyRAST_srcTree_approvedNAMEs.Create(Self);
@@ -147,6 +145,35 @@ end;
 
 //------------------------------------------------------------------------------
 
+procedure TfrmApprovedFILEs2NAMEs._ctrl_Enabled_SET_(const value:boolean);
+begin
+    //
+end;
+
+procedure TfrmApprovedFILEs2NAMEs._ctrl_eventSet_onChange_;
+begin
+    //
+    with _treeL_ do begin
+        OnSelectionChanged:=@_treeL_SelectionChanged_;
+    end;
+    with _treeR_ do begin
+        OnSelectionChanged:=@_treeR_SelectionChanged_;
+    end;
+end;
+
+procedure TfrmApprovedFILEs2NAMEs._ctrl_eventClr_onChange_;
+begin
+    //
+    with _treeL_ do begin
+        OnSelectionChanged:=nil;
+    end;
+    with _treeR_ do begin
+        OnSelectionChanged:=nil;
+    end;
+end;
+
+//------------------------------------------------------------------------------
+
 procedure TfrmApprovedFILEs2NAMEs._HNDLR_set_(const value:tCopyRastSrcTree_prcH4ReNAMEs);
 begin
    _HNDLR_:=value;
@@ -154,11 +181,14 @@ begin
        _treeL_.Root:=_HNDLR_.ROOT_old;
        _treeR_.Root:=_HNDLR_.ROOT_NEW;
         frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=@(_HNDLR_.Template_APPLAY);
+        _ctrl_eventSet_onChange_;
     end
     else begin
        _treeL_.Root:=nil;
        _treeR_.Root:=nil;
         frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=nil;
+        //
+       _ctrl_eventClr_onChange_;
     end;
 end;
 
@@ -218,44 +248,36 @@ end;}
 
 procedure TfrmApprovedFILEs2NAMEs._treeL_SelectionChanged_(Sender:TObject);
 begin
+    //if _ctrl_OnChange_LOCKED_ then EXIT;
     if csDestroying in _treeL_.ComponentState then EXIT; {todo: ДУМАТЬ: этотут НАДО?}
+   _ctrl_OnChange_LOCK_(TRUE);
     //---
     if Assigned(_treeL_.SelectedITEM) then begin
        _editItem_SET_(_treeL_.SelectedITEM);
+       _treeR_.Select_4Left(_treeL_.SelectedITEM);
     end
     else begin
        _editItem_SET_(NIL);
     end;
-    (*
-
-
-    if csDestroying in _treeL_.ComponentState then EXIT;
     //---
-    if Assigned(_HNDLR_) and Assigned(_treeL_.Selected) then begin
-       _customer_node_:=_HNDLR_.CNFGs4NAME_GET(_treeL_.SelectedITEM);
-    end
-    else begin
-       _customer_node_:=nil;
-    end;
-   _CNFGs4NAME_obj2frm_;*)
+   _ctrl_OnChange_LOCK_(FALSE);
 end;
 
-procedure TfrmApprovedFILEs2NAMEs._treeL_Changing(Sender:TObject; Node:TTreeNode; var AllowChange:Boolean);
+procedure TfrmApprovedFILEs2NAMEs._treeR_SelectionChanged_(Sender:TObject);
 begin
-    {if csDestroying in _treeL_.ComponentState then EXIT;
+    //if _ctrl_OnChange_LOCKED_ then EXIT;
+    if csDestroying in _treeR_.ComponentState then EXIT; {todo: ДУМАТЬ: этотут НАДО?}
+   _ctrl_OnChange_LOCK_(TRUE);
     //---
-    if Assigned(_treeL_.SelectedITEM) then begin
-       _editItem_SET_(_treeL_.SelectedITEM);
+    if Assigned(_treeR_.SelectedITEM) then begin
+       _treeL_.Select_4Right(_treeR_.SelectedITEM);
+       _treeL_SelectionChanged_(_treeL_);
     end
     else begin
        _editItem_SET_(NIL);
-    end;}
-    {
-    if Assigned(_customer_node_) and Assigned(_treeL_.SelectedITEM) then begin
-       _CNFGs4NAME_frm2obj_;
-       _HNDLR_.CNFG_customer_SET(_treeL_.SelectedITEM,_customer_node_);
     end;
-    }
+    //---
+   _ctrl_OnChange_LOCK_(FALSE);
 end;
 
 //------------------------------------------------------------------------------
@@ -274,15 +296,6 @@ begin
     //_cnfg_customer_obj2ctrl_;
   // _tmplt_.Templates:=_cnfg_template_;
 end;
-
-
-
-
-
-{procedure TfrmApprovedFILEs2NAMEs.FrameResize(Sender: TObject);
-begin
-    pnlMDL.Left:=(TFrame(Sender).Width-pnlMDL.Width) div 2;
-end; }
 
 procedure TfrmApprovedFILEs2NAMEs.Button1Click(Sender: TObject);
 begin
