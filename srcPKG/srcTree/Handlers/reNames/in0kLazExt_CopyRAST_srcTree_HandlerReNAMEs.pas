@@ -20,6 +20,7 @@ uses
 
   in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
   in0k_lazIdeSRC_srcTree_FNK_baseDIR_SET,
+  in0k_lazIdeSRC_srcTree_FNK_mainFILE_FND,
 
   RegExpr,
 
@@ -72,7 +73,9 @@ type
     procedure _cnfg_XXX_SAVE_(const cnfgs:tLazExt_CopyRAST_CONFIG);
   protected
     function  _get_newFLDR_(const item:tSrcTree_item; out fldrPATH:string; out fldrKIND:sSrcTree_SrchPath; out leftFLDR:tCopyRastNODE_FLDR):boolean;
-    function  _get_newNAME_(const item:tSrcTree_item; out fileName:string; out fileKIND:eSrcTree_FileType):boolean;
+    function  _get_newNAME_(const item:tSrcTree_item):string; overload;
+    function  _get_newPATH_(const item:tSrcTree_item):string; overload;
+    function  _get_newNAME_(const item:tSrcTree_item; out fileName:string; out fileKIND:eSrcTree_FileType):boolean;  overload;
   protected
     function  _getNewName_ROOT_(const item:tSrcTree_ROOT):string;
     function  _getNewName_BASE_(const item:tCopyRastNODE_BASE):string;
@@ -286,25 +289,79 @@ begin
     result:=true;
 end;
 
+function tCopyRastSrcTree_prcH4ReNAMEs._get_newNAME_(const item:tSrcTree_item):string;
+var ctm:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
+    lst:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+begin
+    result:='';
+    if item is _tSrcTree_item_fsNode_ then begin
+        result:=_tSrcTree_item_fsNode_(item).fsName;
+        ctm:=CNFG_customer_GET(item); // проверим ЯВНОЕ указание имен
+        if (Assigned(ctm))and(ctm.NameCustom) then begin
+            result:=ctm.NameStated;
+        end
+        else begin // проверим ШАБЛОНЫ переименования
+            lst:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
+           _template_MakeLIST_(item,lst,TRUE,false,true);
+           _template_APPLAY_LIST_(item,lst,result);
+        end;
+    end;
+end;
+
+function tCopyRastSrcTree_prcH4ReNAMEs._get_newPATH_(const item:tSrcTree_item):string;
+var ctm:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
+    lst:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+begin    ывап
+    result:='';
+    if item is _tSrcTree_item_fsNode_ then begin
+        result:=_tSrcTree_item_fsNode_(item).fsName;
+        ctm:=CNFG_customer_GET(item); // проверим ЯВНОЕ указание
+        if (Assigned(ctm))and(ctm.PathCustom) then begin
+            result:=ctm.PathStated;
+        end
+        else begin // проверим ШАБЛОНЫ переименования
+
+
+
+
+
+            lst:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
+           _template_MakeLIST_(item,lst,TRUE,false,true);
+           _template_APPLAY_LIST_(item,lst,result);
+        end;
+    end;
+end;
+
+
+
 //------------------------------------------------------------------------------
 
 
 const ccc='new_';
 
 function tCopyRastSrcTree_prcH4ReNAMEs._getNewName_ROOT_(const item:tSrcTree_ROOT):string;
+var itmMAIN:tSrcTree_MAIN;
 begin
-    //result:=CRxC_aF2N_ROOT_newName__GET(_configs_,item.ItemNAME);
-    //result:=ccc+item.ItemNAME;
+    itmMAIN:=SrcTree_fndMainFILE(item);
+    if Assigned(itmMAIN) then begin
+        result:=_getNewName_MAIN_(itmMAIN);
+        result:=srcTree_fsFnk_ExtractFileNameOnly(result);
+    end
+    else begin
+        result:=item.ItemNAME;
+    end;
 end;
 
 function tCopyRastSrcTree_prcH4ReNAMEs._getNewName_BASE_(const item:tCopyRastNODE_BASE):string;
 begin
-    result:={ccc+}item.ItemNAME;
+    //result:={ccc+}item.ItemNAME;
+    result:=_get_newNAME_(item);
 end;
 
 function tCopyRastSrcTree_prcH4ReNAMEs._getNewName_MAIN_(const item:tSrcTree_MAIN):string;
 begin
-    result:=ccc+item.ItemNAME;
+    //result:=ccc+item.ItemNAME;
+    result:=_get_newNAME_(item);
 end;
 
 function tCopyRastSrcTree_prcH4ReNAMEs._getNewPATH_FLDR_(const item:tCopyRastNODE_FLDR):string;

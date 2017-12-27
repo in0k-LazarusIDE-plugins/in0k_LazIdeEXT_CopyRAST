@@ -142,6 +142,7 @@
         <Filename Value="..\..\..\srcPKG\UI\frmCopyRAST_EDIT.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmCopyRastEDIT"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit20>
     </Units>
