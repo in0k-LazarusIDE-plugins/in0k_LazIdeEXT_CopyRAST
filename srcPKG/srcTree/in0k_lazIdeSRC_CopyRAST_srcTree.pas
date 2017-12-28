@@ -67,7 +67,6 @@ type
  tCopyRastSrcTree_P4Build=class(tSrcTree_prcHandler)
   protected
     procedure _EXECUTE_; override;
-
   end;
 
 // Processing

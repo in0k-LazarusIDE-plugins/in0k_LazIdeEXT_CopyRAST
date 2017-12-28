@@ -16,7 +16,7 @@ function in0k_colors4StdSheme__getRed:tColor;
 
 implementation
 
-const cStartColor=clHighlight;//clHotLight;
+const cStartColor=clHotLight;//clHighlight;
 
 function in0k_colors4StdSheme__getRed:tColor;
 var R,G,B:byte;

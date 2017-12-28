@@ -96,7 +96,7 @@ begin
 
     first  :=tCopyRastNODE_Root4Package(makeTest_objCopyRAST(builder));
 
-    reNames.ROOT_old:=first;
+    //reNames.ROOT_old:=first;
 
 
 
@@ -109,7 +109,7 @@ begin
     reNames.CNFGs_LOAD(XMLConfig1);
 
 
-    reNames.EXECUTE(first,XMLConfig1,tSrcTree_ROOT(right));
+    reNames.EXECUTE(first);
 
     frmApprovedFILEs2NAMEs1.Handler:=reNames;
 

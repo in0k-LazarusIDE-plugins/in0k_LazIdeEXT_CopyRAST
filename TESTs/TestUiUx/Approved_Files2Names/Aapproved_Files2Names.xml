@@ -2,7 +2,6 @@
 <CopyRAST asd="ssss">
   <approvedFILEs2NAMEs>
     <ROOT>
-      <pathStated Value="dfgd dfg dfg dfg d"/>
       <nameStated Value="uioui"/>
       <Templates count="2">
         <item0>
@@ -23,14 +22,17 @@
           <nameStated Value="zxcz"/>
           <nameCustom Value="False"/>
           <pathStated Value="vbncvbn"/>
+          <pathCustom Value="False"/>
         </item0>
         <item1 Path="srcEXT\in0k-lazarusIdeSRC-FuckUpForm">
           <nameStated Value="zxzxc"/>
           <nameCustom Value="False"/>
           <pathStated Value="qwqwe"/>
+          <pathCustom Value="False"/>
         </item1>
         <item2 Path="srcEXT\in0k-lazarusIdeSRC-SourceTREE">
           <pathStated Value="asdas"/>
+          <pathCustom Value="False"/>
         </item2>
         <item3 Path="srcPKG">
           <nameStated Value="xcvbxcvb"/>
