@@ -6,7 +6,7 @@ interface
 
 uses
   PackageIntf,
-  in0k_lazIdeSRC_CopyRAST_srcTree_Nodes,
+  in0k_CopyRAST_srcTree_ITEMs,
 
   in0k_lazIdeSRC_srcTree_CORE_item,
   in0k_lazIdeSRC_srcTree_item_Globals,
@@ -30,7 +30,9 @@ uses
 
 
   in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_usesFile,
-  in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_files4INC;
+  in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_files4INC,
+
+  in0k_CopyRAST_srcTreeNode_DATA;
 
 
 type
@@ -83,7 +85,7 @@ end;
 
 function tCopyRastSrcTree_Builder4Package.new_Base(const path:string):tSrcTree_BASE;
 begin
-    result:=tCopyRastNODE_BASE.Create(path);
+    result:=tCopyRast_stBASE.Create(path);
 end;
 
 function tCopyRastSrcTree_Builder4Package.new_Main(const name:string):tSrcTree_MAIN;
@@ -107,8 +109,8 @@ procedure _AllNodes_SetSTATE_(const Item:tSrcTree_item; const newState:tCopyRast
 var tmp:tSrcTree_item;
     tmq:pCopyRastNODE_DATA;
 begin
-    if isCopyRastNODE(Item) then begin
-        tmq:=CopyRastNODE_DATA(Item);
+    if IS_CopyRast_stITEM(Item) then begin
+        tmq:=CopyRAST_stITEM_DATA(Item);
         tmq^.NodeSTATE:=newState;
     end;
     //---
@@ -129,8 +131,8 @@ end;
 procedure tCopyRastSrcTree_Builder4Package.Node_clrState__notVerified(const item:tSrcTree_item);
 var tmp:pCopyRastNODE_DATA;
 begin
-    if isCopyRastNODE(Item) then begin
-        tmp:=CopyRastNODE_DATA(Item);
+    if IS_CopyRast_stITEM(Item) then begin
+        tmp:=CopyRAST_stITEM_DATA(Item);
         tmp^.NodeSTATE:=tmp^.NodeSTATE-[CRNK_notVerified];
     end;
 end;

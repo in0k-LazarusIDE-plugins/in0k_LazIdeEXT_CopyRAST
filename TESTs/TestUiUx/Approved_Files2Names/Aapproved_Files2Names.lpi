@@ -13,6 +13,9 @@
     </General>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
+      <SharedMatrixOptions Count="1">
+        <Item1 ID="472991643162" Modes="Default" Value="-dCopyRAST_DEBUG"/>
+      </SharedMatrixOptions>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -39,7 +42,7 @@
         <PackageName Value="LCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="21">
+    <Units Count="24">
       <Unit0>
         <Filename Value="Aapproved_Files2Names.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -145,6 +148,18 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit20>
+      <Unit21>
+        <Filename Value="..\..\..\srcPKG\srcTree\in0k_CopyRAST_srcTree_Stage.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="..\..\..\srcPKG\srcTree\CORE\in0k_lazIdeSRC_CopyRastSrcNODE_ROOT.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="..\..\..\srcPKG\srcTree\in0k_CopyRAST_srcTreeNode_DATA.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit23>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -155,7 +170,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;..\..\..\srcPKG\srcTree;..\..\..\srcPKG\srcTree_UI;..\..\..\srcPKG\xmlConfig;..\..\..\srcPKG\srcTree\Handlers\reNames;..\..\..\srcPKG\srcTree\Handlers;..\..\..\srcPKG\UI;..\..\..\srcExt\in0k-colors4StdSheme;..\..\..\srcPKG"/>
+      <OtherUnitFiles Value="..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;..\..\..\srcPKG\srcTree;..\..\..\srcPKG\srcTree_UI;..\..\..\srcPKG\xmlConfig;..\..\..\srcPKG\srcTree\Handlers\reNames;..\..\..\srcPKG\srcTree\Handlers;..\..\..\srcPKG\UI;..\..\..\srcExt\in0k-colors4StdSheme;..\..\..\srcPKG;..\..\..\srcPKG\srcTree\CORE"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>

@@ -6,7 +6,7 @@ interface
 
 uses
   in0k_lazIdeSRC_srcTree_CORE_item,
-  in0k_lazIdeSRC_CopyRAST_srcTree_Nodes,
+  in0k_CopyRAST_srcTree_ITEMs,
 
 
   Graphics,  LCLType,

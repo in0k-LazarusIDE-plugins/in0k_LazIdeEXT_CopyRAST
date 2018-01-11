@@ -13,8 +13,10 @@ uses
 
   in0k_lazIdeSRC_srcTree_CORE_item,
 
-  in0k_lazIdeSRC_CopyRAST_srcTree_Nodes,
-  in0k_lazExt_CopyRAST_cmpTree;
+  in0k_CopyRAST_srcTree_ITEMs,
+  in0k_lazExt_CopyRAST_cmpTree,
+
+  in0k_CopyRAST_srcTreeNode_DATA;
 
 type
 
@@ -54,9 +56,9 @@ begin
     for i:=0 to self.Items.Count-1 do begin
         tmp:=Items.Item[i].Data;
         if Assigned(tmp) and
-           isCopyRastNODE(tObject(tmp))
+           IS_CopyRast_stITEM(tObject(tmp))
         then begin
-            tmp:=CopyRastNODE_DATA(tObject(tmp));
+            tmp:=CopyRAST_stITEM_DATA(tCopyRast_stITEM(tmp));
             if Assigned(tmp) and
                (pCopyRastNODE_DATA(tmp)^.sideRight=item)
             then begin
@@ -74,9 +76,9 @@ begin
     for i:=0 to self.Items.Count-1 do begin
         tmp:=Items.Item[i].Data;
         if Assigned(tmp) and
-           isCopyRastNODE(tObject(tmp))
+           IS_CopyRast_stITEM(tObject(tmp))
         then begin
-            tmp:=CopyRastNODE_DATA(tObject(tmp));
+            tmp:=CopyRAST_stITEM_DATA(tObject(tmp));
             if Assigned(tmp) and
                (pCopyRastNODE_DATA(tmp)^.sideLeft=item)
             then begin
@@ -116,8 +118,8 @@ begin
     result:=inherited;
     if (Stage=cdPrePaint) and (_lftSide_mustNotNIL_ or _rhtSide_mustNotNIL_) and result then begin
         tmpNode:=tSrcTree_item(Node.Data);
-        if Assigned(tmpNode) and isCopyRastNODE(tmpNode) then begin
-            tmpData:=CopyRastNODE_DATA(tmpNode);
+        if Assigned(tmpNode) and IS_CopyRast_stITEM(tmpNode) then begin
+            tmpData:=CopyRAST_stITEM_DATA(tmpNode);
             if _lftSide_mustNotNIL_ and not Assigned(tmpData^.sideLeft)
             then Canvas.Font.Color:=clGrayText//in0k_colors4StdSheme__getRed//clGray
            else
@@ -133,8 +135,8 @@ var tmpNode:tSrcTree_item;
 begin
     inherited;
     tmpNode:=tSrcTree_item(Node.Data);
-    if Assigned(tmpNode) and isCopyRastNODE(tmpNode) then begin
-        tmpData:=CopyRastNODE_DATA(tmpNode);
+    if Assigned(tmpNode) and IS_CopyRast_stITEM(tmpNode) then begin
+        tmpData:=CopyRAST_stITEM_DATA(tmpNode);
         if CRNK_notVerified in tmpData^.NodeSTATE then begin
            _paint_notVerified_(Node);
         end;

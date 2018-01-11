@@ -29,10 +29,12 @@ uses
 srcTree_handler4build_CORE,
 
 
-  in0k_lazIdeSRC_CopyRAST_srcTree_Nodes,
+  in0k_CopyRAST_srcTree_ITEMs,
   in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs,
   lazExt_CopyRAST__xmlConfig,
-  lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs;
+  lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs,
+
+  in0k_CopyRAST_srcTree_Stage;
 
 type
 
@@ -46,21 +48,17 @@ type
     function Processing:boolean; override; // ВЫПОЛНИТЬ обработку
   end;}
 
- tCopyRastSrcTree_itmH4ReNAMEs_ITEM=class(tSrcTree_itmHandler4Build)
+ tCopyRastSrcTree_itmH4ReNAMEs_ITEM=class(tCopyRast_SrcTree_itmSTAGE)
   protected
-    function newRoot:tSrcTree_ROOT;
-
-  protected
-    function _newFLDR_:_tSrcTree_item_fsNodeFLDR_;
+    function _getTargetFLDR_:_tSrcTree_item_fsNodeFLDR_;
     function _newFILE_(const fldr:_tSrcTree_item_fsNodeFLDR_):tCopyRastNODE_FILE;
   public // ВЫПОЛНЕНИЕ
     function Processing:boolean; override; // ВЫПОЛНИТЬ обработку
   end;
 
 
- tCopyRastSrcTree_prcH4ReNAMEs=class(tSrcTree_prcHandler4Build)
+ tCopyRastSrcTree_prcH4ReNAMEs=class(tCopyRast_SrcTree_prcSTAGE)
   private
-   _newROOT_:tSrcTree_ROOT;
    _regExpr_:TRegExpr;
   private
    _cnfg_customer_ROOT_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
@@ -84,10 +82,6 @@ type
 
     //function  _getNewPATH_FLDR_(const item:tCopyRastNODE_FLDR):string;
     //function  _getNewPATH_FILE_(const item:tCopyRastNODE_FILE):string;
-  protected
-    function  _prc_setNew_ROOT_(const item:tSrcTree_ROOT):tSrcTree_ROOT;
-    procedure _prc_setNew_BASE_(const item:tSrcTree_BASE);
-    procedure _prc_setNew_MAIN_(const item:tSrcTree_MAIN);
     //procedure _prc_addNew_FLDR_(const item:tCopyRastNODE_FLDR);
     //procedure _prc_addNew_FILE_(const item:tCopyRastNODE_FILE);
   protected
@@ -96,7 +90,7 @@ type
     procedure CNFGs_LOAD(const Configs:tLazExt_CopyRAST_CONFIG);
     procedure CNFGs_SAVE(const Configs:tLazExt_CopyRAST_CONFIG);
   public
-    procedure EXECUTE(const nodeRoot:tSrcTree_ROOT); overload;
+    //procedure EXECUTE(const nodeRoot:tSrcTree_ROOT); overload;
   public
     constructor Create(const aBUILDer:tSrcTree_Builder_CORE); override;
     destructor DESTROY; override;
@@ -125,8 +119,7 @@ type
   public
     function  Template_APPLAY(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer;
   public
-    property ROOT_old:tSrcTree_item read _execRoot_;// write _nodeRoot_;
-    property ROOT_NEW:tSrcTree_ROOT read _newROOT_;
+    //property ROOT_old:tSrcTree_item read _execRoot_;// write _nodeRoot_;
   end;
 
 implementation
@@ -163,14 +156,8 @@ end;}
 
 //------------------------------------------------------------------------------
 
-function tCopyRastSrcTree_itmH4ReNAMEs_ITEM.newRoot:tSrcTree_ROOT;
-begin
-    result:=tSrcTree_ROOT(tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._newROOT_);
-end;
-
-
 // получить-СОЗДАТЬ НОВУЮ папку для prcssdITEM
-function tCopyRastSrcTree_itmH4ReNAMEs_ITEM._newFLDR_:_tSrcTree_item_fsNodeFLDR_;
+function tCopyRastSrcTree_itmH4ReNAMEs_ITEM._getTargetFLDR_:_tSrcTree_item_fsNodeFLDR_;
 var tmpLeft:tSrcTree_item;
 var tmpPATH:string;
     tmpKING:sSrcTree_SrchPath;
@@ -178,8 +165,8 @@ begin
     result:=nil;
     tmpPATH:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._cnfgClc_newNameFLDR_(prcssdITEM, tSrcTree_fsFLDR(tmpLeft));
     if tmpPATH=''
-    then result:=SrcTree_fndBaseDIR(newRoot) //< тут видимо берем БАЗОВУЮ папку
-    else result:=Builder.add_FLDR(newRoot,tmpPATH,tmpKING); {todo:!!!!!!!!}
+    then result:=SrcTree_fndBaseDIR(ROOT_Target) //< тут видимо берем БАЗОВУЮ папку
+    else result:=Builder.add_FLDR(ROOT_Target,tmpPATH,tmpKING); {todo:!!!!!!!!}
     // вяжем
     if Assigned(tmpLeft) then CopyRastNODE_LINK(tmpLeft,result);
 end;
@@ -198,8 +185,11 @@ begin
     tmpName:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._cnfgClc_newNAME_(prcssdITEM);//tmpName);
     if tmpName<>'' then begin
         tmpName:=srcTree_fsFnk_ConcatPaths(fldr.fsPath,tmpName);
-        result :=tCopyRastNODE_FILE(Builder.add_FILE(newRoot,tmpName,tCopyRastNODE_FILE(prcssdITEM).fileKIND));
+        result :=tCopyRastNODE_FILE(Builder.add_FILE(ROOT_Target,tmpName,tCopyRastNODE_FILE(prcssdITEM).fileKIND));
         CopyRastNODE_LINK(tCopyRastNODE_FILE(prcssdITEM),result);
+    end
+    else begin
+        {todo: про ОШИБКИ !}
     end;
 end;
 
@@ -211,7 +201,7 @@ var tmpFLDR:_tSrcTree_item_fsNodeFLDR_;
 begin //
     if prcssdITEM is tCopyRastNODE_FILE then begin //< работаем ТОЛЬКО с ФАЙЛАМИ
         //with tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_) do begin
-            tmpFLDR:=_newFLDR_; //<
+            tmpFLDR:=_getTargetFLDR_; //<
             if Assigned(tmpFLDR) then begin
                _newFILE_(tmpFLDR);
             end;
@@ -241,7 +231,7 @@ begin
 
    _regExpr_.FREE;
   // _CNFGs4NAME_.FREE;
-   _newROOT_.FREE;
+  // _newROOT_.FREE;
 end;
 
 //------------------------------------------------------------------------------
@@ -456,35 +446,6 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tCopyRastSrcTree_prcH4ReNAMEs._prc_setNew_ROOT_(const item:tSrcTree_ROOT):tSrcTree_ROOT;
-begin
-    {$ifOPT D+}
-    Assert(Assigned(item));
-    Assert(isCopyRastNODE(item),item.ClassName+' is NOT CopyRastNODE');
-    {$endIf}
-    // создадим
-    if item is tCopyRastNODE_Root4Package
-    then result:=tCopyRastNODE_Root4Package(_builder_.crt_ROOT(_clc_newName_ROOT_(item)))
-   else
-    if item is tCopyRastNODE_Root4Project
-    then result:=tCopyRastNODE_Root4Project(_builder_.crt_ROOT(_clc_newName_ROOT_(item)));
-    // свяжем
-    CopyRastNODE_LINK(item,result);
-end;
-
-procedure tCopyRastSrcTree_prcH4ReNAMEs._prc_setNew_BASE_(const item:tSrcTree_BASE);
-var tmp:tCopyRastNODE_BASE;
-begin // создадим и свяжем
-    tmp:=tCopyRastNODE_BASE(_builder_.set_BASE(_newROOT_, _clc_newName_BASE_(item)));
-    CopyRastNODE_LINK(item,tmp);
-end;
-
-procedure tCopyRastSrcTree_prcH4ReNAMEs._prc_setNew_MAIN_(const item:tSrcTree_MAIN);
-var tmp:tSrcTree_MAIN;
-begin // создадим и свяжем
-    tmp:=_builder_.set_MAIN(_newROOT_, _clc_newName_MAIN_(item));
-    CopyRastNODE_LINK(item,tmp);
-end;
 
 {procedure tCopyRastSrcTree_prcH4ReNAMEs._prc_AddNew_FLDR_(const item:tCopyRastNODE_FLDR);
 var tmp:tCopyRastNODE_FLDR;
@@ -507,7 +468,7 @@ begin
     EXECUTE_4TREE(tCopyRastSrcTree_itmH4ReNAMEs_ITEM);
 end;
 
-procedure tCopyRastSrcTree_prcH4ReNAMEs.EXECUTE(const nodeRoot:tSrcTree_ROOT);
+(*procedure tCopyRastSrcTree_prcH4ReNAMEs.EXECUTE(const nodeRoot:tSrcTree_ROOT);
 begin
     //_configs_:=Configs;
    _newROOT_:=_prc_setNew_ROOT_(nodeRoot);
@@ -515,9 +476,9 @@ begin
    _prc_setNew_BASE_({tCopyRastNODE_BASE}(_builder_.fnd_BASE(nodeRoot)));
    _prc_setNew_MAIN_({tCopyRastNODE_MAIN}(_builder_.fnd_MAIN(nodeRoot)));
     //
-   inherited EXECUTE(nodeRoot);
+   //inherited EXECUTE(nodeRoot);
     //NewROOT:=_newROOT_;
-end;
+end;*)
 
 //------------------------------------------------------------------------------
 
@@ -855,7 +816,7 @@ begin
     //---
     if (srcItem is tCopyRastNODE_Root4Package) then EXIT;
     if (srcItem is tCopyRastNODE_Root4Project) then EXIT;
-    if (srcItem is tCopyRastNODE_BASE)         then EXIT;
+    if (srcItem is tCopyRast_stBASE)           then EXIT;
     if (srcItem is tCopyRastNODE_Main4Package) then EXIT;
     if (srcItem is tCopyRastNODE_Main4Project) then EXIT;
     //

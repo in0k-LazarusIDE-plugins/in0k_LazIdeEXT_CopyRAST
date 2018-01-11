@@ -11,7 +11,8 @@ uses
   in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
   in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
 
-  in0k_lazIdeSRC_CopyRAST_srcTree_Nodes;
+  in0k_CopyRAST_srcTree_ITEMs,
+  in0k_CopyRAST_srcTreeNode_DATA;
 
 function CopyRASTItem_isReNamed(const item:tSrcTree_item):boolean;
 
@@ -30,7 +31,7 @@ begin
     result:=false;
     if not (item is _tSrcTree_item_fsNode_) then EXIT;
     //---
-    tmpData:=CopyRastNODE_DATA(item);
+    tmpData:=CopyRAST_stITEM_DATA(item);
     if Assigned(tmpData) then begin
         tmpItem:=tmpData^.sideLeft;
         if Assigned(tmpItem) and (tmpItem is _tSrcTree_item_fsNode_) then begin

@@ -178,8 +178,8 @@ procedure TfrmApprovedFILEs2NAMEs._HNDLR_set_(const value:tCopyRastSrcTree_prcH4
 begin
    _HNDLR_:=value;
     if Assigned(_HNDLR_) then begin
-       _treeL_.Root:=_HNDLR_.ROOT_old;
-       _treeR_.Root:=_HNDLR_.ROOT_NEW;
+       _treeL_.Root:=_HNDLR_.ROOT_Source;
+       _treeR_.Root:=_HNDLR_.ROOT_Target;
         frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=@(_HNDLR_.Template_APPLAY);
         _ctrl_eventSet_onChange_;
     end

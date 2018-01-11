@@ -19,10 +19,12 @@ uses
   lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs,
 
   in0k_lazIdeSRC_CopyRAST_srcTree,
-  in0k_lazIdeSRC_CopyRAST_srcTree_Nodes,
+  in0k_CopyRAST_srcTree_ITEMs,
   in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs,
 
   makeTest_copyRastOBJ,
+
+  in0k_CopyRAST_srcTreeNode_DATA,
   //
   cmpCopyRAST_srcTree_approvedFiles,
   cmpCopyRAST_srcTree_approvedNAMEs,
@@ -159,6 +161,7 @@ end;
 destructor TForm1.DESTROY;
 begin
     inherited;
+    reNames.Root_Target.FREE;
     reNames.FREE;
     builder.FREE;
     first.FREE;

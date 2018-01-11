@@ -20,7 +20,7 @@ uses
    in0k_lazIdeSRC_srcTree_FNK_srchPATH_ADD,
    in0k_lazIdeSRC_srcTree_FNK_fsFILE_GET,
    //
-   in0k_lazIdeSRC_CopyRAST_srcTree_Nodes;
+   in0k_CopyRAST_srcTree_ITEMs;
 
 function makeTest_objCopyRAST(builder:tSrcTree_Builder_4Package):tSrcTree_ROOT;
 
