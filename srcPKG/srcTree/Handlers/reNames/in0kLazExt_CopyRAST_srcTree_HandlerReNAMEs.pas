@@ -60,8 +60,10 @@ type
  tCopyRastSrcTree_prcH4ReNAMEs=class(tCopyRast_SrcTree_prcSTAGE)
   private
    _macross_:tStringList;
-   _regExpr_:TRegExpr;
+    procedure _macross_reClc_;
     function _macross_APPLAY_(const srcString:string):string;
+  private
+   _regExpr_:TRegExpr;
   private
    _cnfg_customer_ROOT_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
    _cnfg_customer_FILE_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER;
@@ -78,6 +80,7 @@ type
     function  _cnfgClc_newPATH_ (const item:tSrcTree_item):string; overload;
     function  _cnfgClc_newNameFLDR_ (const item:tSrcTree_item; out leftFLDR:tSrcTree_fsFLDR):string; overload;
   protected
+    function  _clc_oldName_ROOT_(const item:tSrcTree_ROOT):string;
     function  _clc_newName_ROOT_(const item:tSrcTree_ROOT):string;
     function  _clc_newName_BASE_(const item:tSrcTree_BASE):string;
     function  _clc_newName_MAIN_(const item:tSrcTree_MAIN):string;
@@ -371,7 +374,16 @@ end;
 
 //------------------------------------------------------------------------------
 
-{%region -- _clc_newName.. ----------------------------------------------}
+{%region -- _clc_..Name.. -----------------------------------------------}
+
+function tCopyRastSrcTree_prcH4ReNAMEs._clc_oldName_ROOT_(const item:tSrcTree_ROOT):string;
+begin
+    {$ifOpt D+}
+    Assert(Assigned(item));
+    Assert(IS_CopyRAST_stROOT(item));
+    {$endIf}
+    result:=item.ItemTEXT;
+end;
 
 // расчитать Имя: ROOT файла
 // берем ИМЯ главного файла и УДАЛЯЕМ расширение
@@ -463,7 +475,6 @@ begin
     if Assigned(tmpItem) and IS_CopyRAST_stROOT(tmpItem) then begin
         tmpName:=_clc_newName_ROOT_(_sourceROOT_GET_);
         SrcTree_re_set_itemTEXT(tmpItem,tmpName);
-       _macross_.Values['MainNewName']:=tmpName;
     end
     else begin
         {todo: про ОШИБКИ !}
@@ -488,7 +499,7 @@ begin
     end;
     //
     // теперь про ОСТАЛЬНЫЕ файлы
-    //
+   _macross_reClc_;
     EXECUTE_4TREE(tCopyRast_SrcTree_stageReNAMEs_itm4file);
 end;
 
@@ -615,6 +626,7 @@ begin
     //---
     if _item_4_cnfg_customer_ROOT_(item) then begin
        _cnfg_customer_ROOT_.Copy(CNFG);
+       _macross_reClc_;
     end
    else
     if item is tSrcTree_fsFILE then begin
@@ -654,6 +666,7 @@ begin
     {$endIf}
     if item is tSrcTree_ROOT then begin
        _cnfg_template_ROOT_.COPY(value);
+       _macross_reClc_;
     end
    else begin
        _cnfg_template_LAER_.CNFG_SET(_tSrcTree_item_fsNodeFLDR_(item).fsBase, value);
@@ -826,18 +839,31 @@ end;
 
 //------------------------------------------------------------------------------
 
+const
+  _cMacrosSMBL_equal_    ='=';
+  _cMacrosNAME_crOldNAME_='crOldNAME';
+  _cMacrosNAME_crNewNAME_='crNewNAME';
+
+procedure tCopyRastSrcTree_prcH4ReNAMEs._macross_reClc_;
+begin
+   _macross_.Clear;
+    // заполним ЗАНОГО
+   _macross_.Add(_cMacrosNAME_crOldNAME_+_cMacrosSMBL_equal_+_clc_oldName_ROOT_(_sourceROOT_GET_));
+   _macross_.Add(_cMacrosNAME_crNewNAME_+_cMacrosSMBL_equal_+_clc_newName_ROOT_(_targetROOT_GET_));
+end;
+
 function tCopyRastSrcTree_prcH4ReNAMEs._macross_APPLAY_(const srcString:string):string;
 var i:integer;
 begin
     result:=srcString;//'($MainNewName)';
     //---
-    {for i:=0 to _macross_.Count-1 do begin
+    for i:=0 to _macross_.Count-1 do begin
        _regExpr_.InputString:=result;
        _regExpr_.Expression :='(\(\$'+_macross_.Names[i]+'\))'; // шаблон поиска
         if _regExpr_.Exec(1) then begin
             result:=_regExpr_.Replace(result,_macross_.Values[_macross_.Names[i]],FALSE);
         end
-    end;}
+    end;
 end;
 
 //------------------------------------------------------------------------------
@@ -849,6 +875,8 @@ const
 
 
 function tCopyRastSrcTree_prcH4ReNAMEs._template_APPLAY_RULE_(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer;
+var tmpTemplate:string;
+    tmpExchange:string;
 begin
     outName:=srcName;
     result :=c_NoNEED;
@@ -862,12 +890,16 @@ begin
     if (srcItem is tCopyRastNODE_FILE)and(not rule.Use4FILE) then EXIT;
     if (srcItem is tCopyRastNODE_FLDR)and(not rule.Use4FLDR) then EXIT;
     //---
+    tmpTemplate:=_macross_APPLAY_(rule.Template);
+    tmpExchange:=_macross_APPLAY_(rule.Exchange);
+
+
     if rule.RegExUSE then begin
         {todo: делать МАКРОСЫ}
        _regExpr_.InputString:=srcName;
-       _regExpr_.Expression :=rule.Template; // шаблон поиска
+       _regExpr_.Expression :=tmpTemplate; // шаблон поиска
         if _regExpr_.Exec(1) then begin
-            outName:=_regExpr_.Replace(srcName,_macross_APPLAY_(rule.Exchange),true);
+            outName:=_regExpr_.Replace(srcName,tmpExchange,true);
             result :=c_Replaced;
         end
         else begin

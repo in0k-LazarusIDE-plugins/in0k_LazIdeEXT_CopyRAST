@@ -2,11 +2,11 @@
 <CopyRAST asd="ssss">
   <approvedFILEs2NAMEs>
     <ROOT>
-      <nameStated Value="uioui"/>
+      <nameStated Value="CopyRAST"/>
       <Templates count="2">
         <item0>
           <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
-          <exchange Value="asdf$1$2wadfasdfsadfasdf"/>
+          <exchange Value="($crNewName)_$1$2"/>
         </item0>
         <item1>
           <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
@@ -68,7 +68,7 @@
         <item1 type="inherited"/>
         <item2>
           <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
-          <exchange Value="asdf$1$2"/>
+          <exchange Value="($MainNewName)_$1$2"/>
         </item2>
       </item1>
     </Templates>
