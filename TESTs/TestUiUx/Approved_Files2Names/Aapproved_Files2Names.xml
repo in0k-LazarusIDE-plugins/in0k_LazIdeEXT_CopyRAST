@@ -10,7 +10,7 @@
         </item0>
         <item1>
           <template Value="^in0k_lazIdeSRC_(\w+)(\.pas)$"/>
-          <exchange Value="adffdfffffsdf$1$2"/>
+          <exchange Value="($MainNewName)_$1$2"/>
           <_Use4FILE_ Value="False"/>
           <_Use4FLDR_ Value="True"/>
         </item1>
@@ -41,6 +41,7 @@
       </FLDRs>
       <FILEs count="2">
         <item0 Path="in0k_lazIdeSRC_SETTINGs.inc">
+          <nameStated Value="dfgdfsdfgs"/>
           <pathStated Value="dfgdfg"/>
           <pathCustom Value="False"/>
         </item0>

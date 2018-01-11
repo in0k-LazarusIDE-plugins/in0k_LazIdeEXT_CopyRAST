@@ -48,18 +48,20 @@ type
     function Processing:boolean; override; // ВЫПОЛНИТЬ обработку
   end;}
 
- tCopyRastSrcTree_itmH4ReNAMEs_ITEM=class(tCopyRast_SrcTree_itmSTAGE)
+ tCopyRast_SrcTree_stageReNAMEs_itm4file=class(tCopyRast_SrcTree_itmSTAGE)
   protected
     function _getTargetFLDR_:_tSrcTree_item_fsNodeFLDR_;
-    function _newFILE_(const fldr:_tSrcTree_item_fsNodeFLDR_):tCopyRastNODE_FILE;
-  public // ВЫПОЛНЕНИЕ
+    function _newTargetFILE_(const fldr:_tSrcTree_item_fsNodeFLDR_):tCopyRastNODE_FILE;
+  public
     function Processing:boolean; override; // ВЫПОЛНИТЬ обработку
   end;
 
 
  tCopyRastSrcTree_prcH4ReNAMEs=class(tCopyRast_SrcTree_prcSTAGE)
   private
+   _macross_:tStringList;
    _regExpr_:TRegExpr;
+    function _macross_APPLAY_(const srcString:string):string;
   private
    _cnfg_customer_ROOT_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
    _cnfg_customer_FILE_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER;
@@ -124,64 +126,41 @@ type
 
 implementation
 
-{%region --- inline ---}
-
-type
-
-_tConfigList_=class(TStringList)
-
-  end;
-
-//------------------------------------------------------------------------------
-
-{%endregion}
-
-
-{function tCopyRastSrcTree_itmH4ReNAMEs_FLDR.Processing:boolean;
-begin
-    result:=true;
-    if prcssdITEM is tCopyRastNODE_FLDR then begin
-        tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._prc_AddNew_FLDR_(tCopyRastNODE_FLDR(prcssdITEM));
-    end;
-end;
-
-function tCopyRastSrcTree_itmH4ReNAMEs_FILE.Processing:boolean;
-begin
-    result:=true;
-    if prcssdITEM is tCopyRastNODE_FILE then begin
-        tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._prc_AddNew_FILE_(tCopyRastNODE_FILE(prcssdITEM));
-    end;
-end;}
-
-
-//------------------------------------------------------------------------------
+{%region --- tCopyRast_SrcTree_stageReNAMEs_itm4file ------------------- }
 
 // получить-СОЗДАТЬ НОВУЮ папку для prcssdITEM
-function tCopyRastSrcTree_itmH4ReNAMEs_ITEM._getTargetFLDR_:_tSrcTree_item_fsNodeFLDR_;
+function tCopyRast_SrcTree_stageReNAMEs_itm4file._getTargetFLDR_:_tSrcTree_item_fsNodeFLDR_;
 var tmpLeft:tSrcTree_item;
 var tmpPATH:string;
     tmpKING:sSrcTree_SrchPath;
 begin
     result:=nil;
+    // ищем СТРОКУ-ПУТЬ
     tmpPATH:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._cnfgClc_newNameFLDR_(prcssdITEM, tSrcTree_fsFLDR(tmpLeft));
+    // ищем НАБОР "путиПоиска"
+    tmpKING:=[];
+    if Assigned(tmpLeft) then tmpKING:=tSrcTree_fsFLDR(tmpLeft).inSearchPATHs
+    else begin
+        // ищем ОТКУДА брать поисковые пути
+        tmpLeft:=SrcTree_fsFolder__fnd_PARENT(prcssdITEM);
+        if Assigned(tmpLeft) then begin
+            tmpKING:=tSrcTree_fsFLDR(tmpLeft).inSearchPATHs;
+        end;
+        tmpLeft:=nil;
+    end;
+    // ищем НОВУЮ папку
     if tmpPATH=''
     then result:=SrcTree_fndBaseDIR(ROOT_Target) //< тут видимо берем БАЗОВУЮ папку
-    else result:=Builder.add_FLDR(ROOT_Target,tmpPATH,tmpKING); {todo:!!!!!!!!}
-    // вяжем
-    if Assigned(tmpLeft) then CopyRastNODE_LINK(tmpLeft,result);
+    else begin
+        result:=Builder.add_FLDR(ROOT_Target,tmpPATH,tmpKING); {todo:!!!!!!!!}
+        // вяжем
+        if Assigned(tmpLeft) then CopyRastNODE_LINK(tmpLeft,result);
+    end;
 end;
 
-function tCopyRastSrcTree_itmH4ReNAMEs_ITEM._newFILE_(const fldr:_tSrcTree_item_fsNodeFLDR_):tCopyRastNODE_FILE;
+function tCopyRast_SrcTree_stageReNAMEs_itm4file._newTargetFILE_(const fldr:_tSrcTree_item_fsNodeFLDR_):tCopyRastNODE_FILE;
 var tmpName:string;
-    tmpKING:eSrcTree_FileType;
 begin
-   { if tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._cnfgClc_newNAME_(prcssdITEM,tmpName,tmpKING)
-    then begin // создаем и линкуем
-        tmpName:=srcTree_fsFnk_ConcatPaths(fldr.fsPath,tmpName);
-        result :=tCopyRastNODE_FILE(Builder.add_FILE(newRoot,tmpName,tmpKING));
-        CopyRastNODE_LINK(tCopyRastNODE_FILE(prcssdITEM),result);
-    end
-    else result:=nil;  }
     tmpName:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._cnfgClc_newNAME_(prcssdITEM);//tmpName);
     if tmpName<>'' then begin
         tmpName:=srcTree_fsFnk_ConcatPaths(fldr.fsPath,tmpName);
@@ -193,22 +172,22 @@ begin
     end;
 end;
 
-
-
-function tCopyRastSrcTree_itmH4ReNAMEs_ITEM.Processing:boolean;
+function tCopyRast_SrcTree_stageReNAMEs_itm4file.Processing:boolean;
 var tmpFLDR:_tSrcTree_item_fsNodeFLDR_;
-    tmpFILE:tCopyRastNODE_FILE;
 begin //
     if prcssdITEM is tCopyRastNODE_FILE then begin //< работаем ТОЛЬКО с ФАЙЛАМИ
-        //with tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_) do begin
-            tmpFLDR:=_getTargetFLDR_; //<
-            if Assigned(tmpFLDR) then begin
-               _newFILE_(tmpFLDR);
-            end;
-        //end;
+        tmpFLDR:=_getTargetFLDR_; //<
+        if Assigned(tmpFLDR) then begin
+           _newTargetFILE_(tmpFLDR);
+        end
+        else begin
+            {todo: про ОШИБКИ !}
+        end;
     end;
     result:=TRUE;
 end;
+
+{%endregion}
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -217,6 +196,9 @@ constructor tCopyRastSrcTree_prcH4ReNAMEs.Create(const aBUILDer:tSrcTree_Builder
 begin
     inherited;
    _regExpr_ :=TRegExpr.Create;
+   _macross_ :=TStringList.Create;
+   _macross_.Add('MainNewName=ttttt');
+
     //---
    _cnfg_XXXX_CRT_;
     //---
@@ -227,6 +209,7 @@ destructor tCopyRastSrcTree_prcH4ReNAMEs.DESTROY;
 begin
     inherited;
 
+   _macross_ .FREE;
    _cnfg_XXXX_DST_;
 
    _regExpr_.FREE;
@@ -367,7 +350,15 @@ begin {todo: уйти от рекурсии}
     end
    else
     if Assigned(item.ItemPRNT) then begin //< в других случаях идем ВЫШЕ
-        result:=_cnfgClc_newNameFLDR_(item.ItemPRNT,leftFLDR);
+        // ищем свой ПУТЬ
+        ctm:=CNFG_customer_GET(item); // проверим ЯВНОЕ указание
+        if (Assigned(ctm))and(ctm.PathCustom) then begin
+            result:=ctm.PathStated;
+        end
+        else begin // путь для нас ЯВНО не указан, считаем путь по родителю
+            result:=_cnfgClc_newNameFLDR_(item.ItemPRNT,leftFLDR);
+        end;
+        ctm.FREE;
     end;
 end;
 
@@ -464,8 +455,41 @@ end;}
 //------------------------------------------------------------------------------
 
 procedure tCopyRastSrcTree_prcH4ReNAMEs._EXECUTE_;
+var tmpItem:tCopyRast_stITEM;
+    tmpName:string;
 begin
-    EXECUTE_4TREE(tCopyRastSrcTree_itmH4ReNAMEs_ITEM);
+    // переустановим НОВОЕ имя для ВСЕГО проекта
+    tmpItem:=_targetROOT_GET_;
+    if Assigned(tmpItem) and IS_CopyRAST_stROOT(tmpItem) then begin
+        tmpName:=_clc_newName_ROOT_(_sourceROOT_GET_);
+        SrcTree_re_set_itemTEXT(tmpItem,tmpName);
+       _macross_.Values['MainNewName']:=tmpName;
+    end
+    else begin
+        {todo: про ОШИБКИ !}
+    end;
+    // переустановим НОВЫЙ путь к БАЗОВОЙ папке
+    tmpItem:=_builder_.fnd_BASE(_targetROOT_GET_);
+    if Assigned(tmpItem) and IS_CopyRAST_stBASE(tmpItem) then begin
+        tmpName:=_clc_newName_BASE_(_builder_.fnd_BASE(_sourceROOT_GET_));
+        SrcTree_re_set_itemTEXT(tmpItem,tmpName);
+    end
+    else begin
+        {todo: про ОШИБКИ !}
+    end;
+    // переустановим НОВОЕ имя для ФАЙЛА проекта
+    tmpItem:=_builder_.fnd_MAIN(_targetROOT_GET_);
+    if Assigned(tmpItem) and IS_CopyRAST_stMAIN(tmpItem) then begin
+        tmpName:=_clc_newName_MAIN_(_builder_.fnd_MAIN(_sourceROOT_GET_));
+        SrcTree_re_set_itemTEXT(tmpItem,tmpName);
+    end
+    else begin
+        {todo: про ОШИБКИ !}
+    end;
+    //
+    // теперь про ОСТАЛЬНЫЕ файлы
+    //
+    EXECUTE_4TREE(tCopyRast_SrcTree_stageReNAMEs_itm4file);
 end;
 
 (*procedure tCopyRastSrcTree_prcH4ReNAMEs.EXECUTE(const nodeRoot:tSrcTree_ROOT);
@@ -799,6 +823,23 @@ begin {todo: добавить СЕРЪЕЗНУЮ проверку}
     result:=Trim(value)<>'';
 end;
 
+
+//------------------------------------------------------------------------------
+
+function tCopyRastSrcTree_prcH4ReNAMEs._macross_APPLAY_(const srcString:string):string;
+var i:integer;
+begin
+    result:=srcString;//'($MainNewName)';
+    //---
+    {for i:=0 to _macross_.Count-1 do begin
+       _regExpr_.InputString:=result;
+       _regExpr_.Expression :='(\(\$'+_macross_.Names[i]+'\))'; // шаблон поиска
+        if _regExpr_.Exec(1) then begin
+            result:=_regExpr_.Replace(result,_macross_.Values[_macross_.Names[i]],FALSE);
+        end
+    end;}
+end;
+
 //------------------------------------------------------------------------------
 
 const
@@ -814,23 +855,27 @@ begin
     //---
     if not rule.Enabled then EXIT;
     //---
-    if (srcItem is tCopyRastNODE_Root4Package) then EXIT;
-    if (srcItem is tCopyRastNODE_Root4Project) then EXIT;
-    if (srcItem is tCopyRast_stBASE)           then EXIT;
-    if (srcItem is tCopyRastNODE_Main4Package) then EXIT;
-    if (srcItem is tCopyRastNODE_Main4Project) then EXIT;
+    if IS_CopyRAST_stROOT(srcItem) then EXIT;
+    if IS_CopyRAST_stBASE(srcItem) then EXIT;
+    if IS_CopyRAST_stMAIN(srcItem) then EXIT;
     //
     if (srcItem is tCopyRastNODE_FILE)and(not rule.Use4FILE) then EXIT;
     if (srcItem is tCopyRastNODE_FLDR)and(not rule.Use4FLDR) then EXIT;
     //---
-   _regExpr_.InputString:=srcName;
-   _regExpr_.Expression :=rule.Template; // шаблон поиска
-    if _regExpr_.Exec(1) then begin
-        outName:=_regExpr_.Replace(srcName,rule.Exchange,true);
-        result :=c_Replaced;
+    if rule.RegExUSE then begin
+        {todo: делать МАКРОСЫ}
+       _regExpr_.InputString:=srcName;
+       _regExpr_.Expression :=rule.Template; // шаблон поиска
+        if _regExpr_.Exec(1) then begin
+            outName:=_regExpr_.Replace(srcName,_macross_APPLAY_(rule.Exchange),true);
+            result :=c_Replaced;
+        end
+        else begin
+            result :=c_notFound;
+        end;
     end
     else begin
-        result :=c_notFound;
+        {todo: делать через POS}
     end;
 end;
 
@@ -842,7 +887,11 @@ begin
     srcName:=srcItem.ItemNAME;
     for i:=0 to list.Count-1 do begin
         rule:=list.Items[i];
-        result:=_template_APPLAY_RULE_(srcItem,srcName,rule,outName)
+        result:=_template_APPLAY_RULE_(srcItem,srcName,rule,outName);
+        if result=c_Replaced then begin
+            srcName:=outName; //< новая строка для поиска
+            if rule.use_Last then BREAK; //< это было ПОСЛЕДНЕЕ правило
+        end;
     end;
 end;
 

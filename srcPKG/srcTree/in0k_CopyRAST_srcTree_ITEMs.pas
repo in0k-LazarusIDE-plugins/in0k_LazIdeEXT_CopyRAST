@@ -101,7 +101,6 @@ function IS_CopyRAST_stMAIN  (const value:tCopyRast_stITEM):boolean; overload; {
 function IS_CopyRAST_stMAIN  (const value:tObject         ):boolean; overload; {$ifOPT D-}inline;{$endIf}
 function IS_CopyRAST_stMAIN  (const value:pointer         ):boolean; overload; {$ifOPT D-}inline;{$endIf}
 
-
 function CopyRAST_stITEM_DATA(const value:tCopyRast_stITEM):pCopyRastNODE_DATA; overload; {$ifOPT D-}inline;{$endIf}
 function CopyRAST_stITEM_DATA(const value:tObject         ):pCopyRastNODE_DATA; overload; {$ifOPT D-}inline;{$endIf}
 function CopyRAST_stITEM_DATA(const value:pointer         ):pCopyRastNODE_DATA; overload; {$ifOPT D-}inline;{$endIf}

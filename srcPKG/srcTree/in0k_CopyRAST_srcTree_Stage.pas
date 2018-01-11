@@ -36,13 +36,9 @@ type
   protected
     function  _targetROOT_GET_:tCopyRast_stROOT; {$ifOpt D-}inline;{$endIf}
     function  _sourceROOT_GET_:tCopyRast_stROOT; {$ifOpt D-}inline;{$endIf}
-  protected
-    //function  _prc_setNew_ROOT_(const item:tSrcTree_ROOT):tSrcTree_ROOT;
-    //procedure _prc_setNew_BASE_(const item:tSrcTree_BASE);
-    //procedure _prc_setNew_MAIN_(const item:tSrcTree_MAIN);
   public
-    property ROOT_Source:tCopyRast_stROOT read _sourceROOT_GET_;
-    property ROOT_Target:tCopyRast_stROOT read _targetROOT_GET_;
+    property  ROOT_Source:tCopyRast_stROOT read _sourceROOT_GET_;
+    property  ROOT_Target:tCopyRast_stROOT read _targetROOT_GET_;
     procedure ROOT_Target_CLEAR;
   public
     function EXECUTE(const nodeRoot:tSrcTree_item):boolean; override;
