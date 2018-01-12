@@ -13,7 +13,7 @@ uses
   in0k_lazIdeSRC_srcTree_CORE_item,
   in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
 
-  in0k_colors4StdSheme,
+  in0k_ext4ColorTheme,
   lazExt_CopyRAST_clcNotRenamed,
   cmpCopyRAST_srcTree;
 
@@ -56,13 +56,13 @@ begin
             //---
             if (tmpNode is _tSrcTree_item_fsNodeFILE_) and (_show_unReNamed_FILE_) then begin
                 if NOT lazExt_CopyRAST_clcNotRenamed.CopyRASTItem_isReNamed(tmpNode) then begin
-                    Canvas.Font.Color:=in0k_colors4StdSheme__getRed//clGray
+                    Canvas.Font.Color:=color_Red//clGray
                 end;
             end
            else
             if (tmpNode is _tSrcTree_item_fsNodeFLDR_) and (_show_unReNamed_FLDR_) then begin
                 if NOT lazExt_CopyRAST_clcNotRenamed.CopyRASTItem_isReNamed(tmpNode) then begin
-                    Canvas.Font.Color:=in0k_colors4StdSheme__getRed//clGray
+                    Canvas.Font.Color:=color_Red//clGray
                 end;
             end
         end;
@@ -72,7 +72,7 @@ begin
         if ( _show_unReNamed_FILE_ or _show_unReNamed_FLDR_) then begin
             //
             Canvas.Brush.Style:=bsClear;
-            Canvas.Font.Color:=in0k_colors4StdSheme__getRed;//clGray
+            Canvas.Font.Color:=color_Red;//clGray
             //
             tmpCNTs:=0;
             if _show_unReNamed_FLDR_ then tmpCNTs:=tmpCNTs+ CopyRAST_Item_notReNamedChild_FLDR(tmpNode);

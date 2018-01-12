@@ -10,11 +10,11 @@
       <SearchPaths>
         <IncludeFiles Value="srcPKG"/>
         <Libraries Value="srcPKG"/>
-        <OtherUnitFiles Value="srcPKG;srcPKG\srcTree;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcPKG\OperationNODEs\Processing_ProjPack;srcPKG\srcTree_UI;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm;srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcExt\in0k-lazarusIdeSRC-SourceTREE;srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;srcExt\in0k-lazarusIdeSRC-SourceTREE-UI"/>
+        <OtherUnitFiles Value="srcPKG;srcPKG\srcTree;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcPKG\OperationNODEs\Processing_ProjPack;srcPKG\xmlConfig;srcPKG\srcTree_UI;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm;srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcExt\in0k-lazarusIdeSRC-SourceTREE;srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;srcExt\in0k-ext4ColorTheme;srcPKG\srcTree\Handlers\reNames;srcPKG\srcTree\Handlers"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="86">
+    <Files Count="90">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -360,6 +360,22 @@
         <Filename Value="srcPKG\srcTree\in0k_CopyRAST_srcTree_ITEMs.pas"/>
         <UnitName Value="in0k_CopyRAST_srcTree_ITEMs"/>
       </Item86>
+      <Item87>
+        <Filename Value="srcExt\in0k-ext4ColorTheme\in0k_ext4ColorTheme.pas"/>
+        <UnitName Value="in0k_ext4ColorTheme"/>
+      </Item87>
+      <Item88>
+        <Filename Value="srcPKG\srcTree\Handlers\reNames\in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs.pas"/>
+        <UnitName Value="in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs"/>
+      </Item88>
+      <Item89>
+        <Filename Value="srcPKG\srcTree\Handlers\reNames\in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs.pas"/>
+        <UnitName Value="in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs"/>
+      </Item89>
+      <Item90>
+        <Filename Value="srcPKG\srcTree\Handlers\CopyRAST_srcTree_4Handler_CNFGs.pas"/>
+        <UnitName Value="CopyRAST_srcTree_4Handler_CNFGs"/>
+      </Item90>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

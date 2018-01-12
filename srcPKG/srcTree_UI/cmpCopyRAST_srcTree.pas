@@ -9,7 +9,7 @@ uses
   Graphics,
   ComCtrls,
 
-  in0k_colors4StdSheme,
+  in0k_ext4ColorTheme,
 
   in0k_lazIdeSRC_srcTree_CORE_item,
 
@@ -121,10 +121,10 @@ begin
         if Assigned(tmpNode) and IS_CopyRast_stITEM(tmpNode) then begin
             tmpData:=CopyRAST_stITEM_DATA(tmpNode);
             if _lftSide_mustNotNIL_ and not Assigned(tmpData^.sideLeft)
-            then Canvas.Font.Color:=clGrayText//in0k_colors4StdSheme__getRed//clGray
+            then Canvas.Font.Color:=clGrayText//color_Red//clGray
            else
             if _rhtSide_mustNotNIL_ and not Assigned(tmpData^.sideRight)
-            then Canvas.Font.Color:=clGrayText//in0k_colors4StdSheme__getRed//clGray
+            then Canvas.Font.Color:=clGrayText//color_Red//clGray
         end;
     end;
 end;

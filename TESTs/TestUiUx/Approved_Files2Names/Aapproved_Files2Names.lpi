@@ -134,7 +134,7 @@
         <ResourceBaseClass Value="Frame"/>
       </Unit17>
       <Unit18>
-        <Filename Value="..\..\..\srcExt\in0k-colors4StdSheme\in0k_colors4StdSheme.pas"/>
+        <Filename Value="..\..\..\srcExt\in0k-ext4ColorTheme\in0k_ext4ColorTheme.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit18>
       <Unit19>
@@ -170,7 +170,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;..\..\..\srcPKG\srcTree;..\..\..\srcPKG\srcTree_UI;..\..\..\srcPKG\xmlConfig;..\..\..\srcPKG\srcTree\Handlers\reNames;..\..\..\srcPKG\srcTree\Handlers;..\..\..\srcPKG\UI;..\..\..\srcExt\in0k-colors4StdSheme;..\..\..\srcPKG;..\..\..\srcPKG\srcTree\CORE"/>
+      <OtherUnitFiles Value="..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;..\..\..\srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;..\..\..\srcPKG\srcTree;..\..\..\srcPKG\srcTree_UI;..\..\..\srcPKG\xmlConfig;..\..\..\srcPKG\srcTree\Handlers\reNames;..\..\..\srcPKG\srcTree\Handlers;..\..\..\srcPKG\UI;..\..\..\srcExt\in0k-colors4StdSheme;..\..\..\srcPKG;..\..\..\srcPKG\srcTree\CORE;..\..\..\srcExt\in0k-ext4ColorTheme"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>
