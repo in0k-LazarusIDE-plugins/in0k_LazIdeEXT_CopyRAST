@@ -17,13 +17,13 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
      {$endIf}
 
         in0k_lazIdeSRC_srcTree_item_Globals,
-        in0k_lazIdeSRC_CopyRAST_srcTree_Nodes,
+        in0k_CopyRAST_srcTree_ITEMs,
 
     lazExt_CopyRAST_wndCORE,
      lazExt_CopyRAST_node_ROOT,
      lazExt_CopyRAST_node_ROOT_package,
        // srcTree_item_root4Package,
-        srcTree_builder_4Package,
+        in0k_lazIdeSRC_srcTree_4Package,
         srcTree_FNC,
      lazExt_CopyRAST_StrConsts,
      lazExt_CopyRAST_node, lazExt_CopyRAST_node_Folder, lazExt_CopyRAST_node_File,
@@ -104,19 +104,19 @@ begin
     // формируем ПЕРВЫЧНЫЙ список файлов
     Builder:=tCopyRastSrcTree_Builder4Package.Create;
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'Builder START at '{+DateTimeToStr(NOW)});{$endIf}
-    root:=Builder.MAKE_SourceTREE(_package_);
+    root:=CreateRoot4Package(Builder,_package_);
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'Builder END at '{+DateTimeToStr(NOW)});{$endIf}
     // отображаем
     treeCopyRAST_First.Root:=tSrcTree_ROOT(root);
 
     //
-    root:=CopyRast_SrcTree_Copy(tCopyRastNODE_ROOT(root));
+    {root:=CopyRast_SrcTree_Copy(tCopyRastNODE_ROOT(root));
     // уточняем список по исходникам
     P4Build:=tCopyRastSrcTree_P4Build.Create;
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'P4Build START at '{+DateTimeToStr(NOW)});{$endIf}
     P4Build.EXECUTE(_package_,Builder,root);
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'P4Build END at '{+DateTimeToStr(NOW)});{$endIf}
-    // отображаем
+    // отображаем   }
     treeCopyRAST_Second.Root:=root;
 
 

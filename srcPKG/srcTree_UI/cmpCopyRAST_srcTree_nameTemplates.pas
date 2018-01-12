@@ -19,6 +19,12 @@ type
  mTemplateAPPLAY=function(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer of object;
 
  tCmpCopyRAST_srcTree_nameTemplates=class(TCustomListView)
+  private
+   _clmn_RegExpr_ID_:Integer;
+    procedure _clmn_RegExpr_CRT_;
+  private
+    procedure _CLMNs_CLR_;
+    procedure _CLMNs_CRT_;
   protected
     function  _view_rule_GET_(const item:TListItem):tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;             overload; {$ifOpt D-} inline; {$endIf}
     function  _view_rule_GET_(const indx:integer  ):tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;             overload; {$ifOpt D-} inline; {$endIf}
@@ -120,9 +126,31 @@ end;
 {%endregion -------------------------------------------------------------------}
 
 constructor tCmpCopyRAST_srcTree_nameTemplates.Create(AOwner: TComponent);
+var clmn:TListColumn;
 begin
     inherited Create(AOwner);
    // Items.Add(nil,'NEW');
+
+   _CLMNs_CRT_;
+
+    clmn:=Columns.Add;
+    with clmn do begin
+        Caption:='Template';
+        AutoSize:=TRUE;
+    end;
+    //clmn.Index:=;
+
+
+
+
+    with Columns.Add do begin
+        Caption:='Template';
+        AutoSize:=TRUE;
+    end;
+    with Columns.Add do begin
+        Caption:='Template';
+        AutoSize:=TRUE;
+    end;
     with Columns.Add do begin
         Caption:='Template';
         AutoSize:=TRUE;
@@ -368,14 +396,12 @@ var rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
 begin
     result:=inherited;
     if result then begin
-        {if AStage=cdPrePaint then begin
+        if AStage=cdPrePaint then begin
             rule:=_view_rule_GET_(AItem);
-            if rule.isInherited_RULE then begin
-                self.Canvas.Brush.Color:=clBtnFace;
+            if NOT rule.Enabled then begin
                 self.Canvas.Font.Color:=clGrayText;
             end;
-        end;}
-        //self.Canvas.Font.Color:=clRed;
+        end;
     end;
 end;
 
@@ -384,7 +410,6 @@ var rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
 begin        //TCustomDrawState
     result:=inherited;
     if result then begin
-        //self.Canvas.Font.Color:=clRed;
         if AStage=cdPrePaint then begin
             rule:=_view_rule_GET_(AItem);
             if rule.isInherited_RULE then begin
@@ -706,5 +731,39 @@ begin
     //self.EndUpdate;
     //Invalidate;
 end;
+
+{%region --- про КОЛОНКИ ------------------------------------------------------}
+
+const
+ _clmn_ID_notDef_=-1;
+
+procedure tCmpCopyRAST_srcTree_nameTemplates._clmn_RegExpr_CRT_;
+var clmn:TListColumn;
+begin
+    clmn:=Columns.Add;
+    with clmn do begin
+        Caption:='Template';
+        Hint   :='asdfasdfasdf';
+        AutoSize:=TRUE;
+    end;
+end;
+
+//------------------------------------------------------------------------------
+
+procedure tCmpCopyRAST_srcTree_nameTemplates._CLMNs_CLR_;
+begin
+    self.Columns.Clear;
+    //---
+   _clmn_RegExpr_ID_:=_clmn_ID_notDef_;
+end;
+
+procedure tCmpCopyRAST_srcTree_nameTemplates._CLMNs_CRT_;
+begin
+   _CLMNs_CLR_;
+   _clmn_RegExpr_CRT_;
+end;
+
+{%endregion}
+
 
 end.

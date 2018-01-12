@@ -57,6 +57,10 @@ type
     procedure AllNodes_SetSTATE(const ROOT:tSrcTree_ROOT; const newState:tCopyRastNODE_KIND);
   end;
 
+    function CreateRoot4Package(const Builder:tCopyRastSrcTree_Builder4Package; const Package:TIDEPackage):tCopyRast_stROOT;
+
+
+
 type
 
  tCopyRastSrcTree_f8a=class(tSrcTree_itmHandler4Build__f8a_CORE)
@@ -77,6 +81,19 @@ type
 // prcBuilder
 
 implementation
+
+function CreateRoot4Package(const Builder:tCopyRastSrcTree_Builder4Package; const Package:TIDEPackage):tCopyRast_stROOT;
+var creator:tSrcTree_Creater_4Package;
+begin
+    creator:=tSrcTree_Creater_4Package.Create;
+    try
+        result:=creator.MAKE_SourceTREE(Builder,Package);
+    finally
+        creator.FREE;
+    end;
+end;
+
+//------------------------------------------------------------------------------
 
 function tCopyRastSrcTree_Builder4Package.new_ROOT(const name:string):tSrcTree_ROOT;
 begin

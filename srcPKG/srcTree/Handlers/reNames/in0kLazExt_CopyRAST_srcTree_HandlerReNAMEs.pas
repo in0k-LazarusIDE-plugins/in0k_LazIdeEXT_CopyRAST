@@ -14,6 +14,8 @@ uses
   in0k_lazIdeSRC_srcTree_item_fsFile,
 
 
+  PackageDependencyIntf,
+
   srcTree_builder_CORE,
 
   sysutils,
@@ -59,11 +61,14 @@ type
 
  tCopyRastSrcTree_prcH4ReNAMEs=class(tCopyRast_SrcTree_prcSTAGE)
   private
+   _regExpr_:TRegExpr;
+  strict private
    _macross_:tStringList;
     procedure _macross_reClc_;
-    function _macross_APPLAY_(const srcString:string):string;
+    function  _macross_APPLAY_CopyRAST_(const srcString:string):string;
+    function  _macross_APPLAY_Lazarus_ (const srcString:string):string;
   private
-   _regExpr_:TRegExpr;
+    function  _macross_APPLAY_(const srcString:string):string;
   private
    _cnfg_customer_ROOT_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
    _cnfg_customer_FILE_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER;
@@ -80,7 +85,7 @@ type
     function  _cnfgClc_newPATH_ (const item:tSrcTree_item):string; overload;
     function  _cnfgClc_newNameFLDR_ (const item:tSrcTree_item; out leftFLDR:tSrcTree_fsFLDR):string; overload;
   protected
-    function  _clc_oldName_ROOT_(const item:tSrcTree_ROOT):string;
+    function  _get_oldName_ROOT_(const item:tSrcTree_ROOT):string;
     function  _clc_newName_ROOT_(const item:tSrcTree_ROOT):string;
     function  _clc_newName_BASE_(const item:tSrcTree_BASE):string;
     function  _clc_newName_MAIN_(const item:tSrcTree_MAIN):string;
@@ -138,8 +143,9 @@ var tmpPATH:string;
     tmpKING:sSrcTree_SrchPath;
 begin
     result:=nil;
-    // ищем СТРОКУ-ПУТЬ
+    // ищем СТРОКУ-ПУТЬ и применяем МАКРОСЫ
     tmpPATH:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._cnfgClc_newNameFLDR_(prcssdITEM, tSrcTree_fsFLDR(tmpLeft));
+    tmpPATH:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._macross_APPLAY_(tmpPATH);
     // ищем НАБОР "путиПоиска"
     tmpKING:=[];
     if Assigned(tmpLeft) then tmpKING:=tSrcTree_fsFLDR(tmpLeft).inSearchPATHs
@@ -162,12 +168,15 @@ begin
 end;
 
 function tCopyRast_SrcTree_stageReNAMEs_itm4file._newTargetFILE_(const fldr:_tSrcTree_item_fsNodeFLDR_):tCopyRastNODE_FILE;
-var tmpName:string;
+var tmpNAME:string;
 begin
-    tmpName:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._cnfgClc_newNAME_(prcssdITEM);//tmpName);
-    if tmpName<>'' then begin
-        tmpName:=srcTree_fsFnk_ConcatPaths(fldr.fsPath,tmpName);
-        result :=tCopyRastNODE_FILE(Builder.add_FILE(ROOT_Target,tmpName,tCopyRastNODE_FILE(prcssdITEM).fileKIND));
+    // ищем СТРОКУ-НАЗВАНИЕ и применяем МАКРОСЫ
+    tmpNAME:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._cnfgClc_newNAME_(prcssdITEM);
+    tmpNAME:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._macross_APPLAY_(tmpNAME);
+    //
+    if tmpNAME<>'' then begin
+        tmpNAME:=srcTree_fsFnk_ConcatPaths(fldr.fsPath,tmpNAME);
+        result :=tCopyRastNODE_FILE(Builder.add_FILE(ROOT_Target,tmpNAME,tCopyRastNODE_FILE(prcssdITEM).fileKIND));
         CopyRastNODE_LINK(tCopyRastNODE_FILE(prcssdITEM),result);
     end
     else begin
@@ -191,7 +200,6 @@ begin //
 end;
 
 {%endregion}
-
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -376,7 +384,7 @@ end;
 
 {%region -- _clc_..Name.. -----------------------------------------------}
 
-function tCopyRastSrcTree_prcH4ReNAMEs._clc_oldName_ROOT_(const item:tSrcTree_ROOT):string;
+function tCopyRastSrcTree_prcH4ReNAMEs._get_oldName_ROOT_(const item:tSrcTree_ROOT):string;
 begin
     {$ifOpt D+}
     Assert(Assigned(item));
@@ -839,32 +847,54 @@ end;
 
 //------------------------------------------------------------------------------
 
+{%region -- _macros_ ----------------------------------------------------}
+
 const
   _cMacrosSMBL_equal_    ='=';
   _cMacrosNAME_crOldNAME_='crOldNAME';
   _cMacrosNAME_crNewNAME_='crNewNAME';
 
+// переСоздаем список НАШИХ макросов
 procedure tCopyRastSrcTree_prcH4ReNAMEs._macross_reClc_;
 begin
    _macross_.Clear;
     // заполним ЗАНОГО
-   _macross_.Add(_cMacrosNAME_crOldNAME_+_cMacrosSMBL_equal_+_clc_oldName_ROOT_(_sourceROOT_GET_));
+   _macross_.Add(_cMacrosNAME_crOldNAME_+_cMacrosSMBL_equal_+_get_oldName_ROOT_(_sourceROOT_GET_));
    _macross_.Add(_cMacrosNAME_crNewNAME_+_cMacrosSMBL_equal_+_clc_newName_ROOT_(_targetROOT_GET_));
 end;
 
-function tCopyRastSrcTree_prcH4ReNAMEs._macross_APPLAY_(const srcString:string):string;
+//------------------------------------------------------------------------------
+
+function tCopyRastSrcTree_prcH4ReNAMEs._macross_APPLAY_CopyRAST_(const srcString:string):string;
 var i:integer;
 begin
     result:=srcString;//'($MainNewName)';
     //---
+   _regExpr_.ModifierI:=TRUE;
     for i:=0 to _macross_.Count-1 do begin
        _regExpr_.InputString:=result;
-       _regExpr_.Expression :='(\(\$'+_macross_.Names[i]+'\))'; // шаблон поиска
+       _regExpr_.Expression :='(\$\('+_macross_.Names[i]+'\))'; // шаблон поиска
         if _regExpr_.Exec(1) then begin
             result:=_regExpr_.Replace(result,_macross_.Values[_macross_.Names[i]],FALSE);
         end
     end;
 end;
+
+function tCopyRastSrcTree_prcH4ReNAMEs._macross_APPLAY_Lazarus_ (const srcString:string):string;
+begin
+    {todo: DO it!}
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+function tCopyRastSrcTree_prcH4ReNAMEs._macross_APPLAY_(const srcString:string):string;
+begin
+    result:=srcString;
+    result:=_macross_APPLAY_CopyRAST_(result);
+    result:=_macross_APPLAY_Lazarus_ (result);
+end;
+
+{%endRegion}
 
 //------------------------------------------------------------------------------
 

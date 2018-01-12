@@ -52,6 +52,10 @@ object Form1: TForm1
         TabOrder = 1
         DesignLeft = 468
         DesignTop = 400
+        inherited pnl_BTTNs: TPanel
+          Height = 305
+          ClientHeight = 305
+        end
         inherited Splitter1: TSplitter
           AnchorSideTop.Control = frmApprovedFILEs2NAMEs1.frmCopyRAST_cie_ReNamesTemplate1
           AnchorSideBottom.Control = frmApprovedFILEs2NAMEs1.frmCopyRAST_cie_ReNamesTemplate1
@@ -80,7 +84,7 @@ object Form1: TForm1
             OnResize = nil
             inherited Label1: TLabel
               Left = 501
-              Top = -14
+              Top = -13
             end
             inherited CheckBoxThemed2: TCheckBoxThemed
               Left = -382

@@ -51,6 +51,9 @@ begin
     if (Stage=cdPrePaint) and result then begin //< мы можем что-то порисовать
         if ( _show_unReNamed_FILE_ or _show_unReNamed_FLDR_) then begin
             tmpNode:=tSrcTree_item(Node.Data);
+            //---
+
+            //---
             if (tmpNode is _tSrcTree_item_fsNodeFILE_) and (_show_unReNamed_FILE_) then begin
                 if NOT lazExt_CopyRAST_clcNotRenamed.CopyRASTItem_isReNamed(tmpNode) then begin
                     Canvas.Font.Color:=in0k_colors4StdSheme__getRed//clGray
