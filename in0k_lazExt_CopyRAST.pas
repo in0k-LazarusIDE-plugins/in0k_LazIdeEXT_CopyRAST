@@ -63,7 +63,9 @@ uses
     in0k_lazIdeSRC_srcTree_itemsList, in0k_CopyRAST_srcTree_ITEMs, 
     in0k_ext4ColorTheme, in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs, 
     in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs, 
-    CopyRAST_srcTree_4Handler_CNFGs, LazarusPackageIntf;
+    CopyRAST_srcTree_4Handler_CNFGs, frmCopyRAST_EDIT, 
+    in0k_CopyRAST__frmSTAGE, frmCopyRAST_srcTree_approvedFILEs2NAMEs, 
+    LazarusPackageIntf;
 
 implementation
 

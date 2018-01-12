@@ -22,9 +22,9 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
 
 
      lazExt_CopyRAST_node, lazExt_CopyRAST_node_File,
-     lazExt_CopyRAST_node_Folder, Classes, SysUtils, FileUtil, Forms, Controls,
-     Graphics, Dialogs, ComCtrls, ExtCtrls, StdCtrls, LazFileUtils,
-     ExtendedTabControls, ExtendedNotebook;
+     lazExt_CopyRAST_node_Folder, in0k_CopyRAST__frmSTAGE_approveFILEs, Classes,
+     SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
+     StdCtrls, LazFileUtils, ExtendedTabControls, ExtendedNotebook;
 
 type
 

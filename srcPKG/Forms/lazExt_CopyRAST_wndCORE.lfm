@@ -9,7 +9,7 @@ object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
   OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.8.0.5'
+  LCLVersion = '1.8.0.6'
   object Panel1: TPanel
     Left = 0
     Height = 50
@@ -86,6 +86,12 @@ object wnd_lazExt_CopyRAST_CORE: Twnd_lazExt_CopyRAST_CORE
     end
     object TabSheet2: TTabSheet
       Caption = 'TabSheet2'
+      ClientHeight = 393
+      ClientWidth = 654
+      inline frmCopyRAST_STAGE_approveFILEs1: TfrmCopyRAST_STAGE_approveFILEs
+        Height = 393
+        Width = 654
+      end
     end
   end
   object SaveDialog1: TSaveDialog
