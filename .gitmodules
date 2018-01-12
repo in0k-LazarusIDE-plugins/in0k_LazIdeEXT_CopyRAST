@@ -16,3 +16,6 @@
 	
 	url = https://github.com/in0k-LazarusIDE-soures/in0k-lazarusIdeSRC-SourceTREE-UI.git
 
+[submodule "srcExt/in0k-ext4ColorTheme"]
+	path = srcExt/in0k-ext4ColorTheme
+	url = https://github.com/in0k-pas-src/in0k-ext4ColorTheme.git
