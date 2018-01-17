@@ -35,6 +35,7 @@ type
    public
      constructor Create(AnOwner: TComponent); override;
    end;
+  tCmpCopyRAST_srcTree_TYPE=class of tCmpCopyRAST_srcTree;
 
 implementation
 

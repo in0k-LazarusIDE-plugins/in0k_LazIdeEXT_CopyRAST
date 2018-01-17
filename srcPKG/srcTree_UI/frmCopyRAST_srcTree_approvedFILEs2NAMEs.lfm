@@ -1,24 +1,15 @@
-object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
-  Left = 0
+inherited frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
   Height = 720
-  Top = 0
   Width = 670
   ClientHeight = 720
   ClientWidth = 670
-  TabOrder = 0
   DesignLeft = 518
   DesignTop = 36
-  object pnlMDL: TPanel
+  inherited pnlMDL: TPanel
     AnchorSideTop.Control = Owner
-    Left = 319
-    Height = 367
-    Top = 0
-    Width = 49
-    Anchors = [akTop, akLeft, akBottom]
-    Caption = 'pnlMDL'
-    TabOrder = 0
+    TabOrder = 1
   end
-  object pnlPRP: TPanel
+  object pnlPRP: TPanel[1]
     Left = 0
     Height = 353
     Top = 367
@@ -27,7 +18,7 @@ object frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
     BevelOuter = bvNone
     ClientHeight = 353
     ClientWidth = 670
-    TabOrder = 1
+    TabOrder = 0
     inline frmCopyRAST_cie_ReNamesCustomer1: TfrmCopyRAST_cie_ReNamesCustomer
       Height = 48
       Width = 670

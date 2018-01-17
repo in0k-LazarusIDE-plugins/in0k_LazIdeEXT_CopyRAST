@@ -11,6 +11,8 @@ interface
 
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
 
+     in0k_CopyRAST__frmSTAGE_approveFILEs,
+
      IDEImagesIntf, PackageIntf,
      lazExt_CopyRAST_FuckUpForm,
      in0k_lazExt_CopyRAST_cmpTree,
@@ -22,7 +24,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
 
 
      lazExt_CopyRAST_node, lazExt_CopyRAST_node_File,
-     lazExt_CopyRAST_node_Folder, in0k_CopyRAST__frmSTAGE_approveFILEs, Classes,
+     lazExt_CopyRAST_node_Folder, Classes,
      SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
      StdCtrls, LazFileUtils, ExtendedTabControls, ExtendedNotebook;
 
@@ -31,6 +33,7 @@ type
  { Twnd_lazExt_CopyRAST_CORE }
 
  Twnd_lazExt_CopyRAST_CORE = class(TForm)
+    frmCopyRAST_STAGE_approveFILEs1: TfrmCopyRAST_STAGE_approveFILEs;
     Button1: TButton;
     Button2: TButton;
 		Button3: TButton;

@@ -1,10 +1,3 @@
-object frmCopyRAST_STAGE: TfrmCopyRAST_STAGE
-  Left = 0
-  Height = 240
-  Top = 0
-  Width = 320
+inherited frmCopyRAST_STAGE: TfrmCopyRAST_STAGE
   Align = alClient
-  TabOrder = 0
-  DesignLeft = 477
-  DesignTop = 119
 end

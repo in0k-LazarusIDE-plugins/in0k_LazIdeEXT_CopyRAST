@@ -103,7 +103,7 @@ begin
 
 
 
-    frmApprovedFILEs2NAMEs1.Handler:=reNames;
+    frmApprovedFILEs2NAMEs1.stage:=reNames;
 
 
     s:=ChangeFileExt(ParamStr(0),'.xml');
@@ -113,7 +113,7 @@ begin
 
     reNames.EXECUTE(first);
 
-    frmApprovedFILEs2NAMEs1.Handler:=reNames;
+    frmApprovedFILEs2NAMEs1.stage:=reNames;
 
 
     //var _reNames_:tCopyRastSrcTree_prcH4ReNAMEs;
@@ -174,7 +174,7 @@ begin
     //s:=ChangeFileExt(ParamStr(0),'.xml');
     XMLConfig1.Flush;
 
-    frmApprovedFILEs2NAMEs1.Handler:=nil;
+    frmApprovedFILEs2NAMEs1.stage:=nil;
 
     frmApprovedFILEs2NAMEs1.FREE;
     frmApprovedFILEs2NAMEs1:=nil;

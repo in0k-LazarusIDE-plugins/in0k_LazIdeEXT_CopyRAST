@@ -10,7 +10,9 @@ uses
 
 
 
-  frmCopyRAST_EDIT,
+  in0k_CopyRAST__frmSTAGE_twoTree,
+
+  in0k_CopyRAST_srcTree_Stage,
 
   cmpCopyRAST_srcTree_approvedFiles,
   in0k_lazIdeSRC_srcTree_CORE_item,
@@ -27,41 +29,40 @@ type
 
  { TfrmApprovedFILEs2NAMEs }
 
- TfrmApprovedFILEs2NAMEs = class(tFrmCopyRastEDIT)
+ TfrmApprovedFILEs2NAMEs = class(TfrmCopyRAST_STAGE_twoTree)
     frmCopyRAST_cie_ReNamesCustomer1: TfrmCopyRAST_cie_ReNamesCustomer;
     frmCopyRAST_cie_ReNamesTemplate1: TfrmCopyRAST_cie_ReNamesTemplate;
-    pnlMDL: TPanel;
     pnlPRP: TPanel;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
   protected
-    procedure _ctrl_Enabled_SET_(const value:boolean); override;
+    //procedure _ctrl_Enabled_SET_(const value:boolean); override;
     //procedure _ctrl_validate_;                         virtual; {$ifOpt D-}abstract;{$endIf}
-    procedure _ctrl_eventSet_onChange_; override;
-    procedure _ctrl_eventClr_onChange_; override;
+    //procedure _ctrl_eventSet_onChange_; override;
+    //procedure _ctrl_eventClr_onChange_; override;
   private
    _cnfg_template_:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
     procedure _cnfg_template_SET_(const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
   private
    _editItem_:tSrcTree_item;
-    procedure _editItem_SET_(const value:tSrcTree_item);
+    procedure _editItem_SET_(const value:tSrcTree_item); override;
   private
     procedure _onChange_customer_(const Sender:tObject; const itemCnfg:pointer);
     procedure _onChange_template_(const Sender:tObject; const itemCnfg:pointer);
   private
-   _treeL_:tCmpCopyRAST_srcTree_approvedFILEs;
-    procedure _treeL_SelectionChanged_(Sender:TObject);
+   //_treeL_:tCmpCopyRAST_srcTree_approvedFILEs;
+   // procedure _treeL_SelectionChanged_(Sender:TObject);
   private
-   _treeR_:tCmpCopyRAST_srcTree_approvedNAMEs;
-    procedure _treeR_SelectionChanged_(Sender:TObject);
+   //_treeR_:tCmpCopyRAST_srcTree_approvedNAMEs;
+   // procedure _treeR_SelectionChanged_(Sender:TObject);
   private
-   _HNDLR_:tCopyRastSrcTree_prcH4ReNAMEs;
-    procedure _HNDLR_set_(const value:tCopyRastSrcTree_prcH4ReNAMEs);
+    //_HNDLR_:tCopyRastSrcTree_prcH4ReNAMEs;
+    procedure _STAGE_set_(const value:tCopyRast_SrcTree_prcSTAGE);
   public
     constructor Create(AOwner:TComponent); override;
     destructor DESTROY; override;
   public
-    property Handler:tCopyRastSrcTree_prcH4ReNAMEs read _HNDLR_ write _HNDLR_set_;
+    //property Handler:tCopyRastSrcTree_prcH4ReNAMEs read _HNDLR_ write _HNDLR_set_;
   end;
 
 implementation
@@ -79,7 +80,7 @@ constructor TfrmApprovedFILEs2NAMEs.Create(AOwner:TComponent);
 begin
     inherited Create(AOwner);
     //---
-   _treeL_:=tCmpCopyRAST_srcTree_approvedFILEs.Create(Self);
+ {  _treeL_:=tCmpCopyRAST_srcTree_approvedFILEs.Create(Self);
     with _treeL_ do begin
         Parent:=Self;
         //
@@ -101,9 +102,9 @@ begin
         end;
         Anchors:=[akTop, akLeft, akRight, akBottom];
         //
-    end;
+    end;}
     //---
-   _treeR_:=tCmpCopyRAST_srcTree_approvedNAMEs.Create(Self);
+  { _treeR_:=tCmpCopyRAST_srcTree_approvedNAMEs.Create(Self);
     with _treeR_ do begin
         Parent:=Self;
         //
@@ -125,7 +126,7 @@ begin
         end;
         //
         Anchors:=[akTop, akLeft, akRight, akBottom];
-    end;
+    end; }
     //---
    //_cnfg_customer_null2frm;
    //_cnfg_customer_ctrl_validate_;
@@ -145,50 +146,33 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure TfrmApprovedFILEs2NAMEs._ctrl_Enabled_SET_(const value:boolean);
+{procedure TfrmApprovedFILEs2NAMEs._ctrl_Enabled_SET_(const value:boolean);
 begin
     //
-end;
+end;}
 
-procedure TfrmApprovedFILEs2NAMEs._ctrl_eventSet_onChange_;
+{procedure TfrmApprovedFILEs2NAMEs._ctrl_eventSet_onChange_;
 begin
     //
-    with _treeL_ do begin
-        OnSelectionChanged:=@_treeL_SelectionChanged_;
-    end;
-    with _treeR_ do begin
-        OnSelectionChanged:=@_treeR_SelectionChanged_;
-    end;
-end;
+end;}
 
-procedure TfrmApprovedFILEs2NAMEs._ctrl_eventClr_onChange_;
+{procedure TfrmApprovedFILEs2NAMEs._ctrl_eventClr_onChange_;
 begin
     //
-    with _treeL_ do begin
-        OnSelectionChanged:=nil;
-    end;
-    with _treeR_ do begin
-        OnSelectionChanged:=nil;
-    end;
-end;
+end;}
 
 //------------------------------------------------------------------------------
 
-procedure TfrmApprovedFILEs2NAMEs._HNDLR_set_(const value:tCopyRastSrcTree_prcH4ReNAMEs);
+procedure TfrmApprovedFILEs2NAMEs._STAGE_set_(const value:tCopyRast_SrcTree_prcSTAGE);
 begin
-   _HNDLR_:=value;
-    if Assigned(_HNDLR_) then begin
-       _treeL_.Root:=_HNDLR_.ROOT_Source;
-       _treeR_.Root:=_HNDLR_.ROOT_Target;
-        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=@(_HNDLR_.Template_APPLAY);
-        _ctrl_eventSet_onChange_;
+
+    frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=nil;//@(_HNDLR_.Template_APPLAY);
+    inherited;
+    if Assigned(_STAGE_) then begin
+        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=@(tCopyRastSrcTree_prcH4ReNAMEs(_STAGE_).Template_APPLAY);
     end
     else begin
-       _treeL_.Root:=nil;
-       _treeR_.Root:=nil;
         frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=nil;
-        //
-       _ctrl_eventClr_onChange_;
     end;
 end;
 
@@ -199,8 +183,8 @@ begin
     if Assigned(value) then begin
        _editItem_:=value;
         frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_ITM:=nil;
-        frmCopyRAST_cie_ReNamesCustomer1.ItemCNFG:=_HNDLR_.CNFG_customer_GET(_editItem_);
-        frmCopyRAST_cie_ReNamesTemplate1.ItemCNFG:=_HNDLR_.CNFG_template_GET(_editItem_);
+        frmCopyRAST_cie_ReNamesCustomer1.ItemCNFG:=tCopyRastSrcTree_prcH4ReNAMEs(_STAGE_).CNFG_customer_GET(_editItem_);
+        frmCopyRAST_cie_ReNamesTemplate1.ItemCNFG:=tCopyRastSrcTree_prcH4ReNAMEs(_STAGE_).CNFG_template_GET(_editItem_);
         frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_ITM:=_editItem_;
     end
     else begin
@@ -215,14 +199,14 @@ end;
 procedure TfrmApprovedFILEs2NAMEs._onChange_customer_(const Sender:tObject; const itemCnfg:pointer);
 begin
     if Assigned(_editItem_) then begin
-       _HNDLR_.CNFG_customer_SET(_editItem_,tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node(itemCnfg));
+       tCopyRastSrcTree_prcH4ReNAMEs(_STAGE_).CNFG_customer_SET(_editItem_,tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node(itemCnfg));
     end;
 end;
 
 procedure TfrmApprovedFILEs2NAMEs._onChange_template_(const Sender:tObject; const itemCnfg:pointer);
 begin
     if Assigned(_editItem_) then begin
-       _HNDLR_.CNFG_template_SET(_editItem_,tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(itemCnfg));
+       tCopyRastSrcTree_prcH4ReNAMEs(_STAGE_).CNFG_template_SET(_editItem_,tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(itemCnfg));
     end;
 end;
 
@@ -246,7 +230,7 @@ end;}
 
 //------------------------------------------------------------------------------
 
-procedure TfrmApprovedFILEs2NAMEs._treeL_SelectionChanged_(Sender:TObject);
+{procedure TfrmApprovedFILEs2NAMEs._treeL_SelectionChanged_(Sender:TObject);
 begin
     //if _ctrl_OnChange_LOCKED_ then EXIT;
     if csDestroying in _treeL_.ComponentState then EXIT; {todo: ДУМАТЬ: этотут НАДО?}
@@ -261,9 +245,9 @@ begin
     end;
     //---
    _ctrl_OnChange_LOCK_(FALSE);
-end;
+end; }
 
-procedure TfrmApprovedFILEs2NAMEs._treeR_SelectionChanged_(Sender:TObject);
+{procedure TfrmApprovedFILEs2NAMEs._treeR_SelectionChanged_(Sender:TObject);
 begin
     //if _ctrl_OnChange_LOCKED_ then EXIT;
     if csDestroying in _treeR_.ComponentState then EXIT; {todo: ДУМАТЬ: этотут НАДО?}
@@ -278,7 +262,7 @@ begin
     end;
     //---
    _ctrl_OnChange_LOCK_(FALSE);
-end;
+end;}
 
 //------------------------------------------------------------------------------
 

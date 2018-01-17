@@ -15,7 +15,8 @@ uses
   CopyRAST_srcTree_4Handler_CNFGs, frmCopyRAST_CnfgItem_EDIT,
   frmCopyRAST_cie_ReNames_customer, frmCopyRAST_cie_ReNames_template,
   frmCopyRAST_cie_ReNames_tmpltRule, in0k_ext4ColorTheme,
-  lazExt_CopyRAST_clcNotRenamed, frmCopyRAST_EDIT,
+  lazExt_CopyRAST_clcNotRenamed, frmCopyRAST_EDIT, in0k_CopyRAST__frmSTAGE,
+  in0k_CopyRAST__frmSTAGE_approveFILEs, in0k_CopyRAST__frmSTAGE_twoTree,
   in0k_CopyRAST_srcTree_Stage, in0k_lazIdeSRC_CopyRastSrcNODE_ROOT,
   in0k_CopyRAST_srcTreeNode_DATA
   { you can add units after this };

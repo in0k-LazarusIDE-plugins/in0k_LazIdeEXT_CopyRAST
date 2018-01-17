@@ -42,7 +42,7 @@
         <PackageName Value="LCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="24">
+    <Units Count="30">
       <Unit0>
         <Filename Value="Aapproved_Files2Names.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -160,6 +160,39 @@
         <Filename Value="..\..\..\srcPKG\srcTree\in0k_CopyRAST_srcTreeNode_DATA.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit23>
+      <Unit24>
+        <Filename Value="..\..\..\srcPKG\UI\in0k_CopyRAST__frmSTAGE.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmCopyRAST_STAGE"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="..\..\..\srcPKG\UI\in0k_CopyRAST__frmSTAGE_approveFILEs.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmCopyRAST_STAGE_approveFILEs"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="..\..\..\srcPKG\UI\in0k_CopyRAST__frmSTAGE_approveFILEs.lfm"/>
+        <IsPartOfProject Value="True"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="..\..\..\srcPKG\UI\in0k_CopyRAST__frmSTAGE_twoTree.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmCopyRAST_STAGE_twoTree"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="..\..\..\srcPKG\UI\in0k_CopyRAST__frmSTAGE.lfm"/>
+        <IsPartOfProject Value="True"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="..\..\..\srcPKG\UI\in0k_CopyRAST__frmSTAGE_twoTree.lfm"/>
+        <IsPartOfProject Value="True"/>
+      </Unit29>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
