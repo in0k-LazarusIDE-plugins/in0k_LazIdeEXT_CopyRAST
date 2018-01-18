@@ -11,6 +11,8 @@ interface
 
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
 
+     LazIDEIntf,
+
      in0k_CopyRAST__frmSTAGE_approveFILEs,
 
      IDEImagesIntf, PackageIntf,
@@ -19,6 +21,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
      srcTree_FNC,
      in0k_lazIdeSRC_srcTree_item_Globals,
 
+     in0k_CopyRAST_STAGEs,
     lazExt_CopyRAST_node_ROOT,
     lazExt_CopyRAST_node_ROOT_package,
 
@@ -26,7 +29,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
      lazExt_CopyRAST_node, lazExt_CopyRAST_node_File,
      lazExt_CopyRAST_node_Folder, Classes,
      SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls,
-     StdCtrls, LazFileUtils, ExtendedTabControls, ExtendedNotebook;
+     StdCtrls, LazFileUtils;
 
 type
 
@@ -39,10 +42,7 @@ type
 		Button3: TButton;
     PageControl1: TPageControl;
     Panel1: TPanel;
-    Panel2: TPanel;
     SaveDialog1: TSaveDialog;
-    Splitter1: TSplitter;
-    Splitter2: TSplitter;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
     procedure Button1Click(Sender: TObject);
@@ -54,6 +54,9 @@ type
     procedure ItemsTreeViewAdvancedCustomDraw(Sender: TCustomTreeView;
       const ARect: TRect; Stage: TCustomDrawStage; var DefaultDraw: Boolean);
     procedure ItemsTreeViewDeletion(Sender: TObject; Node: TTreeNode);
+    procedure TabSheet1Show(Sender: TObject);
+    procedure TabSheet2Hide(Sender: TObject);
+    procedure TabSheet2Show(Sender: TObject);
   protected
    _FuckUpForm_:tLazExt_CopyRAST_FuckUpForm;
   protected
@@ -61,24 +64,26 @@ type
    _parentFRM_:TCustomForm;    //< форма которая нас вызвала (LazIDE)
     procedure _onInit_prtnOBJs_; virtual;
     procedure _reInit_copyRast_;
-    function  _copyRastObj_CRT_:tCopyRAST_ROOT; virtual;
-    procedure _copyRastObj_DST_;
   protected
-   _cpRastObj_:tCopyRAST_ROOT; //< объект над которым работаем
+   _cpRastObj_:tCopyRAST_STAGEs; //< объект над которым работаем
+    function   _copyRastObj_CRT_:tCopyRAST_STAGEs; virtual;
+    procedure  _copyRastObj_DST_;
   public
     procedure Init(const ParentOBJ:TObject; const ParentFRM:TCustomForm);
   protected
-    function  _ITV_getNodeImageIndex_(const TreeNode:tTreeNode):integer;
+   // function  _ITV_getNodeImageIndex_(const TreeNode:tTreeNode):integer;
   public
-    procedure _ITV_SetUp_nodeImage_(const TreeNode:tTreeNode);
-    procedure _ITV_SetUp_         (const TreeNode:tTreeNode);
-    procedure  ITV_SetUp (const ROOT:tCopyRAST_ROOT);
+   // procedure _ITV_SetUp_nodeImage_(const TreeNode:tTreeNode);
+   // procedure _ITV_SetUp_         (const TreeNode:tTreeNode);
+   // procedure  ITV_SetUp (const ROOT:tCopyRAST_ROOT);
   public
     //function  ITV_add_BasePath(const Path:string):TTreeNode;
     //function  ITV_add_Pkg_File(const Prnt:TTreeNode; const fileName:string):TTreeNode;
     //procedure ITV_add_Pkg_Path(const Prnt:TTreeNode; const PathType:eCopyRAST_node_Path; const Paths:string);
-    treeCopyRAST_First :tCmp_CopyRAST_Tree;
-    treeCopyRAST_Second:tCmp_CopyRAST_Tree;
+   // treeCopyRAST_First :tCmp_CopyRAST_Tree;
+   // treeCopyRAST_Second:tCmp_CopyRAST_Tree;
+  protected
+   // procedure onIdeClose(Sender: TObject);
   public
     constructor Create(AOwner:TComponent); override;
     destructor DESTROY; override;
@@ -133,25 +138,16 @@ begin
    _parentOBJ_:=nil;
    _parentFRM_:=nil;
    _cpRastObj_:=nil;
-    //---
-    treeCopyRAST_First:=tCmp_CopyRAST_Tree.Create(SELF);
-    with treeCopyRAST_First do begin
-       Parent:=TabSheet1;
-       Align:=alLeft;
-  	end;
-    treeCopyRAST_Second:=tCmp_CopyRAST_Tree.Create(SELF);
-    with treeCopyRAST_Second do begin
-       Parent:=TabSheet1;
-       Align:=alRight;
-  	end;
-    Splitter2.Align:=alRight;
+    //
+    PageControl1.ActivePageIndex:=0;
+
+  //  LazarusIDE.AddHandlerOnIDEClose(@onIdeClose)
 end;
 
 destructor Twnd_lazExt_CopyRAST_CORE.DESTROY;
 begin
     //cmpCopyRAST_Tree.Root.FREE;
     //---
-
    _copyRastObj_DST_;
     //---
    _FuckUpForm_.ParentForm_CLEAR; //< после этого, можно спокойно уничтожаться
@@ -160,10 +156,16 @@ begin
     inherited DESTROY;
 end;
 
+{procedure Twnd_lazExt_CopyRAST_CORE.onIdeClose(Sender: TObject);
+begin
+    self.Close;
+end;}
+
 //------------------------------------------------------------------------------
 
 procedure Twnd_lazExt_CopyRAST_CORE.FormCreate(Sender: TObject);
 begin
+    inherited;
     //---
    // ItemsTreeView.Images:=IDEImages.Images_16;
   {  vITV_BasePath:= IDEImages.LoadImage(16, 'folder');
@@ -200,6 +202,7 @@ procedure Twnd_lazExt_CopyRAST_CORE.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
    _FuckUpForm_.ParentForm_CLEAR; //< после этого, можно спокойно уничтожаться
+    Visible:=FALSE;
     CloseAction:=caFree;
 end;
 
@@ -213,12 +216,12 @@ end;
 
 procedure Twnd_lazExt_CopyRAST_CORE.Button1Click(Sender: TObject);
 begin
-   _reInit_copyRast_;
+  // _reInit_copyRast_;
 end;
 
 procedure Twnd_lazExt_CopyRAST_CORE.Button2Click(Sender: TObject);
 begin
-    _cpRastObj_.CopyRAST;
+   // _cpRastObj_.CopyRAST;
 end;
 
 procedure Twnd_lazExt_CopyRAST_CORE.Button3Click(Sender: TObject);
@@ -252,6 +255,22 @@ begin
     end;
 end;
 
+procedure Twnd_lazExt_CopyRAST_CORE.TabSheet1Show(Sender: TObject);
+begin
+   _cpRastObj_.doStage_0;
+end;
+
+procedure Twnd_lazExt_CopyRAST_CORE.TabSheet2Hide(Sender: TObject);
+begin
+    frmCopyRAST_STAGE_approveFILEs1.STAGE:=_cpRastObj_.Stage_1;
+end;
+
+procedure Twnd_lazExt_CopyRAST_CORE.TabSheet2Show(Sender: TObject);
+begin
+   _cpRastObj_.doStage_1;
+    frmCopyRAST_STAGE_approveFILEs1.STAGE:=_cpRastObj_.Stage_1;
+end;
+
 //------------------------------------------------------------------------------
 
 procedure Twnd_lazExt_CopyRAST_CORE.Init(const ParentOBJ:TObject; const ParentFRM:TCustomForm);
@@ -262,7 +281,10 @@ begin
            _parentFRM_:=ParentFRM;
            _FuckUpForm_.Form:=ParentFRM;
            _onInit_prtnOBJs_;
-           _reInit_copyRast_;
+            //
+           _cpRastObj_:=_copyRastObj_CRT_;
+           _cpRastObj_.doStage_0;
+            //
         end;
     end;
 end;
@@ -272,9 +294,9 @@ begin
    //
 end;
 
-function Twnd_lazExt_CopyRAST_CORE._copyRastObj_CRT_:tCopyRAST_ROOT;
+function Twnd_lazExt_CopyRAST_CORE._copyRastObj_CRT_:tCopyRAST_STAGEs;
 begin
-    result:=nil;
+    //result:=nil;
     // это для детей, они ДОЛЖНЫ переопределитьasdf
 end;
 
@@ -285,23 +307,27 @@ begin
     //ItemsTreeView.BeginUpdate;
     //ItemsTreeView.Items.Clear; // собственноо вот тут и идет УНИЧТОЖЕНИЕ объектов
     //---
-   _cpRastObj_:=nil;
+    //_cpRastObj_:=nil;
     //---
     //ItemsTreeView.EndUpdate;
+
+    _cpRastObj_.Free;
+
+
 end;
 
 procedure Twnd_lazExt_CopyRAST_CORE._reInit_copyRast_;
 begin
     //ItemsTreeView.BeginUpdate;
-   _copyRastObj_DST_;
-   _cpRastObj_:=_copyRastObj_CRT_;
-    if Assigned(_cpRastObj_) then ITV_SetUp(_cpRastObj_);
+    // _copyRastObj_DST_;
+    //_cpRastObj_:=_copyRastObj_CRT_;
+    // if Assigned(_cpRastObj_) then ITV_SetUp(_cpRastObj_);
     //ItemsTreeView.EndUpdate;
 end;
 
 //------------------------------------------------------------------------------
 
-function Twnd_lazExt_CopyRAST_CORE._ITV_getNodeImageIndex_(const TreeNode:tTreeNode):integer;
+(*function Twnd_lazExt_CopyRAST_CORE._ITV_getNodeImageIndex_(const TreeNode:tTreeNode):integer;
 var tmp:tCopyRAST_node;
 begin
     result:=-1;
@@ -339,20 +365,20 @@ begin
             if tCopyRAST_node_FILE(tmp).have_SingleLFM then Result:=ImageIndexLFM;
         end;
     end; }
-end;
+end; *)
 
-procedure Twnd_lazExt_CopyRAST_CORE._ITV_SetUp_nodeImage_(const TreeNode:tTreeNode);
+(*procedure Twnd_lazExt_CopyRAST_CORE._ITV_SetUp_nodeImage_(const TreeNode:tTreeNode);
 var tmp:tCopyRAST_node;
 begin
     if not Assigned(TreeNode) then EXIT;
     //---
     TreeNode.SelectedIndex:=_ITV_getNodeImageIndex_(TreeNode);
     TreeNode.ImageIndex   := TreeNode.SelectedIndex;
-end;
+end;*)
 
 
 
-procedure Twnd_lazExt_CopyRAST_CORE._ITV_SetUp_(const TreeNode:tTreeNode);
+(*procedure Twnd_lazExt_CopyRAST_CORE._ITV_SetUp_(const TreeNode:tTreeNode);
 var itm:tTreeNode;
     tmp:tCopyRAST_node;
 begin
@@ -371,14 +397,14 @@ begin
         //--->
         tmp:=tmp.NodeNEXT;
     end;  }
-end;
+end; *)
 
-procedure Twnd_lazExt_CopyRAST_CORE.ITV_SetUp(const ROOT:tCopyRAST_ROOT);
+(*procedure Twnd_lazExt_CopyRAST_CORE.ITV_SetUp(const ROOT:tCopyRAST_ROOT);
 var tmp:tTreeNode;
 begin
   {  tmp:=ItemsTreeView.Items.AddChildObjectFirst(nil,ROOT.src_NodeTXT,ROOT); }
   // _ITV_SetUp_(tmp);
-end;
+end;*)
 
 
 

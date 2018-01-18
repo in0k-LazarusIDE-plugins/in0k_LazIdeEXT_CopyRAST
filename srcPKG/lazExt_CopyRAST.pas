@@ -12,12 +12,13 @@ interface
 
 
 uses in0k_lazIdeSRC_ExpertCORE,
+     Dialogs, sysutils,
      {in0k_lazIdeSRC_ExpertCORE,}
      //in0k_lazIdeSRC_ExpertCORE,
      (*in0k_lazIdeSRC_ExpertCORE,*)
      lazExt_CopyRAST_StrConsts,
      {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
-     lazExt_CopyRAST_wndPackage in 'D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcPKG\Forms',
+     lazExt_CopyRAST_wndPackage{ in 'D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcPKG\Forms'},
      lazExt_CopyRAST_wndProject,
   MenuIntf, IDECommands, IDEWindowIntf, PackageIntf, LazIDEIntf, ProjectIntf,
   Classes, Controls, Forms, Menus;
@@ -77,11 +78,31 @@ end;
 
 //------------------------------------------------------------------------------
 
+function _make_wndName_(const obj:pointer):string;
+begin
+    str(IntPtr(obj),result);
+    //result:='';
+    result:=clazExt_CopyRAST_wndPackage_name+result;
+end;
+
+procedure tLazExt_CopyRAST._crt_IDEWnd_copyRast_Package_(Sender:TObject; aFormName:string; var AForm:TCustomForm; DoDisableAutoSizing:boolean);
+begin
+    ShowMessage(aFormName);
+    if CompareText(aFormName,clazExt_CopyRAST_wndPackage_name)=0 then begin
+        IDEWindowCreators.CreateForm(AForm,Twnd_lazExt_CopyRAST_Package,DoDisableAutoSizing,Application{LazarusIDE.OwningComponent});
+    end;
+end;
+
+
+
 procedure tLazExt_CopyRAST._ideCommand_copyRast_Package_onClick(Sender:TObject);
 var Pkg:TIDEPackage;
     Frm:TCustomForm;
     wnd:TCustomForm;
     tmp:tObject;
+ trgWndName:string;
+ trgWnd    :TCustomForm;
+
 begin
     {$ifdef _DEBUG_}
         DEBUG('_ideCommand_copyRast_Package_onClick', 'sender is '+sender.ClassName);
@@ -106,11 +127,25 @@ begin
     {%endregion}
     Pkg:=PackageEditingInterface.GetPackageOfEditorItem(tmp);
     Frm:=_ide_GetPackageEditorForm(tmp);
-    if Assigned(Pkg)and Assigned(Frm) then begin
-        wnd:=IDEWindowCreators.ShowForm(clazExt_CopyRAST_wndPackage_name+'___'+Pkg.Name,true);
-        if Assigned(wnd) then begin //< инициализируем окошко
-            Twnd_lazExt_CopyRAST_Package(wnd).Init(Pkg,Frm);
+    if Assigned(Pkg)and Assigned(Frm) then begin //< есть над чем работать
+        trgWndName:=clazExt_CopyRAST_wndPackage_name+'___'+Pkg.Name;
+        trgWnd    :=Screen.FindForm(trgWndName);
+        if NOT Assigned(trgWnd) then begin
+            {$ifdef _DEBUG_}
+                DEBUG('_ideCommand_copyRast_Package_onClick',trgWndName+' wnd CREATE.');
+            {$endIf}
+            trgWnd:=IDEWindowCreators.ShowForm(clazExt_CopyRAST_wndPackage_name,FALSE);
+            trgWnd.Name:=clazExt_CopyRAST_wndPackage_name+'___'+Pkg.Name;
+            Twnd_lazExt_CopyRAST_Package(trgWnd).Init(Pkg,Frm);
         end;
+        IDEWindowCreators.ShowForm(trgWnd,true);
+        {$ifdef _DEBUG_}
+            DEBUG('_ideCommand_copyRast_Package_onClick',trgWndName+' wnd SHOW.');
+        {$endIf}
+        //
+        //wnd:=IDEWindowCreators.ShowForm(clazExt_CopyRAST_wndPackage_name+'___'+Pkg.Name,true);
+        //if Assigned(wnd) then begin //< инициализируем окошко
+        //end;
     end
     {$ifdef _DEBUG_}
     else begin
@@ -118,12 +153,6 @@ begin
          if not Assigned(Frm) then DEBUG('_ideCommand_copyRast_Package_onClick', 'FaIL not Assigned(Frm)');
     end;
     {$endIf}
-end;
-
-procedure tLazExt_CopyRAST._crt_IDEWnd_copyRast_Package_(Sender:TObject; aFormName:string; var AForm:TCustomForm; DoDisableAutoSizing:boolean);
-begin
-    IDEWindowCreators.CreateForm(AForm,Twnd_lazExt_CopyRAST_Package,DoDisableAutoSizing,Application{LazarusIDE.OwningComponent});
-    AForm.Name:=aFormName;
 end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -136,6 +165,10 @@ begin
     Prj:=LazarusIDE.ActiveProject;
     Frm:=_ide_GetPackageEditorForm(Sender);
     if Assigned(Prj)and Assigned(Frm) then begin
+        //---
+
+        //---
+
         wnd:=IDEWindowCreators.ShowForm(clazExt_CopyRAST_wndProject_name+'___'+Prj.Name,true);
         if Assigned(wnd) then begin //< инициализируем окошко
             Twnd_lazExt_CopyRAST_Project(wnd).Init(Prj,Frm);

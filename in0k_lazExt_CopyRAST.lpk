@@ -10,11 +10,11 @@
       <SearchPaths>
         <IncludeFiles Value="srcPKG"/>
         <Libraries Value="srcPKG"/>
-        <OtherUnitFiles Value="srcPKG;srcPKG\srcTree;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcPKG\OperationNODEs\Processing_ProjPack;srcPKG\xmlConfig;srcPKG\srcTree_UI;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm;srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcExt\in0k-lazarusIdeSRC-SourceTREE;srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;srcExt\in0k-ext4ColorTheme;srcPKG\srcTree\Handlers\reNames;srcPKG\srcTree\Handlers;srcPKG\UI"/>
+        <OtherUnitFiles Value="srcPKG;srcPKG\srcTree;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcPKG\OperationNODEs\Processing_ProjPack;srcPKG\xmlConfig;srcPKG\srcTree_UI;srcPKG\Stages;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm;srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcExt\in0k-lazarusIdeSRC-SourceTREE;srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;srcExt\in0k-ext4ColorTheme;srcPKG\srcTree\Handlers\reNames;srcPKG\srcTree\Handlers;srcPKG\UI"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="96">
+    <Files Count="98">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -404,6 +404,14 @@
         <Filename Value="srcPKG\srcTree\in0k_CopyRAST_srcTree_Stage_0t1.pas"/>
         <UnitName Value="in0k_CopyRAST_srcTree_Stage_0t1"/>
       </Item96>
+      <Item97>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST_STAGEs.pas"/>
+        <UnitName Value="in0k_CopyRAST_STAGEs"/>
+      </Item97>
+      <Item98>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST_STAGEs_4Package.pas"/>
+        <UnitName Value="in0k_CopyRAST_STAGEs_4Package"/>
+      </Item98>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

@@ -27,8 +27,8 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
         srcTree_FNC,
      lazExt_CopyRAST_StrConsts,
      lazExt_CopyRAST_node, lazExt_CopyRAST_node_Folder, lazExt_CopyRAST_node_File,
-
-
+        in0k_CopyRAST_STAGEs,
+        in0k_CopyRAST_STAGEs_4Package,
         in0k_lazIdeSRC_CopyRAST_srcTree,
 
   PackageIntf,
@@ -50,7 +50,7 @@ type
     function _package_:TIDEPackage; inline;
   protected
     procedure _onInit_prtnOBJs_; override;
-    function  _copyRastObj_CRT_:tCopyRAST_ROOT; override;
+    function  _copyRastObj_CRT_:tCopyRAST_STAGEs; override;
 
   end;
 
@@ -89,11 +89,12 @@ end;
 
 procedure Twnd_lazExt_CopyRAST_Package._onInit_prtnOBJs_;
 begin
+    inherited;
     Caption:=cRes_CopyRAST_PKG_name+' - '+ExtractFileName(_package_.Filename);
 end;
 
-function Twnd_lazExt_CopyRAST_Package._copyRastObj_CRT_:tCopyRAST_ROOT;
-var root:tSrcTree_ROOT;
+function Twnd_lazExt_CopyRAST_Package._copyRastObj_CRT_:tCopyRAST_STAGEs;
+{var root:tSrcTree_ROOT;
        i:integer;
 
 
@@ -101,9 +102,9 @@ var root:tSrcTree_ROOT;
  P4Build:tCopyRastSrcTree_P4Build;
 
    Stage__0_1:tCopyRast_SrcTree_prcSTAGE__0_1;
-
+    }
 begin
-    result:=nil;
+ {   result:=nil;
     // формируем ПЕРВЫЧНЫЙ список файлов
     Builder:=tCopyRastSrcTree_Builder4Package.Create;
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'Builder START at '{+DateTimeToStr(NOW)});{$endIf}
@@ -130,7 +131,9 @@ begin
 
     P4Build.FREE;
     Builder.FREE;
+    }
 
+    result:=tCopyRAST_STAGEs_4Package.Create(_package_);
 end;
 
 end.

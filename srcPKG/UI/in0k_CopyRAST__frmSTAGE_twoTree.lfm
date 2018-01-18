@@ -5,8 +5,10 @@ inherited frmCopyRAST_STAGE_twoTree: TfrmCopyRAST_STAGE_twoTree
   ClientWidth = 582
   object pnlMDL: TPanel[0]
     AnchorSideTop.Control = Owner
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
     Left = 271
-    Height = 543
+    Height = 416
     Top = 0
     Width = 49
     Anchors = [akTop, akLeft, akBottom]

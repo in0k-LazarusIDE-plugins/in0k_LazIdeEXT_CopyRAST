@@ -57,6 +57,8 @@ type
     procedure AllNodes_SetSTATE(const ROOT:tSrcTree_ROOT; const newState:tCopyRastNODE_KIND);
   end;
 
+ tCopyRastSrcTree_Creater4Package=class(tSrcTree_Creater_4Package);
+
     function CreateRoot4Package(const Builder:tCopyRastSrcTree_Builder4Package; const Package:TIDEPackage):tCopyRast_stROOT;
 
 

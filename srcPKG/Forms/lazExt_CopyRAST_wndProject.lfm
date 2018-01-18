@@ -1,4 +1,21 @@
 inherited wnd_lazExt_CopyRAST_Project: Twnd_lazExt_CopyRAST_Project
   Caption = 'wnd_lazExt_CopyRAST_Project'
   OnCreate = FormCreate
+  inherited PageControl1: TPageControl
+    ActivePage = TabSheet1
+    TabIndex = 0
+    inherited TabSheet2: TTabSheet
+      inherited frmCopyRAST_STAGE_approveFILEs1: TfrmCopyRAST_STAGE_approveFILEs
+        Height = 393
+        Width = 654
+        ClientHeight = 393
+        ClientWidth = 654
+        inherited pnlMDL: TPanel
+          AnchorSideTop.Control = frmCopyRAST_STAGE_approveFILEs1
+          AnchorSideBottom.Control = frmCopyRAST_STAGE_approveFILEs1
+          Height = 393
+        end
+      end
+    end
+  end
 end

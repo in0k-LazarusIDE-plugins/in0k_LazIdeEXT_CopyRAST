@@ -10,6 +10,7 @@ interface
 
 uses
   in0k_lazIdeSRC_srcTree_CORE_item,
+  lazExt_CopyRAST__xmlConfig,
   srcTree_handler4build_CORE,
   //---
   in0k_CopyRAST_srcTree_ITEMs;
@@ -24,6 +25,15 @@ type
   end;
 
  tCopyRast_SrcTree_prcSTAGE=class(tSrcTree_prcHandler4Build)
+
+ protected
+   procedure _CNFGs_FREE_;                                        virtual;
+   procedure _CNFGs_LOAD_(const Configs:tLazExt_CopyRAST_CONFIG); virtual;
+   procedure _CNFGs_SAVE_(const Configs:tLazExt_CopyRAST_CONFIG); virtual;
+ public
+   procedure  CNFGs_LOAD (const Configs:tLazExt_CopyRAST_CONFIG);
+   procedure  CNFGs_SAVE (const Configs:tLazExt_CopyRAST_CONFIG);
+
   strict private
    _targetROOT_:tCopyRast_stROOT;
     procedure _targetROOT_CLR_; {$ifOpt D-}inline;{$endIf}
@@ -41,7 +51,10 @@ type
     property  ROOT_Target:tCopyRast_stROOT read _targetROOT_GET_;
     procedure ROOT_Target_CLEAR;
   public
-    function EXECUTE(const nodeRoot:tSrcTree_item):boolean; override;
+    function  EXECUTE(const nodeRoot:tSrcTree_item):boolean; override;
+    procedure doClear; virtual;
+  public
+    destructor DESTROY; override;
   end;
 
 
@@ -67,6 +80,14 @@ begin
 end;
 
 //==============================================================================
+
+destructor tCopyRast_SrcTree_prcSTAGE.DESTROY;
+begin
+   _CNFGs_FREE_;
+    inherited;
+end;
+
+//------------------------------------------------------------------------------
 
 procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_CLR_;
 begin
@@ -154,6 +175,14 @@ begin
     //---
 end;
 
+procedure tCopyRast_SrcTree_prcSTAGE.doClear;
+begin
+   _targetROOT_.FREE;
+   _targetROOT_:=nil;
+    //
+   _execRoot_  :=nil;
+end;
+
 //------------------------------------------------------------------------------
 
 procedure tCopyRast_SrcTree_prcSTAGE.ROOT_Target_CLEAR;
@@ -161,7 +190,35 @@ begin
    _targetROOT_CLR_;
 end;
 
+//------------------------------------------------------------------------------
 
+procedure tCopyRast_SrcTree_prcSTAGE._CNFGs_FREE_;
+begin
+    //
+end;
+
+procedure tCopyRast_SrcTree_prcSTAGE._CNFGs_LOAD_(const Configs:tLazExt_CopyRAST_CONFIG);
+begin
+    //
+end;
+
+procedure tCopyRast_SrcTree_prcSTAGE._CNFGs_SAVE_(const Configs:tLazExt_CopyRAST_CONFIG);
+begin
+    //
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+procedure tCopyRast_SrcTree_prcSTAGE.CNFGs_LOAD(const Configs:tLazExt_CopyRAST_CONFIG);
+begin
+   _CNFGs_FREE_;
+   _CNFGs_LOAD_(Configs);
+end;
+
+procedure tCopyRast_SrcTree_prcSTAGE.CNFGs_SAVE(const Configs:tLazExt_CopyRAST_CONFIG);
+begin
+   _CNFGs_SAVE_(Configs);
+end;
 
 end.
 

@@ -12,19 +12,4 @@ inherited wnd_lazExt_CopyRAST_Package: Twnd_lazExt_CopyRAST_Package
       TabOrder = 3
     end
   end
-  inherited PageControl1: TPageControl
-    inherited TabSheet2: TTabSheet
-      ClientHeight = 393
-      ClientWidth = 654
-      inherited frmCopyRAST_STAGE_approveFILEs1: TfrmCopyRAST_STAGE_approveFILEs
-        Height = 393
-        Width = 654
-        ClientHeight = 393
-        ClientWidth = 654
-        inherited pnlMDL: TPanel
-          AnchorSideTop.Control = frmCopyRAST_STAGE_approveFILEs1
-        end
-      end
-    end
-  end
 end

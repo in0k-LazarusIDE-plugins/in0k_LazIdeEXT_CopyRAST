@@ -36,10 +36,10 @@ begin
 end;
 
 procedure Twnd_lazExt_CopyRAST_Project._onInit_prtnOBJs_;
-var asd:tCopyRAST_ROOT_project;
+//var asd:tCopyRAST_ROOT_project;
 begin
     Caption:=cRes_CopyRAST_PRJ_name+' - '+_progect_.GetTitleOrName;
-    //-------------------------------------
+  (*  //-------------------------------------
     asd:=tCopyRAST_ROOT_project.Create('PROJECT');
 
 
@@ -56,7 +56,7 @@ begin
         asd.add_File(pkgFile.GetFullFilename,pkgFile.FileType);
     end;}
     //-------------------------------------
-    ITV_SetUp(asd);
+    //ITV_SetUp(asd);   *)
 end;
 
 //------------------------------------------------------------------------------
