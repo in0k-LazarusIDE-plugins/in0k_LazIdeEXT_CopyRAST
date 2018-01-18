@@ -14,7 +14,7 @@ uses
   in0k_lazIdeSRC_srcTree_item_fsFile,
 
 
-  PackageDependencyIntf,
+  //PackageDependencyIntf,
 
   srcTree_builder_CORE,
 

@@ -15,10 +15,10 @@ interface
 uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
         in0k_lazIdeSRC_DEBUG,
      {$endIf}
-
+         //in0k_CopyRAST_srcTree_Stage_0t1,
         in0k_lazIdeSRC_srcTree_item_Globals,
         in0k_CopyRAST_srcTree_ITEMs,
-
+     in0k_CopyRAST_srcTree_Stage_0t1,
     lazExt_CopyRAST_wndCORE,
      lazExt_CopyRAST_node_ROOT,
      lazExt_CopyRAST_node_ROOT_package,
@@ -99,6 +99,9 @@ var root:tSrcTree_ROOT;
 
  Builder:tCopyRastSrcTree_Builder4Package;
  P4Build:tCopyRastSrcTree_P4Build;
+
+   Stage__0_1:tCopyRast_SrcTree_prcSTAGE__0_1;
+
 begin
     result:=nil;
     // формируем ПЕРВЫЧНЫЙ список файлов
@@ -118,6 +121,11 @@ begin
     {$ifDef _DEBUG_}DEBUG(self.ClassName,'P4Build END at '{+DateTimeToStr(NOW)});{$endIf}
     // отображаем   }
     treeCopyRAST_Second.Root:=root;
+
+    Stage__0_1:=tCopyRast_SrcTree_prcSTAGE__0_1.Create(Builder);
+
+    Stage__0_1.EXECUTE(root);
+    frmCopyRAST_STAGE_approveFILEs1.STAGE:=Stage__0_1;
 
 
     P4Build.FREE;
