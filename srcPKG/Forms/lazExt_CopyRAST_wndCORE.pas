@@ -202,7 +202,7 @@ procedure Twnd_lazExt_CopyRAST_CORE.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
    _FuckUpForm_.ParentForm_CLEAR; //< после этого, можно спокойно уничтожаться
-    Visible:=FALSE;
+   // Visible:=FALSE;
     CloseAction:=caFree;
 end;
 
@@ -257,7 +257,7 @@ end;
 
 procedure Twnd_lazExt_CopyRAST_CORE.TabSheet1Show(Sender: TObject);
 begin
-   _cpRastObj_.doStage_0;
+   //_cpRastObj_.doStage_0;
 end;
 
 procedure Twnd_lazExt_CopyRAST_CORE.TabSheet2Hide(Sender: TObject);
@@ -267,8 +267,8 @@ end;
 
 procedure Twnd_lazExt_CopyRAST_CORE.TabSheet2Show(Sender: TObject);
 begin
-   _cpRastObj_.doStage_1;
-    frmCopyRAST_STAGE_approveFILEs1.STAGE:=_cpRastObj_.Stage_1;
+   // _cpRastObj_.doStage_1;
+   // frmCopyRAST_STAGE_approveFILEs1.STAGE:=_cpRastObj_.Stage_1;
 end;
 
 //------------------------------------------------------------------------------
@@ -311,7 +311,7 @@ begin
     //---
     //ItemsTreeView.EndUpdate;
 
-    _cpRastObj_.Free;
+ //  _cpRastObj_.Free;
 
 
 end;

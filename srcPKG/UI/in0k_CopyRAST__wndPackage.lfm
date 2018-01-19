@@ -1,0 +1,13 @@
+inherited wndCopyRAST_Package: TwndCopyRAST_Package
+  Left = 445
+  Height = 359
+  Top = 274
+  Width = 611
+  Caption = 'wndCopyRAST_Package'
+  ClientHeight = 359
+  ClientWidth = 611
+  inherited PageControl1: TPageControl
+    Height = 359
+    Width = 611
+  end
+end

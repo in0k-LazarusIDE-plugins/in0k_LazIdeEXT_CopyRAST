@@ -1,0 +1,15 @@
+{"version":1,"strings":[
+{"hash":50562693,"name":"twndcopyrast_core.caption","sourcebytes":[119,110,100,67,111,112,121,82,65,83,84,95,67,79,82,69],"value":"wndCopyRAST_CORE"},
+{"hash":127854081,"name":"twndcopyrast_core.tabsheet1.caption","sourcebytes":[84,97,98,83,104,101,101,116,49],"value":"TabSheet1"},
+{"hash":112022622,"name":"twndcopyrast_core.groupbox1.caption","sourcebytes":[84,111,111,108,32,83,101,116,116,105,110,103,115,32,115,97,118,101,32,105,110],"value":"Tool Settings save in"},
+{"hash":251908193,"name":"twndcopyrast_core.radiobutton1.caption","sourcebytes":[82,97,100,105,111,66,117,116,102,103,104,32,100,102,103,104,32,100,102,116,111,110,49],"value":"RadioButfgh dfgh dfton1"},
+{"hash":206317090,"name":"twndcopyrast_core.radiobutton2.caption","sourcebytes":[82,97,100,105,111,66,117,116,116,111,110,50],"value":"RadioButton2"},
+{"hash":236979097,"name":"twndcopyrast_core.checkboxthemed1.caption","sourcebytes":[69,120,99,108,117,100,101,32,102,114,111,109,32,67,79,80,89],"value":"Exclude from COPY"},
+{"hash":194906437,"name":"twndcopyrast_core.label1.caption","sourcebytes":[83,97,118,101,32,105,110,32,102,105,108,101],"value":"Save in file"},
+{"hash":127854082,"name":"twndcopyrast_core.tabsheet2.caption","sourcebytes":[84,97,98,83,104,101,101,116,50],"value":"TabSheet2"},
+{"hash":127854083,"name":"twndcopyrast_core.tabsheet3.caption","sourcebytes":[84,97,98,83,104,101,101,116,51],"value":"TabSheet3"},
+{"hash":90721265,"name":"twndcopyrast_core.panel1.caption","sourcebytes":[80,97,110,101,108,49],"value":"Panel1"},
+{"hash":99718697,"name":"twndcopyrast_core.a_wnd_applay.caption","sourcebytes":[97,95,119,110,100,95,65,112,112,108,97,121],"value":"a_wnd_Applay"},
+{"hash":115648075,"name":"twndcopyrast_core.a_wnd_ok.caption","sourcebytes":[97,95,119,110,100,95,79,75],"value":"a_wnd_OK"},
+{"hash":84202300,"name":"twndcopyrast_core.a_wnd_cansel.caption","sourcebytes":[97,95,119,110,100,95,67,65,78,83,69,76],"value":"a_wnd_CANSEL"}
+]}

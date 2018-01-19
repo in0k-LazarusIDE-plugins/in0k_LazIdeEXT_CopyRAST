@@ -18,8 +18,10 @@ uses in0k_lazIdeSRC_ExpertCORE,
      (*in0k_lazIdeSRC_ExpertCORE,*)
      lazExt_CopyRAST_StrConsts,
      {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
-     lazExt_CopyRAST_wndPackage{ in 'D:\!PROGECTs\!in0k\in0k_LazIdeEXT_CopyRAST\srcPKG\Forms'},
-     lazExt_CopyRAST_wndProject,
+     in0k_CopyRAST__wndPackage,
+     in0k_CopyRAST__wndProject,
+
+
   MenuIntf, IDECommands, IDEWindowIntf, PackageIntf, LazIDEIntf, ProjectIntf,
   Classes, Controls, Forms, Menus;
 
@@ -78,30 +80,59 @@ end;
 
 //------------------------------------------------------------------------------
 
-function _make_wndName_(const obj:pointer):string;
+procedure tLazExt_CopyRAST._crt_IDEWnd_copyRast_Project_(Sender:TObject; aFormName:string; var AForm:TCustomForm; DoDisableAutoSizing:boolean);
 begin
-    str(IntPtr(obj),result);
-    //result:='';
-    result:=clazExt_CopyRAST_wndPackage_name+result;
-end;
-
-procedure tLazExt_CopyRAST._crt_IDEWnd_copyRast_Package_(Sender:TObject; aFormName:string; var AForm:TCustomForm; DoDisableAutoSizing:boolean);
-begin
-    ShowMessage(aFormName);
-    if CompareText(aFormName,clazExt_CopyRAST_wndPackage_name)=0 then begin
-        IDEWindowCreators.CreateForm(AForm,Twnd_lazExt_CopyRAST_Package,DoDisableAutoSizing,Application{LazarusIDE.OwningComponent});
+    if CompareText(aFormName,tWndCopyRAST_Progect.ide_CoreName)=0 then begin
+        IDEWindowCreators.CreateForm(AForm,tWndCopyRAST_Progect,DoDisableAutoSizing,Application);
     end;
 end;
 
+procedure tLazExt_CopyRAST._ideCommand_copyRast_Project_onClick(Sender:TObject);
+var srcMain:TLazProject;
+    srcForm:TCustomForm;
+var trgName:string;
+    trgForm:TCustomForm;
+begin
+    srcMain:= LazarusIDE.ActiveProject;
+    srcForm:=_ide_GetPackageEditorForm(Sender);
+    if Assigned(srcMain)and Assigned(srcForm) then begin //< есть над чем работать
+        trgName:=tWndCopyRAST_Progect.ide_Name4OBJ(srcMain);
+        trgForm:=Screen.FindForm(trgName);
+        if NOT Assigned(trgForm) then begin //< надо СОЗДАВАТЬ
+            trgForm:=IDEWindowCreators.ShowForm(tWndCopyRAST_Progect.ide_CoreName,FALSE);
+            tWndCopyRAST_Progect(trgForm).Init (srcMain,srcForm);
+            {$ifdef _DEBUG_}
+                DEBUG('_ideCommand_copyRast_Package_onClick',trgName+' wnd Create and INIT.');
+            {$endIf}
+        end;
+        IDEWindowCreators.ShowForm(trgForm,true);
+        {$ifdef _DEBUG_}
+            DEBUG('_ideCommand_copyRast_Package_onClick',trgName+' wnd SHOW.');
+        {$endIf}
+    end
+    {$ifdef _DEBUG_}
+    else begin
+         if not Assigned(srcMain) then DEBUG('_ideCommand_copyRast_Project_onClick', 'FaIL not Assigned(Pkg)');
+         if not Assigned(srcForm) then DEBUG('_ideCommand_copyRast_Project_onClick', 'FaIL not Assigned(Frm)');
+    end;
+    {$endIf}
+end;
 
+//------------------------------------------------------------------------------
+
+procedure tLazExt_CopyRAST._crt_IDEWnd_copyRast_Package_(Sender:TObject; aFormName:string; var AForm:TCustomForm; DoDisableAutoSizing:boolean);
+begin
+    if CompareText(aFormName,tWndCopyRAST_Package.ide_CoreName)=0 then begin
+        IDEWindowCreators.CreateForm(AForm,tWndCopyRAST_Package,DoDisableAutoSizing,Application);
+    end;
+end;
 
 procedure tLazExt_CopyRAST._ideCommand_copyRast_Package_onClick(Sender:TObject);
-var Pkg:TIDEPackage;
-    Frm:TCustomForm;
-    wnd:TCustomForm;
-    tmp:tObject;
- trgWndName:string;
- trgWnd    :TCustomForm;
+var tmp    :tObject;
+var srcMain:TIDEPackage;
+    srcForm:TCustomForm;
+var trgName:string;
+    trgForm:TCustomForm;
 
 begin
     {$ifdef _DEBUG_}
@@ -125,61 +156,29 @@ begin
         tmp:=Sender;
     {$endif}
     {%endregion}
-    Pkg:=PackageEditingInterface.GetPackageOfEditorItem(tmp);
-    Frm:=_ide_GetPackageEditorForm(tmp);
-    if Assigned(Pkg)and Assigned(Frm) then begin //< есть над чем работать
-        trgWndName:=clazExt_CopyRAST_wndPackage_name+'___'+Pkg.Name;
-        trgWnd    :=Screen.FindForm(trgWndName);
-        if NOT Assigned(trgWnd) then begin
+    srcMain:= PackageEditingInterface.GetPackageOfEditorItem(tmp);
+    srcForm:=_ide_GetPackageEditorForm(tmp);
+    if Assigned(srcMain)and Assigned(srcForm) then begin //< есть над чем работать
+        trgName:=tWndCopyRAST_Package.ide_Name4OBJ(srcMain);
+        trgForm:=Screen.FindForm(trgName);
+        if NOT Assigned(trgForm) then begin //< надо СОЗДАВАТЬ
+            trgForm:=IDEWindowCreators.ShowForm(tWndCopyRAST_Package.ide_CoreName,FALSE);
+            tWndCopyRAST_Package(trgForm).Init (srcMain,srcForm);
             {$ifdef _DEBUG_}
-                DEBUG('_ideCommand_copyRast_Package_onClick',trgWndName+' wnd CREATE.');
+                DEBUG('_ideCommand_copyRast_Package_onClick',trgName+' wnd Create and INIT.');
             {$endIf}
-            trgWnd:=IDEWindowCreators.ShowForm(clazExt_CopyRAST_wndPackage_name,FALSE);
-            trgWnd.Name:=clazExt_CopyRAST_wndPackage_name+'___'+Pkg.Name;
-            Twnd_lazExt_CopyRAST_Package(trgWnd).Init(Pkg,Frm);
         end;
-        IDEWindowCreators.ShowForm(trgWnd,true);
+        IDEWindowCreators.ShowForm(trgForm,true);
         {$ifdef _DEBUG_}
-            DEBUG('_ideCommand_copyRast_Package_onClick',trgWndName+' wnd SHOW.');
+            DEBUG('_ideCommand_copyRast_Package_onClick',trgName+' wnd SHOW.');
         {$endIf}
-        //
-        //wnd:=IDEWindowCreators.ShowForm(clazExt_CopyRAST_wndPackage_name+'___'+Pkg.Name,true);
-        //if Assigned(wnd) then begin //< инициализируем окошко
-        //end;
     end
     {$ifdef _DEBUG_}
     else begin
-         if not Assigned(Pkg) then DEBUG('_ideCommand_copyRast_Package_onClick', 'FaIL not Assigned(Pkg)');
-         if not Assigned(Frm) then DEBUG('_ideCommand_copyRast_Package_onClick', 'FaIL not Assigned(Frm)');
+         if not Assigned(srcMain) then DEBUG('_ideCommand_copyRast_Package_onClick', 'FaIL not Assigned(Pkg)');
+         if not Assigned(srcForm) then DEBUG('_ideCommand_copyRast_Package_onClick', 'FaIL not Assigned(Frm)');
     end;
     {$endIf}
-end;
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-procedure tLazExt_CopyRAST._ideCommand_copyRast_Project_onClick(Sender:TObject);
-var Prj:TLazProject;
-    Frm:TCustomForm;
-    wnd:TCustomForm;
-begin
-    Prj:=LazarusIDE.ActiveProject;
-    Frm:=_ide_GetPackageEditorForm(Sender);
-    if Assigned(Prj)and Assigned(Frm) then begin
-        //---
-
-        //---
-
-        wnd:=IDEWindowCreators.ShowForm(clazExt_CopyRAST_wndProject_name+'___'+Prj.Name,true);
-        if Assigned(wnd) then begin //< инициализируем окошко
-            Twnd_lazExt_CopyRAST_Project(wnd).Init(Prj,Frm);
-        end;
-    end
-end;
-
-procedure tLazExt_CopyRAST._crt_IDEWnd_copyRast_Project_(Sender:TObject; aFormName:string; var AForm:TCustomForm; DoDisableAutoSizing:boolean);
-begin
-    IDEWindowCreators.CreateForm(AForm,Twnd_lazExt_CopyRAST_Project,DoDisableAutoSizing,LazarusIDE.OwningComponent);
-    AForm.Name:=aFormName;
 end;
 
 //------------------------------------------------------------------------------
@@ -203,8 +202,8 @@ begin
     RegisterIDEMenuCommand(itmProjectSaveSection,  'ViewCopyRastPRJ', cRes_CopyRAST_caption, nil,nil, _ideCommand_copyRast_Project_,'');
     //---
     // register window creator
-    IDEWindowCreators.Add(clazExt_CopyRAST_wndPackage_name,nil,@_crt_IDEWnd_copyRast_Package_,'250','250','','','',alNone,true);
-    IDEWindowCreators.Add(clazExt_CopyRAST_wndProject_name,nil,@_crt_IDEWnd_copyRast_Project_,'250','250','','','',alNone,true);
+    IDEWindowCreators.Add(tWndCopyRAST_Progect.ide_CoreName,nil,@_crt_IDEWnd_copyRast_Project_,'100','100','','','',alNone,true);
+    IDEWindowCreators.Add(tWndCopyRAST_Package.ide_CoreName,nil,@_crt_IDEWnd_copyRast_Package_,'100','100','','','',alNone,true);
 end;
 
 procedure tLazExt_CopyRAST.LazarusIDE_CLEAN;

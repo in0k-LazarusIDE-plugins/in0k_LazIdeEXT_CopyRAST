@@ -4,15 +4,27 @@ unit lazExt_CopyRAST__xmlConfig;
 
 interface
 
-uses LazConfigStorage,
+uses
+  {LCLProc,} BaseIDEIntf, LazConfigStorage,
+
+
+
 
   CopyRAST_srcTree_4Handler_CNFGs,
-  XMLConf,
+  {XMLConf,} //Laz2_XMLCfg
   Classes, SysUtils;
 
 
 type
-  tLazExt_CopyRAST_CONFIG=TXMLConfig;
+  tLazExt_CopyRAST_CONFIG=TConfigStorage;//TXMLConfig;
+
+
+
+function  CopyRAST_fileConfig_FIND(const fileName:string; const LoadFromDisk:Boolean):tLazExt_CopyRAST_CONFIG;
+
+procedure CopyRAST_fileConfig_SAVE(const fileName:string; const Config:tLazExt_CopyRAST_CONFIG);
+//procedure CopyRAST_fileConfig_LOAD(const fileName:string; out   Config:tLazExt_CopyRAST_CONFIG);
+
 
 
 
@@ -23,10 +35,10 @@ const
   cXmlConfig_countNAME ='count';
   cXmlConfig_itmCntNME='itemsCount';
 
-  cLazExt_CopyRAST__xmlConfig_SECTION='CopyRAST';
 
 
   cXmlConfig_itm_ROOT_name='ROOT';
+  cLazExt_CopyRAST__xmlConfig_SECTION='CopyRAST';
 
 function lERxC_sctn8Name(const section,name:string):string;                    inline;
 
@@ -51,6 +63,30 @@ procedure lazExt_CopyRAST__ConfigSAVE(const CNFG:tLazExt_CopyRAST_CONFIG; const 
 procedure lazExt_CopyRAST__ConfigLOAD(const CNFG:tLazExt_CopyRAST_CONFIG; const Section:string; const CNFGs:tCopyRAST_srcTree_4Handler_CNFGs; const LoadPRC:fCopyRAST__ConfigNODE_LOAD);     overload;
 
 implementation
+
+function CopyRAST_fileConfig_FIND(const fileName:string; const LoadFromDisk:Boolean):tLazExt_CopyRAST_CONFIG;
+begin
+    try
+        result:=GetIDEConfigStorage(fileName,LoadFromDisk);
+    except
+        result:=nil;
+    end;
+end;
+
+
+procedure CopyRAST_fileConfig_SAVE(const fileName:string; const Config:tLazExt_CopyRAST_CONFIG);
+begin
+    //Config:=GetIDEConfigStorage(fileName,false);
+end;
+
+procedure CopyRAST_fileConfig_LOAD(const fileName:string; out   Config:tLazExt_CopyRAST_CONFIG);
+begin
+    try
+        Config:=GetIDEConfigStorage(fileName,FALSE);
+    except
+        Config:=nil;
+    end;
+end;
 
 //------------------------------------------------------------------------------
 
