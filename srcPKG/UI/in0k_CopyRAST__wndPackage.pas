@@ -5,7 +5,12 @@ unit in0k_CopyRAST__wndPackage;
 interface
 
 uses
-  in0k_CopyRAST__wndCORE, Classes, SysUtils, FileUtil, CheckBoxThemed, Forms,
+  in0k_CopyRAST__wndCORE,
+
+  in0k_CopyRAST_STAGEs,
+  in0k_CopyRAST_STAGEs_4Package,
+
+  Classes, SysUtils, FileUtil, CheckBoxThemed, Forms,
   Controls, Graphics, Dialogs, ComCtrls, StdCtrls;
 
 type
@@ -15,14 +20,19 @@ type
  tWndCopyRAST_Package = class(tWndCopyRAST_CORE)
   private
 
-  public
-
+  protected
+    function _copyRastObj_CRT_:tCopyRAST_STAGEs; override;
   end;
 
 
 implementation
 
 {$R *.lfm}
+
+function tWndCopyRAST_Package._copyRastObj_CRT_:tCopyRAST_STAGEs;
+begin
+    result:=tCopyRAST_STAGEs_4Package.Create(_parentOBJ_);
+end;
 
 end.
 

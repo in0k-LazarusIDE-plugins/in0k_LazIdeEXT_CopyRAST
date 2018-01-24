@@ -12,7 +12,6 @@ uses
 type
 
  tCopyRAST_STAGEs_4Package=class(tCopyRAST_STAGEs)
-
   protected
     function _builder_TYPE_:tSrcTree_Builder_TYPE; override;
     function _creater_TYPE_:tSrcTree_Creater_TYPE; override;

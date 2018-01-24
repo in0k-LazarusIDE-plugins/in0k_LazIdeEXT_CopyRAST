@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="101">
+    <Files Count="102">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -401,8 +401,8 @@
         <UnitName Value="in0k_CopyRAST__frmSTAGE_twoTree"/>
       </Item95>
       <Item96>
-        <Filename Value="srcPKG\srcTree\in0k_CopyRAST_srcTree_Stage_0t1.pas"/>
-        <UnitName Value="in0k_CopyRAST_srcTree_Stage_0t1"/>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST_stage__FileHandling.pas"/>
+        <UnitName Value="in0k_CopyRAST_stage__FileHandling"/>
       </Item96>
       <Item97>
         <Filename Value="srcPKG\Stages\in0k_CopyRAST_STAGEs.pas"/>
@@ -424,6 +424,10 @@
         <Filename Value="srcPKG\UI\in0k_CopyRAST__wndPackage.pas"/>
         <UnitName Value="in0k_CopyRAST__wndPackage"/>
       </Item101>
+      <Item102>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST_stage__JustCopying.pas"/>
+        <UnitName Value="in0k_CopyRAST_stage__JustCopying"/>
+      </Item102>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

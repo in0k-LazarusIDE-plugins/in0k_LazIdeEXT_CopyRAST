@@ -7,6 +7,7 @@ interface
 uses
   Classes, Controls, ExtCtrls,
 
+  in0k_CopyRAST_srcTree_ITEMs,
   in0k_CopyRAST_srcTree_Stage,
   in0k_lazIdeSRC_srcTree_CORE_item,
 
@@ -29,6 +30,9 @@ type
     function  _treeR_TYPE_:tCmpCopyRAST_srcTree_TYPE; virtual;
     procedure _treeR_SelectionChanged_(Sender:TObject);
     procedure _treeR_CRT_;
+  protected
+    procedure _onLRootChange_(const aStage:tCopyRast_SrcTree_prcSTAGE; const aRoot:tCopyRast_stROOT);
+    procedure _onRRootChange_(const aStage:tCopyRast_SrcTree_prcSTAGE; const aRoot:tCopyRast_stROOT);
   protected
     procedure _editItem_SET_(const value:tSrcTree_item); virtual;
   protected
@@ -88,6 +92,9 @@ begin
     inherited;
     //---
     if Assigned(_STAGE_) then begin
+       _STAGE_.ROOT_Source_onChange:=@_onLRootChange_;
+       _STAGE_.ROOT_Target_onChange:=@_onRRootChange_;
+        //---
        _treeL_.Root:=_STAGE_.ROOT_Source;
        _treeR_.Root:=_STAGE_.ROOT_Target;
         //frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=@(_STAGE_.Template_APPLAY);
@@ -217,6 +224,29 @@ begin
    _ctrl_OnChange_LOCK_(FALSE);
 end;
 
+//------------------------------------------------------------------------------
+
+procedure TfrmCopyRAST_STAGE_twoTree._onLRootChange_(const aStage:tCopyRast_SrcTree_prcSTAGE; const aRoot:tCopyRast_stROOT);
+begin
+    if STAGE=aStage then begin
+       _ctrl_OnChange_LOCK_(TRUE);
+        //---
+       _treeL_.Root:=aRoot;
+        //---
+       _ctrl_OnChange_LOCK_(FALSE);
+    end;
+end;
+
+procedure TfrmCopyRAST_STAGE_twoTree._onRRootChange_(const aStage:tCopyRast_SrcTree_prcSTAGE; const aRoot:tCopyRast_stROOT);
+begin
+    if STAGE=aStage then begin
+       _ctrl_OnChange_LOCK_(TRUE);
+        //---
+       _treeR_.Root:=aRoot;
+        //---
+       _ctrl_OnChange_LOCK_(FALSE);
+    end;
+end;
 
 end.
 

@@ -6,10 +6,16 @@
 {"hash":206317090,"name":"twndcopyrast_core.radiobutton2.caption","sourcebytes":[82,97,100,105,111,66,117,116,116,111,110,50],"value":"RadioButton2"},
 {"hash":236979097,"name":"twndcopyrast_core.checkboxthemed1.caption","sourcebytes":[69,120,99,108,117,100,101,32,102,114,111,109,32,67,79,80,89],"value":"Exclude from COPY"},
 {"hash":194906437,"name":"twndcopyrast_core.label1.caption","sourcebytes":[83,97,118,101,32,105,110,32,102,105,108,101],"value":"Save in file"},
-{"hash":127854082,"name":"twndcopyrast_core.tabsheet2.caption","sourcebytes":[84,97,98,83,104,101,101,116,50],"value":"TabSheet2"},
-{"hash":127854083,"name":"twndcopyrast_core.tabsheet3.caption","sourcebytes":[84,97,98,83,104,101,101,116,51],"value":"TabSheet3"},
+{"hash":176723653,"name":"twndcopyrast_core.tabsheet_stage_0.caption","sourcebytes":[83,114,99,84,82,69,69],"value":"SrcTREE"},
+{"hash":189357287,"name":"twndcopyrast_core.tabsheet_stage_1.caption","sourcebytes":[70,105,108,101,32,72,97,110,100,108,105,110,103],"value":"File Handling"},
+{"hash":265089472,"name":"twndcopyrast_core.tabsheet_stage_2.caption","sourcebytes":[70,105,108,101,115,32,82,101,118,105,115,105,111,110,32],"value":"Files Revision "},
+{"hash":46189299,"name":"twndcopyrast_core.tabsheet_stage_3.caption","sourcebytes":[82,101,110,97,109,101,32,70,105,108,101,115],"value":"Rename Files"},
+{"hash":52757187,"name":"twndcopyrast_core.tabsheet_stage_4.caption","sourcebytes":[67,111,112,121,105,110,103,32,70,105,108,101,115],"value":"Copying Files"},
+{"hash":258023527,"name":"twndcopyrast_core.tabsheet_stage_5.caption","sourcebytes":[112,111,115,116,112,114,111,99,101,115,115,105,110,103],"value":"postprocessing"},
+{"hash":93105204,"name":"twndcopyrast_core.tabsheet8.caption","sourcebytes":[82,101,115,117,108,116],"value":"Result"},
 {"hash":90721265,"name":"twndcopyrast_core.panel1.caption","sourcebytes":[80,97,110,101,108,49],"value":"Panel1"},
 {"hash":99718697,"name":"twndcopyrast_core.a_wnd_applay.caption","sourcebytes":[97,95,119,110,100,95,65,112,112,108,97,121],"value":"a_wnd_Applay"},
 {"hash":115648075,"name":"twndcopyrast_core.a_wnd_ok.caption","sourcebytes":[97,95,119,110,100,95,79,75],"value":"a_wnd_OK"},
-{"hash":84202300,"name":"twndcopyrast_core.a_wnd_cansel.caption","sourcebytes":[97,95,119,110,100,95,67,65,78,83,69,76],"value":"a_wnd_CANSEL"}
+{"hash":84202300,"name":"twndcopyrast_core.a_wnd_cansel.caption","sourcebytes":[97,95,119,110,100,95,67,65,78,83,69,76],"value":"a_wnd_CANSEL"},
+{"hash":265617816,"name":"twndcopyrast_core.a_stg_refresh.caption","sourcebytes":[97,95,83,84,71,95,114,101,70,114,101,115,104],"value":"a_STG_reFresh"}
 ]}

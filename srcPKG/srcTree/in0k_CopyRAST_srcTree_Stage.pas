@@ -24,32 +24,42 @@ type
     function ROOT_Target:tCopyRast_stROOT; {$ifOpt D-}inline;{$endIf}
   end;
 
+ tCopyRast_SrcTree_prcSTAGE=class;
+
+ mCopyRast_STAGE_onRootChange=procedure(const Sender:tCopyRast_SrcTree_prcSTAGE; const newRoot:tCopyRast_stROOT) of object;
+
+
  tCopyRast_SrcTree_prcSTAGE=class(tSrcTree_prcHandler4Build)
-
- protected
-   procedure _CNFGs_FREE_;                                        virtual;
-   procedure _CNFGs_LOAD_(const Configs:tLazExt_CopyRAST_CONFIG); virtual;
-   procedure _CNFGs_SAVE_(const Configs:tLazExt_CopyRAST_CONFIG); virtual;
- public
-   procedure  CNFGs_LOAD (const Configs:tLazExt_CopyRAST_CONFIG);
-   procedure  CNFGs_SAVE (const Configs:tLazExt_CopyRAST_CONFIG);
-
+  protected
+   _mOn_srcRootCHG_:mCopyRast_STAGE_onRootChange;
+   _mOn_trgRootCHG_:mCopyRast_STAGE_onRootChange;
+  protected
+    procedure _CNFGs_FREE_;                                        virtual;
+    procedure _CNFGs_LOAD_(const Configs:tLazExt_CopyRAST_CONFIG); virtual;
+    procedure _CNFGs_SAVE_(const Configs:tLazExt_CopyRAST_CONFIG); virtual;
+  public
+    procedure  CNFGs_LOAD (const Configs:tLazExt_CopyRAST_CONFIG);
+    procedure  CNFGs_SAVE (const Configs:tLazExt_CopyRAST_CONFIG);
   strict private
    _targetROOT_:tCopyRast_stROOT;
-    procedure _targetROOT_CLR_; {$ifOpt D-}inline;{$endIf}
+    procedure _targetROOT_SET_(const value:tCopyRast_stROOT); {$ifOpt D-}inline;{$endIf}
+    procedure _sourceROOT_SET_(const value:tCopyRast_stROOT); {$ifOpt D-}inline;{$endIf}
+  protected
+    function  _targetROOT_GET_:tCopyRast_stROOT;              {$ifOpt D-}inline;{$endIf}
+    function  _sourceROOT_GET_:tCopyRast_stROOT;              {$ifOpt D-}inline;{$endIf}
   strict private
     procedure _targetROOT_NEW_Root(const src:tCopyRast_stROOT);
     procedure _targetROOT_NEW_Base(const src:tCopyRast_stITEM);
     procedure _targetROOT_NEW_Main(const src:tCopyRast_stITEM);
   private
     procedure _targetROOT_NEW_(const srcRoot:tCopyRast_stITEM);
-  protected
-    function  _targetROOT_GET_:tCopyRast_stROOT; {$ifOpt D-}inline;{$endIf}
-    function  _sourceROOT_GET_:tCopyRast_stROOT; {$ifOpt D-}inline;{$endIf}
+  public
+    property  ROOT_Source_onChange:mCopyRast_STAGE_onRootChange read _mOn_srcRootCHG_ write _mOn_srcRootCHG_;
+    property  ROOT_Target_onChange:mCopyRast_STAGE_onRootChange read _mOn_trgRootCHG_ write _mOn_trgRootCHG_;
   public
     property  ROOT_Source:tCopyRast_stROOT read _sourceROOT_GET_;
     property  ROOT_Target:tCopyRast_stROOT read _targetROOT_GET_;
-    procedure ROOT_Target_CLEAR;
+    //procedure ROOT_Target_CLEAR;
   public
     function  EXECUTE(const nodeRoot:tSrcTree_item):boolean; override;
     procedure doClear; virtual;
@@ -89,9 +99,36 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_CLR_;
+{procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_SET_(const root:tCopyRast_stROOT);
 begin
-   _targetROOT_:=nil;
+    if _targetROOT_<>root then begin
+       _targetROOT_:=root;
+        if Assigned(_mOn_trgRootCHG_) then _mOn_trgRootCHG_(self,_targetROOT_);
+    end;
+end;}
+
+{procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_CLR_;
+begin
+   _targetROOT_SET_(nil);
+end;}
+
+
+procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_SET_(const value:tCopyRast_stROOT);
+var tmpRoot:tCopyRast_stROOT;
+begin
+    if _targetROOT_<>value then begin
+        if Assigned(_targetROOT_) then begin
+            tmpRoot:=_targetROOT_;
+            //
+           _targetROOT_:=nil;
+            if Assigned(_mOn_trgRootCHG_) then _mOn_trgRootCHG_(self,nil);
+            //
+            tmpRoot.Free;
+        end;
+        //
+       _targetROOT_:=value;
+        if Assigned(_mOn_trgRootCHG_) then _mOn_trgRootCHG_(self,nil);
+    end;
 end;
 
 function tCopyRast_SrcTree_prcSTAGE._targetROOT_GET_:tCopyRast_stROOT;
@@ -99,12 +136,22 @@ begin
     result:=_targetROOT_;
 end;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+procedure tCopyRast_SrcTree_prcSTAGE._sourceROOT_SET_(const value:tCopyRast_stROOT);
+begin
+    if _execRoot_<>value then begin
+       _execRoot_:=value;
+        if Assigned(_mOn_srcRootCHG_) then _mOn_srcRootCHG_(self,value);
+    end;
+end;
+
 function tCopyRast_SrcTree_prcSTAGE._sourceROOT_GET_:tCopyRast_stROOT;
 begin
     {$ifDEF _local_DEBUG_}
         Assert(not Assigned(_execRoot_) OR IS_CopyRAST_stROOT(_execRoot_));
     {$endIf}
-    result:= tCopyRast_stROOT(_execRoot_);
+    result:=tCopyRast_stROOT(_execRoot_);
 end;
 
 //------------------------------------------------------------------------------
@@ -159,20 +206,26 @@ begin
         Assert(Assigned(srcRoot));
         Assert(IS_CopyRAST_stROOT(srcRoot));
     {$endIf}
-    _targetROOT_CLR_;
-    _targetROOT_NEW_Root(                   tCopyRast_stROOT(srcRoot));
-    _targetROOT_NEW_Base(_builder_.fnd_BASE(tCopyRast_stROOT(srcRoot)));
-    _targetROOT_NEW_Main(_builder_.fnd_MAIN(tCopyRast_stROOT(srcRoot)));
+   _targetROOT_:=nil;
+   _targetROOT_NEW_Root(                   tCopyRast_stROOT(srcRoot));
+   _targetROOT_NEW_Base(_builder_.fnd_BASE(tCopyRast_stROOT(srcRoot)));
+   _targetROOT_NEW_Main(_builder_.fnd_MAIN(tCopyRast_stROOT(srcRoot)));
 end;
 
 //------------------------------------------------------------------------------
 
 function tCopyRast_SrcTree_prcSTAGE.EXECUTE(const nodeRoot:tSrcTree_item):boolean;
 begin
-   _targetROOT_NEW_(nodeRoot);
+    {$ifDEF _local_DEBUG_}
+      Assert(not Assigned(_execRoot_) OR IS_CopyRAST_stROOT(_execRoot_));
+    {$endIf}
+   _sourceROOT_SET_(tCopyRast_stROOT(nodeRoot));
+   _targetROOT_SET_(NIL);
     //---
+   _targetROOT_NEW_(nodeRoot);
     result:=inherited EXECUTE(nodeRoot);
     //---
+    if Assigned(_mOn_trgRootCHG_) then _mOn_trgRootCHG_(self,_targetROOT_);
 end;
 
 procedure tCopyRast_SrcTree_prcSTAGE.doClear;
@@ -185,10 +238,10 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tCopyRast_SrcTree_prcSTAGE.ROOT_Target_CLEAR;
+{procedure tCopyRast_SrcTree_prcSTAGE.ROOT_Target_CLEAR;
 begin
    _targetROOT_CLR_;
-end;
+end;}
 
 //------------------------------------------------------------------------------
 

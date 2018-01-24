@@ -13,10 +13,12 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
     Height = 322
     Top = 0
     Width = 829
-    ActivePage = TabSheet2
+    ActivePage = TabSheet_Stage_1
     Align = alClient
-    TabIndex = 1
+    TabIndex = 2
     TabOrder = 0
+    OnChange = PageControl1Change
+    OnChanging = PageControl1Changing
     object TabSheet1: TTabSheet
       Caption = 'TabSheet1'
       ClientHeight = 294
@@ -73,11 +75,41 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
         end
       end
     end
-    object TabSheet2: TTabSheet
-      Caption = 'TabSheet2'
+    object TabSheet_Stage_0: TTabSheet
+      Caption = 'SrcTREE'
+      OnShow = TabSheet_Stage_0Show
     end
-    object TabSheet3: TTabSheet
-      Caption = 'TabSheet3'
+    object TabSheet_Stage_1: TTabSheet
+      Caption = 'File Handling'
+      ClientHeight = 294
+      ClientWidth = 821
+      OnShow = TabSheet_Stage_1Show
+      inline frmCopyRAST_STAGE_twoTree1: TfrmCopyRAST_STAGE_twoTree
+        Height = 294
+        Width = 821
+        ClientHeight = 294
+        ClientWidth = 821
+        inherited pnlMDL: TPanel
+          AnchorSideTop.Control = frmCopyRAST_STAGE_twoTree1
+          AnchorSideBottom.Control = frmCopyRAST_STAGE_twoTree1
+          Height = 294
+        end
+      end
+    end
+    object TabSheet_Stage_2: TTabSheet
+      Caption = 'Files Revision '
+    end
+    object TabSheet_Stage_3: TTabSheet
+      Caption = 'Rename Files'
+    end
+    object TabSheet_Stage_4: TTabSheet
+      Caption = 'Copying Files'
+    end
+    object TabSheet_Stage_5: TTabSheet
+      Caption = 'postprocessing'
+    end
+    object TabSheet8: TTabSheet
+      Caption = 'Result'
     end
   end
   object Panel1: TPanel
@@ -114,6 +146,15 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
       Action = a_wnd_Applay
       TabOrder = 2
     end
+    object Button4: TButton
+      Left = 8
+      Height = 25
+      Top = 8
+      Width = 75
+      Action = a_STG_reFresh
+      OnClick = Button4Click
+      TabOrder = 3
+    end
   end
   object ActionList1: TActionList
     left = 16
@@ -129,6 +170,10 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
     object a_wnd_CANSEL: TAction
       Caption = 'a_wnd_CANSEL'
       OnExecute = a_wnd_CANSELExecute
+    end
+    object a_STG_reFresh: TAction
+      Caption = 'a_STG_reFresh'
+      OnExecute = a_STG_reFreshExecute
     end
   end
 end

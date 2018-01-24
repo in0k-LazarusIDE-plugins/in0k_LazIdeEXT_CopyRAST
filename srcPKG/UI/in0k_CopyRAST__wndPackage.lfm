@@ -7,7 +7,12 @@ inherited wndCopyRAST_Package: TwndCopyRAST_Package
   ClientHeight = 359
   ClientWidth = 611
   inherited PageControl1: TPageControl
-    Height = 359
+    Height = 309
     Width = 611
+  end
+  inherited Panel1: TPanel
+    Top = 309
+    Width = 611
+    ClientWidth = 611
   end
 end

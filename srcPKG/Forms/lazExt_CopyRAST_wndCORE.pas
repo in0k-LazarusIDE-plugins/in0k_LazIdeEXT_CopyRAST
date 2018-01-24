@@ -283,7 +283,7 @@ begin
            _onInit_prtnOBJs_;
             //
            _cpRastObj_:=_copyRastObj_CRT_;
-           _cpRastObj_.doStage_0;
+           _cpRastObj_.DoSTAGE(0);
             //
         end;
     end;

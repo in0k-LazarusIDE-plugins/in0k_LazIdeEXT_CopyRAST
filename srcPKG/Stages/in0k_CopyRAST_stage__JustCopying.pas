@@ -1,4 +1,4 @@
-unit in0k_CopyRAST_srcTree_Stage_0t1;
+unit in0k_CopyRAST_stage__JustCopying;
 
 {$mode objfpc}{$H+}
 
@@ -9,7 +9,7 @@ uses
 
 type
 
- tCopyRast_SrcTree_prcSTAGE__0_1=class(tCopyRast_SrcTree_prcSTAGE)
+ tCopyRast_stage__JustCopying=class(tCopyRast_SrcTree_prcSTAGE)
 
   end;
 

@@ -18,7 +18,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
          //in0k_CopyRAST_srcTree_Stage_0t1,
         in0k_lazIdeSRC_srcTree_item_Globals,
         in0k_CopyRAST_srcTree_ITEMs,
-     in0k_CopyRAST_srcTree_Stage_0t1,
+     in0k_CopyRAST_stage__FileHandling,
     lazExt_CopyRAST_wndCORE,
      lazExt_CopyRAST_node_ROOT,
      lazExt_CopyRAST_node_ROOT_package,
@@ -101,7 +101,7 @@ function Twnd_lazExt_CopyRAST_Package._copyRastObj_CRT_:tCopyRAST_STAGEs;
  Builder:tCopyRastSrcTree_Builder4Package;
  P4Build:tCopyRastSrcTree_P4Build;
 
-   Stage__0_1:tCopyRast_SrcTree_prcSTAGE__0_1;
+   Stage__0_1:tCopyRast_stage__FileHandling;
     }
 begin
  {   result:=nil;
@@ -123,7 +123,7 @@ begin
     // отображаем   }
     treeCopyRAST_Second.Root:=root;
 
-    Stage__0_1:=tCopyRast_SrcTree_prcSTAGE__0_1.Create(Builder);
+    Stage__0_1:=tCopyRast_stage__FileHandling.Create(Builder);
 
     Stage__0_1.EXECUTE(root);
     frmCopyRAST_STAGE_approveFILEs1.STAGE:=Stage__0_1;

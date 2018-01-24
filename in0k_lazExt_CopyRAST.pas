@@ -64,9 +64,10 @@ uses
   CopyRAST_srcTree_4Handler_CNFGs, frmCopyRAST_EDIT, in0k_CopyRAST__frmSTAGE, 
   frmCopyRAST_srcTree_approvedFILEs2NAMEs, 
   in0k_CopyRAST__frmSTAGE_approveFILEs, in0k_CopyRAST__frmSTAGE_twoTree, 
-  in0k_CopyRAST_srcTree_Stage_0t1, in0k_CopyRAST_STAGEs, 
+  in0k_CopyRAST_stage__FileHandling, in0k_CopyRAST_STAGEs, 
   in0k_CopyRAST_STAGEs_4Package, in0k_CopyRAST__wndCORE, 
-  in0k_CopyRAST__wndProject, in0k_CopyRAST__wndPackage, LazarusPackageIntf;
+  in0k_CopyRAST__wndProject, in0k_CopyRAST__wndPackage, 
+  in0k_CopyRAST_stage__JustCopying, LazarusPackageIntf;
 
 implementation
 
