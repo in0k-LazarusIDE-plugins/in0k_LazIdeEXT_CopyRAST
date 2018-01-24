@@ -1,21 +1,21 @@
 object wndCopyRAST_CORE: TwndCopyRAST_CORE
-  Left = 413
+  Left = 517
   Height = 372
-  Top = 233
+  Top = 178
   Width = 829
   Caption = 'wndCopyRAST_CORE'
   ClientHeight = 372
   ClientWidth = 829
   OnClose = FormClose
-  LCLVersion = '1.8.0.6'
+  LCLVersion = '1.6.4.0'
   object PageControl1: TPageControl
     Left = 0
     Height = 322
     Top = 0
     Width = 829
-    ActivePage = TabSheet_Stage_1
+    ActivePage = TabSheet_Stage_2
     Align = alClient
-    TabIndex = 2
+    TabIndex = 3
     TabOrder = 0
     OnChange = PageControl1Change
     OnChanging = PageControl1Changing
@@ -83,30 +83,86 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
       Caption = 'File Handling'
       ClientHeight = 294
       ClientWidth = 821
-      OnShow = TabSheet_Stage_1Show
-      inline frmCopyRAST_STAGE_twoTree1: TfrmCopyRAST_STAGE_twoTree
+      OnShow = TabSheet_Stage_xShow
+      inline frmCopyRAST_STAGE_1: TfrmCopyRAST_STAGE_twoTree
         Height = 294
         Width = 821
         ClientHeight = 294
         ClientWidth = 821
         inherited pnlMDL: TPanel
-          AnchorSideTop.Control = frmCopyRAST_STAGE_twoTree1
-          AnchorSideBottom.Control = frmCopyRAST_STAGE_twoTree1
+          AnchorSideTop.Control = frmCopyRAST_STAGE_1
+          AnchorSideBottom.Control = frmCopyRAST_STAGE_1
           Height = 294
         end
       end
     end
     object TabSheet_Stage_2: TTabSheet
       Caption = 'Files Revision '
+      ClientHeight = 294
+      ClientWidth = 821
+      OnShow = TabSheet_Stage_xShow
+      inline frmCopyRAST_STAGE_2: TfrmCopyRAST_STAGE_twoTree
+        Height = 294
+        Width = 821
+        ClientHeight = 294
+        ClientWidth = 821
+        inherited pnlMDL: TPanel
+          AnchorSideTop.Control = frmCopyRAST_STAGE_2
+          AnchorSideBottom.Control = frmCopyRAST_STAGE_2
+          Height = 294
+        end
+      end
     end
     object TabSheet_Stage_3: TTabSheet
       Caption = 'Rename Files'
+      ClientHeight = 294
+      ClientWidth = 821
+      OnShow = TabSheet_Stage_xShow
+      inline frmCopyRAST_STAGE_3: TfrmCopyRAST_STAGE_twoTree
+        Height = 294
+        Width = 821
+        ClientHeight = 294
+        ClientWidth = 821
+        inherited pnlMDL: TPanel
+          AnchorSideTop.Control = frmCopyRAST_STAGE_3
+          AnchorSideBottom.Control = frmCopyRAST_STAGE_3
+          Height = 294
+        end
+      end
     end
     object TabSheet_Stage_4: TTabSheet
       Caption = 'Copying Files'
+      ClientHeight = 294
+      ClientWidth = 821
+      OnShow = TabSheet_Stage_xShow
+      inline frmCopyRAST_STAGE_4: TfrmCopyRAST_STAGE_twoTree
+        Height = 294
+        Width = 821
+        ClientHeight = 294
+        ClientWidth = 821
+        inherited pnlMDL: TPanel
+          AnchorSideTop.Control = frmCopyRAST_STAGE_4
+          AnchorSideBottom.Control = frmCopyRAST_STAGE_4
+          Height = 294
+        end
+      end
     end
     object TabSheet_Stage_5: TTabSheet
       Caption = 'postprocessing'
+      ClientHeight = 294
+      ClientWidth = 821
+      OnShow = TabSheet_Stage_xShow
+      inline frmCopyRAST_STAGE_5: TfrmCopyRAST_STAGE_twoTree
+        Height = 294
+        Width = 821
+        ClientHeight = 294
+        ClientWidth = 821
+        inherited pnlMDL: TPanel
+          AnchorSideTop.Control = frmCopyRAST_STAGE_5
+          AnchorSideBottom.Control = frmCopyRAST_STAGE_5
+          Height = 294
+        end
+      end
     end
     object TabSheet8: TTabSheet
       Caption = 'Result'
@@ -152,7 +208,6 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
       Top = 8
       Width = 75
       Action = a_STG_reFresh
-      OnClick = Button4Click
       TabOrder = 3
     end
   end

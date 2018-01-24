@@ -16,8 +16,8 @@ uses
   lazExt_CopyRAST__xmlConfig,
   lazExt_CopyRAST__xmlConfig_Base,
 
-  cmpCopyRAST_srcTree,
-  in0k_CopyRAST_STAGEs, in0k_CopyRAST__frmSTAGE_twoTree,
+  cmpCopyRAST_srcTree, in0k_CopyRAST_STAGEs, in0k_CopyRAST__frmSTAGE_twoTree,
+  in0k_CopyRAST__frmSTAGE_approveFILEs,
 
   in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
 
@@ -42,7 +42,11 @@ type
     Button3: TButton;
     Button4: TButton;
     CheckBoxThemed1: TCheckBoxThemed;
-    frmCopyRAST_STAGE_twoTree1: TfrmCopyRAST_STAGE_twoTree;
+    frmCopyRAST_STAGE_1: TfrmCopyRAST_STAGE_twoTree;
+    frmCopyRAST_STAGE_2: TfrmCopyRAST_STAGE_twoTree;
+    frmCopyRAST_STAGE_4: TfrmCopyRAST_STAGE_twoTree;
+    frmCopyRAST_STAGE_5: TfrmCopyRAST_STAGE_twoTree;
+    frmCopyRAST_STAGE_3: TfrmCopyRAST_STAGE_twoTree;
     GroupBox1: TGroupBox;
     Label1: TLabel;
     PageControl1: TPageControl;
@@ -61,7 +65,6 @@ type
     procedure a_wnd_ApplayExecute(Sender: TObject);
     procedure a_wnd_CANSELExecute(Sender: TObject);
     procedure a_wnd_OKExecute(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
     procedure ExtendedNotebook1Change(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure PageControl1Change(Sender: TObject);
@@ -70,7 +73,7 @@ type
       var Handled: Boolean);
     procedure TabSheet3Enter(Sender: TObject);
     procedure TabSheet_Stage_0Show(Sender: TObject);
-    procedure TabSheet_Stage_1Show(Sender: TObject);
+    procedure TabSheet_Stage_xShow(Sender: TObject);
   protected
     function _getConfigFileName_IDE_:string; virtual;
     function _getConfigFileName_EXT_:string;
@@ -236,6 +239,8 @@ begin
   //
 end;
 
+//------------------------------------------------------------------------------
+
 procedure tWndCopyRAST_CORE.TabSheet_Stage_0Show(Sender: TObject);
 begin
     if (_cpRastObj_.STAGE_IDX=0)and(not _cpRastObj_.STAGE_END) then begin
@@ -243,13 +248,17 @@ begin
     end;
 end;
 
-procedure tWndCopyRAST_CORE.TabSheet_Stage_1Show(Sender: TObject);
+procedure tWndCopyRAST_CORE.TabSheet_Stage_xShow(Sender: TObject);
+var tmpStageIndex:integer;
 begin
-    if ((_cpRastObj_.STAGE_IDX=0)and(    _cpRastObj_.STAGE_END))
-    OR ((_cpRastObj_.STAGE_IDX=1)and(not _cpRastObj_.STAGE_END))
+    tmpStageIndex:=_pages_getSTAGE_(TTabSheet(Sender).PageIndex);
+    //
+    if ((_cpRastObj_.STAGE_IDX=tmpStageIndex-1)and(    _cpRastObj_.STAGE_END))
+    OR ((_cpRastObj_.STAGE_IDX=tmpStageIndex  )and(not _cpRastObj_.STAGE_END))
     then begin
-       _cpRastObj_.DoSTAGE(1);
+       _cpRastObj_.DoSTAGE(tmpStageIndex);
     end;
+    caption:=inttostr(tmpStageIndex)+sender.ClassName;
 end;
 
 //------------------------------------------------------------------------------
@@ -261,16 +270,17 @@ end;
 
 procedure tWndCopyRAST_CORE.a_STG_reFreshExecute(Sender: TObject);
 begin
-    if PageControl1.PageIndex=0 then begin
+    if _pages_Is_begin_(PageControl1.PageIndex) then begin
       _cpRastObj_.DoCLEAN(0);
     end
    else
-    if PageControl1.PageIndex=PageControl1.PageCount-1 then begin
+    if _pages_Is_final_(PageControl1.PageIndex) then begin
       _cpRastObj_.DoCLEAN(0);
        PageControl1.PageIndex:=0;
     end
    else begin
-      _cpRastObj_.DoSTAGE(PageControl1.PageIndex-1);
+       caption:=inttostr(_pages_getSTAGE_(PageControl1.PageIndex));
+      _cpRastObj_.DoSTAGE(_pages_getSTAGE_(PageControl1.PageIndex));
     end;
 end;
 
@@ -283,11 +293,6 @@ procedure tWndCopyRAST_CORE.a_wnd_OKExecute(Sender: TObject);
 begin
    _CNFG_Save_(RadioButton1.Checked);
     Close;
-end;
-
-procedure tWndCopyRAST_CORE.Button4Click(Sender: TObject);
-begin
-  _cpRastObj_.DoSTAGE(0);
 end;
 
 procedure tWndCopyRAST_CORE.ExtendedNotebook1Change(Sender: TObject);
@@ -371,7 +376,11 @@ begin
    _cpRastObj_.onCLEAN:=@_STAGES_onCLEAN_;
    _cpRastObj_.onSTAGE:=@_STAGES_onSTAGE_;
     //
-    frmCopyRAST_STAGE_twoTree1.STAGE:=_cpRastObj_.Stage_1;
+    frmCopyRAST_STAGE_1.STAGE:=_cpRastObj_.Stage_1;
+    frmCopyRAST_STAGE_2.STAGE:=_cpRastObj_.Stage_2;
+    frmCopyRAST_STAGE_3.STAGE:=_cpRastObj_.Stage_3;
+    frmCopyRAST_STAGE_4.STAGE:=_cpRastObj_.Stage_4;
+    frmCopyRAST_STAGE_5.STAGE:=_cpRastObj_.Stage_5;
     //
    _stages_reIMAGE_;
 end;

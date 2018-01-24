@@ -106,7 +106,7 @@ function CopyRAST_stITEM_DATA(const value:tObject         ):pCopyRastNODE_DATA; 
 function CopyRAST_stITEM_DATA(const value:pointer         ):pCopyRastNODE_DATA; overload; {$ifOPT D-}inline;{$endIf}
 
 
-function  CopyRastNODE_ROOT(const value:tSrcTree_item):tSrcTree_ROOT;
+function CopyRastNODE_ROOT(const value:tSrcTree_item):tSrcTree_ROOT;
 
 
 

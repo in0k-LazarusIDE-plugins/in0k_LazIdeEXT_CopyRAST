@@ -78,6 +78,10 @@ type
     property onSTAGE:mCopyRAST_STAGEs_onSTAGE read _mOn_Stage_ write _mOn_Stage_;
   public
     property Stage_1:tCopyRast_SrcTree_prcSTAGE read _stage_01_;
+    property Stage_2:tCopyRast_SrcTree_prcSTAGE read _stage_02_;
+    property Stage_3:tCopyRast_SrcTree_prcSTAGE read _stage_03_;
+    property Stage_4:tCopyRast_SrcTree_prcSTAGE read _stage_04_;
+    property Stage_5:tCopyRast_SrcTree_prcSTAGE read _stage_05_;
   public
     constructor Create(const MainIdeOobject:TObject); virtual;
     destructor DESTROY; override;
@@ -96,11 +100,11 @@ begin
     //---
    _stageIDX_  := 0;
    _stageEND_  := FALSE;
-   _stage_01_  := tCopyRast_stage__FileHandling.Create(_Builder_);
-   _stage_02_  := tCopyRast_stage__JustCopying .Create(_Builder_);
-   _stage_03_  := tCopyRast_stage__JustCopying .Create(_Builder_);
-   _stage_04_  := tCopyRast_stage__JustCopying .Create(_Builder_);
-   _stage_05_  := tCopyRast_stage__JustCopying .Create(_Builder_);
+   _stage_01_  := tCopyRast_stage__JustCopying.Create(_Builder_);
+   _stage_02_  := tCopyRast_stage__JustCopying.Create(_Builder_);
+   _stage_03_  := tCopyRast_stage__JustCopying.Create(_Builder_);
+   _stage_04_  := tCopyRast_stage__JustCopying.Create(_Builder_);
+   _stage_05_  := tCopyRast_stage__JustCopying.Create(_Builder_);
 end;
 
 destructor tCopyRAST_STAGEs.DESTROY;
@@ -115,6 +119,7 @@ begin
    _stage_02_.FREE;
    _stage_01_.FREE;
     // остальное
+   _Builder_.Free;
     inherited;
     {$ifdef _DEBUG_}DEBUG(self.ClassName+'.DESTROY','END');{$endIf}
 end;
@@ -139,23 +144,23 @@ begin
     //
     if stageIndex>5 then EXIT;
     {$ifdef _DEBUG_}DEBUG(self.ClassName+'._doClear_','stageIndex=5');{$endIf}
-   _stage_05_.doClear;
+   _stage_05_.doClear(stageIndex<5);
     //
     if stageIndex>4 then EXIT;
     {$ifdef _DEBUG_}DEBUG(self.ClassName+'._doClear_','stageIndex=4');{$endIf}
-   _stage_04_.doClear;
+   _stage_04_.doClear(stageIndex<4);
     //
     if stageIndex>3 then EXIT;
     {$ifdef _DEBUG_}DEBUG(self.ClassName+'._doClear_','stageIndex=3');{$endIf}
-   _stage_03_.doClear;
+   _stage_03_.doClear(stageIndex<3);
     //
     if stageIndex>2 then EXIT;
     {$ifdef _DEBUG_}DEBUG(self.ClassName+'._doClear_','stageIndex=2');{$endIf}
-   _stage_02_.doClear;
+   _stage_02_.doClear(stageIndex<2);
     //
     if stageIndex>1 then EXIT;
     {$ifdef _DEBUG_}DEBUG(self.ClassName+'._doClear_','stageIndex=1');{$endIf}
-   _stage_01_.doClear;
+   _stage_01_.doClear(stageIndex<1);
     //
     if stageIndex>0 then EXIT;
     {$ifdef _DEBUG_}DEBUG(self.ClassName+'._doClear_','stageIndex=0');{$endIf}
@@ -164,11 +169,11 @@ begin
     //
     if stageIndex>=0 then EXIT;
     {$ifdef _DEBUG_}DEBUG(self.ClassName+'._doClear_','stageIndex<0');{$endIf}
-   _Builder_.FREE;
 end;
 
 procedure tCopyRAST_STAGEs._goCLEAR_(const stageIndex:integer);
 begin
+    {$ifdef _DEBUG_}DEBUG(self.ClassName+'._goCLEAR_',inttostr(stageIndex));{$endIf}
    _stageIDX_:=stageIndex;
    _stageEND_:=FALSE;
     if Assigned(_mOn_Clear_) then _mOn_Clear_(self,stageIndex);
@@ -185,7 +190,7 @@ begin
     try
        _srcRoot_:=tmpCreater.MAKE_SourceTREE(_Builder_,_mainIdeOBJ_);
     finally
-	    tmpCreater.FREE;
+       tmpCreater.FREE;
     end;
 end;
 
@@ -205,6 +210,7 @@ end;
 
 procedure tCopyRAST_STAGEs._goSTAGE_(const stageIndex:integer);
 begin
+   {$ifdef _DEBUG_}DEBUG(self.ClassName+'._goSTAGE_',inttostr(stageIndex));{$endIf}
    _stageIDX_:=stageIndex;
    _doStage_(stageIndex);
    _stageEND_:=TRUE;

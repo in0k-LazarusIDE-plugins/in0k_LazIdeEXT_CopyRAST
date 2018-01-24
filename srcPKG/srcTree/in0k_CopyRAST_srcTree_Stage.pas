@@ -24,6 +24,12 @@ type
     function ROOT_Target:tCopyRast_stROOT; {$ifOpt D-}inline;{$endIf}
   end;
 
+ tCopyRast_SrcTree_itmSTAGE_justCopy=class(tCopyRast_SrcTree_itmSTAGE)
+  public
+    function Processing:boolean; override; // ВЫПОЛНИТЬ обработку
+  end;
+
+
  tCopyRast_SrcTree_prcSTAGE=class;
 
  mCopyRast_STAGE_onRootChange=procedure(const Sender:tCopyRast_SrcTree_prcSTAGE; const newRoot:tCopyRast_stROOT) of object;
@@ -62,13 +68,15 @@ type
     //procedure ROOT_Target_CLEAR;
   public
     function  EXECUTE(const nodeRoot:tSrcTree_item):boolean; override;
-    procedure doClear; virtual;
+    procedure doClear(const full:boolean=true); virtual;
   public
     destructor DESTROY; override;
   end;
 
 
 implementation
+
+{%region --- .._itmSTAGE.. ------}
 
 function tCopyRast_SrcTree_itmSTAGE.ROOT_Source:tCopyRast_stROOT;
 begin
@@ -89,6 +97,16 @@ begin
     result:=tCopyRast_stROOT(tCopyRast_SrcTree_prcSTAGE(_OWNER_)._targetROOT_GET_);
 end;
 
+{%endregion}
+
+{%region --- .._itmSTAGE_justCopy.. ------}
+
+function tCopyRast_SrcTree_itmSTAGE_justCopy.Processing:boolean; // ВЫПОЛНИТЬ обработку
+begin
+
+end;
+
+{%endregion}
 //==============================================================================
 
 destructor tCopyRast_SrcTree_prcSTAGE.DESTROY;
@@ -228,12 +246,10 @@ begin
     if Assigned(_mOn_trgRootCHG_) then _mOn_trgRootCHG_(self,_targetROOT_);
 end;
 
-procedure tCopyRast_SrcTree_prcSTAGE.doClear;
+procedure tCopyRast_SrcTree_prcSTAGE.doClear(const full:boolean=true);
 begin
-   _targetROOT_.FREE;
-   _targetROOT_:=nil;
-    //
-   _execRoot_  :=nil;
+   _targetROOT_SET_(nil);
+    if full then _sourceROOT_SET_(nil);
 end;
 
 //------------------------------------------------------------------------------
