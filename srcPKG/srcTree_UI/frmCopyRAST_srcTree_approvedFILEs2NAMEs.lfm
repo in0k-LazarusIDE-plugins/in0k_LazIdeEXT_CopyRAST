@@ -3,13 +3,25 @@ inherited frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
   Width = 670
   ClientHeight = 720
   ClientWidth = 670
+  Constraints.MinHeight = 1
+  Constraints.MinWidth = 1
+  OnConstrainedResize = FrameConstrainedResize
   DesignLeft = 518
   DesignTop = 36
-  inherited pnlMDL: TPanel
+  inherited Label1: TLabel
+    AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
-    TabOrder = 1
   end
-  object pnlPRP: TPanel[1]
+  inherited Label2: TLabel
+    AnchorSideTop.Control = Owner
+  end
+  inherited Splitter_LR: TSplitter
+    AnchorSideTop.Control = Owner
+    AnchorSideBottom.Control = Splitter_TB
+    AnchorSideBottom.Side = asrTop
+    Height = 362
+  end
+  object pnlPRP: TPanel[3]
     Left = 0
     Height = 353
     Top = 367
@@ -48,6 +60,8 @@ inherited frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       DesignLeft = 468
       DesignTop = 400
       inherited pnl_BTTNs: TPanel
+        AnchorSideTop.Control = frmCopyRAST_cie_ReNamesTemplate1
+        AnchorSideBottom.Control = frmCopyRAST_cie_ReNamesTemplate1
         Height = 305
         ClientHeight = 305
       end
@@ -103,5 +117,14 @@ inherited frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
         end
       end
     end
+  end
+  object Splitter_TB: TSplitter[4]
+    Cursor = crVSplit
+    Left = 0
+    Height = 5
+    Top = 362
+    Width = 670
+    Align = alBottom
+    ResizeAnchor = akBottom
   end
 end

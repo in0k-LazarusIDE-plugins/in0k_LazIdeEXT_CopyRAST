@@ -20,21 +20,25 @@ uses
 
 type
 
-  tCmpCopyRAST_srcTree=class(tCmp_CopyRAST_Tree)
-   protected
-    _lftSide_mustNotNIL_:boolean;
-    _rhtSide_mustNotNIL_:boolean;
-   protected
-     procedure _paint_notVerified_(const node:TTreeNode);
-     function  IsCustomDrawn(Target:TCustomDrawTarget; Stage:TCustomDrawStage): Boolean; override;
-     function  CustomDrawItem(Node:TTreeNode; State:TCustomDrawState; Stage:TCustomDrawStage; var PaintImages:Boolean):Boolean; override;
-     procedure DoPaintNode(Node: TTreeNode); override;
-   public
-     procedure Select_4Right(const item:tSrcTree_item);
-     procedure Select_4Left (const item:tSrcTree_item);
-   public
-     constructor Create(AnOwner: TComponent); override;
-   end;
+ tCmpCopyRAST_srcTree=class(tCmp_CopyRAST_Tree)
+  protected
+    procedure _root_set_(const newRoot:tSrcTree_item); override;
+  protected
+   _lftSide_mustNotNIL_:boolean;
+   _rhtSide_mustNotNIL_:boolean;
+  protected
+    procedure _paint_notVerified_(const node:TTreeNode);
+    function  IsCustomDrawn(Target:TCustomDrawTarget; Stage:TCustomDrawStage): Boolean; override;
+    function  CustomDrawItem(Node:TTreeNode; State:TCustomDrawState; Stage:TCustomDrawStage; var PaintImages:Boolean):Boolean; override;
+    procedure DoPaintNode(Node: TTreeNode); override;
+  public
+    procedure Select_4Right(const item:tSrcTree_item);
+    procedure Select_4Left (const item:tSrcTree_item);
+  public
+    constructor Create(AnOwner: TComponent); override;
+  public
+    procedure Expand_MainNODEs;
+  end;
   tCmpCopyRAST_srcTree_TYPE=class of tCmpCopyRAST_srcTree;
 
 implementation
@@ -45,6 +49,14 @@ begin
    _lftSide_mustNotNIL_:=false;
    _rhtSide_mustNotNIL_:=false;
     self.Options:=self.Options-[tvoThemedDraw]+[tvoReadOnly];
+end;
+
+//------------------------------------------------------------------------------
+
+procedure tCmpCopyRAST_srcTree._root_set_(const newRoot:tSrcTree_item);
+begin
+    inherited;
+    Expand_MainNODEs;
 end;
 
 //------------------------------------------------------------------------------
@@ -140,6 +152,21 @@ begin
         tmpData:=CopyRAST_stITEM_DATA(tmpNode);
         if CRNK_notVerified in tmpData^.NodeSTATE then begin
            _paint_notVerified_(Node);
+        end;
+    end;
+end;
+
+//------------------------------------------------------------------------------
+
+procedure tCmpCopyRAST_srcTree.Expand_MainNODEs;
+var i:integer;
+    p:pointer;
+begin
+    for i:=0 to self.Items.Count-1 do begin
+        p:=items[i].Data;
+        if IS_CopyRAST_stROOT(p) or IS_CopyRAST_stBASE(p) or IS_CopyRAST_stMAIN(p)
+        then begin
+            items[i].Expanded:=TRUE;
         end;
     end;
 end;

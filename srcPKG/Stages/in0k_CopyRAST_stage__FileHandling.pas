@@ -10,7 +10,7 @@ uses
 
 type
 
- tCopyRast_stage__FileHandling=class(tCopyRast_stage__JustCopying)
+ tCopyRast_stage__FileHandling=class(tCopyRast_SrcTree_prcSTAGE)
 
   end;
 

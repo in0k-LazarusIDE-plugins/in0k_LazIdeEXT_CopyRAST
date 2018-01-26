@@ -5,7 +5,7 @@ unit in0k_CopyRAST__frmSTAGE_approveFILEs;
 interface
 
 uses
-  in0k_CopyRAST__frmSTAGE_twoTree;
+  in0k_CopyRAST__frmSTAGE_twoTree_CORE;
 
 type
 

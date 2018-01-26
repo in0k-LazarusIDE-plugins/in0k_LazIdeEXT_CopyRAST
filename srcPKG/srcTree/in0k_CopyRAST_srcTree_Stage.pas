@@ -12,6 +12,7 @@ uses
   in0k_lazIdeSRC_srcTree_CORE_item,
   lazExt_CopyRAST__xmlConfig,
   srcTree_handler4build_CORE,
+  srcTree_builder_CORE,
   //---
   in0k_CopyRAST_srcTree_ITEMs;
 
@@ -24,52 +25,65 @@ type
     function ROOT_Target:tCopyRast_stROOT; {$ifOpt D-}inline;{$endIf}
   end;
 
- tCopyRast_SrcTree_itmSTAGE_justCopy=class(tCopyRast_SrcTree_itmSTAGE)
-  public
-    function Processing:boolean; override; // ВЫПОЛНИТЬ обработку
-  end;
 
+type
 
  tCopyRast_SrcTree_prcSTAGE=class;
 
  mCopyRast_STAGE_onRootChange=procedure(const Sender:tCopyRast_SrcTree_prcSTAGE; const newRoot:tCopyRast_stROOT) of object;
 
 
- tCopyRast_SrcTree_prcSTAGE=class(tSrcTree_prcHandler4Build)
+ tCopyRast_SrcTree_prcSTAGE=class{(tSrcTree_prcHandler4Build)}
   protected
-   _mOn_srcRootCHG_:mCopyRast_STAGE_onRootChange;
-   _mOn_trgRootCHG_:mCopyRast_STAGE_onRootChange;
-  protected
+   _enabled_:boolean;
+  protected //< с Чего начинаем
+   _rootSource_:tCopyRast_stROOT;
+   _rootSource_mOnCHANGE_:mCopyRast_STAGE_onRootChange;
+    procedure _rootSource_CLR_; virtual;                      {$ifOpt D-}inline;{$endIf}
+    procedure _rootSource_SET_(const value:tCopyRast_stROOT); {$ifOpt D-}inline;{$endIf}
+  protected //< что хотим получить
+   _rootResult_:tCopyRast_stROOT;
+   _rootResult_mOnCHANGE_:mCopyRast_STAGE_onRootChange;
+    procedure _rootResult_CLR_; virtual;                      {$ifOpt D-}inline;{$endIf}
+    procedure _rootResult_SET_(const value:tCopyRast_stROOT); {$ifOpt D-}inline;{$endIf}
+  protected // работа с Конфигурацией
     procedure _CNFGs_FREE_;                                        virtual;
+    procedure _CNFGs_CREATE_;                                      virtual;
     procedure _CNFGs_LOAD_(const Configs:tLazExt_CopyRAST_CONFIG); virtual;
     procedure _CNFGs_SAVE_(const Configs:tLazExt_CopyRAST_CONFIG); virtual;
-  public
+  public    // работа с Конфигурацией
     procedure  CNFGs_LOAD (const Configs:tLazExt_CopyRAST_CONFIG);
     procedure  CNFGs_SAVE (const Configs:tLazExt_CopyRAST_CONFIG);
+
+
+  protected
+    //source
+    //result
+
+   _BUILDer_:tSrcTree_Builder_CORE;
+  protected
   strict private
-   _targetROOT_:tCopyRast_stROOT;
-    procedure _targetROOT_SET_(const value:tCopyRast_stROOT); {$ifOpt D-}inline;{$endIf}
-    procedure _sourceROOT_SET_(const value:tCopyRast_stROOT); {$ifOpt D-}inline;{$endIf}
   protected
     function  _targetROOT_GET_:tCopyRast_stROOT;              {$ifOpt D-}inline;{$endIf}
     function  _sourceROOT_GET_:tCopyRast_stROOT;              {$ifOpt D-}inline;{$endIf}
   strict private
-    procedure _targetROOT_NEW_Root(const src:tCopyRast_stROOT);
-    procedure _targetROOT_NEW_Base(const src:tCopyRast_stITEM);
-    procedure _targetROOT_NEW_Main(const src:tCopyRast_stITEM);
+    //function  _targetROOT_NEW_Root(const src:tCopyRast_stROOT):tCopyRast_stROOT;
+    //function  _targetROOT_NEW_Base(const src:tCopyRast_stITEM):tCopyRast_stBASE;
+    //function  _targetROOT_NEW_Main(const src:tCopyRast_stITEM):tCopyRast_stMAIN;
   private
     procedure _targetROOT_NEW_(const srcRoot:tCopyRast_stITEM);
   public
-    property  ROOT_Source_onChange:mCopyRast_STAGE_onRootChange read _mOn_srcRootCHG_ write _mOn_srcRootCHG_;
-    property  ROOT_Target_onChange:mCopyRast_STAGE_onRootChange read _mOn_trgRootCHG_ write _mOn_trgRootCHG_;
+    property  ROOT_Source         :tCopyRast_stROOT read _sourceROOT_GET_;
+    property  ROOT_Source_onChange:mCopyRast_STAGE_onRootChange read _rootSource_mOnCHANGE_ write _rootSource_mOnCHANGE_;
+    property  ROOT_Target         :tCopyRast_stROOT read _targetROOT_GET_;
+    property  ROOT_Target_onChange:mCopyRast_STAGE_onRootChange read _rootResult_mOnCHANGE_ write _rootResult_mOnCHANGE_;
+  protected
+    procedure _EXECUTE_; virtual;
   public
-    property  ROOT_Source:tCopyRast_stROOT read _sourceROOT_GET_;
-    property  ROOT_Target:tCopyRast_stROOT read _targetROOT_GET_;
-    //procedure ROOT_Target_CLEAR;
-  public
-    function  EXECUTE(const nodeRoot:tSrcTree_item):boolean; override;
+    function  EXECUTE(const nodeRoot:tSrcTree_item):boolean; //override;
     procedure doClear(const full:boolean=true); virtual;
   public
+    constructor Create(const aBUILDer:tSrcTree_Builder_CORE); virtual;// override;
     destructor DESTROY; override;
   end;
 
@@ -99,25 +113,33 @@ end;
 
 {%endregion}
 
-{%region --- .._itmSTAGE_justCopy.. ------}
-
-function tCopyRast_SrcTree_itmSTAGE_justCopy.Processing:boolean; // ВЫПОЛНИТЬ обработку
-begin
-
-end;
-
-{%endregion}
 //==============================================================================
+
+
+constructor tCopyRast_SrcTree_prcSTAGE.Create(const aBUILDer:tSrcTree_Builder_CORE);
+begin
+    //inherited Create(aBUILDer);
+    //------------------------
+   _enabled_:=FALSE;
+    //
+   _rootSource_mOnCHANGE_:=nil;
+   _rootResult_mOnCHANGE_:=nil;
+    //
+   _rootResult_:=nil;
+    //
+   _CNFGs_CREATE_;
+end;
 
 destructor tCopyRast_SrcTree_prcSTAGE.DESTROY;
 begin
+   _rootResult_CLR_;
    _CNFGs_FREE_;
     inherited;
 end;
 
 //------------------------------------------------------------------------------
 
-{procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_SET_(const root:tCopyRast_stROOT);
+{procedure tCopyRast_SrcTree_prcSTAGE._rootResult_SET_(const root:tCopyRast_stROOT);
 begin
     if _targetROOT_<>root then begin
        _targetROOT_:=root;
@@ -131,36 +153,44 @@ begin
 end;}
 
 
-procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_SET_(const value:tCopyRast_stROOT);
+procedure tCopyRast_SrcTree_prcSTAGE._rootResult_CLR_;
 var tmpRoot:tCopyRast_stROOT;
 begin
-    if _targetROOT_<>value then begin
-        if Assigned(_targetROOT_) then begin
-            tmpRoot:=_targetROOT_;
-            //
-           _targetROOT_:=nil;
-            if Assigned(_mOn_trgRootCHG_) then _mOn_trgRootCHG_(self,nil);
-            //
-            tmpRoot.Free;
-        end;
+    if Assigned(_rootResult_) then begin
+        tmpRoot:=_rootResult_;
+       _rootResult_:=nil;
+        if Assigned(_rootResult_mOnCHANGE_) then _rootResult_mOnCHANGE_(self,nil);
+        tmpRoot.Free;
+    end;
+end;
+
+procedure tCopyRast_SrcTree_prcSTAGE._rootResult_SET_(const value:tCopyRast_stROOT);
+begin
+    if _rootResult_<>value then begin
+       _rootResult_CLR_; {todo: УБРАТЬ отсюда}
         //
-       _targetROOT_:=value;
-        if Assigned(_mOn_trgRootCHG_) then _mOn_trgRootCHG_(self,nil);
+       _rootResult_:=value;
+        if Assigned(_rootResult_mOnCHANGE_) then _rootResult_mOnCHANGE_(self,nil);
     end;
 end;
 
 function tCopyRast_SrcTree_prcSTAGE._targetROOT_GET_:tCopyRast_stROOT;
 begin
-    result:=_targetROOT_;
+    result:=_rootResult_;
 end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-procedure tCopyRast_SrcTree_prcSTAGE._sourceROOT_SET_(const value:tCopyRast_stROOT);
+procedure tCopyRast_SrcTree_prcSTAGE._rootSource_CLR_;
 begin
-    if _execRoot_<>value then begin
-       _execRoot_:=value;
-        if Assigned(_mOn_srcRootCHG_) then _mOn_srcRootCHG_(self,value);
+   _rootSource_SET_(NIL);
+end;
+
+procedure tCopyRast_SrcTree_prcSTAGE._rootSource_SET_(const value:tCopyRast_stROOT);
+begin
+    if _rootSource_<>value then begin
+       _rootSource_:=value;
+        if Assigned(_rootSource_mOnCHANGE_) then _rootSource_mOnCHANGE_(self,value);
     end;
 end;
 
@@ -169,87 +199,99 @@ begin
     {$ifDEF _local_DEBUG_}
         Assert(not Assigned(_execRoot_) OR IS_CopyRAST_stROOT(_execRoot_));
     {$endIf}
-    result:=tCopyRast_stROOT(_execRoot_);
+    result:=tCopyRast_stROOT(_rootSource_);
 end;
 
 //------------------------------------------------------------------------------
 
-procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_NEW_Root(const src:tCopyRast_stROOT);
+(*procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_NEW_Root(const src:tCopyRast_stROOT);
 begin
-    {$ifOPT D+}
+  (*  {$ifOPT D+}
     Assert(Assigned(src));
     Assert(IS_CopyRAST_stROOT(src),src.ClassName+' is NOT valid CopyRAST_stROOT');
     {$endIf}
     // создадим
     if src is tCopyRastNODE_Root4Package
-    then _targetROOT_:=tCopyRastNODE_Root4Package(_builder_.crt_ROOT(src.ItemTEXT))
+    then _rootResult_:=tCopyRastNODE_Root4Package(_builder_.crt_ROOT(src.ItemTEXT))
    else
     if src is tCopyRastNODE_Root4Project
-    then _targetROOT_:=tCopyRastNODE_Root4Project(_builder_.crt_ROOT(src.ItemTEXT));
+    then _rootResult_:=tCopyRastNODE_Root4Project(_builder_.crt_ROOT(src.ItemTEXT));
     // свяжем
-    CopyRastNODE_LINK(src,_targetROOT_);
-end;
+    CopyRastNODE_LINK(src,_rootResult_);    *)
+end; *)
 
-procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_NEW_Base(const src:tCopyRast_stITEM);
+(*procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_NEW_Base(const src:tCopyRast_stITEM);
 var tmp:tCopyRast_stBASE;
 begin // создадим и свяжем
-    {$ifOPT D+}
-    Assert(Assigned(_targetROOT_));
+ (*   {$ifOPT D+}
+    Assert(Assigned(_rootResult_));
     Assert(Assigned(src));
     Assert(IS_CopyRAST_stBASE(src),src.ClassName+' is NOT valid CopyRAST_stBASE');
     {$endIf}
     // создадим и свяжем
-    tmp:=tCopyRast_stBASE(_builder_.set_BASE(_targetROOT_,tCopyRast_stBASE(src).fsPath));
-    CopyRastNODE_LINK(src,tmp);
-end;
+    tmp:=tCopyRast_stBASE(_builder_.set_BASE(_rootResult_,tCopyRast_stBASE(src).fsPath));
+    CopyRastNODE_LINK(src,tmp);*)
+end; *)
 
-procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_NEW_Main(const src:tCopyRast_stITEM);
+(*procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_NEW_Main(const src:tCopyRast_stITEM);
 var tmp:tCopyRast_stMAIN;
 begin // создадим и свяжем
-    {$ifOPT D+}
-    Assert(Assigned(_targetROOT_));
+ (*   {$ifOPT D+}
+    Assert(Assigned(_rootResult_));
     Assert(Assigned(src));
     Assert(IS_CopyRAST_stMAIN(src),src.ClassName+' is NOT valid CopyRAST_stMAIN');
     {$endIf}
     // создадим и свяжем
-    tmp:=_builder_.set_MAIN(_targetROOT_,tCopyRast_stMAIN(src).fsPath);
-    CopyRastNODE_LINK(src,tmp);
-end;
+    tmp:=_builder_.set_MAIN(_rootResult_,tCopyRast_stMAIN(src).fsPath);
+    CopyRastNODE_LINK(src,tmp);*)
+end;*)
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 procedure tCopyRast_SrcTree_prcSTAGE._targetROOT_NEW_(const srcRoot:tCopyRast_stITEM);
 begin
-    {$ifDEF _local_DEBUG_}
+ (*   {$ifDEF _local_DEBUG_}
         Assert(Assigned(srcRoot));
         Assert(IS_CopyRAST_stROOT(srcRoot));
     {$endIf}
-   _targetROOT_:=nil;
+   _rootResult_:=nil;
    _targetROOT_NEW_Root(                   tCopyRast_stROOT(srcRoot));
    _targetROOT_NEW_Base(_builder_.fnd_BASE(tCopyRast_stROOT(srcRoot)));
-   _targetROOT_NEW_Main(_builder_.fnd_MAIN(tCopyRast_stROOT(srcRoot)));
+   _targetROOT_NEW_Main(_builder_.fnd_MAIN(tCopyRast_stROOT(srcRoot))); *)
 end;
 
 //------------------------------------------------------------------------------
 
+procedure tCopyRast_SrcTree_prcSTAGE._EXECUTE_;
+begin
+   //
+end;
+
 function tCopyRast_SrcTree_prcSTAGE.EXECUTE(const nodeRoot:tSrcTree_item):boolean;
 begin
-    {$ifDEF _local_DEBUG_}
-      Assert(not Assigned(_execRoot_) OR IS_CopyRAST_stROOT(_execRoot_));
+ (*   {$ifDEF _local_DEBUG_}
+      Assert(not Assigned(_rootSource_) OR IS_CopyRAST_stROOT(_rootSource_));
     {$endIf}
-   _sourceROOT_SET_(tCopyRast_stROOT(nodeRoot));
-   _targetROOT_SET_(NIL);
-    //---
-   _targetROOT_NEW_(nodeRoot);
-    result:=inherited EXECUTE(nodeRoot);
-    //---
-    if Assigned(_mOn_trgRootCHG_) then _mOn_trgRootCHG_(self,_targetROOT_);
+    //--- готовимся
+   _rootSource_SET_(tCopyRast_stROOT(nodeRoot)); //< ПереУстановить
+   _rootResult_SET_(NIL);                        //< УНИЧТОЖЕНИЕ
+    //--- выполняем
+    if _enabled_ then begin
+       _targetROOT_NEW_(nodeRoot);           //< подготавливаем ОСНОВНЫЕ узлы
+        result:=inherited EXECUTE(nodeRoot); //< выполняем алгоритм
+    end
+    else begin //< алгоритм НЕ выполнять ... просто копирование
+       _rootResult_:=CopyRast_SrcTree_Copy(_sourceROOT_GET_);
+    end;
+    //--- отчытываемся
+    if Assigned(_rootResult_mOnCHANGE_) then _rootResult_mOnCHANGE_(self,_rootResult_);
+    //*)
 end;
 
 procedure tCopyRast_SrcTree_prcSTAGE.doClear(const full:boolean=true);
 begin
-   _targetROOT_SET_(nil);
-    if full then _sourceROOT_SET_(nil);
+   _rootResult_CLR_;
+    if full then _rootSource_CLR_;
 end;
 
 //------------------------------------------------------------------------------
@@ -260,6 +302,11 @@ begin
 end;}
 
 //------------------------------------------------------------------------------
+
+procedure tCopyRast_SrcTree_prcSTAGE._CNFGs_CREATE_;
+begin
+    //
+end;
 
 procedure tCopyRast_SrcTree_prcSTAGE._CNFGs_FREE_;
 begin
@@ -280,7 +327,10 @@ end;
 
 procedure tCopyRast_SrcTree_prcSTAGE.CNFGs_LOAD(const Configs:tLazExt_CopyRAST_CONFIG);
 begin
+    // чистим
    _CNFGs_FREE_;
+   _CNFGs_CREATE_;
+    // загружаем
    _CNFGs_LOAD_(Configs);
 end;
 

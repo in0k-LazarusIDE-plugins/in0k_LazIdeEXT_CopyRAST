@@ -9,8 +9,8 @@ uses
   StdCtrls, ComCtrls,
 
 
-
-  in0k_CopyRAST__frmSTAGE_twoTree,
+  lazExt_CopyRAST__xmlConfig,
+  in0k_CopyRAST__frmSTAGE_twoTree_CORE,
 
   in0k_CopyRAST_srcTree_Stage,
 
@@ -22,8 +22,8 @@ uses
   cmpCopyRAST_srcTree_nameTemplates,
   cmpCopyRAST_srcTree_approvedNAMEs,
   frmCopyRAST_cie_ReNames_customer, frmCopyRAST_cie_ReNames_template,
-  in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs,
-  in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs;
+  in0k_CopyRAST_stage__ChangePaths,
+  in0k_CopyRAST_stage__ChangePaths_CNFGs;
 
 type
 
@@ -33,8 +33,11 @@ type
     frmCopyRAST_cie_ReNamesCustomer1: TfrmCopyRAST_cie_ReNamesCustomer;
     frmCopyRAST_cie_ReNamesTemplate1: TfrmCopyRAST_cie_ReNamesTemplate;
     pnlPRP: TPanel;
+    Splitter_TB: TSplitter;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure FrameConstrainedResize(Sender: TObject; var MinWidth, MinHeight,
+      MaxWidth, MaxHeight: TConstraintSize);
   protected
     //procedure _ctrl_Enabled_SET_(const value:boolean); override;
     //procedure _ctrl_validate_;                         virtual; {$ifOpt D-}abstract;{$endIf}
@@ -56,13 +59,14 @@ type
    //_treeR_:tCmpCopyRAST_srcTree_approvedNAMEs;
    // procedure _treeR_SelectionChanged_(Sender:TObject);
   private
-    //_HNDLR_:tCopyRastSrcTree_prcH4ReNAMEs;
+    //_HNDLR_:tCopyRast_stage__ChangePaths;
     procedure _STAGE_set_(const value:tCopyRast_SrcTree_prcSTAGE);
   public
     constructor Create(AOwner:TComponent); override;
     destructor DESTROY; override;
   public
-    //property Handler:tCopyRastSrcTree_prcH4ReNAMEs read _HNDLR_ write _HNDLR_set_;
+    procedure wndSettings_LOAD(const xmlCongif:tLazExt_CopyRAST_CONFIG); override;
+    procedure wndSettings_SAVE(const xmlCongif:tLazExt_CopyRAST_CONFIG); override;
   end;
 
 implementation
@@ -169,7 +173,7 @@ begin
     frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=nil;//@(_HNDLR_.Template_APPLAY);
     inherited;
     if Assigned(_STAGE_) then begin
-        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=@(tCopyRastSrcTree_prcH4ReNAMEs(_STAGE_).Template_APPLAY);
+        frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=@(tCopyRast_stage__ChangePaths(_STAGE_).Template_APPLAY);
     end
     else begin
         frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=nil;
@@ -183,8 +187,8 @@ begin
     if Assigned(value) then begin
        _editItem_:=value;
         frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_ITM:=nil;
-        frmCopyRAST_cie_ReNamesCustomer1.ItemCNFG:=tCopyRastSrcTree_prcH4ReNAMEs(_STAGE_).CNFG_customer_GET(_editItem_);
-        frmCopyRAST_cie_ReNamesTemplate1.ItemCNFG:=tCopyRastSrcTree_prcH4ReNAMEs(_STAGE_).CNFG_template_GET(_editItem_);
+        frmCopyRAST_cie_ReNamesCustomer1.ItemCNFG:=tCopyRast_stage__ChangePaths(_STAGE_).CNFG_customer_GET(_editItem_);
+        frmCopyRAST_cie_ReNamesTemplate1.ItemCNFG:=tCopyRast_stage__ChangePaths(_STAGE_).CNFG_template_GET(_editItem_);
         frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_ITM:=_editItem_;
     end
     else begin
@@ -199,14 +203,14 @@ end;
 procedure TfrmApprovedFILEs2NAMEs._onChange_customer_(const Sender:tObject; const itemCnfg:pointer);
 begin
     if Assigned(_editItem_) then begin
-       tCopyRastSrcTree_prcH4ReNAMEs(_STAGE_).CNFG_customer_SET(_editItem_,tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node(itemCnfg));
+       tCopyRast_stage__ChangePaths(_STAGE_).CNFG_customer_SET(_editItem_,tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node(itemCnfg));
     end;
 end;
 
 procedure TfrmApprovedFILEs2NAMEs._onChange_template_(const Sender:tObject; const itemCnfg:pointer);
 begin
     if Assigned(_editItem_) then begin
-       tCopyRastSrcTree_prcH4ReNAMEs(_STAGE_).CNFG_template_SET(_editItem_,tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(itemCnfg));
+       tCopyRast_stage__ChangePaths(_STAGE_).CNFG_template_SET(_editItem_,tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(itemCnfg));
     end;
 end;
 
@@ -289,9 +293,42 @@ end;
 
 procedure TfrmApprovedFILEs2NAMEs.Button2Click(Sender: TObject);
 begin
-//    Splitter1.Left:=_tmplt_.Width+_tmplt_.Left;
+//    Splitter_TB.Left:=_tmplt_.Width+_tmplt_.Left;
 //   _tmplt_.Anchors:=_tmplt_.Anchors+[akRight];
 end;
+
+procedure TfrmApprovedFILEs2NAMEs.FrameConstrainedResize(Sender: TObject;
+  var MinWidth, MinHeight, MaxWidth, MaxHeight: TConstraintSize);
+var tmp:integer;
+begin
+    //
+    //tmp:=0;
+    //---
+    //frmCopyRAST_cie_ReNamesCustomer1
+    pnlPRP.Constraints.MinHeight:=(frmCopyRAST_cie_ReNamesCustomer1.Constraints.MinHeight + frmCopyRAST_cie_ReNamesTemplate1.Constraints.MinHeight);
+
+end;
+
+
+//------------------------------------------------------------------------------
+
+const
+ _cWndSettings_pnlPRP='pnlPRP';
+ _cWndSettings_Height='Height';
+
+
+procedure TfrmApprovedFILEs2NAMEs.wndSettings_LOAD(const xmlCongif:tLazExt_CopyRAST_CONFIG);
+begin
+    inherited;
+    pnlPRP.Height:=xmlCongif.GetValue(lERxC_8Value(wndSettings_Section,_cWndSettings_pnlPRP,_cWndSettings_Height),pnlPRP.Constraints.MinHeight);
+end;
+
+procedure TfrmApprovedFILEs2NAMEs.wndSettings_SAVE(const xmlCongif:tLazExt_CopyRAST_CONFIG);
+begin
+    inherited;
+    xmlCongif.SetDeleteValue(lERxC_8Value(wndSettings_Section,_cWndSettings_pnlPRP,_cWndSettings_Height),pnlPRP.Height,pnlPRP.Constraints.MinHeight);
+end;
+
 
 end.
 

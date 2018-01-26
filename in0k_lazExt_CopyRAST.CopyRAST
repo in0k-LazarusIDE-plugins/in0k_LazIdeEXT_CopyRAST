@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <CopyRAST SettingsEXCLUDE="False"/>
+  <approvedFILEs2NAMEs>
+    <ROOT>
+      <Templates count="1">
+        <item0>
+          <template Value="dfghgdfg"/>
+          <exchange Value="fghdfghdfgh"/>
+        </item0>
+      </Templates>
+    </ROOT>
+  </approvedFILEs2NAMEs>
 </CONFIG>

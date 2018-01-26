@@ -7,7 +7,7 @@ interface
 uses
   Classes,
   CopyRAST_srcTree_4Handler_CNFGs,
-  in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs,
+  in0k_CopyRAST_stage__ChangePaths_CNFGs,
   lazExt_CopyRAST__xmlConfig;
 
 // НАПРЯМУЮ указанные имена

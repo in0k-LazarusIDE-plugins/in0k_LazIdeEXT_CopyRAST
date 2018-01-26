@@ -5,7 +5,7 @@ unit frmCopyRAST_cie_ReNames_tmpltRule;
 interface
 
 uses
-  in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs,
+  in0k_CopyRAST_stage__ChangePaths_CNFGs,
 
     Classes, SysUtils, FileUtil, CheckBoxThemed, Forms, Controls, Graphics,
     Dialogs, StdCtrls, frmCopyRAST_CnfgItem_EDIT;

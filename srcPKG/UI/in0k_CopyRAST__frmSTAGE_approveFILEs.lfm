@@ -1,2 +1,6 @@
 inherited frmCopyRAST_STAGE_approveFILEs: TfrmCopyRAST_STAGE_approveFILEs
+  Height = 475
+  Width = 599
+  ClientHeight = 475
+  ClientWidth = 599
 end

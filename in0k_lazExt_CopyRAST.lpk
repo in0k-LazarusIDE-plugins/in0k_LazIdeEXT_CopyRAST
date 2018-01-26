@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="102">
+    <Files Count="103">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -365,12 +365,12 @@
         <UnitName Value="in0k_ext4ColorTheme"/>
       </Item87>
       <Item88>
-        <Filename Value="srcPKG\srcTree\Handlers\reNames\in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs.pas"/>
-        <UnitName Value="in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs"/>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST_stage__ChangePaths.pas"/>
+        <UnitName Value="in0k_CopyRAST_stage__ChangePaths"/>
       </Item88>
       <Item89>
-        <Filename Value="srcPKG\srcTree\Handlers\reNames\in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs.pas"/>
-        <UnitName Value="in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs"/>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST_stage__ChangePaths_CNFGs.pas"/>
+        <UnitName Value="in0k_CopyRAST_stage__ChangePaths_CNFGs"/>
       </Item89>
       <Item90>
         <Filename Value="srcPKG\srcTree\Handlers\CopyRAST_srcTree_4Handler_CNFGs.pas"/>
@@ -382,8 +382,8 @@
         <ResourceBaseClass Value="Frame"/>
       </Item91>
       <Item92>
-        <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE.pas"/>
-        <UnitName Value="in0k_CopyRAST__frmSTAGE"/>
+        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__frmSTAGE_CORE.pas"/>
+        <UnitName Value="in0k_CopyRAST__frmSTAGE_CORE"/>
         <ResourceBaseClass Value="Frame"/>
       </Item92>
       <Item93>
@@ -397,8 +397,8 @@
         <ResourceBaseClass Value="Frame"/>
       </Item94>
       <Item95>
-        <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE_twoTree.pas"/>
-        <UnitName Value="in0k_CopyRAST__frmSTAGE_twoTree"/>
+        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__frmSTAGE_twoTree_CORE.pas"/>
+        <UnitName Value="in0k_CopyRAST__frmSTAGE_twoTree_CORE"/>
       </Item95>
       <Item96>
         <Filename Value="srcPKG\Stages\in0k_CopyRAST_stage__FileHandling.pas"/>
@@ -428,6 +428,10 @@
         <Filename Value="srcPKG\Stages\in0k_CopyRAST_stage__JustCopying.pas"/>
         <UnitName Value="in0k_CopyRAST_stage__JustCopying"/>
       </Item102>
+      <Item103>
+        <Filename Value="srcPKG\UI\in0k_CopyRAST__wnd_SHOW.pas"/>
+        <UnitName Value="in0k_CopyRAST__wnd_SHOW"/>
+      </Item103>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

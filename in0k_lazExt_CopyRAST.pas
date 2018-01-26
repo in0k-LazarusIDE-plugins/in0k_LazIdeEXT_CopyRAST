@@ -4,6 +4,7 @@
 
 unit in0k_lazExt_CopyRAST;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
@@ -58,15 +59,15 @@ uses
   cmpCopyRAST_srcTree, lazExt_CopyRAST__xmlConfig, 
   lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs, 
   in0k_lazIdeSRC_srcTree_itemsList, in0k_CopyRAST_srcTree_ITEMs, 
-  in0k_ext4ColorTheme, in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs, 
-  in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs, 
-  CopyRAST_srcTree_4Handler_CNFGs, frmCopyRAST_EDIT, in0k_CopyRAST__frmSTAGE, 
+  in0k_ext4ColorTheme, in0k_CopyRAST_stage__ChangePaths, 
+  in0k_CopyRAST_stage__ChangePaths_CNFGs, CopyRAST_srcTree_4Handler_CNFGs, 
+  frmCopyRAST_EDIT, in0k_CopyRAST__frmSTAGE_CORE, 
   frmCopyRAST_srcTree_approvedFILEs2NAMEs, 
-  in0k_CopyRAST__frmSTAGE_approveFILEs, in0k_CopyRAST__frmSTAGE_twoTree, 
+  in0k_CopyRAST__frmSTAGE_approveFILEs, in0k_CopyRAST__frmSTAGE_twoTree_CORE, 
   in0k_CopyRAST_stage__FileHandling, in0k_CopyRAST_STAGEs, 
   in0k_CopyRAST_STAGEs_4Package, in0k_CopyRAST__wndCORE, 
   in0k_CopyRAST__wndProject, in0k_CopyRAST__wndPackage, 
-  in0k_CopyRAST_stage__JustCopying, LazarusPackageIntf;
+  in0k_CopyRAST_stage__JustCopying, in0k_CopyRAST__wnd_SHOW, LazarusPackageIntf;
 
 implementation
 

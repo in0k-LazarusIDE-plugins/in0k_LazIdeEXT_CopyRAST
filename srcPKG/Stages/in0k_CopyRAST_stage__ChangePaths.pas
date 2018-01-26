@@ -1,4 +1,4 @@
-unit in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs;
+unit in0k_CopyRAST_stage__ChangePaths;
 
 {$mode objfpc}{$H+}
 
@@ -32,7 +32,7 @@ srcTree_handler4build_CORE,
 
 
   in0k_CopyRAST_srcTree_ITEMs,
-  in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs,
+  in0k_CopyRAST_stage__ChangePaths_CNFGs,
   lazExt_CopyRAST__xmlConfig,
   lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs,
 
@@ -50,16 +50,7 @@ type
     function Processing:boolean; override; // ВЫПОЛНИТЬ обработку
   end;}
 
- tCopyRast_SrcTree_stageReNAMEs_itm4file=class(tCopyRast_SrcTree_itmSTAGE)
-  protected
-    function _getTargetFLDR_:_tSrcTree_item_fsNodeFLDR_;
-    function _newTargetFILE_(const fldr:_tSrcTree_item_fsNodeFLDR_):tCopyRastNODE_FILE;
-  public
-    function Processing:boolean; override; // ВЫПОЛНИТЬ обработку
-  end;
-
-
- tCopyRastSrcTree_prcH4ReNAMEs=class(tCopyRast_SrcTree_prcSTAGE)
+ tCopyRast_stage__ChangePaths=class(tCopyRast_SrcTree_prcSTAGE)
   private
    _regExpr_:TRegExpr;
   strict private
@@ -97,8 +88,10 @@ type
   protected
     procedure _EXECUTE_; override;
   public
-    procedure CNFGs_LOAD(const Configs:tLazExt_CopyRAST_CONFIG);
-    procedure CNFGs_SAVE(const Configs:tLazExt_CopyRAST_CONFIG);
+    procedure _CNFGs_CREATE_;                                       override;
+    procedure _CNFGs_FREE_;                                         override;
+    procedure _CNFGs_LOAD_(const Configs:tLazExt_CopyRAST_CONFIG);  override;
+    procedure _CNFGs_SAVE_(const Configs:tLazExt_CopyRAST_CONFIG);  override;
   public
     //procedure EXECUTE(const nodeRoot:tSrcTree_ROOT); overload;
   public
@@ -136,6 +129,18 @@ implementation
 
 {%region --- tCopyRast_SrcTree_stageReNAMEs_itm4file ------------------- }
 
+type
+ {todo: ПЕРЕИМЕНОВАТЬ}
+tCopyRast_SrcTree_stageReNAMEs_itm4file=class(tCopyRast_SrcTree_itmSTAGE)
+ protected
+   function _getTargetFLDR_:_tSrcTree_item_fsNodeFLDR_;
+   function _newTargetFILE_(const fldr:_tSrcTree_item_fsNodeFLDR_):tCopyRastNODE_FILE;
+ public
+   function Processing:boolean; override; // ВЫПОЛНИТЬ обработку
+ end;
+
+
+
 // получить-СОЗДАТЬ НОВУЮ папку для prcssdITEM
 function tCopyRast_SrcTree_stageReNAMEs_itm4file._getTargetFLDR_:_tSrcTree_item_fsNodeFLDR_;
 var tmpLeft:tSrcTree_item;
@@ -144,8 +149,8 @@ var tmpPATH:string;
 begin
     result:=nil;
     // ищем СТРОКУ-ПУТЬ и применяем МАКРОСЫ
-    tmpPATH:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._cnfgClc_newNameFLDR_(prcssdITEM, tSrcTree_fsFLDR(tmpLeft));
-    tmpPATH:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._macross_APPLAY_(tmpPATH);
+    tmpPATH:=tCopyRast_stage__ChangePaths(_OWNER_)._cnfgClc_newNameFLDR_(prcssdITEM, tSrcTree_fsFLDR(tmpLeft));
+    tmpPATH:=tCopyRast_stage__ChangePaths(_OWNER_)._macross_APPLAY_(tmpPATH);
     // ищем НАБОР "путиПоиска"
     tmpKING:=[];
     if Assigned(tmpLeft) then tmpKING:=tSrcTree_fsFLDR(tmpLeft).inSearchPATHs
@@ -171,8 +176,8 @@ function tCopyRast_SrcTree_stageReNAMEs_itm4file._newTargetFILE_(const fldr:_tSr
 var tmpNAME:string;
 begin
     // ищем СТРОКУ-НАЗВАНИЕ и применяем МАКРОСЫ
-    tmpNAME:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._cnfgClc_newNAME_(prcssdITEM);
-    tmpNAME:=tCopyRastSrcTree_prcH4ReNAMEs(_OWNER_)._macross_APPLAY_(tmpNAME);
+    tmpNAME:=tCopyRast_stage__ChangePaths(_OWNER_)._cnfgClc_newNAME_(prcssdITEM);
+    tmpNAME:=tCopyRast_stage__ChangePaths(_OWNER_)._macross_APPLAY_(tmpNAME);
     //
     if tmpNAME<>'' then begin
         tmpNAME:=srcTree_fsFnk_ConcatPaths(fldr.fsPath,tmpNAME);
@@ -203,25 +208,24 @@ end;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-constructor tCopyRastSrcTree_prcH4ReNAMEs.Create(const aBUILDer:tSrcTree_Builder_CORE);
+constructor tCopyRast_stage__ChangePaths.Create(const aBUILDer:tSrcTree_Builder_CORE);
 begin
     inherited;
    _regExpr_ :=TRegExpr.Create;
    _macross_ :=TStringList.Create;
-   _macross_.Add('MainNewName=ttttt');
-
+    // _macross_.Add('MainNewName=ttttt');
     //---
-   _cnfg_XXXX_CRT_;
+    //_cnfg_XXXX_CRT_;
     //---
-  // _CNFGs4NAME_:=tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.Create;
+    // _CNFGs4NAME_:=tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME.Create;
 end;
 
-destructor tCopyRastSrcTree_prcH4ReNAMEs.DESTROY;
+destructor tCopyRast_stage__ChangePaths.DESTROY;
 begin
     inherited;
 
    _macross_ .FREE;
-   _cnfg_XXXX_DST_;
+   //_cnfg_XXXX_DST_;
 
    _regExpr_.FREE;
   // _CNFGs4NAME_.FREE;
@@ -230,7 +234,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-(*function tCopyRastSrcTree_prcH4ReNAMEs._get_newFLDR_(const item:tSrcTree_item; out fldrPATH:string; out fldrKIND:sSrcTree_SrchPath; out leftFLDR:tCopyRastNODE_FLDR):boolean;
+(*function tCopyRast_stage__ChangePaths._get_newFLDR_(const item:tSrcTree_item; out fldrPATH:string; out fldrKIND:sSrcTree_SrchPath; out leftFLDR:tCopyRastNODE_FLDR):boolean;
 var ctm:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
     tmp:tSrcTree_item;
 begin
@@ -256,7 +260,7 @@ begin
     end;
 end; *)
 
-{function tCopyRastSrcTree_prcH4ReNAMEs._cnfgClc_newNAME_(const item:tSrcTree_item; out fileName:string; out fileKIND:eSrcTree_FileType):boolean;
+{function tCopyRast_stage__ChangePaths._cnfgClc_newNAME_(const item:tSrcTree_item; out fileName:string; out fileKIND:eSrcTree_FileType):boolean;
 var ctm:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
     lst:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
 begin
@@ -280,7 +284,7 @@ end;}
 
 {%region --- _cnfgClc_XXX.. ---------------------------------------------}
 
-function tCopyRastSrcTree_prcH4ReNAMEs._cnfgClc_newBASE_(const item:tSrcTree_item):string;
+function tCopyRast_stage__ChangePaths._cnfgClc_newBASE_(const item:tSrcTree_item):string;
 var ctm:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
 begin
     result:='';
@@ -299,7 +303,7 @@ begin
     end;
 end;
 
-function tCopyRastSrcTree_prcH4ReNAMEs._cnfgClc_newNAME_(const item:tSrcTree_item):string;
+function tCopyRast_stage__ChangePaths._cnfgClc_newNAME_(const item:tSrcTree_item):string;
 var ctm:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
     lst:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
 begin
@@ -323,14 +327,14 @@ end;
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // расчитать новы ПУТЬ
-function tCopyRastSrcTree_prcH4ReNAMEs._cnfgClc_newPATH_(const item:tSrcTree_item):string;
+function tCopyRast_stage__ChangePaths._cnfgClc_newPATH_(const item:tSrcTree_item):string;
 var tmp:tSrcTree_fsFLDR;
 begin
     result:=_cnfgClc_newNameFLDR_(item,tmp);
 end;
 
 // расчитываем новый путь .. начинаем с себя и идем ВВЕРХ по дереву
-function tCopyRastSrcTree_prcH4ReNAMEs._cnfgClc_newNameFLDR_(const item:tSrcTree_item; out leftFLDR:tSrcTree_fsFLDR):string;
+function tCopyRast_stage__ChangePaths._cnfgClc_newNameFLDR_(const item:tSrcTree_item; out leftFLDR:tSrcTree_fsFLDR):string;
 var ctm:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
     tmpName:string;
 begin {todo: уйти от рекурсии}
@@ -384,7 +388,7 @@ end;
 
 {%region -- _clc_..Name.. -----------------------------------------------}
 
-function tCopyRastSrcTree_prcH4ReNAMEs._get_oldName_ROOT_(const item:tSrcTree_ROOT):string;
+function tCopyRast_stage__ChangePaths._get_oldName_ROOT_(const item:tSrcTree_ROOT):string;
 begin
     {$ifOpt D+}
     Assert(Assigned(item));
@@ -395,7 +399,7 @@ end;
 
 // расчитать Имя: ROOT файла
 // берем ИМЯ главного файла и УДАЛЯЕМ расширение
-function tCopyRastSrcTree_prcH4ReNAMEs._clc_newName_ROOT_(const item:tSrcTree_ROOT):string;
+function tCopyRast_stage__ChangePaths._clc_newName_ROOT_(const item:tSrcTree_ROOT):string;
 var itmMAIN:tSrcTree_MAIN;
 begin
     itmMAIN:=SrcTree_fndMainFILE(item);
@@ -409,13 +413,13 @@ begin
 end;
 
 // расчитать Имя: (ПУТЬ) базовой папки
-function tCopyRastSrcTree_prcH4ReNAMEs._clc_newName_BASE_(const item:tSrcTree_BASE):string;
+function tCopyRast_stage__ChangePaths._clc_newName_BASE_(const item:tSrcTree_BASE):string;
 begin
     result:=_cnfgClc_newBASE_(item);
 end;
 
 // расчитать Имя: ГЛАВНОГО файла
-function tCopyRastSrcTree_prcH4ReNAMEs._clc_newName_MAIN_(const item:tSrcTree_MAIN):string;
+function tCopyRast_stage__ChangePaths._clc_newName_MAIN_(const item:tSrcTree_MAIN):string;
 var itmMAIN:tSrcTree_MAIN;
     tmp_ext:string;
 begin
@@ -438,12 +442,12 @@ end;
 {%endregion}
 
 
-//function tCopyRastSrcTree_prcH4ReNAMEs._getNewPATH_FLDR_(const item:tCopyRastNODE_FLDR):string;
+//function tCopyRast_stage__ChangePaths._getNewPATH_FLDR_(const item:tCopyRastNODE_FLDR):string;
 //begin
 //    result:={ccc+}item.fsPath;
 //end;
 
-//function tCopyRastSrcTree_prcH4ReNAMEs._getNewPATH_FILE_(const item:tCopyRastNODE_FILE):string;
+//function tCopyRast_stage__ChangePaths._getNewPATH_FILE_(const item:tCopyRastNODE_FILE):string;
 //begin
 //   _regExpr_.InputString:=item.ItemNAME;
 //   _regExpr_.Expression :='^in0k_lazIdeSRC_(\w+)(\.pas)$';
@@ -458,14 +462,14 @@ end;
 //------------------------------------------------------------------------------
 
 
-{procedure tCopyRastSrcTree_prcH4ReNAMEs._prc_AddNew_FLDR_(const item:tCopyRastNODE_FLDR);
+{procedure tCopyRast_stage__ChangePaths._prc_AddNew_FLDR_(const item:tCopyRastNODE_FLDR);
 var tmp:tCopyRastNODE_FLDR;
 begin // создадим и свяжем
     tmp:=tCopyRastNODE_FLDR(_builder_.add_FLDR(_newROOT_, _getNewPATH_FLDR_(item), item.inSearchPATHs ));
     CopyRastNODE_LINK(item,tmp);
 end;}
 
-{procedure tCopyRastSrcTree_prcH4ReNAMEs._prc_AddNew_FILE_(const item:tCopyRastNODE_FILE);
+{procedure tCopyRast_stage__ChangePaths._prc_AddNew_FILE_(const item:tCopyRastNODE_FILE);
 var tmp:tCopyRastNODE_FILE;
 begin // создадим и свяжем
     tmp:=tCopyRastNODE_FILE(_builder_.add_FILE(_newROOT_, {item.ItemPRNT.fsPath+'\'+}_getNewPATH_FILE_(item), item.fileKIND ));
@@ -474,11 +478,11 @@ end;}
 
 //------------------------------------------------------------------------------
 
-procedure tCopyRastSrcTree_prcH4ReNAMEs._EXECUTE_;
+procedure tCopyRast_stage__ChangePaths._EXECUTE_;
 var tmpItem:tCopyRast_stITEM;
     tmpName:string;
 begin
-    // переустановим НОВОЕ имя для ВСЕГО проекта
+ (*   // переустановим НОВОЕ имя для ВСЕГО проекта
     tmpItem:=_targetROOT_GET_;
     if Assigned(tmpItem) and IS_CopyRAST_stROOT(tmpItem) then begin
         tmpName:=_clc_newName_ROOT_(_sourceROOT_GET_);
@@ -508,10 +512,10 @@ begin
     //
     // теперь про ОСТАЛЬНЫЕ файлы
    _macross_reClc_;
-    EXECUTE_4TREE(tCopyRast_SrcTree_stageReNAMEs_itm4file);
+    EXECUTE_4TREE(tCopyRast_SrcTree_stageReNAMEs_itm4file);    *)
 end;
 
-(*procedure tCopyRastSrcTree_prcH4ReNAMEs.EXECUTE(const nodeRoot:tSrcTree_ROOT);
+(*procedure tCopyRast_stage__ChangePaths.EXECUTE(const nodeRoot:tSrcTree_ROOT);
 begin
     //_configs_:=Configs;
    _newROOT_:=_prc_setNew_ROOT_(nodeRoot);
@@ -525,19 +529,29 @@ end;*)
 
 //------------------------------------------------------------------------------
 
-procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFGs_LOAD(const Configs:tLazExt_CopyRAST_CONFIG);
+procedure tCopyRast_stage__ChangePaths._CNFGs_CREATE_;
+begin
+   _cnfg_XXXX_CRT_;
+end;
+
+procedure tCopyRast_stage__ChangePaths._CNFGs_FREE_;
+begin
+   _cnfg_XXXX_DST_;
+end;
+
+procedure tCopyRast_stage__ChangePaths._CNFGs_LOAD_(const Configs:tLazExt_CopyRAST_CONFIG);
 begin
    _cnfg_XXX_LOAD_(Configs);
 end;
 
-procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFGs_SAVE(const Configs:tLazExt_CopyRAST_CONFIG);
+procedure tCopyRast_stage__ChangePaths._CNFGs_SAVE_(const Configs:tLazExt_CopyRAST_CONFIG);
 begin
    _cnfg_XXX_SAVE_(Configs);
 end;
 
 //------------------------------------------------------------------------------
 
-{procedure tCopyRastSrcTree_prcH4ReNAMEs._CNFGs4NAME_SET_(const List:TStringList; const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+{procedure tCopyRast_stage__ChangePaths._CNFGs4NAME_SET_(const List:TStringList; const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
 var tmpIndx:integer;
     tmpData:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
 begin
@@ -565,7 +579,7 @@ begin
     end;
 end; }
 
-{procedure tCopyRastSrcTree_prcH4ReNAMEs._CNFGs4NAME_GET_(const List:TStringList; const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
+{procedure tCopyRast_stage__ChangePaths._CNFGs4NAME_GET_(const List:TStringList; const item:tSrcTree_item; const reNames:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME);
 var tmpIndx:integer;
     tmpData:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
 begin
@@ -581,7 +595,7 @@ end;}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-(*procedure tCopyRastSrcTree_prcH4ReNAMEs._TMPLs4NAME_SET_(const List:TStringList; const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+(*procedure tCopyRast_stage__ChangePaths._TMPLs4NAME_SET_(const List:TStringList; const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
 var tmpIndx:integer;
     tmpData:tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
 begin
@@ -628,7 +642,7 @@ begin
     if item is tSrcTree_MAIN then result:=true;
 end;
 
-procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFG_customer_SET(const item:tSrcTree_item; const CNFG:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
+procedure tCopyRast_stage__ChangePaths.CNFG_customer_SET(const item:tSrcTree_item; const CNFG:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
 begin
     if not Assigned(item) then EXIT;
     //---
@@ -646,7 +660,7 @@ begin
     end
 end;
 
-function tCopyRastSrcTree_prcH4ReNAMEs.CNFG_customer_GET(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
+function tCopyRast_stage__ChangePaths.CNFG_customer_GET(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
 begin
     result:=nil;
     if not Assigned(item) then EXIT;
@@ -667,7 +681,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tCopyRastSrcTree_prcH4ReNAMEs.CNFG_template_SET(const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+procedure tCopyRast_stage__ChangePaths.CNFG_template_SET(const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
 begin
     {$ifOpt D+}
     Assert(Assigned(item));
@@ -683,7 +697,7 @@ end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function tCopyRastSrcTree_prcH4ReNAMEs._template_GET_link_(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+function tCopyRast_stage__ChangePaths._template_GET_link_(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
 begin
     {$ifOpt D+}
     Assert(Assigned(item));
@@ -697,7 +711,7 @@ begin
 end;
 
 
-procedure tCopyRastSrcTree_prcH4ReNAMEs._template_MakeLIST_(const item:tSrcTree_item; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; const ENABLED_only:boolean; const asParent,asEnable:boolean);
+procedure tCopyRast_stage__ChangePaths._template_MakeLIST_(const item:tSrcTree_item; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; const ENABLED_only:boolean; const asParent,asEnable:boolean);
 var as_Prnt:tSrcTree_item;
     itmList:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
     tmpRule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
@@ -742,7 +756,7 @@ begin
 	end;
 end;
 
-function tCopyRastSrcTree_prcH4ReNAMEs.CNFG_template_GET(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+function tCopyRast_stage__ChangePaths.CNFG_template_GET(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
 begin
     {$ifOpt D+}
     Assert(Assigned(item));
@@ -761,7 +775,7 @@ begin
 end;
 
 
-{function tCopyRastSrcTree_prcH4ReNAMEs.CNFGs4NAME_GET(const item:tSrcTree_item):tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
+{function tCopyRast_stage__ChangePaths.CNFGs4NAME_GET(const item:tSrcTree_item):tCopyRAST_srcTree_HandlerReNAMEs_CNFGs4NAME;
 begin
    _CNFGs4NAME_.CLEAR;
     result:=_CNFGs4NAME_;
@@ -790,7 +804,7 @@ end;}
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-procedure tCopyRastSrcTree_prcH4ReNAMEs._cnfg_XXXX_CRT_;
+procedure tCopyRast_stage__ChangePaths._cnfg_XXXX_CRT_;
 begin
    _cnfg_customer_ROOT_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node.Create;
    _cnfg_customer_FLDR_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER.Create;
@@ -800,7 +814,7 @@ begin
    _cnfg_template_LAER_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR.Create;
 end;
 
-procedure tCopyRastSrcTree_prcH4ReNAMEs._cnfg_XXXX_DST_;
+procedure tCopyRast_stage__ChangePaths._cnfg_XXXX_DST_;
 begin
    _cnfg_customer_ROOT_.FREE;
    _cnfg_customer_FLDR_.FREE;
@@ -812,7 +826,7 @@ end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-procedure tCopyRastSrcTree_prcH4ReNAMEs._cnfg_XXX_LOAD_(const cnfgs:tLazExt_CopyRAST_CONFIG);
+procedure tCopyRast_stage__ChangePaths._cnfg_XXX_LOAD_(const cnfgs:tLazExt_CopyRAST_CONFIG);
 begin
     CRxC_aF2N__customerROOT__Load(cnfgs,'',_cnfg_customer_ROOT_);
     CRxC_aF2N__customerFLDR__Load(cnfgs,'',_cnfg_customer_FLDR_);
@@ -822,7 +836,7 @@ begin
     CRxC_aF2N__templateLAIR__Load(cnfgs,'',_cnfg_template_LAER_);
 end;
 
-procedure tCopyRastSrcTree_prcH4ReNAMEs._cnfg_XXX_SAVE_(const cnfgs:tLazExt_CopyRAST_CONFIG);
+procedure tCopyRast_stage__ChangePaths._cnfg_XXX_SAVE_(const cnfgs:tLazExt_CopyRAST_CONFIG);
 begin
     CRxC_aF2N__customerROOT__Save(cnfgs,'',_cnfg_customer_ROOT_);
     CRxC_aF2N__customerFLDR__Save(cnfgs,'',_cnfg_customer_FLDR_);
@@ -834,12 +848,12 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tCopyRastSrcTree_prcH4ReNAMEs.Validate_FLDR(const value:string):boolean;
+function tCopyRast_stage__ChangePaths.Validate_FLDR(const value:string):boolean;
 begin {todo: добавить СЕРЪЕЗНУЮ проверку}
     result:=Trim(value)<>'';
 end;
 
-function tCopyRastSrcTree_prcH4ReNAMEs.Validate_FILE(const value:string):boolean;
+function tCopyRast_stage__ChangePaths.Validate_FILE(const value:string):boolean;
 begin {todo: добавить СЕРЪЕЗНУЮ проверку}
     result:=Trim(value)<>'';
 end;
@@ -855,7 +869,7 @@ const
   _cMacrosNAME_crNewNAME_='crNewNAME';
 
 // переСоздаем список НАШИХ макросов
-procedure tCopyRastSrcTree_prcH4ReNAMEs._macross_reClc_;
+procedure tCopyRast_stage__ChangePaths._macross_reClc_;
 begin
    _macross_.Clear;
     // заполним ЗАНОГО
@@ -865,7 +879,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tCopyRastSrcTree_prcH4ReNAMEs._macross_APPLAY_CopyRAST_(const srcString:string):string;
+function tCopyRast_stage__ChangePaths._macross_APPLAY_CopyRAST_(const srcString:string):string;
 var i:integer;
 begin
     result:=srcString;//'($MainNewName)';
@@ -880,14 +894,14 @@ begin
     end;
 end;
 
-function tCopyRastSrcTree_prcH4ReNAMEs._macross_APPLAY_Lazarus_ (const srcString:string):string;
+function tCopyRast_stage__ChangePaths._macross_APPLAY_Lazarus_ (const srcString:string):string;
 begin
     {todo: DO it!}
 end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-function tCopyRastSrcTree_prcH4ReNAMEs._macross_APPLAY_(const srcString:string):string;
+function tCopyRast_stage__ChangePaths._macross_APPLAY_(const srcString:string):string;
 begin
     result:=srcString;
     result:=_macross_APPLAY_CopyRAST_(result);
@@ -904,7 +918,7 @@ const
   c_notFound=2;
 
 
-function tCopyRastSrcTree_prcH4ReNAMEs._template_APPLAY_RULE_(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer;
+function tCopyRast_stage__ChangePaths._template_APPLAY_RULE_(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer;
 var tmpTemplate:string;
     tmpExchange:string;
 begin
@@ -941,7 +955,7 @@ begin
     end;
 end;
 
-function tCopyRastSrcTree_prcH4ReNAMEs._template_APPLAY_LIST_(const srcItem:tSrcTree_item; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; out outName:string):integer;
+function tCopyRast_stage__ChangePaths._template_APPLAY_LIST_(const srcItem:tSrcTree_item; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; out outName:string):integer;
 var srcName:string;
     i      :integer;
     rule   :tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
@@ -957,7 +971,7 @@ begin
     end;
 end;
 
-function tCopyRastSrcTree_prcH4ReNAMEs.Template_APPLAY(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer;
+function tCopyRast_stage__ChangePaths.Template_APPLAY(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer;
 begin
     result:=_template_APPLAY_RULE_(srcItem,srcName,rule,outName);
 end;

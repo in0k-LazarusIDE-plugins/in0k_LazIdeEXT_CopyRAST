@@ -20,6 +20,9 @@ type
     procedure _ctrl_validate_;                         virtual; {$ifOpt D-}abstract;{$endIf}
     procedure _ctrl_eventSet_onChange_;                virtual; {$ifOpt D-}abstract;{$endIf}
     procedure _ctrl_eventClr_onChange_;                virtual; {$ifOpt D-}abstract;{$endIf}
+
+  protected
+    procedure Constraints_reSet;
   public
     procedure AfterConstruction; override;
     procedure BeforeDestruction; override;
@@ -104,6 +107,21 @@ begin
 end;
 {$endIf}
 
+//------------------------------------------------------------------------------
+
+procedure tFrmCopyRastEDIT.Constraints_reSet;
+var MinWidth, MinHeight, MaxWidth, MaxHeight: TConstraintSize;
+begin
+    MinWidth :=Constraints.MinWidth;
+    MinHeight:=Constraints.MinHeight;
+    MaxWidth :=Constraints.MaxWidth;
+    MaxHeight:=Constraints.MaxHeight;
+    ConstrainedResize(MinWidth,MinHeight,MaxWidth,MaxHeight);
+    Constraints.MinWidth :=MinWidth;
+    Constraints.MinHeight:=MinHeight;
+    Constraints.MaxWidth :=MaxWidth;
+    Constraints.MaxHeight:=MaxHeight;
+end;
 
 end.
 

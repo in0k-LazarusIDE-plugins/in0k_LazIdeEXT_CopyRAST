@@ -1,4 +1,4 @@
-unit in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs;
+unit in0k_CopyRAST_stage__ChangePaths_CNFGs;
 
 {$mode objfpc}{$H+}
 

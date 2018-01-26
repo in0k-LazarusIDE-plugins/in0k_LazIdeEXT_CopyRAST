@@ -16,7 +16,8 @@ uses
   lazExt_CopyRAST__xmlConfig,
   lazExt_CopyRAST__xmlConfig_Base,
 
-  cmpCopyRAST_srcTree, in0k_CopyRAST_STAGEs, in0k_CopyRAST__frmSTAGE_twoTree,
+  cmpCopyRAST_srcTree, frmCopyRAST_srcTree_approvedFILEs2NAMEs,
+  in0k_CopyRAST_STAGEs, in0k_CopyRAST__frmSTAGE_twoTree_CORE,
   in0k_CopyRAST__frmSTAGE_approveFILEs,
 
   in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
@@ -42,11 +43,11 @@ type
     Button3: TButton;
     Button4: TButton;
     CheckBoxThemed1: TCheckBoxThemed;
+    frmCopyRAST_STAGE_3: TfrmApprovedFILEs2NAMEs;
     frmCopyRAST_STAGE_1: TfrmCopyRAST_STAGE_twoTree;
     frmCopyRAST_STAGE_2: TfrmCopyRAST_STAGE_twoTree;
     frmCopyRAST_STAGE_4: TfrmCopyRAST_STAGE_twoTree;
     frmCopyRAST_STAGE_5: TfrmCopyRAST_STAGE_twoTree;
-    frmCopyRAST_STAGE_3: TfrmCopyRAST_STAGE_twoTree;
     GroupBox1: TGroupBox;
     Label1: TLabel;
     PageControl1: TPageControl;
@@ -65,23 +66,17 @@ type
     procedure a_wnd_ApplayExecute(Sender: TObject);
     procedure a_wnd_CANSELExecute(Sender: TObject);
     procedure a_wnd_OKExecute(Sender: TObject);
-    procedure ExtendedNotebook1Change(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure PageControl1Change(Sender: TObject);
     procedure PageControl1Changing(Sender: TObject; var AllowChange: Boolean);
-    procedure TabSheet3ContextPopup(Sender: TObject; MousePos: TPoint;
-      var Handled: Boolean);
     procedure TabSheet3Enter(Sender: TObject);
     procedure TabSheet_Stage_0Show(Sender: TObject);
     procedure TabSheet_Stage_xShow(Sender: TObject);
   protected
-    function _getConfigFileName_IDE_:string; virtual;
-    function _getConfigFileName_EXT_:string;
-  protected
-    function  _init_ConfigFileName_fndIn_IDE_:boolean;
-    function  _init_ConfigFileName_fndIn_EXT_:boolean;
-    procedure _init_ConfigFileName_fndIn;
-    procedure _init_ConfigFileName_;
+    procedure _wndSettings_LOAD_(const xmlCongif:tLazExt_CopyRAST_CONFIG);
+    procedure _wndSettings_LOAD_;
+    procedure _wndSettings_SAVE_(const xmlCongif:tLazExt_CopyRAST_CONFIG);
+    procedure _wndSettings_SAVE_;
   strict private
     function _stage_is_LOCK_(const stageIdx:integer):boolean;
   strict private
@@ -118,13 +113,12 @@ type
     function _wndName_calc_:string;
     function _wndCptn_calc_:string;
   protected
-    procedure _CNFG_LOAD_(const inIDE:boolean);
-    procedure _CNFG_loadDO_(const cnf:tLazExt_CopyRAST_CONFIG);
-    procedure _CNFG_Save_(const inIDE:boolean);
-    procedure _CNFG_saveDO_(const cnf:tLazExt_CopyRAST_CONFIG);
+    procedure _CNFG_LOAD_;
+    procedure _CNFG_Save_;
   protected
    _parentOBJ_:TObject;     //< объект над которым работаем (LazIDE)
    _parentFRM_:TCustomForm; //< форма которая нас вызвала (LazIDE)
+    procedure _parentFRM_SET_(const value:TCustomForm);
   protected
    _cpRastObj_:tCopyRAST_STAGEs; //< объект над которым работаем
     function   _copyRastObj_CRT_:tCopyRAST_STAGEs; virtual;
@@ -139,10 +133,17 @@ type
 
   protected
    _view_stage0_files_:tCmpCopyRAST_srcTree;
+
+
+
   public
-    procedure Init(const ParentOBJ:TObject; const ParentFRM:TCustomForm);
+    property  ideOBJ:TObject     read _parentOBJ_;
+    property  ideWND:TCustomForm read _parentFRM_ write _parentFRM_SET_;
+    //procedure Init(const ParentOBJ:TObject; const ParentFRM:TCustomForm);
   public
-    constructor Create(AOwner:TComponent); override;
+    constructor Create(const AOwner:TComponent; const ideObject:tObject);
+    procedure AfterConstruction; override;
+    procedure BeforeDestruction; override;
     destructor DESTROY; override;
   public
     class function ide_CoreName:string; virtual;
@@ -150,17 +151,25 @@ type
     class function ide_Name4OBJ(const OBJ:TIDEPackage):string; overload;
   end;
 
+
+
 implementation
 
 {$R *.lfm}
 
 
-constructor tWndCopyRAST_CORE.Create(AOwner:TComponent);
+constructor tWndCopyRAST_CORE.Create(const AOwner:TComponent; const ideObject:tObject);
 begin
-    inherited;
-   _parentOBJ_:=nil;
+    inherited Create(AOwner);
+   _parentOBJ_:=ideObject;
    _parentFRM_:=nil;
-   _cpRastObj_:=nil;
+    //
+   _cpRastObj_:=_copyRastObj_CRT_;
+   _cpRastObj_.onCLEAN:=@_STAGES_onCLEAN_;
+   _cpRastObj_.onSTAGE:=@_STAGES_onSTAGE_;
+    //
+    Self.Name   :=_wndName_calc_;
+    Self.Caption:=_wndCptn_calc_;
     //
    _stageImgIDX_bbb_:=-1;
    _stageImgIDX_DIS_:=-1;
@@ -169,12 +178,33 @@ begin
    _stageImgIDX_eER_:=-1;
    _stageImgIDX_eOk_:=-1;
     //
+    frmCopyRAST_STAGE_1.STAGE:=_cpRastObj_.Stage_1;
+    frmCopyRAST_STAGE_2.STAGE:=_cpRastObj_.Stage_2;
+    frmCopyRAST_STAGE_3.STAGE:=_cpRastObj_.Stage_3;
+    frmCopyRAST_STAGE_4.STAGE:=_cpRastObj_.Stage_4;
+    frmCopyRAST_STAGE_5.STAGE:=_cpRastObj_.Stage_5;
+    //
     PageControl1.ActivePageIndex:=0;
     PageControl1.Images:=IDEImages.Images_16;
+   _stages_reIMAGE_;
     //
    _view_stage0_files_:=tCmpCopyRAST_srcTree.Create(self);
    _view_stage0_files_.Parent:=TabSheet_Stage_0;
    _view_stage0_files_.Align:=alClient;
+end;
+
+procedure tWndCopyRAST_CORE.AfterConstruction;
+begin
+    inherited;
+   _wndSettings_LOAD_;
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+procedure tWndCopyRAST_CORE.BeforeDestruction;
+begin
+   _wndSettings_SAVE_;
+    inherited;
 end;
 
 destructor tWndCopyRAST_CORE.DESTROY;
@@ -189,6 +219,13 @@ end;
 procedure tWndCopyRAST_CORE.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
     CloseAction:=caFree;
+end;
+
+//------------------------------------------------------------------------------
+
+procedure tWndCopyRAST_CORE._parentFRM_SET_(const value:TCustomForm);
+begin
+   _parentFRM_:=value;
 end;
 
 //------------------------------------------------------------------------------
@@ -228,12 +265,6 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tWndCopyRAST_CORE.TabSheet3ContextPopup(Sender: TObject;
-  MousePos: TPoint; var Handled: Boolean);
-begin
-
-end;
-
 procedure tWndCopyRAST_CORE.TabSheet3Enter(Sender: TObject);
 begin
   //
@@ -265,7 +296,7 @@ end;
 
 procedure tWndCopyRAST_CORE.a_wnd_ApplayExecute(Sender: TObject);
 begin
-   _CNFG_Save_(RadioButton1.Checked);
+   _CNFG_Save_;
 end;
 
 procedure tWndCopyRAST_CORE.a_STG_reFreshExecute(Sender: TObject);
@@ -291,99 +322,31 @@ end;
 
 procedure tWndCopyRAST_CORE.a_wnd_OKExecute(Sender: TObject);
 begin
-   _CNFG_Save_(RadioButton1.Checked);
+   _CNFG_Save_;
     Close;
 end;
 
-procedure tWndCopyRAST_CORE.ExtendedNotebook1Change(Sender: TObject);
-begin
-
-end;
-
 //------------------------------------------------------------------------------
-
-function tWndCopyRAST_CORE._init_ConfigFileName_fndIn_IDE_:boolean;
-var tmp:tLazExt_CopyRAST_CONFIG;
-begin {todo: разбираться с МЕСТОМ хранения настроек}
-    result:=FALSE;
-    (*tmp:=CopyRAST_fileConfig_FIND(_getConfigFileName_IDE_,FALSE);
-    if Assigned(tmp) then begin
-        result:=CRxC_BASE__SettingsPRESENT(tmp);
-    end;
-    tmp.WriteToDisk;
-    tmp.FREE;*)
-end;
-
-function tWndCopyRAST_CORE._init_ConfigFileName_fndIn_EXT_:boolean;
-var tmp:tLazExt_CopyRAST_CONFIG;
-begin {todo: разбираться с МЕСТОМ хранения настроек}
-    result:=TRUE;
-    (*tmp:=CopyRAST_fileConfig_FIND(_getConfigFileName_EXT_,TRUE);
-    if Assigned(tmp) then begin
-        result:=CRxC_BASE__SettingsPRESENT(tmp);
-    end;
-    tmp.WriteToDisk;
-    tmp.FREE;*)
-end;
-
-procedure tWndCopyRAST_CORE._init_ConfigFileName_fndIn;
-var inIDE:boolean;
-    inEXT:boolean;
-begin
-    {todo: разбираться с МЕСТОМ хранения настроек}
-    inIde:=_init_ConfigFileName_fndIn_IDE_;
-    inEXT:=_init_ConfigFileName_fndIn_EXT_;
-    //---
-    if inIde and inEXT then begin
-        RadioButton1.Checked:=TRUE;
-    end
-   else
-    if inIde then begin
-       RadioButton1.Checked:=TRUE;
-    end
-   else
-    if inEXT then begin
-       RadioButton2.Checked:=TRUE;
-    end
-   else begin
-       RadioButton1.Checked:=TRUE;
-    end;
-end;
-
 //------------------------------------------------------------------------------
 
 
-procedure tWndCopyRAST_CORE._init_ConfigFileName_;
-begin
-    RadioButton1.Caption:=srcTree_fsFnk_ExtractFileName(_getConfigFileName_IDE_);
-    RadioButton2.Caption:=srcTree_fsFnk_ExtractFileName(_getConfigFileName_EXT_);
-end;
 
-procedure tWndCopyRAST_CORE.Init(const ParentOBJ:TObject; const ParentFRM:TCustomForm);
+(*procedure tWndCopyRAST_CORE.Init(const ParentOBJ:TObject; const ParentFRM:TCustomForm);
 begin
-    inherited;
-   _parentOBJ_:=ParentOBJ;
+    //inherited;
+  { _parentOBJ_:=ParentOBJ;
    _ParentFRM_:=ParentFRM;
     //
-    Self.Name   :=_wndName_calc_;
-    Self.Caption:=_wndCptn_calc_;
     //
-   _init_ConfigFileName_;
-   _init_ConfigFileName_fndIn;
     //
-    //CRxC_BASE__SettingsEXCLUDE(tmp,CheckBoxThemed1.Checked);
-   _cpRastObj_:=_copyRastObj_CRT_;
-   _cpRastObj_.onCLEAN:=@_STAGES_onCLEAN_;
-   _cpRastObj_.onSTAGE:=@_STAGES_onSTAGE_;
+   ;
     //
-    frmCopyRAST_STAGE_1.STAGE:=_cpRastObj_.Stage_1;
-    frmCopyRAST_STAGE_2.STAGE:=_cpRastObj_.Stage_2;
-    frmCopyRAST_STAGE_3.STAGE:=_cpRastObj_.Stage_3;
-    frmCopyRAST_STAGE_4.STAGE:=_cpRastObj_.Stage_4;
-    frmCopyRAST_STAGE_5.STAGE:=_cpRastObj_.Stage_5;
+    RadioButton1.Caption:=_cpRastObj_.ConfigFileName4IDE;
+    RadioButton2.Caption:=_cpRastObj_.ConfigFileName4EXT;
+
     //
-   _stages_reIMAGE_;
-end;
+    PageControl1.PageIndex:=0;  }
+end;*)
 
 
 //------------------------------------------------------------------------------
@@ -398,46 +361,24 @@ const //< для НАЗВАНИЯ окна
 // _cCoreWnd_PCK_='PCK';
 
 const //< для ЗАГОЛОВКА окна
- _cCoreUsrCPTN_='CopyRUST';
+ _cCoreUsrCPTN_='CopyRAST';
  _cCoreUsrCPT1_='-';
  _cCoreUsr_PRJ_='Project';
  _cCoreUsr_PCK_='Package';
 
 class function tWndCopyRAST_CORE.ide_CoreName:string;
 begin
-    result:=_cCoreWnd_IDE_+self.ClassName;
+    result:=_cCoreWnd_IDE_+_cCoreUsrCPTN_;
 end;
 
 class function tWndCopyRAST_CORE.ide_Name4OBJ(const OBJ:TLazProject):string;
 begin
-    result:=ide_CoreName+_cTxt_PDTCHRK_+OBJ.Name;
+    result:=ide_CoreName+_cTxt_PDTCHRK_+_cTxt_PDTCHRK_+OBJ.Name;
 end;
 
 class function tWndCopyRAST_CORE.ide_Name4OBJ(const OBJ:TIDEPackage):string;
 begin
-    result:=ide_CoreName+_cTxt_PDTCHRK_+OBJ.Name;
-end;
-
-//------------------------------------------------------------------------------
-
-function tWndCopyRAST_CORE._getConfigFileName_IDE_:string;
-begin
-    if _parentOBJ_ is TLazProject then begin
-        result:=TLazProject(_parentOBJ_).ProjectInfoFile;
-    end
-   else
-    if _parentOBJ_ is TIDEPackage then begin
-        result:=TIDEPackage(_parentOBJ_).Filename;
-    end
-   else
-    begin
-        result:=''
-    end;
-end;
-
-function tWndCopyRAST_CORE._getConfigFileName_EXT_:string;
-begin
-    result:=srcTree_fsFnk_ChangeFileExt(_getConfigFileName_IDE_,'.CopyRAST');
+    result:=ide_CoreName+_cTxt_PDTCHRK_+_cTxt_PDTCHRK_+OBJ.Name;
 end;
 
 //------------------------------------------------------------------------------
@@ -487,65 +428,14 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tWndCopyRAST_CORE._CNFG_loadDO_(const cnf:tLazExt_CopyRAST_CONFIG);
+procedure tWndCopyRAST_CORE._CNFG_LOAD_;
 begin
-    CheckBoxThemed1.Checked:=CRxC_BASE__SettingsEXCLUDE(cnf);
+   _cpRastObj_.Configs_LOAD;
 end;
 
-procedure tWndCopyRAST_CORE._CNFG_LOAD_(const inIDE:boolean);
-var tmp:tLazExt_CopyRAST_CONFIG;
+procedure tWndCopyRAST_CORE._CNFG_Save_;
 begin
-    //--- получаем ЭКЗЕМПЛЯР
-    if NOT false {inIde} then {todo: разбираться с МЕСТОМ хранения настроек} begin
-        tmp:=CopyRAST_fileConfig_FIND(_getConfigFileName_IDE_,FALSE);
-    end
-    else begin
-        tmp:=CopyRAST_fileConfig_FIND(_getConfigFileName_EXT_,FALSE);
-    end;
-    //--- ГРУЗИМСЯ ---
-   _CNFG_loadDO_(tmp);
-    //--- ЧИСТИМСЯ ------
-    if NOT false {inIde} then {todo: разбираться с МЕСТОМ хранения настроек} begin
-       tmp.FREE;
-    end
-end;
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-procedure tWndCopyRAST_CORE._CNFG_saveDO_(const cnf:tLazExt_CopyRAST_CONFIG);
-begin
-    CRxC_BASE__SettingsEXCLUDE(cnf,CheckBoxThemed1.Checked);
-end;
-
-procedure tWndCopyRAST_CORE._CNFG_Save_(const inIDE:boolean);
-var tmp:tLazExt_CopyRAST_CONFIG;
-begin
-    //--- сначала пытаемся очистить в СТАРЫХ местах
-    {todo: разбираться с МЕСТОМ хранения настроек}
-    (*if inIde then begin
-        // чистим кеши LAZARUS`a
-        tmp:=CopyRAST_fileConfig_FIND(_getConfigFileName_EXT_,FALSE);
-        tmp.FREE;
-        // физически идаляем файл
-        DeleteFile(_getConfigFileName_EXT_);
-    end
-    else begin
-        tmp:=CopyRAST_fileConfig_FIND(_getConfigFileName_IDE_,FALSE);
-        if Assigned(tmp) then tmp.DeletePath(cLazExt_CopyRAST__xmlConfig_SECTION);
-    end;*)
-    //--- получаем ЭКЗЕМПЛЯР
-    if FALSE {inIde} then {todo: разбираться с МЕСТОМ хранения настроек} begin
-        tmp:=CopyRAST_fileConfig_FIND(_getConfigFileName_IDE_,FALSE);
-    end
-    else begin
-        tmp:=CopyRAST_fileConfig_FIND(_getConfigFileName_EXT_,FALSE);
-    end;
-    //--- СОХРАНЯЕМСЯ ---
-   _CNFG_saveDO_(tmp);
-    //--- ЧИСТИМСЯ ------
-    if NOT false {inIde} then {todo: разбираться с МЕСТОМ хранения настроек} begin
-       tmp.FREE;
-    end
+   _cpRastObj_.Configs_SAVE;
 end;
 
 //------------------------------------------------------------------------------
@@ -755,6 +645,71 @@ function tWndCopyRAST_CORE._getImageIDX_eOk_:integer;
 begin
     if _stageImgIDX_eOk_<0 then _stageImgIDX_eOk_:=_do_getIdxImj4IdeImages_(_cImgName_eOk_);
     result:=_stageImgIDX_eOk_;
+end;
+
+//------------------------------------------------------------------------------
+
+const
+ _cWndSettingsFile_dirPath_  =_cCoreWnd_IDE_+_cCoreUsrCPTN_;
+ _cWndSettingsFile_extention_='.xml';
+
+function _wndSettingsFileNAME_(const wndName:string):string;
+begin           // LazarusIDE.c;
+    result:=LazarusIDE.GetPrimaryConfigPath+PathDelim+_cWndSettingsFile_dirPath_+PathDelim+wndName+_cWndSettingsFile_extention_
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+const
+ _cWndSettings_name_Position ='position';
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+procedure tWndCopyRAST_CORE._wndSettings_LOAD_(const xmlCongif:tLazExt_CopyRAST_CONFIG);
+var r:tRect;
+begin
+    // свое Место положение
+    xmlCongif.GetValue(_cWndSettings_name_Position,r,self.BoundsRect);
+    self.Position:=poDesigned;
+    self.BoundsRect:=r;
+    // останое
+    frmCopyRAST_STAGE_1.wndSettings_LOAD(xmlCongif);
+    frmCopyRAST_STAGE_2.wndSettings_LOAD(xmlCongif);
+    frmCopyRAST_STAGE_3.wndSettings_LOAD(xmlCongif);
+    frmCopyRAST_STAGE_4.wndSettings_LOAD(xmlCongif);
+    frmCopyRAST_STAGE_5.wndSettings_LOAD(xmlCongif);
+end;
+
+procedure tWndCopyRAST_CORE._wndSettings_LOAD_;
+var xmlCNFG:tLazExt_CopyRAST_CONFIG;
+begin
+    caption:=_wndSettingsFileNAME_(self.Name);
+    xmlCNFG:=CopyRAST_createObj_wndConfig(_wndSettingsFileNAME_(self.Name));
+   _wndSettings_LOAD_(xmlCNFG);
+    xmlCNFG.FREE;
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+procedure tWndCopyRAST_CORE._wndSettings_SAVE_(const xmlCongif:tLazExt_CopyRAST_CONFIG);
+begin
+    // свое Место положение
+    xmlCongif.SetValue(_cWndSettings_name_Position,self.BoundsRect);
+    // останое
+    frmCopyRAST_STAGE_1.wndSettings_SAVE(xmlCongif);
+    frmCopyRAST_STAGE_2.wndSettings_SAVE(xmlCongif);
+    frmCopyRAST_STAGE_3.wndSettings_SAVE(xmlCongif);
+    frmCopyRAST_STAGE_4.wndSettings_SAVE(xmlCongif);
+    frmCopyRAST_STAGE_5.wndSettings_SAVE(xmlCongif);
+end;
+
+procedure tWndCopyRAST_CORE._wndSettings_SAVE_;
+var xmlCNFG:tLazExt_CopyRAST_CONFIG;
+begin
+    xmlCNFG:=CopyRAST_createObj_wndConfig(_wndSettingsFileNAME_(self.Name));
+   _wndSettings_SAVE_(xmlCNFG);
+    xmlCNFG.WriteToDisk;
+    xmlCNFG.FREE;
 end;
 
 end.

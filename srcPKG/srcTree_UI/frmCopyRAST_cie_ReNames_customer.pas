@@ -5,7 +5,7 @@ unit frmCopyRAST_cie_ReNames_customer;
 interface
 
 uses
-  in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs,
+  in0k_CopyRAST_stage__ChangePaths_CNFGs,
   frmCopyRAST_CnfgItem_EDIT, Classes, SysUtils, FileUtil, CheckBoxThemed, Forms,
   Controls, Graphics, Dialogs, StdCtrls;
 
@@ -18,6 +18,8 @@ type
     cntrl_nameStated: TEdit;
     cntrl_pathCST: TCheckBoxThemed;
     cntrl_pathStated: TEdit;
+    procedure FrameConstrainedResize(Sender: TObject; var MinWidth, MinHeight,
+      MaxWidth, MaxHeight: TConstraintSize);
     procedure FrameResize(Sender: TObject);
   protected
     function  _itemCNFG_GET_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
@@ -42,11 +44,21 @@ type
     procedure _ctrl_eventClr_onChange_;                override;
   public
     property ItemCNFG:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node read _itemCNFG_GET_ write _itemCNFG_SET_;
+  public
+    constructor Create(AOwner:TComponent); override;
   end;
 
 implementation
 
 {$R *.lfm}
+
+
+constructor tFrmCopyRAST_cie_ReNamesCustomer.Create(AOwner:TComponent);
+begin
+    inherited;
+    Constraints_reSet;
+end;
+
 
 function tFrmCopyRAST_cie_ReNamesCustomer._itemCNFG_GET_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
 begin
@@ -264,6 +276,13 @@ begin
     if w<cntrl_nameCST.Width then w:=cntrl_nameCST.Width;
     if w<cntrl_pathCST.Width then w:=cntrl_pathCST.Width;
     cntrl_nameStated.Left:=w+2;
+end;
+
+procedure tFrmCopyRAST_cie_ReNamesCustomer.FrameConstrainedResize(Sender: TObject; var MinWidth, MinHeight, MaxWidth, MaxHeight: TConstraintSize);
+begin
+    MinHeight:=cntrl_pathStated.Top+cntrl_pathStated.Height;
+    MaxHeight:=MinHeight;
+    MinWidth :=cntrl_nameCST.Width+cntrl_pathCST.Width;
 end;
 
 end.

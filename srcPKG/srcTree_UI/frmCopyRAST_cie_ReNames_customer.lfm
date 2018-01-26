@@ -4,6 +4,9 @@ inherited frmCopyRAST_cie_ReNamesCustomer: TfrmCopyRAST_cie_ReNamesCustomer
   AutoSize = True
   ClientHeight = 59
   ClientWidth = 679
+  Constraints.MinHeight = 1
+  Constraints.MinWidth = 1
+  OnConstrainedResize = FrameConstrainedResize
   OnResize = FrameResize
   object cntrl_nameCST: TCheckBoxThemed[0]
     AnchorSideLeft.Control = Owner

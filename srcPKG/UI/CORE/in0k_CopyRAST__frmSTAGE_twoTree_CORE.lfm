@@ -1,0 +1,38 @@
+inherited frmCopyRAST_STAGE_twoTree: TfrmCopyRAST_STAGE_twoTree
+  Height = 416
+  Width = 582
+  ClientHeight = 416
+  ClientWidth = 582
+  object Label1: TLabel[0]
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+    Left = 0
+    Height = 15
+    Top = 0
+    Width = 34
+    Caption = 'Label1'
+    ParentColor = False
+  end
+  object Label2: TLabel[1]
+    AnchorSideLeft.Control = Splitter_LR
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = Owner
+    Left = 233
+    Height = 15
+    Top = 0
+    Width = 34
+    Caption = 'Label2'
+    ParentColor = False
+  end
+  object Splitter_LR: TSplitter[2]
+    AnchorSideTop.Control = Owner
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
+    Left = 228
+    Height = 416
+    Top = 0
+    Width = 5
+    Align = alNone
+    Anchors = [akTop, akLeft, akBottom]
+  end
+end

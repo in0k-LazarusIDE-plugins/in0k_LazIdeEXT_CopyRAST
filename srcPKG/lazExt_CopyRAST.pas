@@ -16,6 +16,8 @@ uses in0k_lazIdeSRC_ExpertCORE,
      {in0k_lazIdeSRC_ExpertCORE,}
      //in0k_lazIdeSRC_ExpertCORE,
      (*in0k_lazIdeSRC_ExpertCORE,*)
+     in0k_CopyRAST__wnd_SHOW,
+
      lazExt_CopyRAST_StrConsts,
      {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
      in0k_CopyRAST__wndPackage,
@@ -96,7 +98,8 @@ begin
     srcMain:= LazarusIDE.ActiveProject;
     srcForm:=_ide_GetPackageEditorForm(Sender);
     if Assigned(srcMain)and Assigned(srcForm) then begin //< есть над чем работать
-        trgName:=tWndCopyRAST_Progect.ide_Name4OBJ(srcMain);
+        WndCopyRAST_SHOW(srcMain,srcForm);
+        (*trgName:=tWndCopyRAST_Progect.ide_Name4OBJ(srcMain);
         trgForm:=Screen.FindForm(trgName);
         if NOT Assigned(trgForm) then begin //< надо СОЗДАВАТЬ
             trgForm:=IDEWindowCreators.ShowForm(tWndCopyRAST_Progect.ide_CoreName,FALSE);
@@ -108,7 +111,7 @@ begin
         IDEWindowCreators.ShowForm(trgForm,true);
         {$ifdef _DEBUG_}
             DEBUG('_ideCommand_copyRast_Package_onClick',trgName+' wnd SHOW.');
-        {$endIf}
+        {$endIf}*)
     end
     {$ifdef _DEBUG_}
     else begin
@@ -159,7 +162,8 @@ begin
     srcMain:= PackageEditingInterface.GetPackageOfEditorItem(tmp);
     srcForm:=_ide_GetPackageEditorForm(tmp);
     if Assigned(srcMain)and Assigned(srcForm) then begin //< есть над чем работать
-        trgName:=tWndCopyRAST_Package.ide_Name4OBJ(srcMain);
+        WndCopyRAST_SHOW(srcMain,srcForm);
+        (*trgName:=tWndCopyRAST_Package.ide_Name4OBJ(srcMain);
         trgForm:=Screen.FindForm(trgName);
         if NOT Assigned(trgForm) then begin //< надо СОЗДАВАТЬ
             trgForm:=IDEWindowCreators.ShowForm(tWndCopyRAST_Package.ide_CoreName,FALSE);
@@ -171,7 +175,7 @@ begin
         IDEWindowCreators.ShowForm(trgForm,true);
         {$ifdef _DEBUG_}
             DEBUG('_ideCommand_copyRast_Package_onClick',trgName+' wnd SHOW.');
-        {$endIf}
+        {$endIf}*)
     end
     {$ifdef _DEBUG_}
     else begin
@@ -202,8 +206,8 @@ begin
     RegisterIDEMenuCommand(itmProjectSaveSection,  'ViewCopyRastPRJ', cRes_CopyRAST_caption, nil,nil, _ideCommand_copyRast_Project_,'');
     //---
     // register window creator
-    IDEWindowCreators.Add(tWndCopyRAST_Progect.ide_CoreName,nil,@_crt_IDEWnd_copyRast_Project_,'100','100','','','',alNone,true);
-    IDEWindowCreators.Add(tWndCopyRAST_Package.ide_CoreName,nil,@_crt_IDEWnd_copyRast_Package_,'100','100','','','',alNone,true);
+    //IDEWindowCreators.Add(tWndCopyRAST_Progect.ide_CoreName,nil,@_crt_IDEWnd_copyRast_Project_,'100','100','','','',alNone,true);
+    //IDEWindowCreators.Add(tWndCopyRAST_Package.ide_CoreName,nil,@_crt_IDEWnd_copyRast_Package_,'100','100','','','',alNone,true);
 end;
 
 procedure tLazExt_CopyRAST.LazarusIDE_CLEAN;

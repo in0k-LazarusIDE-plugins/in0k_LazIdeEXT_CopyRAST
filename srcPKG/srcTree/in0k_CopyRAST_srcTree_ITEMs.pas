@@ -133,7 +133,7 @@ procedure CopyRastNODE_CopyData_FLDR(const source,target:tCopyRastNODE_FLDR);
 procedure CopyRastNODE_CopyData_FILE(const source,target:tCopyRastNODE_FILE);
 
 
-//function  CopyRast_SrcTree_Copy(const source:tCopyRastNODE_ROOT):tCopyRastNODE_ROOT;
+function  CopyRast_SrcTree_Copy(const source:tCopyRast_stROOT):tCopyRast_stROOT;
 
 
 
@@ -697,7 +697,7 @@ end;
 
 {%endregion}
 
-function _CR_SrcTree_Copy_(const item:tSrcTree_item):tSrcTree_item;
+(*function _CR_SrcTree_Copy_(const item:tSrcTree_item):tSrcTree_item;
 var chld:tSrcTree_item;
 begin
  {   if item is tCopyRastNODE_FILE then begin
@@ -750,12 +750,32 @@ begin
         //--->
         chld:=chld.ItemNEXT;
     end;  }
+end;  *)
+
+function _CR_SrcTree_Copy_(const item:tCopyRast_stITEM):tCopyRast_stITEM;
+var chld :tCopyRast_stITEM;
+    lData:pCopyRastNODE_DATA;
+    rData:pCopyRastNODE_DATA;
+begin
+    // сам узел .. создаем, копируем данные, связываем
+    result:=tCopyRast_stITEM(item.ClassType.Create);
+    result.CopyData(item);
+    lData:=CopyRAST_stITEM_DATA(item);
+    rData:=CopyRAST_stITEM_DATA(result);
+    lData^.sideRight:=result;
+    rData^.sideLeft :=item;
+    // про детей теперь
+    chld:=item.ItemCHLD;
+    while Assigned(chld) do begin
+        SrcTree_insert_ChldLast(result,_CR_SrcTree_Copy_(chld));
+        chld:=chld.ItemNEXT;
+    end;
 end;
 
-{function CopyRast_SrcTree_Copy(const source:tCopyRastNODE_ROOT):tCopyRastNODE_ROOT;
+function CopyRast_SrcTree_Copy(const source:tCopyRast_stROOT):tCopyRast_stROOT;
 begin
-    result:=tCopyRastNODE_ROOT(_CR_SrcTree_Copy_(source));
-end;  }
+    result:=tCopyRast_stROOT(_CR_SrcTree_Copy_(source));
+end;
 
 end.
 

@@ -7,7 +7,7 @@ interface
 uses
   {LCLProc,} BaseIDEIntf, LazConfigStorage,
 
-
+       Dialogs,
 
 
   CopyRAST_srcTree_4Handler_CNFGs,
@@ -19,6 +19,7 @@ type
   tLazExt_CopyRAST_CONFIG=TConfigStorage;//TXMLConfig;
 
 
+function  CopyRAST_createObj_wndConfig(const fileName:string):tLazExt_CopyRAST_CONFIG;
 
 function  CopyRAST_fileConfig_FIND(const fileName:string; const LoadFromDisk:Boolean):tLazExt_CopyRAST_CONFIG;
 
@@ -73,6 +74,16 @@ begin
     end;
 end;
 
+function CopyRAST_createObj_wndConfig(const fileName:string):tLazExt_CopyRAST_CONFIG;
+var dir:string;
+begin
+    dir:=ExtractFileDir(fileName);
+    if dir<>'' then begin
+        ForceDirectories(dir);
+    end;
+    result:=GetIDEConfigStorage(fileName,TRUE);
+end;
+
 
 procedure CopyRAST_fileConfig_SAVE(const fileName:string; const Config:tLazExt_CopyRAST_CONFIG);
 begin
@@ -114,7 +125,7 @@ end;
 
 function lERxC_8Value(const section:string; const lblObj,lblVal:string):string;
 begin
-    result:=lERxC_8Value(_n2n_(section,lblObj));
+    result:=_n2n_(_n2n_(section,lblObj),lblVal);
 end;
 
 //------------------------------------------------------------------------------

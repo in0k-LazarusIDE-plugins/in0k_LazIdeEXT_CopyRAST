@@ -10,7 +10,7 @@ uses
 
 
   Graphics,  LCLType,
-  in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs,
+  in0k_CopyRAST_stage__ChangePaths_CNFGs,
   ComCtrls,
   Classes, SysUtils;
 

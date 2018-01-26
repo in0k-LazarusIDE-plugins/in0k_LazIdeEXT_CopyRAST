@@ -1,21 +1,27 @@
 inherited frmCopyRAST_cie_ReNamesTemplate: TfrmCopyRAST_cie_ReNamesTemplate
-  Height = 259
+  Height = 324
   Width = 505
-  ClientHeight = 259
+  ClientHeight = 324
   ClientWidth = 505
+  Constraints.MinHeight = 1
+  Constraints.MinWidth = 1
+  OnConstrainedResize = FrameConstrainedResize
   DesignLeft = 541
-  DesignTop = 365
+  DesignTop = 330
   object pnl_BTTNs: TPanel[0]
     AnchorSideLeft.Control = Splitter1
     AnchorSideLeft.Side = asrBottom
+    AnchorSideTop.Control = Owner
+    AnchorSideBottom.Control = Owner
+    AnchorSideBottom.Side = asrBottom
     Left = 317
-    Height = 259
+    Height = 324
     Top = 0
     Width = 32
     Anchors = [akTop, akLeft, akBottom]
     AutoSize = True
     BevelOuter = bvNone
-    ClientHeight = 259
+    ClientHeight = 324
     ClientWidth = 32
     TabOrder = 0
     object BitBtn1: TBitBtn
@@ -80,7 +86,7 @@ inherited frmCopyRAST_cie_ReNamesTemplate: TfrmCopyRAST_cie_ReNamesTemplate
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 312
-    Height = 259
+    Height = 324
     Top = 0
     Width = 5
     Align = alNone
@@ -95,20 +101,20 @@ inherited frmCopyRAST_cie_ReNamesTemplate: TfrmCopyRAST_cie_ReNamesTemplate
     AnchorSideBottom.Control = Owner
     AnchorSideBottom.Side = asrBottom
     Left = 349
-    Height = 259
+    Height = 324
     Width = 156
     Anchors = [akTop, akLeft, akRight, akBottom]
-    ClientHeight = 259
+    ClientHeight = 324
     ClientWidth = 156
     TabOrder = 2
     inherited GroupBox1: TGroupBox
-      Height = 259
+      Height = 324
       Width = 156
-      ClientHeight = 239
+      ClientHeight = 304
       ClientWidth = 152
       inherited Label1: TLabel
         Left = 114
-        Top = -1
+        Top = 1
       end
       inherited CheckBoxThemed2: TCheckBoxThemed
         Left = -382

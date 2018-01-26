@@ -1,17 +1,18 @@
-unit in0k_CopyRAST__frmSTAGE_twoTree;
+unit in0k_CopyRAST__frmSTAGE_twoTree_CORE;
 
 {$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, Controls, ExtCtrls,
+  Classes, Controls, ExtCtrls, StdCtrls,
 
   in0k_CopyRAST_srcTree_ITEMs,
   in0k_CopyRAST_srcTree_Stage,
   in0k_lazIdeSRC_srcTree_CORE_item,
+  lazExt_CopyRAST__xmlConfig,
 
-  in0k_CopyRAST__frmSTAGE,
+  in0k_CopyRAST__frmSTAGE_CORE,
   cmpCopyRAST_srcTree;
 
 type
@@ -19,7 +20,11 @@ type
  { TfrmCopyRAST_STAGE_twoTree }
 
  TfrmCopyRAST_STAGE_twoTree=class(tFrmCopyRAST_STAGE)
-	pnlMDL:TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Splitter_LR: TSplitter;
+  protected
+    function _SplitterLR_defPosition_:integer;
   protected
    _treeL_:tCmpCopyRAST_srcTree;
     function  _treeL_TYPE_:tCmpCopyRAST_srcTree_TYPE; virtual;
@@ -43,6 +48,9 @@ type
     procedure _STAGE_set_(const value:tCopyRast_SrcTree_prcSTAGE); override;
   public
     constructor Create(AOwner:TComponent); override;
+  public
+    procedure wndSettings_LOAD(const xmlCongif:tLazExt_CopyRAST_CONFIG); override;
+    procedure wndSettings_SAVE(const xmlCongif:tLazExt_CopyRAST_CONFIG); override;
   end;
 
 implementation
@@ -52,6 +60,8 @@ implementation
 constructor TfrmCopyRAST_STAGE_twoTree.Create(AOwner:TComponent);
 begin
     inherited Create(AOwner);
+    //---
+    Splitter_LR.Left:=_SplitterLR_defPosition_;
     //---
    _treeL_CRT_;
    _treeR_CRT_;
@@ -137,15 +147,15 @@ begin
             Side   :=asrLeft;
         end;
         with AnchorSide[akTop] do begin
-            Control:=Self;
-            Side   :=asrTop;
+            Control:=Label1;
+            Side   :=asrBottom;
         end;
         with AnchorSide[akRight] do begin
-            Control:=pnlMDL;
+            Control:=Splitter_LR;
             Side   :=asrLeft;
         end;
         with AnchorSide[akBottom] do begin
-            Control:=pnlMDL;
+            Control:=Splitter_LR;
             Side   :=asrBottom;
         end;
         Anchors:=[akTop, akLeft, akRight, akBottom];
@@ -168,19 +178,19 @@ begin
         Parent:=Self;
         //
         with AnchorSide[akLeft] do begin
-            Control:=pnlMDL;
+            Control:=Splitter_LR;
             Side   :=asrRight;
         end;
         with AnchorSide[akTop] do begin
-            Control:=Self;
-            Side   :=asrTop;
+            Control:=Label2;
+            Side   :=asrBottom;
         end;
         with AnchorSide[akRight] do begin
-            Control:=Self;
+            Control:=self;
             Side   :=asrRight;
         end;
         with AnchorSide[akBottom] do begin
-            Control:=pnlMDL;
+            Control:=Splitter_LR;
             Side   :=asrBottom;
         end;
         //
@@ -246,6 +256,32 @@ begin
         //---
        _ctrl_OnChange_LOCK_(FALSE);
     end;
+end;
+
+//------------------------------------------------------------------------------
+
+function TfrmCopyRAST_STAGE_twoTree._SplitterLR_defPosition_:integer;
+begin
+    result:=(ClientWidth-Splitter_LR.Width) div 2;
+end;
+
+//------------------------------------------------------------------------------
+
+const
+ _cWndSettings_SplitterLR='Splitter_LR';
+ _cWndSettings_LEFT      ='left';
+
+
+procedure TfrmCopyRAST_STAGE_twoTree.wndSettings_LOAD(const xmlCongif:tLazExt_CopyRAST_CONFIG);
+begin
+    inherited;
+    Splitter_LR.Left:=xmlCongif.GetValue(lERxC_8Value(wndSettings_Section,_cWndSettings_SplitterLR,_cWndSettings_LEFT),Splitter_LR.Left);
+end;
+
+procedure TfrmCopyRAST_STAGE_twoTree.wndSettings_SAVE(const xmlCongif:tLazExt_CopyRAST_CONFIG);
+begin
+    inherited;
+    xmlCongif.SetDeleteValue(lERxC_8Value(wndSettings_Section,_cWndSettings_SplitterLR,_cWndSettings_LEFT),Splitter_LR.Left,_SplitterLR_defPosition_);
 end;
 
 end.

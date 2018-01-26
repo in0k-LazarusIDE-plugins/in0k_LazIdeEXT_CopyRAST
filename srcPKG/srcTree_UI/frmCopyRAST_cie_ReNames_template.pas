@@ -8,7 +8,7 @@ uses
 
     in0k_lazIdeSRC_srcTree_CORE_item,
 
-  in0kLazExt_CopyRAST_srcTree_HandlerReNAMEs_CNFGs,
+  in0k_CopyRAST_stage__ChangePaths_CNFGs,
   cmpCopyRAST_srcTree_nameTemplates, frmCopyRAST_cie_ReNames_tmpltRule,
     ComCtrls,
 
@@ -42,7 +42,8 @@ type
     procedure a_moveUPUpdate(Sender: TObject);
     procedure a_newCNFGExecute(Sender: TObject);
     procedure a_newCNFGUpdate(Sender: TObject);
-
+    procedure FrameConstrainedResize(Sender: TObject; var MinWidth, MinHeight,
+      MaxWidth, MaxHeight: TConstraintSize);
   protected
 
 
@@ -113,7 +114,8 @@ begin
     end;
     //---
     frmCopyRAST_cie_ReNamesTmpltRULE1.ItemCNFG_OnChange:=@_onChange_tmpltRULE_;
-
+    //
+    Constraints_reSet;
 end;
 
 //------------------------------------------------------------------------------
@@ -276,6 +278,8 @@ begin
     tAction(sender).Enabled:=cntrl_Template.new_Cnfg_CreateCAN;
 end;
 
+
+
 procedure TfrmCopyRAST_cie_ReNamesTemplate.a_newCNFGExecute(Sender: TObject);
 begin
     cntrl_Template.new_Cnfg_Create;
@@ -305,6 +309,13 @@ end;
 function TfrmCopyRAST_cie_ReNamesTemplate._templateAPPLAY_ITM_GET_:tSrcTree_item;
 begin
     result:=cntrl_Template.TemplateAPPLAY_ITM;
+end;
+
+//------------------------------------------------------------------------------
+
+procedure TfrmCopyRAST_cie_ReNamesTemplate.FrameConstrainedResize(Sender:TObject; var MinWidth, MinHeight, MaxWidth, MaxHeight: TConstraintSize);
+begin
+    MinHeight:=pnl_BTTNs.Top*2+BitBtn5.top*2+(BitBtn4.Top+BitBtn4.Height);
 end;
 
 end.
