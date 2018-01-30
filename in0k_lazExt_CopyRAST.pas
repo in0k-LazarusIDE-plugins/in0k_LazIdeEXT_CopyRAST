@@ -67,7 +67,8 @@ uses
   in0k_CopyRAST_stage__FileHandling, in0k_CopyRAST_STAGEs, 
   in0k_CopyRAST_STAGEs_4Package, in0k_CopyRAST__wndCORE, 
   in0k_CopyRAST__wndProject, in0k_CopyRAST__wndPackage, 
-  in0k_CopyRAST_stage__JustCopying, in0k_CopyRAST__wnd_SHOW, LazarusPackageIntf;
+  in0k_CopyRAST_stage__JustCopying, in0k_CopyRAST__wnd_SHOW, 
+  in0k_CopyRAST_STAGE_00_makeTree, in0k_CopyRAST_Stage_CORE, LazarusPackageIntf;
 
 implementation
 

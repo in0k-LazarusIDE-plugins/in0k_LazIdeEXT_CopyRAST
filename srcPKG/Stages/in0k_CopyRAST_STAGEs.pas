@@ -22,7 +22,7 @@ uses
   in0k_CopyRAST_stage__FileHandling,
   in0k_CopyRAST_stage__ChangePaths,
   //
-  in0k_CopyRAST_srcTree_Stage,
+//  in0k_CopyRAST_srcTree_Stage,
   lazExt_CopyRAST__xmlConfig,
   srcTree_builder_CORE;
 
@@ -34,6 +34,25 @@ uses
 
 type
  tCopyRAST_STAGEs=class;
+
+(* tCopyRAST_STAGE_CORE=class
+  protected
+   _enabled_:boolean;
+  public
+    constructor Create(const BUILDer:tSrcTree_Builder_CORE); virtual;
+  end;
+
+ tCopyRAST_STAGE_00=class(tCopyRAST_STAGE_CORE)
+  protected
+
+  public
+    constructor Create(const treeCreater:tSrcTree_Creater_TYPE); virtual;
+  end;
+ *)
+
+
+
+
 
  mCopyRAST_STAGEs_onCLEAN=procedure(const Sender:tCopyRAST_STAGEs; const stageIndex:integer) of object;
  mCopyRAST_STAGEs_onSTAGE=procedure(const Sender:tCopyRAST_STAGEs; const stageIndex:integer) of object;
@@ -108,7 +127,24 @@ type
     destructor DESTROY; override;
   end;
 
+
+type
+ tCopyRast_SrcTree_STAGE_00_makeTree=class(tCopyRast_SrcTree_STAGE_00_CORE)
+  protected
+   _creater_:tSrcTree_Creater;
+  public
+    constructor Create(const aBUILDer:tSrcTree_Builder_CORE); override;
+  end;
+
 implementation
+
+constructor tCopyRAST_STAGE_CORE.Create(const BUILDer:tSrcTree_Builder_CORE);
+begin
+   _enabled_:=false
+end;
+
+//==============================================================================
+
 
 constructor tCopyRAST_STAGEs.Create(const MainIdeOobject:TObject);
 begin
@@ -396,6 +432,25 @@ begin
     else result:=CopyRAST_fileConfig_FIND(_CNFG_fileName_4EXT_,true);
 end;
 
+
+//==============================================================================
+
+constructor tCopyRast_SrcTree_STAGE_00_makeTree.Create(const aBUILDer:tSrcTree_Builder_CORE);
+begin
+   _creater_:tSrcTree_Creater;
+
+
+   var tmpCreater:tSrcTree_Creater;
+   begin
+       tmpCreater:=_creater_TYPE_.Create;
+       try
+          _srcRoot_:=tmpCreater.MAKE_SourceTREE(_Builder_,_mainIdeOBJ_);
+       finally
+          tmpCreater.FREE;
+       end;
+   end;
+
+end;
 
 end.
 

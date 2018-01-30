@@ -1,4 +1,4 @@
-unit in0k_CopyRAST_srcTree_Stage;
+unit in0k_CopyRAST_Stage_CORE;
 
 {$mode objfpc}{$H+}
 
@@ -29,23 +29,37 @@ type
 type
 
  tCopyRast_SrcTree_prcSTAGE=class;
+ tCopyRast_SrcTree_STAGE_CORE=class;
 
- mCopyRast_STAGE_onRootChange=procedure(const Sender:tCopyRast_SrcTree_prcSTAGE; const newRoot:tCopyRast_stROOT) of object;
+ mCopyRast_STAGE_onRootChange=procedure(const Sender:tCopyRast_SrcTree_STAGE_CORE; const newRoot:tCopyRast_stROOT) of object;
 
 
- tCopyRast_SrcTree_prcSTAGE=class{(tSrcTree_prcHandler4Build)}
+{ tCopyRast_SrcTree_STAGE_00_CORE=class
   protected
-   _enabled_:boolean;
-  protected //< с Чего начинаем
-   _rootSource_:tCopyRast_stROOT;
-   _rootSource_mOnCHANGE_:mCopyRast_STAGE_onRootChange;
-    procedure _rootSource_CLR_; virtual;                      {$ifOpt D-}inline;{$endIf}
-    procedure _rootSource_SET_(const value:tCopyRast_stROOT); {$ifOpt D-}inline;{$endIf}
+   _creater_:tSrcTree_Creater_TYPE;
+  protected
+    constructor Create(const BUILDer:tSrcTree_Builder_CORE); override;
+  public
+    constructor Create(const BUILDer:tSrcTree_Builder_CORE; const Creater_TYPE:tSrcTree_Creater_TYPE);
+
+
+  end;   }
+
+
+
+
+
+ tCopyRast_SrcTree_prcSTAGE=class(tCopyRast_SrcTree_STAGE_CORE)
   protected //< что хотим получить
    _rootResult_:tCopyRast_stROOT;
    _rootResult_mOnCHANGE_:mCopyRast_STAGE_onRootChange;
     procedure _rootResult_CLR_; virtual;                      {$ifOpt D-}inline;{$endIf}
     procedure _rootResult_SET_(const value:tCopyRast_stROOT); {$ifOpt D-}inline;{$endIf}
+  protected //< с Чего начинаем
+   _rootSource_:tCopyRast_stROOT;
+   _rootSource_mOnCHANGE_:mCopyRast_STAGE_onRootChange;
+    procedure _rootSource_CLR_; virtual;                      {$ifOpt D-}inline;{$endIf}
+    procedure _rootSource_SET_(const value:tCopyRast_stROOT); {$ifOpt D-}inline;{$endIf}
   protected // работа с Конфигурацией
     procedure _CNFGs_FREE_;                                        virtual;
     procedure _CNFGs_CREATE_;                                      virtual;
@@ -88,7 +102,66 @@ type
   end;
 
 
+
+type
+ tCopyRast_SrcTree_STAGE_00_CORE=class(tCopyRast_SrcTree_prcSTAGE)
+
+  end;
+
+ tCopyRast_SrcTree_STAGE_XX_CORE=class(tCopyRast_SrcTree_prcSTAGE)
+
+  end;
+
+
 implementation
+
+constructor tCopyRast_SrcTree_STAGE_CORE.Create(const BUILDer:tSrcTree_Builder_CORE);
+begin
+   _enabled_:=FALSE;
+end;
+
+//------------------------------------------------------------------------------
+
+constructor tCopyRast_SrcTree_STAGE_00_CORE.Create(const BUILDer:tSrcTree_Builder_CORE);
+begin
+    inherited;
+end;
+
+constructor tCopyRast_SrcTree_STAGE_00_CORE.Create(const BUILDer:tSrcTree_Builder_CORE; const Creater_TYPE:tSrcTree_Creater_TYPE);
+begin
+    _creater_:=Creater_TYPE.Create;
+end;
+
+//------------------------------------------------------------------------------
+
+procedure tCopyRast_SrcTree_STAGE_CORE._rootResult_CLR_;
+var tmpRoot:tCopyRast_stROOT;
+begin
+    if Assigned(_rootResult_) then begin
+        tmpRoot:=_rootResult_;
+       _rootResult_:=nil;
+        if Assigned(_rootResult_mOnCHANGE_) then _rootResult_mOnCHANGE_(self,nil);
+        tmpRoot.Free;
+    end;
+end;
+
+procedure tCopyRast_SrcTree_STAGE_CORE._rootResult_SET_(const value:tCopyRast_stROOT);
+begin
+    if _rootResult_<>value then begin
+       _rootResult_CLR_; {todo: УБРАТЬ отсюда}
+        //
+       _rootResult_:=value;
+        if Assigned(_rootResult_mOnCHANGE_) then _rootResult_mOnCHANGE_(self,nil);
+    end;
+end;
+
+{function tCopyRast_SrcTree_STAGE_CORE._targetROOT_GET_:tCopyRast_stROOT;
+begin
+    result:=_rootResult_;
+end; }
+
+
+
 
 {%region --- .._itmSTAGE.. ------}
 
@@ -102,13 +175,13 @@ end;
 
 function tCopyRast_SrcTree_itmSTAGE.ROOT_Target:tCopyRast_stROOT;
 begin
-    {$ifDEF _local_DEBUG_}                         ;
+  (*  {$ifDEF _local_DEBUG_}                         ;
         Assert(Assigned(_OWNER_), ClassName+'._OWNER_===NIL');
         //     | типа тест ... для проверки СООБЩЕНИЯ
         Assert(_OWNER_ is tCopyRast_SrcTree_prcSTAGE, ClassName+'._OWNER_('+_OWNER_.ClassName+') is NOT '+tCopyRast_SrcTree_itmSTAGE.ClassName);
         Assert(Assigned(tCopyRast_SrcTree_prcSTAGE(_OWNER_)._targetROOT_GET_), ClassName+'._OWNER_._targetROOT_===NIL');
     {$endIf}
-    result:=tCopyRast_stROOT(tCopyRast_SrcTree_prcSTAGE(_OWNER_)._targetROOT_GET_);
+    result:=tCopyRast_stROOT(tCopyRast_SrcTree_prcSTAGE(_OWNER_)._targetROOT_GET_); *)
 end;
 
 {%endregion}
@@ -153,31 +226,6 @@ begin
 end;}
 
 
-procedure tCopyRast_SrcTree_prcSTAGE._rootResult_CLR_;
-var tmpRoot:tCopyRast_stROOT;
-begin
-    if Assigned(_rootResult_) then begin
-        tmpRoot:=_rootResult_;
-       _rootResult_:=nil;
-        if Assigned(_rootResult_mOnCHANGE_) then _rootResult_mOnCHANGE_(self,nil);
-        tmpRoot.Free;
-    end;
-end;
-
-procedure tCopyRast_SrcTree_prcSTAGE._rootResult_SET_(const value:tCopyRast_stROOT);
-begin
-    if _rootResult_<>value then begin
-       _rootResult_CLR_; {todo: УБРАТЬ отсюда}
-        //
-       _rootResult_:=value;
-        if Assigned(_rootResult_mOnCHANGE_) then _rootResult_mOnCHANGE_(self,nil);
-    end;
-end;
-
-function tCopyRast_SrcTree_prcSTAGE._targetROOT_GET_:tCopyRast_stROOT;
-begin
-    result:=_rootResult_;
-end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
