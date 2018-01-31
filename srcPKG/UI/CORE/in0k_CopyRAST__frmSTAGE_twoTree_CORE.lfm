@@ -1,4 +1,4 @@
-inherited frmCopyRAST_STAGE_twoTree: TfrmCopyRAST_STAGE_twoTree
+inherited frmCopyRAST_STAGE_L_R: TfrmCopyRAST_STAGE_L_R
   Height = 416
   Width = 582
   ClientHeight = 416

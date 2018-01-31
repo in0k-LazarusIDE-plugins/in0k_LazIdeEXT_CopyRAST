@@ -1,0 +1,9 @@
+object frmCopyRAST_STAGE_LMR: TfrmCopyRAST_STAGE_LMR
+  Left = 0
+  Height = 240
+  Top = 0
+  Width = 320
+  TabOrder = 0
+  DesignLeft = 730
+  DesignTop = 119
+end

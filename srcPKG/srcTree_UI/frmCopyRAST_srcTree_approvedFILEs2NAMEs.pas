@@ -12,7 +12,7 @@ uses
   lazExt_CopyRAST__xmlConfig,
   in0k_CopyRAST__frmSTAGE_twoTree_CORE,
 
-  in0k_CopyRAST_srcTree_Stage,
+  in0k_CopyRAST_STAGEs_CORE,
 
   cmpCopyRAST_srcTree_approvedFiles,
   in0k_lazIdeSRC_srcTree_CORE_item,
@@ -29,7 +29,7 @@ type
 
  { TfrmApprovedFILEs2NAMEs }
 
- TfrmApprovedFILEs2NAMEs = class(TfrmCopyRAST_STAGE_twoTree)
+ TfrmApprovedFILEs2NAMEs = class(TfrmCopyRAST_STAGE_L_R)
     frmCopyRAST_cie_ReNamesCustomer1: TfrmCopyRAST_cie_ReNamesCustomer;
     frmCopyRAST_cie_ReNamesTemplate1: TfrmCopyRAST_cie_ReNamesTemplate;
     pnlPRP: TPanel;
@@ -60,13 +60,13 @@ type
    // procedure _treeR_SelectionChanged_(Sender:TObject);
   private
     //_HNDLR_:tCopyRast_stage__ChangePaths;
-    procedure _STAGE_set_(const value:tCopyRast_SrcTree_prcSTAGE);
+    //procedure _STAGE_set_(const value:tCopyRast_STAGE); override;
   public
     constructor Create(AOwner:TComponent); override;
     destructor DESTROY; override;
   public
-    procedure wndSettings_LOAD(const xmlCongif:tLazExt_CopyRAST_CONFIG); override;
-    procedure wndSettings_SAVE(const xmlCongif:tLazExt_CopyRAST_CONFIG); override;
+    procedure frmSettings_LOAD(const xmlCongif:tLazExt_CopyRAST_CONFIG); override;
+    procedure frmSettings_SAVE(const xmlCongif:tLazExt_CopyRAST_CONFIG); override;
   end;
 
 implementation
@@ -167,9 +167,9 @@ end;}
 
 //------------------------------------------------------------------------------
 
-procedure TfrmApprovedFILEs2NAMEs._STAGE_set_(const value:tCopyRast_SrcTree_prcSTAGE);
+(*procedure TfrmApprovedFILEs2NAMEs._STAGE_set_(const value:tCopyRast_STAGE);
 begin
-
+   (*
     frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=nil;//@(_HNDLR_.Template_APPLAY);
     inherited;
     if Assigned(_STAGE_) then begin
@@ -177,14 +177,14 @@ begin
     end
     else begin
         frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=nil;
-    end;
-end;
+    end; *)
+end; *)
 
 //------------------------------------------------------------------------------
 
 procedure TfrmApprovedFILEs2NAMEs._editItem_SET_(const value:tSrcTree_item);
 begin
-    if Assigned(value) then begin
+ (*   if Assigned(value) then begin
        _editItem_:=value;
         frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_ITM:=nil;
         frmCopyRAST_cie_ReNamesCustomer1.ItemCNFG:=tCopyRast_stage__ChangePaths(_STAGE_).CNFG_customer_GET(_editItem_);
@@ -197,21 +197,21 @@ begin
         frmCopyRAST_cie_ReNamesCustomer1.ItemCNFG:=nil;
         frmCopyRAST_cie_ReNamesTemplate1.ItemCNFG:=nil;
        _cnfg_template_SET_(nil);
-    end;
+    end;  *)
 end;
 
 procedure TfrmApprovedFILEs2NAMEs._onChange_customer_(const Sender:tObject; const itemCnfg:pointer);
 begin
-    if Assigned(_editItem_) then begin
+  (*  if Assigned(_editItem_) then begin
        tCopyRast_stage__ChangePaths(_STAGE_).CNFG_customer_SET(_editItem_,tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node(itemCnfg));
-    end;
+    end; *)
 end;
 
 procedure TfrmApprovedFILEs2NAMEs._onChange_template_(const Sender:tObject; const itemCnfg:pointer);
 begin
-    if Assigned(_editItem_) then begin
+  (*   if Assigned(_editItem_) then begin
        tCopyRast_stage__ChangePaths(_STAGE_).CNFG_template_SET(_editItem_,tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(itemCnfg));
-    end;
+    end; *)
 end;
 
 {procedure TfrmApprovedFILEs2NAMEs._editItem_onCHG_template;
@@ -317,16 +317,16 @@ const
  _cWndSettings_Height='Height';
 
 
-procedure TfrmApprovedFILEs2NAMEs.wndSettings_LOAD(const xmlCongif:tLazExt_CopyRAST_CONFIG);
+procedure TfrmApprovedFILEs2NAMEs.frmSettings_LOAD(const xmlCongif:tLazExt_CopyRAST_CONFIG);
 begin
     inherited;
-    pnlPRP.Height:=xmlCongif.GetValue(lERxC_8Value(wndSettings_Section,_cWndSettings_pnlPRP,_cWndSettings_Height),pnlPRP.Constraints.MinHeight);
+   // pnlPRP.Height:=xmlCongif.GetValue(lERxC_8Value(wndSettings_Section,_cWndSettings_pnlPRP,_cWndSettings_Height),pnlPRP.Constraints.MinHeight);
 end;
 
-procedure TfrmApprovedFILEs2NAMEs.wndSettings_SAVE(const xmlCongif:tLazExt_CopyRAST_CONFIG);
+procedure TfrmApprovedFILEs2NAMEs.frmSettings_SAVE(const xmlCongif:tLazExt_CopyRAST_CONFIG);
 begin
     inherited;
-    xmlCongif.SetDeleteValue(lERxC_8Value(wndSettings_Section,_cWndSettings_pnlPRP,_cWndSettings_Height),pnlPRP.Height,pnlPRP.Constraints.MinHeight);
+   // xmlCongif.SetDeleteValue(lERxC_8Value(wndSettings_Section,_cWndSettings_pnlPRP,_cWndSettings_Height),pnlPRP.Height,pnlPRP.Constraints.MinHeight);
 end;
 
 

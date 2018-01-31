@@ -1,0 +1,9 @@
+object frmCopyRAST__STAGE_03_Renaming: TfrmCopyRAST__STAGE_03_Renaming
+  Left = 0
+  Height = 240
+  Top = 0
+  Width = 320
+  TabOrder = 0
+  DesignLeft = 443
+  DesignTop = 119
+end

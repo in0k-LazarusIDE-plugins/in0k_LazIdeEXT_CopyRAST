@@ -13,7 +13,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
 
      LazIDEIntf,
 
-     in0k_CopyRAST__frmSTAGE_approveFILEs,
+     in0k_CopyRAST__frmSTAGE_02_Revision,
 
      IDEImagesIntf, PackageIntf,
      lazExt_CopyRAST_FuckUpForm,
@@ -36,7 +36,7 @@ type
  { Twnd_lazExt_CopyRAST_CORE }
 
  Twnd_lazExt_CopyRAST_CORE = class(TForm)
-    frmCopyRAST_STAGE_approveFILEs1: TfrmCopyRAST_STAGE_approveFILEs;
+    frmCopyRAST_STAGE_approveFILEs1: TfrmCopyRAST_STAGE__02_Revision;
     Button1: TButton;
     Button2: TButton;
 		Button3: TButton;
@@ -262,7 +262,7 @@ end;
 
 procedure Twnd_lazExt_CopyRAST_CORE.TabSheet2Hide(Sender: TObject);
 begin
-    frmCopyRAST_STAGE_approveFILEs1.STAGE:=_cpRastObj_.Stage_1;
+//    frmCopyRAST_STAGE_approveFILEs1.STAGE:=_cpRastObj_.Stage_1;
 end;
 
 procedure Twnd_lazExt_CopyRAST_CORE.TabSheet2Show(Sender: TObject);

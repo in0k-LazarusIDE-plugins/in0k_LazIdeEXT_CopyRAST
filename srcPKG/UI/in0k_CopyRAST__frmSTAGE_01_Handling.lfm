@@ -1,0 +1,19 @@
+inherited frmCopyRAST__STAGE_01_Handling: TfrmCopyRAST__STAGE_01_Handling
+  Height = 240
+  Width = 320
+  ClientHeight = 240
+  ClientWidth = 320
+  DesignLeft = 443
+  inherited Label1: TLabel
+    AnchorSideLeft.Control = Owner
+    AnchorSideTop.Control = Owner
+  end
+  inherited Label2: TLabel
+    AnchorSideTop.Control = Owner
+  end
+  inherited Splitter_LR: TSplitter
+    AnchorSideTop.Control = Owner
+    AnchorSideBottom.Control = Owner
+    Height = 240
+  end
+end

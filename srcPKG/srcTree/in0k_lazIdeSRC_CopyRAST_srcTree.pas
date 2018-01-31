@@ -7,7 +7,7 @@ interface
 uses
   PackageIntf,
   in0k_CopyRAST_srcTree_ITEMs,
-
+  srcTree_handler4build_CORE,
   in0k_lazIdeSRC_srcTree_CORE_item,
   in0k_lazIdeSRC_srcTree_item_Globals,
   in0k_lazIdeSRC_srcTree_CORE_itemFileSystem,
@@ -72,7 +72,7 @@ type
     constructor Create(const Owner:tSrcTree_prcHandler; const Parent:tSrcTree_itmHandler); override;
   end;
 
- tCopyRastSrcTree_P4Build=class(tSrcTree_prcHandler)
+ tCopyRastSrcTree_P4Build=class(tSrcTree_prcHandler4Build)
   protected
     procedure _EXECUTE_; override;
   end;

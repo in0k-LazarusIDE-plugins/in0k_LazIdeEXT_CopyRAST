@@ -36,9 +36,9 @@ srcTree_handler4build_CORE,
   lazExt_CopyRAST__xmlConfig,
   lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs,
 
-  in0k_CopyRAST_srcTree_Stage;
+  in0k_CopyRAST_STAGEs_CORE;
 
-type
+//type
 
  {tCopyRastSrcTree_itmH4ReNAMEs_FLDR=class(tSrcTree_itmHandler4Build)
   public // ВЫПОЛНЕНИЕ
@@ -50,7 +50,7 @@ type
     function Processing:boolean; override; // ВЫПОЛНИТЬ обработку
   end;}
 
- tCopyRast_stage__ChangePaths=class(tCopyRast_SrcTree_prcSTAGE)
+ (*tCopyRast_stage__ChangePaths=class(tCopyRast_SrcTree_STAGE_XX)
   private
    _regExpr_:TRegExpr;
   strict private
@@ -123,9 +123,9 @@ type
     function  Template_APPLAY(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer;
   public
     //property ROOT_old:tSrcTree_item read _execRoot_;// write _nodeRoot_;
-  end;
+  end;     *)
 
-implementation
+implementation                  (*
 
 {%region --- tCopyRast_SrcTree_stageReNAMEs_itm4file ------------------- }
 
@@ -870,11 +870,12 @@ const
 
 // переСоздаем список НАШИХ макросов
 procedure tCopyRast_stage__ChangePaths._macross_reClc_;
-begin
+begin (*
    _macross_.Clear;
     // заполним ЗАНОГО
    _macross_.Add(_cMacrosNAME_crOldNAME_+_cMacrosSMBL_equal_+_get_oldName_ROOT_(_sourceROOT_GET_));
    _macross_.Add(_cMacrosNAME_crNewNAME_+_cMacrosSMBL_equal_+_clc_newName_ROOT_(_targetROOT_GET_));
+   *)
 end;
 
 //------------------------------------------------------------------------------
@@ -975,6 +976,6 @@ function tCopyRast_stage__ChangePaths.Template_APPLAY(const srcItem:tSrcTree_ite
 begin
     result:=_template_APPLAY_RULE_(srcItem,srcName,rule,outName);
 end;
-
+               *)
 end.
 

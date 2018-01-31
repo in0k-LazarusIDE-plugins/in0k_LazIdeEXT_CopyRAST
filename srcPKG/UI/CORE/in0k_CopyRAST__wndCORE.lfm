@@ -1,7 +1,7 @@
 object wndCopyRAST_CORE: TwndCopyRAST_CORE
-  Left = 517
+  Left = 557
   Height = 632
-  Top = 178
+  Top = 124
   Width = 829
   Caption = 'wndCopyRAST_CORE'
   ClientHeight = 632
@@ -14,15 +14,15 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
     Height = 582
     Top = 0
     Width = 829
-    ActivePage = TabSheet_Stage_3
+    ActivePage = TabSheet_Stage_1
     Align = alClient
-    TabIndex = 4
+    TabIndex = 2
     TabOrder = 0
     OnChange = PageControl1Change
     OnChanging = PageControl1Changing
     object TabSheet1: TTabSheet
       Caption = 'TabSheet1'
-      ClientHeight = 294
+      ClientHeight = 554
       ClientWidth = 821
       object GroupBox1: TGroupBox
         AnchorSideLeft.Control = TabSheet1
@@ -78,28 +78,34 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
     end
     object TabSheet_Stage_0: TTabSheet
       Caption = 'SrcTREE'
+      ClientHeight = 554
+      ClientWidth = 821
       OnShow = TabSheet_Stage_0Show
+      inline frmCopyRAST__STAGE_00: TfrmCopyRAST__STAGE_00_CreateTree
+        Height = 554
+        Width = 821
+      end
     end
     object TabSheet_Stage_1: TTabSheet
       Caption = 'File Handling'
       ClientHeight = 554
       ClientWidth = 821
       OnShow = TabSheet_Stage_xShow
-      inline frmCopyRAST_STAGE_1: TfrmCopyRAST_STAGE_twoTree
+      inline frmCopyRAST__STAGE_01: TfrmCopyRAST__STAGE_01_Handling
         Height = 554
         Width = 821
         ClientHeight = 554
         ClientWidth = 821
         inherited Label1: TLabel
-          AnchorSideLeft.Control = frmCopyRAST_STAGE_1
-          AnchorSideTop.Control = frmCopyRAST_STAGE_1
+          AnchorSideLeft.Control = frmCopyRAST__STAGE_01
+          AnchorSideTop.Control = frmCopyRAST__STAGE_01
         end
         inherited Label2: TLabel
-          AnchorSideTop.Control = frmCopyRAST_STAGE_1
+          AnchorSideTop.Control = frmCopyRAST__STAGE_01
         end
         inherited Splitter_LR: TSplitter
-          AnchorSideTop.Control = frmCopyRAST_STAGE_1
-          AnchorSideBottom.Control = frmCopyRAST_STAGE_1
+          AnchorSideTop.Control = frmCopyRAST__STAGE_01
+          AnchorSideBottom.Control = frmCopyRAST__STAGE_01
           Height = 554
         end
       end
@@ -109,21 +115,21 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
       ClientHeight = 554
       ClientWidth = 821
       OnShow = TabSheet_Stage_xShow
-      inline frmCopyRAST_STAGE_2: TfrmCopyRAST_STAGE_twoTree
+      inline frmCopyRAST__STAGE_02: TfrmCopyRAST_STAGE__02_Revision
         Height = 554
         Width = 821
         ClientHeight = 554
         ClientWidth = 821
         inherited Label1: TLabel
-          AnchorSideLeft.Control = frmCopyRAST_STAGE_2
-          AnchorSideTop.Control = frmCopyRAST_STAGE_2
+          AnchorSideLeft.Control = frmCopyRAST__STAGE_02
+          AnchorSideTop.Control = frmCopyRAST__STAGE_02
         end
         inherited Label2: TLabel
-          AnchorSideTop.Control = frmCopyRAST_STAGE_2
+          AnchorSideTop.Control = frmCopyRAST__STAGE_02
         end
         inherited Splitter_LR: TSplitter
-          AnchorSideTop.Control = frmCopyRAST_STAGE_2
-          AnchorSideBottom.Control = frmCopyRAST_STAGE_2
+          AnchorSideTop.Control = frmCopyRAST__STAGE_02
+          AnchorSideBottom.Control = frmCopyRAST__STAGE_02
           Height = 554
         end
       end
@@ -133,116 +139,22 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
       ClientHeight = 554
       ClientWidth = 821
       OnShow = TabSheet_Stage_xShow
-      inline frmCopyRAST_STAGE_3: TfrmApprovedFILEs2NAMEs
+      inline frmCopyRAST__STAGE_03: TfrmCopyRAST__STAGE_03_Renaming
         Height = 554
         Width = 821
         ClientHeight = 554
         ClientWidth = 821
         inherited Label1: TLabel
-          AnchorSideLeft.Control = frmCopyRAST_STAGE_3
-          AnchorSideTop.Control = frmCopyRAST_STAGE_3
+          AnchorSideLeft.Control = frmCopyRAST__STAGE_03
+          AnchorSideTop.Control = frmCopyRAST__STAGE_03
         end
         inherited Label2: TLabel
-          AnchorSideTop.Control = frmCopyRAST_STAGE_3
+          AnchorSideTop.Control = frmCopyRAST__STAGE_03
         end
         inherited Splitter_LR: TSplitter
-          AnchorSideTop.Control = frmCopyRAST_STAGE_3
-          Height = 196
-        end
-        inherited pnlPRP: TPanel
-          Top = 201
-          Width = 821
-          ClientWidth = 821
-          inherited frmCopyRAST_cie_ReNamesCustomer1: TfrmCopyRAST_cie_ReNamesCustomer
-            Height = 48
-            Width = 821
-            Align = alTop
-            ClientHeight = 48
-            ClientWidth = 821
-            inherited cntrl_nameCST: TCheckBoxThemed
-              AnchorSideLeft.Control = frmCopyRAST_STAGE_3.frmCopyRAST_cie_ReNamesCustomer1
-            end
-            inherited cntrl_pathStated: TEdit
-              Width = 717
-            end
-            inherited cntrl_nameStated: TEdit
-              AnchorSideTop.Control = frmCopyRAST_STAGE_3.frmCopyRAST_cie_ReNamesCustomer1
-              AnchorSideRight.Control = frmCopyRAST_STAGE_3.frmCopyRAST_cie_ReNamesCustomer1
-              Width = 717
-            end
-          end
-          inherited frmCopyRAST_cie_ReNamesTemplate1: TfrmCopyRAST_cie_ReNamesTemplate
-            Height = 305
-            Top = 48
-            Width = 821
-            Align = alClient
-            ClientHeight = 305
-            ClientWidth = 821
-            TabOrder = 1
-            DesignLeft = 468
-            DesignTop = 400
-            inherited pnl_BTTNs: TPanel
-              AnchorSideTop.Control = frmCopyRAST_STAGE_3.frmCopyRAST_cie_ReNamesTemplate1
-              AnchorSideBottom.Control = frmCopyRAST_STAGE_3.frmCopyRAST_cie_ReNamesTemplate1
-              Height = 305
-              ClientHeight = 305
-            end
-            inherited Splitter1: TSplitter
-              AnchorSideTop.Control = frmCopyRAST_STAGE_3.frmCopyRAST_cie_ReNamesTemplate1
-              AnchorSideBottom.Control = frmCopyRAST_STAGE_3.frmCopyRAST_cie_ReNamesTemplate1
-              Height = 305
-            end
-            inherited frmCopyRAST_cie_ReNamesTmpltRULE1: TfrmCopyRAST_cie_ReNamesTmpltRULE
-              AnchorSideLeft.Control = frmCopyRAST_STAGE_3.frmCopyRAST_cie_ReNamesTemplate1.pnl_BTTNs
-              AnchorSideLeft.Side = asrBottom
-              AnchorSideTop.Control = frmCopyRAST_STAGE_3.frmCopyRAST_cie_ReNamesTemplate1
-              AnchorSideRight.Control = frmCopyRAST_STAGE_3.frmCopyRAST_cie_ReNamesTemplate1
-              AnchorSideRight.Side = asrBottom
-              AnchorSideBottom.Control = frmCopyRAST_STAGE_3.frmCopyRAST_cie_ReNamesTemplate1
-              AnchorSideBottom.Side = asrBottom
-              Left = 349
-              Height = 305
-              Width = 472
-              Anchors = [akTop, akLeft, akRight, akBottom]
-              ClientHeight = 305
-              ClientWidth = 472
-              TabOrder = 2
-              inherited GroupBox1: TGroupBox
-                Height = 305
-                Width = 472
-                ClientHeight = 285
-                ClientWidth = 468
-                inherited Label1: TLabel
-                  Left = 430
-                  Top = -1
-                end
-                inherited CheckBoxThemed2: TCheckBoxThemed
-                  Left = -382
-                end
-                inherited Edit1: TEdit
-                  Left = -382
-                  Width = 850
-                end
-                inherited Edit2: TEdit
-                  Left = -382
-                  Width = 850
-                end
-                inherited CheckBoxThemed3: TCheckBoxThemed
-                  Left = -382
-                end
-                inherited CheckBoxThemed4: TCheckBoxThemed
-                  Left = -340
-                end
-                inherited CheckBoxThemed5: TCheckBoxThemed
-                  Left = -382
-                end
-              end
-            end
-          end
-        end
-        inherited Splitter_TB: TSplitter
-          Top = 196
-          Width = 821
+          AnchorSideTop.Control = frmCopyRAST__STAGE_03
+          AnchorSideBottom.Control = frmCopyRAST__STAGE_03
+          Height = 554
         end
       end
     end
@@ -251,21 +163,22 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
       ClientHeight = 554
       ClientWidth = 821
       OnShow = TabSheet_Stage_xShow
-      inline frmCopyRAST_STAGE_4: TfrmCopyRAST_STAGE_twoTree
+      inline frmCopyRAST__STAGE_04: TfrmCopyRAST__STAGE_04_Copying
         Height = 554
         Width = 821
         ClientHeight = 554
         ClientWidth = 821
         inherited Label1: TLabel
-          AnchorSideLeft.Control = frmCopyRAST_STAGE_4
-          AnchorSideTop.Control = frmCopyRAST_STAGE_4
+          AnchorSideLeft.Control = frmCopyRAST__STAGE_04
+          AnchorSideTop.Control = frmCopyRAST__STAGE_04
         end
         inherited Label2: TLabel
-          AnchorSideTop.Control = frmCopyRAST_STAGE_4
+          AnchorSideTop.Control = frmCopyRAST__STAGE_04
         end
         inherited Splitter_LR: TSplitter
-          AnchorSideTop.Control = frmCopyRAST_STAGE_4
-          AnchorSideBottom.Control = frmCopyRAST_STAGE_4
+          AnchorSideTop.Control = frmCopyRAST__STAGE_04
+          AnchorSideBottom.Control = frmCopyRAST__STAGE_04
+          Height = 554
         end
       end
     end
@@ -274,21 +187,22 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
       ClientHeight = 554
       ClientWidth = 821
       OnShow = TabSheet_Stage_xShow
-      inline frmCopyRAST_STAGE_5: TfrmCopyRAST_STAGE_twoTree
+      inline frmCopyRAST__STAGE_05: TfrmCopyRAST__STAGE_05_PostProcessing
         Height = 554
         Width = 821
         ClientHeight = 554
         ClientWidth = 821
         inherited Label1: TLabel
-          AnchorSideLeft.Control = frmCopyRAST_STAGE_5
-          AnchorSideTop.Control = frmCopyRAST_STAGE_5
+          AnchorSideLeft.Control = frmCopyRAST__STAGE_05
+          AnchorSideTop.Control = frmCopyRAST__STAGE_05
         end
         inherited Label2: TLabel
-          AnchorSideTop.Control = frmCopyRAST_STAGE_5
+          AnchorSideTop.Control = frmCopyRAST__STAGE_05
         end
         inherited Splitter_LR: TSplitter
-          AnchorSideTop.Control = frmCopyRAST_STAGE_5
-          AnchorSideBottom.Control = frmCopyRAST_STAGE_5
+          AnchorSideTop.Control = frmCopyRAST__STAGE_05
+          AnchorSideBottom.Control = frmCopyRAST__STAGE_05
+          Height = 554
         end
       end
     end

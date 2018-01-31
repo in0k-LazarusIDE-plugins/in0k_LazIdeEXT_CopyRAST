@@ -18,7 +18,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
          //in0k_CopyRAST_srcTree_Stage_0t1,
         in0k_lazIdeSRC_srcTree_item_Globals,
         in0k_CopyRAST_srcTree_ITEMs,
-     in0k_CopyRAST_stage__FileHandling,
+     //in0k_CopyRAST_stage__FileHandling,
     lazExt_CopyRAST_wndCORE,
      lazExt_CopyRAST_node_ROOT,
      lazExt_CopyRAST_node_ROOT_package,
@@ -28,7 +28,6 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
      lazExt_CopyRAST_StrConsts,
      lazExt_CopyRAST_node, lazExt_CopyRAST_node_Folder, lazExt_CopyRAST_node_File,
         in0k_CopyRAST_STAGEs,
-        in0k_CopyRAST_STAGEs_4Package,
         in0k_lazIdeSRC_CopyRAST_srcTree,
 
   PackageIntf,

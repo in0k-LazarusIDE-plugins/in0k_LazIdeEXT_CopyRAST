@@ -17,8 +17,11 @@ uses
   lazExt_CopyRAST__xmlConfig_Base,
 
   cmpCopyRAST_srcTree, frmCopyRAST_srcTree_approvedFILEs2NAMEs,
+
   in0k_CopyRAST_STAGEs, in0k_CopyRAST__frmSTAGE_twoTree_CORE,
-  in0k_CopyRAST__frmSTAGE_approveFILEs,
+  in0k_CopyRAST__frmSTAGE_00_CreateTree, in0k_CopyRAST__frmSTAGE_02_Revision,
+  in0k_CopyRAST__frmSTAGE_01_Handling, in0k_CopyRAST__frmSTAGE_03_Rename,
+  in0k_CopyRAST__frmSTAGE_04_Copying, in0k_CopyRAST__frmSTAGE_05_PostProcessing,
 
   in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
 
@@ -43,11 +46,13 @@ type
     Button3: TButton;
     Button4: TButton;
     CheckBoxThemed1: TCheckBoxThemed;
-    frmCopyRAST_STAGE_3: TfrmApprovedFILEs2NAMEs;
-    frmCopyRAST_STAGE_1: TfrmCopyRAST_STAGE_twoTree;
-    frmCopyRAST_STAGE_2: TfrmCopyRAST_STAGE_twoTree;
-    frmCopyRAST_STAGE_4: TfrmCopyRAST_STAGE_twoTree;
-    frmCopyRAST_STAGE_5: TfrmCopyRAST_STAGE_twoTree;
+    frmCopyRAST__STAGE_01: TfrmCopyRAST__STAGE_01_Handling;
+    frmCopyRAST__STAGE_02: TfrmCopyRAST_STAGE__02_Revision;
+    frmCopyRAST__STAGE_00: TfrmCopyRAST__STAGE_00_CreateTree;
+    frmCopyRAST__STAGE_03: TfrmCopyRAST__STAGE_03_Renaming;
+    frmCopyRAST__STAGE_04: TfrmCopyRAST__STAGE_04_Copying;
+
+      frmCopyRAST__STAGE_05: TfrmCopyRAST__STAGE_05_PostProcessing;
     GroupBox1: TGroupBox;
     Label1: TLabel;
     PageControl1: TPageControl;
@@ -128,11 +133,11 @@ type
 
     procedure _stages_reIMAGE_;
   protected
-    procedure _STAGES_onCLEAN_(const Sender:tCopyRAST_STAGEs; const stageIndex:integer);
-    procedure _STAGES_onSTAGE_(const Sender:tCopyRAST_STAGEs; const stageIndex:integer);
+    procedure _STAGES_onCLEAN_(const Sender:tObject; const stageIndex:integer);
+    procedure _STAGES_onSTAGE_(const Sender:tObject; const stageIndex:integer);
 
   protected
-   _view_stage0_files_:tCmpCopyRAST_srcTree;
+  // _view_stage0_files_:tCmpCopyRAST_srcTree;
 
 
 
@@ -178,19 +183,20 @@ begin
    _stageImgIDX_eER_:=-1;
    _stageImgIDX_eOk_:=-1;
     //
-    frmCopyRAST_STAGE_1.STAGE:=_cpRastObj_.Stage_1;
-    frmCopyRAST_STAGE_2.STAGE:=_cpRastObj_.Stage_2;
-    frmCopyRAST_STAGE_3.STAGE:=_cpRastObj_.Stage_3;
-    frmCopyRAST_STAGE_4.STAGE:=_cpRastObj_.Stage_4;
-    frmCopyRAST_STAGE_5.STAGE:=_cpRastObj_.Stage_5;
+    frmCopyRAST__STAGE_00.STAGE:=_cpRastObj_.Stage_0;
+    frmCopyRAST__STAGE_01.STAGE:=_cpRastObj_.Stage_1;
+    frmCopyRAST__STAGE_02.STAGE:=_cpRastObj_.Stage_2;
+    frmCopyRAST__STAGE_03.STAGE:=_cpRastObj_.Stage_3;
+    frmCopyRAST__STAGE_04.STAGE:=_cpRastObj_.Stage_4;
+    frmCopyRAST__STAGE_05.STAGE:=_cpRastObj_.Stage_5;
     //
     PageControl1.ActivePageIndex:=0;
     PageControl1.Images:=IDEImages.Images_16;
    _stages_reIMAGE_;
     //
-   _view_stage0_files_:=tCmpCopyRAST_srcTree.Create(self);
-   _view_stage0_files_.Parent:=TabSheet_Stage_0;
-   _view_stage0_files_.Align:=alClient;
+   //_view_stage0_files_:=tCmpCopyRAST_srcTree.Create(self);
+   //_view_stage0_files_.Parent:=TabSheet_Stage_0;
+   //_view_stage0_files_.Align:=alClient;
 end;
 
 procedure tWndCopyRAST_CORE.AfterConstruction;
@@ -471,20 +477,13 @@ begin
     end;
 end;
 
-procedure tWndCopyRAST_CORE._STAGES_onCLEAN_(const Sender:tCopyRAST_STAGEs; const stageIndex:integer);
+procedure tWndCopyRAST_CORE._STAGES_onCLEAN_(const Sender:tObject; const stageIndex:integer);
 begin
-    if stageIndex=0 then begin
-       _view_stage0_files_.Root:=nil;
-    end;
-
    _stages_reIMAGE_;
 end;
 
-procedure tWndCopyRAST_CORE._STAGES_onSTAGE_(const Sender:tCopyRAST_STAGEs; const stageIndex:integer);
+procedure tWndCopyRAST_CORE._STAGES_onSTAGE_(const Sender:tObject; const stageIndex:integer);
 begin
-    if stageIndex=0 then begin
-       _view_stage0_files_.Root:=_cpRastObj_.SrcTREE;
-    end;
    _stages_reIMAGE_;
 end;
 
@@ -673,11 +672,12 @@ begin
     self.Position:=poDesigned;
     self.BoundsRect:=r;
     // останое
-    frmCopyRAST_STAGE_1.wndSettings_LOAD(xmlCongif);
-    frmCopyRAST_STAGE_2.wndSettings_LOAD(xmlCongif);
-    frmCopyRAST_STAGE_3.wndSettings_LOAD(xmlCongif);
-    frmCopyRAST_STAGE_4.wndSettings_LOAD(xmlCongif);
-    frmCopyRAST_STAGE_5.wndSettings_LOAD(xmlCongif);
+    frmCopyRAST__STAGE_00.frmSettings_LOAD(xmlCongif);
+    frmCopyRAST__STAGE_01.frmSettings_LOAD(xmlCongif);
+    frmCopyRAST__STAGE_02.frmSettings_LOAD(xmlCongif);
+    frmCopyRAST__STAGE_03.frmSettings_LOAD(xmlCongif);
+    frmCopyRAST__STAGE_04.frmSettings_LOAD(xmlCongif);
+    frmCopyRAST__STAGE_05.frmSettings_LOAD(xmlCongif);
 end;
 
 procedure tWndCopyRAST_CORE._wndSettings_LOAD_;
@@ -696,11 +696,12 @@ begin
     // свое Место положение
     xmlCongif.SetValue(_cWndSettings_name_Position,self.BoundsRect);
     // останое
-    frmCopyRAST_STAGE_1.wndSettings_SAVE(xmlCongif);
-    frmCopyRAST_STAGE_2.wndSettings_SAVE(xmlCongif);
-    frmCopyRAST_STAGE_3.wndSettings_SAVE(xmlCongif);
-    frmCopyRAST_STAGE_4.wndSettings_SAVE(xmlCongif);
-    frmCopyRAST_STAGE_5.wndSettings_SAVE(xmlCongif);
+    frmCopyRAST__STAGE_00.frmSettings_SAVE(xmlCongif);
+    frmCopyRAST__STAGE_01.frmSettings_SAVE(xmlCongif);
+    frmCopyRAST__STAGE_02.frmSettings_SAVE(xmlCongif);
+    frmCopyRAST__STAGE_03.frmSettings_SAVE(xmlCongif);
+    frmCopyRAST__STAGE_04.frmSettings_SAVE(xmlCongif);
+    frmCopyRAST__STAGE_05.frmSettings_SAVE(xmlCongif);
 end;
 
 procedure tWndCopyRAST_CORE._wndSettings_SAVE_;

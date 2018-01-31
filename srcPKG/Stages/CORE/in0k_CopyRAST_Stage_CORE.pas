@@ -17,21 +17,23 @@ uses
   in0k_CopyRAST_srcTree_ITEMs;
 
 
-type
+//type
 
- tCopyRast_SrcTree_itmSTAGE=class(tSrcTree_itmHandler4Build)
+ {tCopyRast_SrcTree_itmSTAGE=class(tSrcTree_itmHandler4Build)
   protected
     function ROOT_Source:tCopyRast_stROOT; {$ifOpt D-}inline;{$endIf}
     function ROOT_Target:tCopyRast_stROOT; {$ifOpt D-}inline;{$endIf}
-  end;
+  end;}
 
 
-type
+//mCopyRast_STAGE_onRootChange=procedure(const Sender:tCopyRast_SrcTree_STAGE_CORE; const newRoot:tCopyRast_stROOT) of object;
 
- tCopyRast_SrcTree_prcSTAGE=class;
- tCopyRast_SrcTree_STAGE_CORE=class;
+//type
 
- mCopyRast_STAGE_onRootChange=procedure(const Sender:tCopyRast_SrcTree_STAGE_CORE; const newRoot:tCopyRast_stROOT) of object;
+ //tCopyRast_SrcTree_prcSTAGE=class;
+
+
+
 
 
 { tCopyRast_SrcTree_STAGE_00_CORE=class
@@ -49,7 +51,7 @@ type
 
 
 
- tCopyRast_SrcTree_prcSTAGE=class(tCopyRast_SrcTree_STAGE_CORE)
+(* tCopyRast_SrcTree_prcSTAGE=class(tCopyRast_SrcTree_STAGE_CORE)
   protected //< что хотим получить
    _rootResult_:tCopyRast_stROOT;
    _rootResult_mOnCHANGE_:mCopyRast_STAGE_onRootChange;
@@ -60,14 +62,6 @@ type
    _rootSource_mOnCHANGE_:mCopyRast_STAGE_onRootChange;
     procedure _rootSource_CLR_; virtual;                      {$ifOpt D-}inline;{$endIf}
     procedure _rootSource_SET_(const value:tCopyRast_stROOT); {$ifOpt D-}inline;{$endIf}
-  protected // работа с Конфигурацией
-    procedure _CNFGs_FREE_;                                        virtual;
-    procedure _CNFGs_CREATE_;                                      virtual;
-    procedure _CNFGs_LOAD_(const Configs:tLazExt_CopyRAST_CONFIG); virtual;
-    procedure _CNFGs_SAVE_(const Configs:tLazExt_CopyRAST_CONFIG); virtual;
-  public    // работа с Конфигурацией
-    procedure  CNFGs_LOAD (const Configs:tLazExt_CopyRAST_CONFIG);
-    procedure  CNFGs_SAVE (const Configs:tLazExt_CopyRAST_CONFIG);
 
 
   protected
@@ -108,12 +102,12 @@ type
 
   end;
 
- tCopyRast_SrcTree_STAGE_XX_CORE=class(tCopyRast_SrcTree_prcSTAGE)
-
-  end;
-
+      *)
 
 implementation
+
+(*
+
 
 constructor tCopyRast_SrcTree_STAGE_CORE.Create(const BUILDer:tSrcTree_Builder_CORE);
 begin
@@ -348,44 +342,7 @@ end;
 begin
    _targetROOT_CLR_;
 end;}
-
-//------------------------------------------------------------------------------
-
-procedure tCopyRast_SrcTree_prcSTAGE._CNFGs_CREATE_;
-begin
-    //
-end;
-
-procedure tCopyRast_SrcTree_prcSTAGE._CNFGs_FREE_;
-begin
-    //
-end;
-
-procedure tCopyRast_SrcTree_prcSTAGE._CNFGs_LOAD_(const Configs:tLazExt_CopyRAST_CONFIG);
-begin
-    //
-end;
-
-procedure tCopyRast_SrcTree_prcSTAGE._CNFGs_SAVE_(const Configs:tLazExt_CopyRAST_CONFIG);
-begin
-    //
-end;
-
-// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-procedure tCopyRast_SrcTree_prcSTAGE.CNFGs_LOAD(const Configs:tLazExt_CopyRAST_CONFIG);
-begin
-    // чистим
-   _CNFGs_FREE_;
-   _CNFGs_CREATE_;
-    // загружаем
-   _CNFGs_LOAD_(Configs);
-end;
-
-procedure tCopyRast_SrcTree_prcSTAGE.CNFGs_SAVE(const Configs:tLazExt_CopyRAST_CONFIG);
-begin
-   _CNFGs_SAVE_(Configs);
-end;
+      *)
 
 end.
 
