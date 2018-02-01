@@ -29,7 +29,7 @@ type
     lTST:TStrings;
     ROOT:tSrcTree_ROOT;
   protected
-    procedure _setUp_(const item:tSrcTree_item; const preFix:string);
+    procedure _setUp_(const item:tSrcTree_item; const base:string; const preFix:string);
   protected
     function  SetUp_lTST_addNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
     function  SetUp_lTST_extNode(const prnt:tSrcTree_item; const lPath:string):tSrcTree_item;
@@ -71,11 +71,14 @@ end;
 
 //------------------------------------------------------------------------------
 
-procedure tTST_srcTree__PATH_get_ABS__asNEW._setUp_(const item:tSrcTree_item; const preFix:string);
+procedure tTST_srcTree__PATH_get_ABS__asNEW._setUp_(const item:tSrcTree_item; const base:string; const preFix:string);
 var tmp:tSrcTree_item;
     fld:string;
 begin
-    fld:=srcTree_fsFnk_ConcatPaths(GetTempDir,preFix);
+    //fld:=srcTree_fsFnk_ExtractFileDrive(GetTempDir);//
+    if preFix<>''
+    then fld:=srcTree_fsFnk_ConcatPaths(base,preFix)
+    else fld:=base;
     //--- добавляем тестовые пути
     tmp:=item;
     tmp:=SetUp_lTST_addNode(tmp,fld+PD+'A');
@@ -172,7 +175,7 @@ begin
         else begin
             if not Assigned(res) then Assert(FALSE,'`res` NOT create for PATH:"'+lTST.Strings[i]+'"')
             else begin // оно ДОЛЖНО лежать в КОРНЕ
-                AssertSame('`res` not in ROOT for PATH:"'+lTST.Strings[i]+'"', ROOT,res.ItemPRNT);
+                AssertSame('`res` not in ROOT for PATH:"'+lTST.Strings[i]+'"', ROOT,SrcTree_fsFolder__fnd_TOP(res).ItemPRNT);
             end;
         end
     end;
@@ -183,7 +186,7 @@ end;
 procedure tTST_srcTree__PATH_get_ABS__asNEW.getABS_base;
 begin
     // создаем ТЕСТОВЫЙ набор
-   _setUp_(SrcTree_fndBaseDIR(ROOT),RT);
+   _setUp_(SrcTree_fndBaseDIR(ROOT),GetTempDir,RT);
     // ТЕСТЫ ...
    _TEST_getAbsPATH_asNew_4BASE_;
 end;
@@ -193,7 +196,7 @@ end;
 procedure tTST_srcTree__PATH_get_ABS__asNEW.getABS_A;
 begin
     // создаем ТЕСТОВЫЙ набор
-   _setUp_(ROOT,'A');
+   _setUp_(ROOT,srcTree_fsFnk_ExtractFileDrive(GetTempDir),'A');
     // ТЕСТЫ ...
    _TEST_getAbsPATH_asNew_4OTHR_;
 end;
@@ -201,8 +204,8 @@ end;
 procedure tTST_srcTree__PATH_get_ABS__asNEW.getABS_AC;
 begin
     // создаем ТЕСТОВЫЙ набор
-   _setUp_(ROOT,'A');
-   _setUp_(ROOT,'C');
+   _setUp_(ROOT,srcTree_fsFnk_ExtractFileDrive(GetTempDir),'A');
+   _setUp_(ROOT,srcTree_fsFnk_ExtractFileDrive(GetTempDir),'C');
     // ТЕСТЫ ...
    _TEST_getAbsPATH_asNew_4OTHR_;
 end;
@@ -210,9 +213,9 @@ end;
 procedure tTST_srcTree__PATH_get_ABS__asNEW.getABS_ACD;
 begin
     // создаем ТЕСТОВЫЙ набор
-   _setUp_(ROOT,'A');
-   _setUp_(ROOT,'C');
-   _setUp_(ROOT,'D');
+   _setUp_(ROOT,srcTree_fsFnk_ExtractFileDrive(GetTempDir),'A');
+   _setUp_(ROOT,srcTree_fsFnk_ExtractFileDrive(GetTempDir),'C');
+   _setUp_(ROOT,srcTree_fsFnk_ExtractFileDrive(GetTempDir),'D');
     // ТЕСТЫ ...
    _TEST_getAbsPATH_asNew_4OTHR_;
 end;
@@ -220,15 +223,15 @@ end;
 procedure tTST_srcTree__PATH_get_ABS__asNEW.getABS_ACDE;
 begin
     // создаем ТЕСТОВЫЙ набор
-   _setUp_(ROOT,'A');
-   _setUp_(ROOT,'C');
-   _setUp_(ROOT,'D');
-   _setUp_(ROOT,'E');
+   _setUp_(ROOT,srcTree_fsFnk_ExtractFileDrive(GetTempDir),'A');
+   _setUp_(ROOT,srcTree_fsFnk_ExtractFileDrive(GetTempDir),'C');
+   _setUp_(ROOT,srcTree_fsFnk_ExtractFileDrive(GetTempDir),'D');
+   _setUp_(ROOT,srcTree_fsFnk_ExtractFileDrive(GetTempDir),'E');
     // ТЕСТЫ ...
    _TEST_getAbsPATH_asNew_4OTHR_;
 end;
 
 initialization
-   // RegisterTest(tTST_srcTree__PATH_get_ABS__asNEW);
+    RegisterTest(tTST_srcTree__PATH_get_ABS__asNEW);
 end.
 
