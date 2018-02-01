@@ -5,7 +5,8 @@ program TESTs;
 uses
   Interfaces, Forms, GuiTestRunner, fpcunittestrunner,
 
-
+uTST_000_srcTree_fsFNK_xxx,
+//
 uTST_001_srcTree_itemROOT__BaseDIR_fnk,
 uTST_001_srcTree_itemROOT__BaseDIR_mtd,
 //

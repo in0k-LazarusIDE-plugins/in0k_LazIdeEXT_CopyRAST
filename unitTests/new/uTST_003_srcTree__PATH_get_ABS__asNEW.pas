@@ -4,6 +4,8 @@ unit uTST_003_srcTree__PATH_get_ABS__asNEW;
 
 {$mode objfpc}{$H+}
 
+{todo: ПЕРЕДЕЛАТЬ ТЕСТЫ}
+
 interface
 
 uses
@@ -227,6 +229,6 @@ begin
 end;
 
 initialization
-    RegisterTest(tTST_srcTree__PATH_get_ABS__asNEW);
+   // RegisterTest(tTST_srcTree__PATH_get_ABS__asNEW);
 end.
 

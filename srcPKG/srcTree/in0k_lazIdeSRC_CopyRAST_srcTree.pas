@@ -65,17 +65,17 @@ type
 
 type
 
- tCopyRastSrcTree_f8a=class(tSrcTree_itmHandler4Build__f8a_CORE)
+ {tCopyRastSrcTree_f8a=class(tSrcTree_itmHandler__f8a)
   protected
     //function _prc__fileName_Need_ADD_(const srcName:string):boolean; override;
   public
     constructor Create(const Owner:tSrcTree_prcHandler; const Parent:tSrcTree_itmHandler); override;
-  end;
+  end;}
 
- tCopyRastSrcTree_P4Build=class(tSrcTree_prcHandler4Build)
-  protected
+ tCopyRastSrcTree_P4Build=class(tSrcTree_prcHandler__f8a);
+{  protected
     procedure _EXECUTE_; override;
-  end;
+  end; }
 
 // Processing
 // Handler
@@ -198,13 +198,13 @@ end;
 
 
 
-constructor tCopyRastSrcTree_f8a.Create(const Owner:tSrcTree_prcHandler; const Parent:tSrcTree_itmHandler);
+{constructor tCopyRastSrcTree_f8a.Create(const Owner:tSrcTree_prcHandler; const Parent:tSrcTree_itmHandler);
 begin
    inherited Create(Owner,Parent);
    //
    Handler_ADD(tSrcTree_itmHandler4Build__f8a_Item_4USEs);
    Handler_ADD(tSrcTree_itmHandler4Build__f8a_Item_4INCs);
-end;
+end;}
 
 (*function tCopyRastSrcTree_f8a._prc__fileName_Need_ADD_(const srcName:string):boolean;
 var fsFLDR:_tSrcTree_item_fsNodeFLDR_;
@@ -219,12 +219,12 @@ begin
 end;*)
 
 
-procedure tCopyRastSrcTree_P4Build._EXECUTE_;
+{procedure tCopyRastSrcTree_P4Build._EXECUTE_;
 begin
     //  _EXECUTE_4ROOT_(tSrcTree_itmHandler4Build__f8a_usesFile);
     //_EXECUTE_4ROOT_(tSrcTree_itmHandler4Build__f8a_files4INC);
-   _EXECUTE_4ROOT_(tCopyRastSrcTree_f8a);
-end;
+    EXECUTE_4ROOT(tCopyRastSrcTree_f8a);
+end;}
 
 end.
 

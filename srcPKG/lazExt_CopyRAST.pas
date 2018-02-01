@@ -17,7 +17,7 @@ uses in0k_lazIdeSRC_ExpertCORE,
      //in0k_lazIdeSRC_ExpertCORE,
      (*in0k_lazIdeSRC_ExpertCORE,*)
      in0k_CopyRAST__wnd_SHOW,
-
+      IDEMsgIntf,
      lazExt_CopyRAST_StrConsts,
      {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
      in0k_CopyRAST__wndPackage,
@@ -63,7 +63,7 @@ begin
 end;
 
 destructor tLazExt_CopyRAST.DESTROY;
-begin
+begin    // IDEMessagesWindow
    ///
 end;
 

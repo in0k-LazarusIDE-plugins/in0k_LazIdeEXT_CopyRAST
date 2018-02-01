@@ -39,7 +39,7 @@
         <PackageName Value="FCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="40">
+    <Units Count="41">
       <Unit0>
         <Filename Value="TESTs.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -200,6 +200,10 @@
         <Filename Value="..\srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1\in0k_lazIdeSRC_srcTree_FNK_fsFILE_ADD.inc"/>
         <IsPartOfProject Value="True"/>
       </Unit39>
+      <Unit40>
+        <Filename Value="new\uTST_000_srcTree_fsFNK_xxx.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit40>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
