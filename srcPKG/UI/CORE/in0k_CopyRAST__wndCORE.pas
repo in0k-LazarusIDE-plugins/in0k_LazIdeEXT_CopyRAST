@@ -9,7 +9,7 @@ interface
 
 uses
   {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
-
+          Unit1,
   IDEIntf, IDEImagesIntf,
   ProjectIntf,  LazIDEIntf,       LCLVersion,
   PackageIntf,
@@ -45,6 +45,7 @@ type
     Button2: TButton;
     Button3: TButton;
     Button4: TButton;
+    Button5: TButton;
     CheckBoxThemed1: TCheckBoxThemed;
     frmCopyRAST__STAGE_01: TfrmCopyRAST__STAGE_01_Handling;
     frmCopyRAST__STAGE_02: TfrmCopyRAST_STAGE__02_Revision;
@@ -71,6 +72,7 @@ type
     procedure a_wnd_ApplayExecute(Sender: TObject);
     procedure a_wnd_CANSELExecute(Sender: TObject);
     procedure a_wnd_OKExecute(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure PageControl1Change(Sender: TObject);
     procedure PageControl1Changing(Sender: TObject; var AllowChange: Boolean);
@@ -330,6 +332,11 @@ procedure tWndCopyRAST_CORE.a_wnd_OKExecute(Sender: TObject);
 begin
    _CNFG_Save_;
     Close;
+end;
+
+procedure tWndCopyRAST_CORE.Button5Click(Sender: TObject);
+begin
+    with TForm1.Create(Application) do Show;
 end;
 
 //------------------------------------------------------------------------------

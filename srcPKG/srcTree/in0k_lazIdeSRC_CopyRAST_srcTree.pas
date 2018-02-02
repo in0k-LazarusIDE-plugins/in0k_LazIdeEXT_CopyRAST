@@ -47,14 +47,16 @@ type
   protected
     procedure Node_clrState__notVerified(const item:tSrcTree_item);
   public
-    function set_BASE(const ROOT:tSrcTree_ROOT; const path:string):tSrcTree_BASE;                                 override;
-    function set_MAIN(const ROOT:tSrcTree_ROOT; const path:string):tSrcTree_MAIN;                                 override;
+    //function set_BASE(const ROOT:tSrcTree_ROOT; const path:string):tSrcTree_BASE;                                 override;
+    //function set_MAIN(const ROOT:tSrcTree_ROOT; const path:string):tSrcTree_MAIN;                                 override;
   public
-    function add_FLDR(const ROOT:tSrcTree_ROOT; const path:string; const kind:eSrcTree_SrchPath):tSrcTree_fsFLDR; override;
-    function add_FLDR(const ROOT:tSrcTree_ROOT; const path:string; const KNDs:sSrcTree_SrchPath):tSrcTree_fsFLDR; override;
-    function add_FILE(const ROOT:tSrcTree_ROOT; const path:string; const kind:eSrcTree_FileType):tSrcTree_fsFILE; override;
+    //function add_FLDR(const ROOT:tSrcTree_ROOT; const path:string; const kind:eSrcTree_SrchPath):tSrcTree_fsFLDR; override;
+    //function add_FLDR(const ROOT:tSrcTree_ROOT; const path:string; const KNDs:sSrcTree_SrchPath):tSrcTree_fsFLDR; override;
+    //function add_FILE(const ROOT:tSrcTree_ROOT; const path:string; const kind:eSrcTree_FileType):tSrcTree_fsFILE; override;
   public
     procedure AllNodes_SetSTATE(const ROOT:tSrcTree_ROOT; const newState:tCopyRastNODE_KIND);
+  public
+    constructor Create; override;
   end;
 
  tCopyRastSrcTree_Creater4Package=class(tSrcTree_Creater_4Package);
@@ -95,31 +97,45 @@ begin
     end;
 end;
 
+
+constructor tCopyRastSrcTree_Builder4Package.Create;
+begin
+    inherited;
+   _macrosNames_ADD_('FPCSrcDir');
+   _macrosNames_ADD_('LazarusDir');
+end;
+
+
 //------------------------------------------------------------------------------
 
 function tCopyRastSrcTree_Builder4Package.new_ROOT(const name:string):tSrcTree_ROOT;
 begin
     result:=tCopyRastNODE_Root4Package.Create(name);
+    Node_clrState__notVerified(result);
 end;
 
 function tCopyRastSrcTree_Builder4Package.new_Base(const path:string):tSrcTree_BASE;
 begin
     result:=tCopyRast_stBASE.Create(path);
+    Node_clrState__notVerified(result);
 end;
 
 function tCopyRastSrcTree_Builder4Package.new_Main(const name:string):tSrcTree_MAIN;
 begin
     result:=tCopyRastNODE_Main4Package.Create(name);
+    Node_clrState__notVerified(result);
 end;
 
 function tCopyRastSrcTree_Builder4Package.new_FLDR(const path:string):tSrcTree_fsFLDR;
 begin
     result:=tCopyRastNODE_FLDR.Create(path);
+    Node_clrState__notVerified(result);
 end;
 
 function tCopyRastSrcTree_Builder4Package.new_FILE(const path:string):tSrcTree_fsFILE;
 begin
     result:=tCopyRastNODE_FILE.Create(path);
+    Node_clrState__notVerified(result);
 end;
 
 //------------------------------------------------------------------------------
@@ -158,7 +174,7 @@ end;
 
 //------------------------------------------------------------------------------
 
-function tCopyRastSrcTree_Builder4Package.set_BASE(const ROOT:tSrcTree_ROOT; const path:string):tSrcTree_BASE;
+(*function tCopyRastSrcTree_Builder4Package.set_BASE(const ROOT:tSrcTree_ROOT; const path:string):tSrcTree_BASE;
 begin
     result:=inherited;
     Node_clrState__notVerified(result);
@@ -186,7 +202,7 @@ function tCopyRastSrcTree_Builder4Package.add_FILE(const ROOT:tSrcTree_ROOT; con
 begin
     result:=inherited;
     Node_clrState__notVerified(result);
-end;
+end; *)
 
 //==============================================================================
 

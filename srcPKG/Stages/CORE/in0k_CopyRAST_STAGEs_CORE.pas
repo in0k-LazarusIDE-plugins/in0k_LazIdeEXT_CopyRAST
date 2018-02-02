@@ -320,7 +320,7 @@ end;
 
 function tCopyRast_SrcTree_STAGE_00.EXECUTE:boolean;
 var tmpRes:tCopyRast_stROOT;
-begin {todo: todo}
+begin
     tmpRes:=_creater_.MAKE_SourceTREE(_owner_Builder,_owner_Ide_OBJ);
    _resultROOT_SET_(tmpRes);
 end;

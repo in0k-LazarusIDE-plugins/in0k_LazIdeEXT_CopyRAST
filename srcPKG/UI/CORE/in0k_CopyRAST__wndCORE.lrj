@@ -14,6 +14,7 @@
 {"hash":258023527,"name":"twndcopyrast_core.tabsheet_stage_5.caption","sourcebytes":[112,111,115,116,112,114,111,99,101,115,115,105,110,103],"value":"postprocessing"},
 {"hash":93105204,"name":"twndcopyrast_core.tabsheet8.caption","sourcebytes":[82,101,115,117,108,116],"value":"Result"},
 {"hash":90721265,"name":"twndcopyrast_core.panel1.caption","sourcebytes":[80,97,110,101,108,49],"value":"Panel1"},
+{"hash":164345429,"name":"twndcopyrast_core.button5.caption","sourcebytes":[66,117,116,116,111,110,53],"value":"Button5"},
 {"hash":99718697,"name":"twndcopyrast_core.a_wnd_applay.caption","sourcebytes":[97,95,119,110,100,95,65,112,112,108,97,121],"value":"a_wnd_Applay"},
 {"hash":115648075,"name":"twndcopyrast_core.a_wnd_ok.caption","sourcebytes":[97,95,119,110,100,95,79,75],"value":"a_wnd_OK"},
 {"hash":84202300,"name":"twndcopyrast_core.a_wnd_cansel.caption","sourcebytes":[97,95,119,110,100,95,67,65,78,83,69,76],"value":"a_wnd_CANSEL"},

@@ -252,6 +252,15 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
       Action = a_STG_reFresh
       TabOrder = 3
     end
+    object Button5: TButton
+      Left = 105
+      Height = 25
+      Top = 13
+      Width = 75
+      Caption = 'Button5'
+      OnClick = Button5Click
+      TabOrder = 4
+    end
   end
   object ActionList1: TActionList
     left = 16
