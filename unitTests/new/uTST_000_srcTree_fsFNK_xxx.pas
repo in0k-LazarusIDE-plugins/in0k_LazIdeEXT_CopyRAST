@@ -27,8 +27,19 @@ type
   end;
 
  tTST_srcTree__fsFNK__FirstDIR=class(TTestCase)
+  protected
+    function _farWay_:string;
+    function _dirStr_:string;
+
   published
-    procedure Test;
+    procedure relative_FLDR_nill;
+    procedure relative_FLDR_short;
+    procedure relative_FLDR_long;
+  published
+    procedure absolute_FLDR_nill;
+    procedure absolute_FLDR_nErr;
+    procedure absolute_FLDR_short;
+    procedure absolute_FLDR_long;
   end;
 
 
@@ -98,23 +109,111 @@ end;
 
 //==============================================================================
 
-procedure tTST_srcTree__fsFNK__FirstDIR.Test;
-var tmpPath:string;
-
-    tmpName:string;
-    tmpDriv:string;
-
-    resPath:string;
+function tTST_srcTree__fsFNK__FirstDIR._dirStr_:string;
 begin
-    tmpPath:=srcTree_fsFnk_ChompPathDelim(GetTempDir(TRUE));
-    //---
-    resPath:=srcTree_fsFnk_ExtractFirstDIR(tmpPath);
-    //---
-    tmpName:=ExtractFileName (resPath);
-    tmpDriv:=ExtractFileDrive(resPath);
+    result:=srcTree_fsFnk_ExtractFileDrive(GetTempDir);
+end;
+
+function tTST_srcTree__fsFNK__FirstDIR._farWay_:string;
+begin
+    result:='';
+    result:=srcTree_fsFnk_ConcatPaths(result,'mega');
+    result:=srcTree_fsFnk_ConcatPaths(result,'super');
+    result:=srcTree_fsFnk_ConcatPaths(result,'long');
+    result:=srcTree_fsFnk_ConcatPaths(result,'file');
+    result:=srcTree_fsFnk_ConcatPaths(result,'path');
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+procedure tTST_srcTree__fsFNK__FirstDIR.relative_FLDR_nill;
+var srcFD:string;
+    testF:string;
+    resFD:string;
+begin // test ""
+    srcFD:='';
+    testF:=srcFD;
     //
-    tmpPath:=srcTree_fsFnk_ConcatPaths(tmpDriv,tmpName);
-    Assert(tmpPath=resPath);
+    resFD:=srcTree_fsFnk_ExtractFirstDIR(testF);
+    AssertEquals('"'+testF+'" wrong result',srcFD,resFD);
+end;
+
+procedure tTST_srcTree__fsFNK__FirstDIR.relative_FLDR_short;
+var srcFD:string;
+    testF:string;
+    resFD:string;
+begin // test "A"
+    srcFD:='A';
+    testF:=srcFD;
+    //
+    resFD:=srcTree_fsFnk_ExtractFirstDIR(testF);
+    AssertEquals('"'+testF+'" wrong result',srcFD,resFD);
+end;
+
+procedure tTST_srcTree__fsFNK__FirstDIR.relative_FLDR_long;
+var srcFD:string;
+    testF:string;
+    resFD:string;
+begin // test "A\..\.."
+    srcFD:='A';
+    testF:=srcTree_fsFnk_ConcatPaths(srcFD,_farWay_);
+    //
+    resFD:=srcTree_fsFnk_ExtractFirstDIR(testF);
+    AssertEquals('"'+testF+'" wrong result',srcFD,resFD);
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+procedure tTST_srcTree__fsFNK__FirstDIR.absolute_FLDR_nill;
+var srcFD:string;
+    testF:string;
+    resFD:string;
+begin // test "C:"
+    srcFD:='';
+    testF:=srcTree_fsFnk_ConcatPaths(_dirStr_,srcFD);
+    //
+    resFD:=srcTree_fsFnk_ExtractFirstDIR(testF);
+    AssertEquals('"'+testF+'" wrong result',srcFD,resFD);
+end;
+
+procedure tTST_srcTree__fsFNK__FirstDIR.absolute_FLDR_nErr;
+var srcFD:string;
+    testF:string;
+    resFD:string;
+begin // test "C:\"
+    srcFD:='';
+    testF:=srcTree_fsFnk_ConcatPaths(_dirStr_,srcFD);
+    testF:=srcTree_fsFnk_AppendPathDelim(testF);
+    //
+    resFD:=srcTree_fsFnk_ExtractFirstDIR(testF);
+    AssertEquals('"'+testF+'" wrong result',srcFD,resFD);
+end;
+
+procedure tTST_srcTree__fsFNK__FirstDIR.absolute_FLDR_short;
+var srcFD:string;
+    testF:string;
+    resFD:string;
+begin // test "C:\A"
+    srcFD:='A';
+    testF:=srcTree_fsFnk_ConcatPaths(_dirStr_,srcFD);
+    testF:=srcTree_fsFnk_AppendPathDelim(testF);
+    //
+    resFD:=srcTree_fsFnk_ExtractFirstDIR(testF);
+    AssertEquals('"'+testF+'" wrong result',srcFD,resFD);
+end;
+
+procedure tTST_srcTree__fsFNK__FirstDIR.absolute_FLDR_long;
+var srcFD:string;
+    testF:string;
+    resFD:string;
+begin // test "C:\A"
+    srcFD:='A';
+    testF:=srcTree_fsFnk_ConcatPaths(_dirStr_,srcFD);
+    testF:=srcTree_fsFnk_ConcatPaths(srcFD,_farWay_);
+    testF:=srcTree_fsFnk_AppendPathDelim(testF);
+    //
+    resFD:=srcTree_fsFnk_ExtractFirstDIR(testF);
+    AssertEquals('"'+testF+'" wrong result',srcFD,resFD);
 end;
 
 //==============================================================================
