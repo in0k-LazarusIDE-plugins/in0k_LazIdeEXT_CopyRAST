@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="110">
+    <Files Count="109">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -449,17 +449,13 @@
         <UnitName Value="in0k_CopyRAST__frmSTAGE_LMR_CORE"/>
       </Item107>
       <Item108>
-        <Filename Value="srcPKG\Unit1.pas"/>
-        <UnitName Value="Unit1"/>
-      </Item108>
-      <Item109>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-Macros\in0k_lazarusIdeSRC_MacrosLIST.pas"/>
         <UnitName Value="in0k_lazarusIdeSRC_MacrosLIST"/>
-      </Item109>
-      <Item110>
+      </Item108>
+      <Item109>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-Macros\in0k_lazarusIdeSRC_ideMacrosCODE.pas"/>
         <UnitName Value="in0k_lazarusIdeSRC_ideMacrosCODE"/>
-      </Item110>
+      </Item109>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

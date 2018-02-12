@@ -4,7 +4,6 @@
 
 unit in0k_lazExt_CopyRAST;
 
-{$warn 5023 off : no warning about unused units}
 interface
 
 uses
@@ -70,7 +69,7 @@ uses
   in0k_CopyRAST__frmSTAGE_01_Handling, in0k_CopyRAST__frmSTAGE_03_Rename, 
   in0k_CopyRAST__frmSTAGE_04_Copying, 
   in0k_CopyRAST__frmSTAGE_05_PostProcessing, in0k_CopyRAST__frmSTAGE_LMR_CORE, 
-  Unit1, in0k_lazarusIdeSRC_MacrosLIST, in0k_lazarusIdeSRC_ideMacrosCODE, 
+  in0k_lazarusIdeSRC_MacrosLIST, in0k_lazarusIdeSRC_ideMacrosCODE, 
   LazarusPackageIntf;
 
 implementation

@@ -199,7 +199,7 @@ begin // test "C:\A"
     testF:=srcTree_fsFnk_AppendPathDelim(testF);
     //
     resFD:=srcTree_fsFnk_ExtractFirstDIR(testF);
-    AssertEquals('"'+testF+'" wrong result',srcFD,resFD);
+    AssertEquals('"'+testF+'" wrong result',_dirStr_,resFD);
 end;
 
 procedure tTST_srcTree__fsFNK__FirstDIR.absolute_FLDR_long;
@@ -209,11 +209,11 @@ var srcFD:string;
 begin // test "C:\A"
     srcFD:='A';
     testF:=srcTree_fsFnk_ConcatPaths(_dirStr_,srcFD);
-    testF:=srcTree_fsFnk_ConcatPaths(srcFD,_farWay_);
+    testF:=srcTree_fsFnk_ConcatPaths(testF,_farWay_);
     testF:=srcTree_fsFnk_AppendPathDelim(testF);
     //
     resFD:=srcTree_fsFnk_ExtractFirstDIR(testF);
-    AssertEquals('"'+testF+'" wrong result',srcFD,resFD);
+    AssertEquals('"'+testF+'" wrong result',_dirStr_,resFD);
 end;
 
 //==============================================================================

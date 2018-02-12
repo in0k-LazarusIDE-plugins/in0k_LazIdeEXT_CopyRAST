@@ -9,7 +9,7 @@ interface
 
 uses
   {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endIf}
-          Unit1,
+         // Unit1,
   IDEIntf, IDEImagesIntf,
   ProjectIntf,  LazIDEIntf,       LCLVersion,
   PackageIntf,
@@ -336,7 +336,7 @@ end;
 
 procedure tWndCopyRAST_CORE.Button5Click(Sender: TObject);
 begin
-    with TForm1.Create(Application) do Show;
+   // with TForm1.Create(Application) do Show;
 end;
 
 //------------------------------------------------------------------------------
