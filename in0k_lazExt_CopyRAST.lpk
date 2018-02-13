@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="109">
+    <Files Count="110">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -456,6 +456,10 @@
         <Filename Value="srcExt\in0k-lazarusIdeSRC-Macros\in0k_lazarusIdeSRC_ideMacrosCODE.pas"/>
         <UnitName Value="in0k_lazarusIdeSRC_ideMacrosCODE"/>
       </Item109>
+      <Item110>
+        <Filename Value="unit2.pas"/>
+        <UnitName Value="Unit2"/>
+      </Item110>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

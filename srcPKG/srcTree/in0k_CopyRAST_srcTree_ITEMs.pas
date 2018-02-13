@@ -10,6 +10,9 @@ uses
   in0k_lazIdeSRC_srcTree_item_fsFolder,
   in0k_lazIdeSRC_srcTree_item_fsFile,
   in0k_lazIdeSRC_srcTree_item_Globals,
+
+  in0k_lazIdeSRC_srcTree_FNK_rootFILE_FND,
+
   in0k_CopyRAST_srcTreeNode_DATA;
 
 type
@@ -121,6 +124,10 @@ procedure CopyRastNODE_listUseInRight(const rootLeft :tSrcTree_ROOT; const value
 
 
 procedure CopyRastNODE_LINK(const leftSide,rightSide:tSrcTree_item);
+
+
+function  CopyRastNODE_presentInLeft(const rootLeft:tCopyRast_stROOT; const value:tCopyRast_stITEM):boolean;
+
 
 
 
@@ -776,6 +783,35 @@ function CopyRast_SrcTree_Copy(const source:tCopyRast_stROOT):tCopyRast_stROOT;
 begin
     result:=tCopyRast_stROOT(_CR_SrcTree_Copy_(source));
 end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function CopyRastNODE_presentInLeft(const rootLeft:tCopyRast_stROOT; const value:tCopyRast_stITEM):tCopyRast_stITEM;
+var tmpNext:tCopyRast_stITEM;
+    itmData:pCopyRastNODE_DATA;
+begin
+    result:=value;
+    while Assigned(result) do begin
+        itmData:=CopyRAST_stITEM_DATA(result);
+        result :=itmData^.sideLeft;
+        if Assigned(result) and (SrcTree_fndRootFILE(tmpNext)=rootLeft)
+        then BREAK;
+    end;
+end;
+
 
 end.
 
