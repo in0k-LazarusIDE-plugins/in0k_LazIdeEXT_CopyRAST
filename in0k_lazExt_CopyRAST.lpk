@@ -457,8 +457,8 @@
         <UnitName Value="in0k_lazarusIdeSRC_ideMacrosCODE"/>
       </Item109>
       <Item110>
-        <Filename Value="unit2.pas"/>
-        <UnitName Value="Unit2"/>
+        <Filename Value="srcPKG\srcTree_UI\cmpCopyRAST_srcTree_Stage1_result.pas"/>
+        <UnitName Value="cmpCopyRAST_srcTree_Stage1_result"/>
       </Item110>
     </Files>
     <i18n>

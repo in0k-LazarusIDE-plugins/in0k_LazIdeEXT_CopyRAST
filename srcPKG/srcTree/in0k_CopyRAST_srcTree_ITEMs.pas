@@ -126,7 +126,7 @@ procedure CopyRastNODE_listUseInRight(const rootLeft :tSrcTree_ROOT; const value
 procedure CopyRastNODE_LINK(const leftSide,rightSide:tSrcTree_item);
 
 
-function  CopyRastNODE_presentInLeft(const rootLeft:tCopyRast_stROOT; const value:tCopyRast_stITEM):boolean;
+function  CopyRastNODE_presentInLeft(const rootLeft:tCopyRast_stROOT; const value:tCopyRast_stITEM):tCopyRast_stITEM;
 
 
 
@@ -807,7 +807,7 @@ begin
     while Assigned(result) do begin
         itmData:=CopyRAST_stITEM_DATA(result);
         result :=itmData^.sideLeft;
-        if Assigned(result) and (SrcTree_fndRootFILE(tmpNext)=rootLeft)
+        if Assigned(result) and (SrcTree_fndRootFILE(result)=rootLeft)
         then BREAK;
     end;
 end;

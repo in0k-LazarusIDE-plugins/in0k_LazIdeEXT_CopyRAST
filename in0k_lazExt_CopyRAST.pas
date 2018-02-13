@@ -70,7 +70,7 @@ uses
   in0k_CopyRAST__frmSTAGE_04_Copying, 
   in0k_CopyRAST__frmSTAGE_05_PostProcessing, in0k_CopyRAST__frmSTAGE_LMR_CORE, 
   in0k_lazarusIdeSRC_MacrosLIST, in0k_lazarusIdeSRC_ideMacrosCODE, 
-  LazarusPackageIntf;
+  cmpCopyRAST_srcTree_Stage1_result, LazarusPackageIntf;
 
 implementation
 
