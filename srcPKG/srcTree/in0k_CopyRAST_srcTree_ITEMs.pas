@@ -759,6 +759,8 @@ begin
     end;  }
 end;  *)
 
+{%region --- по НОДОВОЕ копирование дерева ----------}
+
 function _CR_SrcTree_Copy_(const item:tCopyRast_stITEM):tCopyRast_stITEM;
 var chld :tCopyRast_stITEM;
     lData:pCopyRastNODE_DATA;
@@ -780,9 +782,11 @@ begin
 end;
 
 function CopyRast_SrcTree_Copy(const source:tCopyRast_stROOT):tCopyRast_stROOT;
-begin
+begin {todo: уйти от рекурсии}
     result:=tCopyRast_stROOT(_CR_SrcTree_Copy_(source));
 end;
+
+{%endregion}
 
 
 

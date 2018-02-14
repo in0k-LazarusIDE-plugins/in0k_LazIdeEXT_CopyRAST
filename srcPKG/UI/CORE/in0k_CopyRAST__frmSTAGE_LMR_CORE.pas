@@ -5,6 +5,7 @@ unit in0k_CopyRAST__frmSTAGE_LMR_CORE;
 interface
 
 uses
+  Dialogs,
   in0k_CopyRAST_STAGEs_CORE,
   in0k_CopyRAST__frmSTAGE_twoTree_CORE;
 

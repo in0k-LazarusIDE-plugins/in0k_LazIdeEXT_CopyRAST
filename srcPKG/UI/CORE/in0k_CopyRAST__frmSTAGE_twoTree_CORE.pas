@@ -37,8 +37,8 @@ type
     procedure _treeR_SelectionChanged_(Sender:TObject);
     procedure _treeR_CRT_;
   protected
-    procedure _onLRootChange_(const aStage:tCopyRast_STAGE; const aRoot:tCopyRast_stROOT);
-    procedure _onRRootChange_(const aStage:tCopyRast_STAGE; const aRoot:tCopyRast_stROOT);
+    procedure _onLRootChange_(const aStage:tCopyRast_STAGE; const aRoot:tCopyRast_stROOT); virtual;
+    procedure _onRRootChange_(const aStage:tCopyRast_STAGE; const aRoot:tCopyRast_stROOT); virtual;
   protected
     procedure _editItem_SET_(const value:tSrcTree_item); virtual;
   protected

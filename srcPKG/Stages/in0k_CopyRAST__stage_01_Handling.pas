@@ -5,6 +5,8 @@ unit in0k_CopyRAST__stage_01_Handling;
 interface
 
 uses
+  in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
+
   in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_CORE,
   in0k_lazIdeSRC_srcTree_itmHandler4Build__f8a_ITEM_4USEs,
 
@@ -21,6 +23,8 @@ type
   protected
     function _execute_makeMidlleROOT_(const src:tCopyRast_stROOT):tCopyRast_stROOT; override;
     function _execute_makeResultROOT_(const src:tCopyRast_stROOT):tCopyRast_stROOT; override;
+  protected
+    function _2Result_NeedCopy_FILE_ (const value:tCopyRastNODE_FILE):boolean;
   public
     constructor Create(const STAGEs:tCopyRAST_STAGEs_CORE);
     destructor DESTROY; override;
@@ -54,7 +58,6 @@ begin
     result:=CopyRast_SrcTree_Copy(src);
 end;
 
-
 function tCopyRast__stage_01_Handling._P4Build_processing_(const TestMode:eSrcTree_f8a_FileTestMode; const FileName:string):boolean;
 begin
     case TestMode of
@@ -63,6 +66,19 @@ begin
       eSTf8aFTM__needHandle: result:=FALSE;
     end;
 end;
+
+//------------------------------------------------------------------------------
+
+function tCopyRast__stage_01_Handling._2Result_NeedCopy_FILE_(const value:tCopyRastNODE_FILE):boolean;
+var tmpBASE:tCopyRast_stBASE;
+begin
+    result:=false;
+    tmpBASE:=SrcTree_fndBaseDIR(_midlleROOT_);
+    if Assigned(tmpBASE) then begin
+        result:=SrcTree_isParent_4_Item(tmpBASE,value);
+    end;
+end;
+
 
 end.
 
