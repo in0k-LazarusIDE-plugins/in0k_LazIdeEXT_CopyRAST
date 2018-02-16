@@ -140,15 +140,11 @@ procedure CopyRastNODE_CopyData_FLDR(const source,target:tCopyRastNODE_FLDR);
 procedure CopyRastNODE_CopyData_FILE(const source,target:tCopyRastNODE_FILE);
 
 
-function  CopyRast_SrcTree_Copy(const source:tCopyRast_stROOT):tCopyRast_stROOT;
+type
+  mNeedCopyLeft2Right=function(const item:tCopyRast_stITEM):boolean of object;
 
-
-
-//procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_ROOT); overload;
-//procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_BASE); overload;
-//procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_MAIN); overload;
-//procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_FLDR); overload;
-//procedure CopyRastNODE_setLINK(const leftSide,rightSide:tCopyRastNODE_FILE); overload;
+function  CopyRast_SrcTree_copyLeft2Right(const source:tCopyRast_stROOT):tCopyRast_stROOT;
+function  CopyRast_SrcTree_copyLeft2Right(const source:tCopyRast_stROOT; const testFnk:mNeedCopyLeft2Right):tCopyRast_stROOT;
 
 
 implementation
@@ -761,29 +757,88 @@ end;  *)
 
 {%region --- по НОДОВОЕ копирование дерева ----------}
 
-function _CR_SrcTree_Copy_(const item:tCopyRast_stITEM):tCopyRast_stITEM;
+function _CR_SrcTree_Copy_item_(const source:tCopyRast_stITEM):tCopyRast_stITEM;
+var chld :tCopyRast_stITEM;
+    lData:pCopyRastNODE_DATA;
+    rData:pCopyRastNODE_DATA;
+begin // сам узел .. создаем, копируем данные, связываем
+      {todo: проверки}
+    result:=tCopyRast_stITEM(source.ClassType.Create);
+    result.CopyData(source);
+    lData:=CopyRAST_stITEM_DATA(source);
+    rData:=CopyRAST_stITEM_DATA(result);
+    lData^.sideRight:=result;
+    rData^.sideLeft :=source;
+end;
+
+//------------------------------------------------------------------------------
+
+function _CRST_CopyL2R_(const item:tCopyRast_stITEM):tCopyRast_stITEM; overload;
 var chld :tCopyRast_stITEM;
     lData:pCopyRastNODE_DATA;
     rData:pCopyRastNODE_DATA;
 begin
-    // сам узел .. создаем, копируем данные, связываем
-    result:=tCopyRast_stITEM(item.ClassType.Create);
-    result.CopyData(item);
-    lData:=CopyRAST_stITEM_DATA(item);
-    rData:=CopyRAST_stITEM_DATA(result);
-    lData^.sideRight:=result;
-    rData^.sideLeft :=item;
+    // сам узел ..
+    result:=_CR_SrcTree_Copy_item_(item);
     // про детей теперь
     chld:=item.ItemCHLD;
     while Assigned(chld) do begin
-        SrcTree_insert_ChldLast(result,_CR_SrcTree_Copy_(chld));
+        SrcTree_insert_ChldLast(result,_CRST_CopyL2R_(chld));
         chld:=chld.ItemNEXT;
     end;
 end;
 
-function CopyRast_SrcTree_Copy(const source:tCopyRast_stROOT):tCopyRast_stROOT;
+function CopyRast_SrcTree_copyLeft2Right(const source:tCopyRast_stROOT):tCopyRast_stROOT;
 begin {todo: уйти от рекурсии}
-    result:=tCopyRast_stROOT(_CR_SrcTree_Copy_(source));
+    result:=tCopyRast_stROOT(_CRST_CopyL2R_(source));
+end;
+
+//------------------------------------------------------------------------------
+
+function _CRST_testNeedCopyItemOrCHILDs_(const source:tCopyRast_stITEM; const testFnk:mNeedCopyLeft2Right):boolean;
+var tmp:tCopyRast_stITEM;
+begin {todo: уйти от рекурсии}
+    {$ifOpt D+}
+        Assert(Assigned(source));
+        Assert(Assigned(testFnk));
+    {$endIf}
+    result:=testFnk(source);
+    if not result then begin //< копировать не надо? проверим детей
+        tmp:=source.ItemCHLD;
+        while Assigned(tmp) do begin
+            if _CRST_testNeedCopyItemOrCHILDs_(tmp,testFnk) then begin
+                // кого-то внутри НАДО копировать!
+                result:=TRUE;
+                BREAK;
+            end;
+            //-->
+            tmp:=tmp.ItemNEXT;
+        end;
+    end;
+end;
+
+function _CRST_CopyL2R_(const item:tCopyRast_stITEM; const testFnk:mNeedCopyLeft2Right):tCopyRast_stITEM; overload;
+var srcCHLD:tCopyRast_stITEM;
+    newITEM:tCopyRast_stITEM;
+begin
+    result:=nil;
+    if _CRST_testNeedCopyItemOrCHILDs_(item,testFnk) then begin
+        result:=_CR_SrcTree_Copy_item_(item);
+        //
+        srcCHLD:=item.ItemCHLD;
+        while Assigned(srcCHLD) do begin
+            newITEM:=_CRST_CopyL2R_(srcCHLD,testFnk);
+            if Assigned(newITEM)
+            then SrcTree_insert_ChldLast(result,newITEM);
+            //-->
+            srcCHLD:=srcCHLD.ItemNEXT;
+        end;
+    end;
+end;
+
+function CopyRast_SrcTree_copyLeft2Right(const source:tCopyRast_stROOT; const testFnk:mNeedCopyLeft2Right):tCopyRast_stROOT;
+begin {todo: уйти от рекурсии}
+    result:=tCopyRast_stROOT(_CRST_CopyL2R_(source,testFnk));
 end;
 
 {%endregion}

@@ -14,7 +14,7 @@
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="110">
+    <Files Count="109">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -357,8 +357,8 @@
         <UnitName Value="in0k_ext4ColorTheme"/>
       </Item85>
       <Item86>
-        <Filename Value="srcPKG\Stages\in0k_CopyRAST_stage__ChangePaths.pas"/>
-        <UnitName Value="in0k_CopyRAST_stage__ChangePaths"/>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_03__reName.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_03__reName"/>
       </Item86>
       <Item87>
         <Filename Value="srcPKG\Stages\in0k_CopyRAST_stage__ChangePaths_CNFGs.pas"/>
@@ -379,8 +379,8 @@
         <ResourceBaseClass Value="Frame"/>
       </Item90>
       <Item91>
-        <Filename Value="srcPKG\srcTree_UI\frmCopyRAST_srcTree_approvedFILEs2NAMEs.pas"/>
-        <UnitName Value="frmCopyRAST_srcTree_approvedFILEs2NAMEs"/>
+        <Filename Value="srcPKG\UI\in0k_CopyRAST__STAGE_03__frmRename.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_03__frmRename"/>
         <ResourceBaseClass Value="Frame"/>
       </Item91>
       <Item92>
@@ -433,33 +433,29 @@
         <UnitName Value="in0k_CopyRAST__frmSTAGE_01_Handling"/>
       </Item103>
       <Item104>
-        <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE_03_Rename.pas"/>
-        <UnitName Value="in0k_CopyRAST__frmSTAGE_03_Rename"/>
-      </Item104>
-      <Item105>
         <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE_04_Copying.pas"/>
         <UnitName Value="in0k_CopyRAST__frmSTAGE_04_Copying"/>
-      </Item105>
-      <Item106>
+      </Item104>
+      <Item105>
         <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE_05_PostProcessing.pas"/>
         <UnitName Value="in0k_CopyRAST__frmSTAGE_05_PostProcessing"/>
-      </Item106>
-      <Item107>
+      </Item105>
+      <Item106>
         <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__frmSTAGE_LMR_CORE.pas"/>
         <UnitName Value="in0k_CopyRAST__frmSTAGE_LMR_CORE"/>
-      </Item107>
-      <Item108>
+      </Item106>
+      <Item107>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-Macros\in0k_lazarusIdeSRC_MacrosLIST.pas"/>
         <UnitName Value="in0k_lazarusIdeSRC_MacrosLIST"/>
-      </Item108>
-      <Item109>
+      </Item107>
+      <Item108>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-Macros\in0k_lazarusIdeSRC_ideMacrosCODE.pas"/>
         <UnitName Value="in0k_lazarusIdeSRC_ideMacrosCODE"/>
+      </Item108>
+      <Item109>
+        <Filename Value="srcPKG\UI\in0k_CopyRAST__stage_01__frm_cmpResult.pas"/>
+        <UnitName Value="in0k_CopyRAST__stage_01__frm_cmpResult"/>
       </Item109>
-      <Item110>
-        <Filename Value="srcPKG\srcTree_UI\cmpCopyRAST_srcTree_Stage1_result.pas"/>
-        <UnitName Value="cmpCopyRAST_srcTree_Stage1_result"/>
-      </Item110>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

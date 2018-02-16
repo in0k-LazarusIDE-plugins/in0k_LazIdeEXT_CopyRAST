@@ -5,26 +5,24 @@ unit in0k_CopyRAST__frmSTAGE_01_Handling;
 interface
 
 uses
-  Dialogs,
 
   in0k_CopyRAST__frmSTAGE_twoTree_CORE,
   in0k_CopyRAST__frmSTAGE_LMR_CORE,
 
   in0k_CopyRAST_srcTree_ITEMs,
   cmpCopyRAST_srcTree,
-  cmpCopyRAST_srcTree_Stage1_result,
   in0k_CopyRAST_STAGEs_CORE,
-  in0k_CopyRAST__stage_01_Handling;
+  in0k_CopyRAST__stage_01_Handling,
+  in0k_CopyRAST__stage_01__frm_cmpResult;
 
 type
  TfrmCopyRAST__STAGE_01_Handling = class(tFrmCopyRAST_STAGE_LMR)
- protected
-   procedure _onLRootChange_(const aStage:tCopyRast_STAGE; const aRoot:tCopyRast_stROOT); override;
- protected
-   function  _treeR_TYPE_:tCmpCopyRAST_srcTree_TYPE; override;
- protected
-   procedure _STAGE_onSet_(const value:tCopyRast_STAGE); override;
-
+  protected
+    procedure _onLRootChange_(const aStage:tCopyRast_STAGE; const aRoot:tCopyRast_stROOT); override;
+  protected
+    function  _treeR_TYPE_:tCmpCopyRAST_srcTree_TYPE; override;
+  protected
+    procedure _STAGE_onSet_(const value:tCopyRast_STAGE); override;
   end;
 
 implementation
@@ -48,7 +46,6 @@ procedure TfrmCopyRAST__STAGE_01_Handling._onLRootChange_(const aStage:tCopyRast
 begin
     inherited;
     if (STAGE=aStage) and (STAGE is tCopyRast__stage_01_Handling) then begin
-        ShowMessage('dddddddd');
         tCmpCopyRAST_srcTree_Stage1_result(_treeR_).RootSRC:=tCopyRast__stage_01_Handling(STAGE).RootSOURCE;
     end;
 end;

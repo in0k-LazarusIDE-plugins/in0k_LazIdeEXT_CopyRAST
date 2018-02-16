@@ -28,13 +28,13 @@ type
     function _SplitterLR_defPosition_:integer;
   protected
    _treeL_:tCmpCopyRAST_srcTree;
-    function  _treeL_TYPE_:tCmpCopyRAST_srcTree_TYPE; virtual;
-    procedure _treeL_SelectionChanged_(Sender:TObject);
+    function  _treeL_TYPE_:tCmpCopyRAST_srcTree_TYPE;   virtual;
+    procedure _treeL_SelectionChanged_(Sender:TObject); virtual;
     procedure _treeL_CRT_;
   protected
    _treeR_:tCmpCopyRAST_srcTree;
-    function  _treeR_TYPE_:tCmpCopyRAST_srcTree_TYPE; virtual;
-    procedure _treeR_SelectionChanged_(Sender:TObject);
+    function  _treeR_TYPE_:tCmpCopyRAST_srcTree_TYPE;   virtual;
+    procedure _treeR_SelectionChanged_(Sender:TObject); virtual;
     procedure _treeR_CRT_;
   protected
     procedure _onLRootChange_(const aStage:tCopyRast_STAGE; const aRoot:tCopyRast_stROOT); virtual;

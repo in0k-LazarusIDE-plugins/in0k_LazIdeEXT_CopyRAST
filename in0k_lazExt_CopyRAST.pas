@@ -4,6 +4,7 @@
 
 unit in0k_lazExt_CopyRAST;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
@@ -58,19 +59,18 @@ uses
   cmpCopyRAST_srcTree, lazExt_CopyRAST__xmlConfig, 
   lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs, 
   in0k_lazIdeSRC_srcTree_itemsList, in0k_ext4ColorTheme, 
-  in0k_CopyRAST_stage__ChangePaths, in0k_CopyRAST_stage__ChangePaths_CNFGs, 
+  in0k_CopyRAST__STAGE_03__reName, in0k_CopyRAST_stage__ChangePaths_CNFGs, 
   CopyRAST_srcTree_4Handler_CNFGs, frmCopyRAST_EDIT, 
-  in0k_CopyRAST__frmSTAGE_CORE, frmCopyRAST_srcTree_approvedFILEs2NAMEs, 
+  in0k_CopyRAST__frmSTAGE_CORE, in0k_CopyRAST__STAGE_03__frmRename, 
   in0k_CopyRAST__frmSTAGE_02_Revision, in0k_CopyRAST__frmSTAGE_twoTree_CORE, 
   in0k_CopyRAST__stage_01_Handling, in0k_CopyRAST_STAGEs_CORE, 
   in0k_CopyRAST_STAGEs, in0k_CopyRAST__wndCORE, in0k_CopyRAST__wndProject, 
   in0k_CopyRAST__wndPackage, in0k_CopyRAST__wnd_SHOW, 
   in0k_CopyRAST_Stage_CORE, in0k_CopyRAST__frmSTAGE_00_CreateTree, 
-  in0k_CopyRAST__frmSTAGE_01_Handling, in0k_CopyRAST__frmSTAGE_03_Rename, 
-  in0k_CopyRAST__frmSTAGE_04_Copying, 
+  in0k_CopyRAST__frmSTAGE_01_Handling, in0k_CopyRAST__frmSTAGE_04_Copying, 
   in0k_CopyRAST__frmSTAGE_05_PostProcessing, in0k_CopyRAST__frmSTAGE_LMR_CORE, 
   in0k_lazarusIdeSRC_MacrosLIST, in0k_lazarusIdeSRC_ideMacrosCODE, 
-  cmpCopyRAST_srcTree_Stage1_result, LazarusPackageIntf;
+  in0k_CopyRAST__stage_01__frm_cmpResult, LazarusPackageIntf;
 
 implementation
 

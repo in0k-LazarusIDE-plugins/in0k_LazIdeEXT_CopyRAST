@@ -52,13 +52,13 @@ implementation
 
 {$R *.lfm}
 
-
 constructor tFrmCopyRAST_cie_ReNamesCustomer.Create(AOwner:TComponent);
 begin
     inherited;
     Constraints_reSet;
 end;
 
+//------------------------------------------------------------------------------
 
 function tFrmCopyRAST_cie_ReNamesCustomer._itemCNFG_GET_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
 begin

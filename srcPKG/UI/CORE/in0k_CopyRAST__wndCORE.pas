@@ -16,14 +16,17 @@ uses
   lazExt_CopyRAST__xmlConfig,
   lazExt_CopyRAST__xmlConfig_Base,
 
-  cmpCopyRAST_srcTree, frmCopyRAST_srcTree_approvedFILEs2NAMEs,
+  cmpCopyRAST_srcTree, //frmCopyRAST_srcTree_approvedFILEs2NAMEs,
 
   in0k_CopyRAST_STAGEs, in0k_CopyRAST__frmSTAGE_twoTree_CORE,
   in0k_CopyRAST__frmSTAGE_00_CreateTree, in0k_CopyRAST__frmSTAGE_02_Revision,
-  in0k_CopyRAST__frmSTAGE_01_Handling, in0k_CopyRAST__frmSTAGE_03_Rename,
+  in0k_CopyRAST__frmSTAGE_01_Handling,
   in0k_CopyRAST__frmSTAGE_04_Copying, in0k_CopyRAST__frmSTAGE_05_PostProcessing,
 
   in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
+
+  in0k_CopyRAST__STAGE_03__frmRename,
+
 
   Classes, SysUtils, FileUtil, CheckBoxThemed, DividerBevel, ExtendedNotebook,
   Forms, Controls, Graphics, Dialogs, StdCtrls, ComCtrls,
@@ -47,13 +50,12 @@ type
     Button4: TButton;
     Button5: TButton;
     CheckBoxThemed1: TCheckBoxThemed;
+    frmCopyRAST__STAGE_03: TfrmApprovedFILEs2NAMEs;
     frmCopyRAST__STAGE_01: TfrmCopyRAST__STAGE_01_Handling;
     frmCopyRAST__STAGE_02: TfrmCopyRAST_STAGE__02_Revision;
     frmCopyRAST__STAGE_00: TfrmCopyRAST__STAGE_00_CreateTree;
-    frmCopyRAST__STAGE_03: TfrmCopyRAST__STAGE_03_Renaming;
     frmCopyRAST__STAGE_04: TfrmCopyRAST__STAGE_04_Copying;
-
-      frmCopyRAST__STAGE_05: TfrmCopyRAST__STAGE_05_PostProcessing;
+    frmCopyRAST__STAGE_05: TfrmCopyRAST__STAGE_05_PostProcessing;
     GroupBox1: TGroupBox;
     Label1: TLabel;
     PageControl1: TPageControl;

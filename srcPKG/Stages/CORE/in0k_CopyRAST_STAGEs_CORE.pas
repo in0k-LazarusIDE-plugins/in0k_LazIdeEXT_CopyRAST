@@ -54,7 +54,7 @@ type
     procedure _CNFGs_LOAD_(const Configs:tLazExt_CopyRAST_CONFIG); virtual;
     procedure _CNFGs_SAVE_(const Configs:tLazExt_CopyRAST_CONFIG); virtual;
   public
-    constructor Create(const STAGEs:tCopyRAST_STAGEs_CORE);
+    constructor Create(const STAGEs:tCopyRAST_STAGEs_CORE);        virtual;
     destructor DESTROY; override;
   public // работа с Конфигурацией
     procedure  CNFGs_LOAD (const Configs:tLazExt_CopyRAST_CONFIG);
@@ -86,7 +86,7 @@ type
   protected
     procedure _source_CLR_; virtual;
   public
-    constructor Create(const STAGEs:tCopyRAST_STAGEs_CORE);
+    constructor Create(const STAGEs:tCopyRAST_STAGEs_CORE); override;
     destructor DESTROY; override;
   public
     property RootSOURCE_onChange:mCopyRast_STAGE_onRootChange  write _sourceROOT_mOnCHANGE_;
@@ -378,7 +378,7 @@ begin
         tmpROOT:=_execute_makeResultROOT_(_sourceROOT_);
     end
     else begin //< тут ПРОСТО копируем _sourceROOT_->_resultROOT_
-        tmpROOT:=CopyRast_SrcTree_Copy(_sourceROOT_);
+        tmpROOT:=CopyRast_SrcTree_copyLeft2Right(_sourceROOT_);
     end;
    _resultROOT_SET_(tmpROOT);
 end;
@@ -461,8 +461,8 @@ begin
         tmpResultROOT:=_execute_makeResultROOT_( tmpMiddleROOT);
     end
     else begin //< тут ПРОСТО копируем _sourceROOT_->_resultROOT_
-        tmpMiddleROOT:=CopyRast_SrcTree_Copy(_sourceROOT_);
-        tmpResultROOT:=CopyRast_SrcTree_Copy( tmpMiddleROOT);
+        tmpMiddleROOT:=CopyRast_SrcTree_copyLeft2Right(_sourceROOT_);
+        tmpResultROOT:=CopyRast_SrcTree_copyLeft2Right( tmpMiddleROOT);
     end;
    _midlleROOT_SET_(tmpMiddleROOT);
    _resultROOT_SET_(tmpResultROOT);
