@@ -41,15 +41,15 @@ srcTree_handler4build_CORE,
 
 type
 
- tCopyRastSrcTree_itmH4ReNAMEs_FLDR=class(tSrcTree_itmHandler4Build)
+ {tCopyRastSrcTree_itmH4ReNAMEs_FLDR=class(tSrcTree_itmHandler4Build)
   public // ВЫПОЛНЕНИЕ
     //function Processing:boolean; override; // ВЫПОЛНИТЬ обработку
-  end;
+  end;}
 
- tCopyRastSrcTree_itmH4ReNAMEs_FILE=class(tSrcTree_itmHandler4Build)
+ {tCopyRastSrcTree_itmH4ReNAMEs_FILE=class(tSrcTree_itmHandler4Build)
   public // ВЫПОЛНЕНИЕ
     //function Processing:boolean; override; // ВЫПОЛНИТЬ обработку
-  end;
+  end;}
 
  tCopyRast_stage__ChangePaths=class(tCopyRast_SrcTree_STAGE_L_R)
   private
@@ -92,15 +92,19 @@ type
     procedure _CNFGs_SAVE_(const Configs:tLazExt_CopyRAST_CONFIG); override;
   protected
     function  _get_oldName_ROOT_(const item:tSrcTree_ROOT):string;
-    function  _clc_newName_ROOT_(const item:tSrcTree_ROOT):string;
     function  _get_oldName_BASE_(const item:tSrcTree_BASE):string;
-    function  _clc_newName_BASE_(const item:tCopyRast_stBASE):string;
+    function  _clc_newName_ROOT_:string;
+    function  _clc_newName_BASE_:string;
     function  _clc_newName_MAIN_(const ext:string):string;
 
     //function  _getNewPATH_FLDR_(const item:tCopyRastNODE_FLDR):string;
     //function  _getNewPATH_FILE_(const item:tCopyRastNODE_FILE):string;
     //procedure _prc_addNew_FLDR_(const item:tCopyRastNODE_FLDR);
     //procedure _prc_addNew_FILE_(const item:tCopyRastNODE_FILE);
+
+  protected
+    procedure _execute_makeResultROOT_OTHEr_(const resRoot:tCopyRast_stROOT);
+    procedure _execute_makeResultROOT_MAINs_(out   resRoot:tCopyRast_stROOT; const src:tCopyRast_stROOT);
   protected
     //procedure _EXECUTE_;
     function _execute_makeResultROOT_(const src:tCopyRast_stROOT):tCopyRast_stROOT; override;
@@ -138,11 +142,11 @@ type
 
 implementation
 
-{%region --- tCopyRast_SrcTree_stageReNAMEs_itm4file ------------------- }
-       (*
+{%region --- tCopyRastSrcTree_itmH4ReNAMEs_FILE ------------------- }
+
 type
- {todo: ПЕРЕИМЕНОВАТЬ}
-tCopyRast_SrcTree_stageReNAMEs_itm4file=class(tCopyRast_SrcTree_itmSTAGE)
+
+tCopyRastSrcTree_itmH4ReNAMEs_FILE=class(tSrcTree_itmHandler4Build)
  protected
    function _getTargetFLDR_:_tSrcTree_item_fsNodeFLDR_;
    function _newTargetFILE_(const fldr:_tSrcTree_item_fsNodeFLDR_):tCopyRastNODE_FILE;
@@ -150,10 +154,8 @@ tCopyRast_SrcTree_stageReNAMEs_itm4file=class(tCopyRast_SrcTree_itmSTAGE)
    function Processing:boolean; override; // ВЫПОЛНИТЬ обработку
  end;
 
-
-
 // получить-СОЗДАТЬ НОВУЮ папку для prcssdITEM
-function tCopyRast_SrcTree_stageReNAMEs_itm4file._getTargetFLDR_:_tSrcTree_item_fsNodeFLDR_;
+function tCopyRastSrcTree_itmH4ReNAMEs_FILE._getTargetFLDR_:_tSrcTree_item_fsNodeFLDR_;
 var tmpLeft:tSrcTree_item;
 var tmpPATH:string;
     tmpKING:sSrcTree_SrchPath;
@@ -183,7 +185,7 @@ begin
     end;
 end;
 
-function tCopyRast_SrcTree_stageReNAMEs_itm4file._newTargetFILE_(const fldr:_tSrcTree_item_fsNodeFLDR_):tCopyRastNODE_FILE;
+function tCopyRastSrcTree_itmH4ReNAMEs_FILE._newTargetFILE_(const fldr:_tSrcTree_item_fsNodeFLDR_):tCopyRastNODE_FILE;
 var tmpNAME:string;
 begin
     // ищем СТРОКУ-НАЗВАНИЕ и применяем МАКРОСЫ
@@ -200,7 +202,7 @@ begin
     end;
 end;
 
-function tCopyRast_SrcTree_stageReNAMEs_itm4file.Processing:boolean;
+function tCopyRastSrcTree_itmH4ReNAMEs_FILE.Processing:boolean;
 var tmpFLDR:_tSrcTree_item_fsNodeFLDR_;
 begin //
     if prcssdITEM is tCopyRastNODE_FILE then begin //< работаем ТОЛЬКО с ФАЙЛАМИ
@@ -213,7 +215,7 @@ begin //
         end;
     end;
     result:=TRUE;
-end;   *)
+end;
 
 {%endregion}
 
@@ -409,15 +411,6 @@ end;
 
 {%endregion}
 
-(*
-
-
-
-
-//------------------------------------------------------------------------------
-
-*)
-
 {%region -- _clc_..Name.. -----------------------------------------------}
 
 function tCopyRast_stage__ChangePaths._get_oldName_ROOT_(const item:tSrcTree_ROOT):string;
@@ -431,7 +424,7 @@ end;
 
 // расчитать Имя: ROOT файла
 // берем ИМЯ главного файла и УДАЛЯЕМ расширение
-function tCopyRast_stage__ChangePaths._clc_newName_ROOT_(const item:tSrcTree_ROOT):string;
+function tCopyRast_stage__ChangePaths._clc_newName_ROOT_:string;
 begin
     result:=_macross_APPLAY_(_cnfgClc_newROOT_);
 end;
@@ -445,13 +438,18 @@ begin
     result:=item.ItemTEXT;
 end;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // расчитать Имя: (ПУТЬ) базовой папки
-function tCopyRast_stage__ChangePaths._clc_newName_BASE_(const item:tCopyRast_stBASE):string;
+function tCopyRast_stage__ChangePaths._clc_newName_BASE_:string;
 begin
     result:=_macross_APPLAY_(_cnfgClc_newBASE_);
 end;
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 // расчитать Имя: ГЛАВНОГО файла
+// @prm ext расширение файла из старого
 function tCopyRast_stage__ChangePaths._clc_newName_MAIN_(const ext:string):string;
 begin
     result:=_macross_APPLAY_(_cnfgClc_newMAIN_);
@@ -499,56 +497,44 @@ end;}
 //------------------------------------------------------------------------------
 
 *)
+
+// #2 теперь про ОСТАЛЬНЫЕ файлы
+procedure tCopyRast_stage__ChangePaths._execute_makeResultROOT_OTHEr_(const resRoot:tCopyRast_stROOT);
+var prcHandler:tSrcTree_prcHandler4Build;
+
+begin
+    //prcHandler:=tSrcTree_prcHandler4Build.Create(_owner_Builder);
+    //prcHandler.EXECUTE();
+
+   // EXECUTE_4TREE(tCopyRastSrcTree_itmH4ReNAMEs_FILE);
+end;
+
+// #1 Создаем ОСНОВНЫЕ в ручную
+procedure tCopyRast_stage__ChangePaths._execute_makeResultROOT_MAINs_(out resRoot:tCopyRast_stROOT; const src:tCopyRast_stROOT);
+var tmpItem:tCopyRast_stITEM;
+begin {todo: про ОШИБКИ !}
+    // КОРЕНЬ
+    resRoot:=_owner_Builder.crt_ROOT(_clc_newName_ROOT_);
+    CopyRastNODE_LINK_simple(src,resRoot);
+    // базовая папка
+    tmpItem:=_owner_Builder.set_BASE(resRoot,_clc_newName_BASE_);
+    CopyRastNODE_LINK_simple(_owner_Builder.fnd_BASE(src),tmpItem);
+    // главный файл
+    tmpItem:=_owner_Builder.set_MAIN(resRoot,_clc_newName_MAIN_( srcTree_fsFnk_ExtractFileExt(_owner_Builder.fnd_MAIN(src).fsName) ));
+    CopyRastNODE_LINK_simple(_owner_Builder.fnd_MAIN(src),tmpItem);
+end;
+
+
 function tCopyRast_stage__ChangePaths._execute_makeResultROOT_(const src:tCopyRast_stROOT):tCopyRast_stROOT;
 var tmpItem:tCopyRast_stITEM;
     tmpName:string;
-begin
-    //result:=inherited _execute_makeResultROOT_(src);
-
+begin {todo: про ОШИБКИ !}
    _macross_reClc_;
-    result:=_owner_Builder.crt_ROOT(_clc_newName_ROOT_(nil));
-    CopyRastNODE_LINK_simple(src,result);
-
-    tmpItem:=_owner_Builder.set_BASE(result,_clc_newName_BASE_(nil));
-    CopyRastNODE_LINK_simple(_owner_Builder.fnd_BASE(src),tmpItem);
-
-    tmpItem:=_owner_Builder.set_MAIN(result,_clc_newName_MAIN_( srcTree_fsFnk_ExtractFileExt(_owner_Builder.fnd_MAIN(src).fsName) ));
-    CopyRastNODE_LINK_simple(_owner_Builder.fnd_MAIN(src),tmpItem);
-
-
-   (*
-    // переустановим НОВОЕ имя для ВСЕГО проекта
-    tmpItem:=_targetROOT_GET_;
-    if Assigned(tmpItem) and IS_CopyRAST_stROOT(tmpItem) then begin
-        tmpName:=_clc_newName_ROOT_(_sourceROOT_GET_);
-        SrcTree_re_set_itemTEXT(tmpItem,tmpName);
-    end
-    else begin
-        {todo: про ОШИБКИ !}
-    end;
-    // переустановим НОВЫЙ путь к БАЗОВОЙ папке
-    tmpItem:=_builder_.fnd_BASE(_targetROOT_GET_);
-    if Assigned(tmpItem) and IS_CopyRAST_stBASE(tmpItem) then begin
-        tmpName:=_clc_newName_BASE_(_builder_.fnd_BASE(_sourceROOT_GET_));
-        SrcTree_re_set_itemTEXT(tmpItem,tmpName);
-    end
-    else begin
-        {todo: про ОШИБКИ !}
-    end;
-    // переустановим НОВОЕ имя для ФАЙЛА проекта
-    tmpItem:=_builder_.fnd_MAIN(_targetROOT_GET_);
-    if Assigned(tmpItem) and IS_CopyRAST_stMAIN(tmpItem) then begin
-        tmpName:=_clc_newName_MAIN_(_builder_.fnd_MAIN(_sourceROOT_GET_));
-        SrcTree_re_set_itemTEXT(tmpItem,tmpName);
-    end
-    else begin
-        {todo: про ОШИБКИ !}
-    end;
-    //
-    // теперь про ОСТАЛЬНЫЕ файлы
-   _macross_reClc_;
-    EXECUTE_4TREE(tCopyRast_SrcTree_stageReNAMEs_itm4file);       *)
+   _execute_makeResultROOT_MAINs_(result,src);
+   _execute_makeResultROOT_OTHEr_(result);
 end;
+
+
 (*
 
 (*procedure tCopyRast_stage__ChangePaths.EXECUTE(const nodeRoot:tSrcTree_ROOT);
@@ -731,7 +717,7 @@ begin
    _macross_.Clear;
     // заполним ЗАНОГО
    _macross_.Add(_cMacrosNAME_crOldNAME_+_cMacrosSMBL_equal_+_get_oldName_ROOT_(_sourceROOT_));
-   _macross_.Add(_cMacrosNAME_crNewNAME_+_cMacrosSMBL_equal_+_clc_newName_ROOT_(_resultROOT_));
+   _macross_.Add(_cMacrosNAME_crNewNAME_+_cMacrosSMBL_equal_+_clc_newName_ROOT_);
    _macross_.Add(_cMacrosNAME_crOldPATH_+_cMacrosSMBL_equal_+_get_oldName_BASE_(_owner_Builder.fnd_BASE(_sourceROOT_)));
   // _macross_.Add(_cMacrosNAME_crNewPATH_+_cMacrosSMBL_equal_+_clc_newName_ROOT_(_resultROOT_));
 end;
