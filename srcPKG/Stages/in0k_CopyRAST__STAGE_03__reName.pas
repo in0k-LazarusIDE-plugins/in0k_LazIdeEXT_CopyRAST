@@ -55,8 +55,9 @@ type
   private
    _regExpr_:TRegExpr;
   strict private
-    function _macross_APPLAY_(var   srcString:string; const mcrName,mcrValue:String):boolean; overload;
-    function _macross_APPLAY_(const srcString:string; const macrossList:tStringList):string;  overload;
+    function _macross_Present_(const srcString:string):boolean;
+    function _macross_APPLAY_ (var   srcString:string; const mcrName,mcrValue:String):boolean; overload;
+    function _macross_APPLAY_ (const srcString:string; const macrossList:tStringList):string;  overload;
   strict private
    _mcrWRNG_:tStringList; //< ИСКЛЮЧАЕМЫХ макросов при указании имен
     function  _mcrWRNG_Exclude(const srcString:string):string;
@@ -94,7 +95,7 @@ type
     function  _clc_newName_ROOT_(const item:tSrcTree_ROOT):string;
     function  _get_oldName_BASE_(const item:tSrcTree_BASE):string;
     function  _clc_newName_BASE_(const item:tCopyRast_stBASE):string;
-    function  _clc_newName_MAIN_(const item:tSrcTree_MAIN):string;
+    function  _clc_newName_MAIN_(const ext:string):string;
 
     //function  _getNewPATH_FLDR_(const item:tCopyRastNODE_FLDR):string;
     //function  _getNewPATH_FILE_(const item:tCopyRastNODE_FILE):string;
@@ -431,49 +432,30 @@ end;
 // расчитать Имя: ROOT файла
 // берем ИМЯ главного файла и УДАЛЯЕМ расширение
 function tCopyRast_stage__ChangePaths._clc_newName_ROOT_(const item:tSrcTree_ROOT):string;
-var itmMAIN:tSrcTree_MAIN;
 begin
-    itmMAIN:=SrcTree_fndMainFILE(item);
-    if Assigned(itmMAIN) then begin
-        result:=_clc_newName_MAIN_(itmMAIN);
-        result:=srcTree_fsFnk_ExtractFileNameOnly(result);
-    end
-    else begin
-        result:=item.ItemNAME;
-    end;
+    result:=_macross_APPLAY_(_cnfgClc_newROOT_);
 end;
-
 
 function tCopyRast_stage__ChangePaths._get_oldName_BASE_(const item:tSrcTree_BASE):string;
 begin
-
+    {$ifOpt D+}
+    Assert(Assigned(item));
+    Assert(IS_CopyRAST_stBASE(item));
+    {$endIf}
+    result:=item.ItemTEXT;
 end;
 
 // расчитать Имя: (ПУТЬ) базовой папки
 function tCopyRast_stage__ChangePaths._clc_newName_BASE_(const item:tCopyRast_stBASE):string;
 begin
-    result:=_cnfgClc_newBASE_{(item)};
+    result:=_macross_APPLAY_(_cnfgClc_newBASE_);
 end;
 
 // расчитать Имя: ГЛАВНОГО файла
-function tCopyRast_stage__ChangePaths._clc_newName_MAIN_(const item:tSrcTree_MAIN):string;
-var itmMAIN:tSrcTree_MAIN;
-    tmp_ext:string;
+function tCopyRast_stage__ChangePaths._clc_newName_MAIN_(const ext:string):string;
 begin
-    itmMAIN:=(item);
-    if Assigned(itmMAIN) then begin
-        // берем ИМЯ
-        result:=_cnfgClc_newNAME_(itmMAIN);
-        // проверим разрешение
-        tmp_ext:=srcTree_fsFnk_ExtractFileExt(result);
-        if tmp_ext='' then begin
-            tmp_ext:=srcTree_fsFnk_ExtractFileExt(item.fsName);
-            result :=srcTree_fsFnk_ChangeFileExt(result,tmp_ext)
-        end;
-    end
-    else begin
-        result:=item.ItemNAME;
-    end;
+    result:=_macross_APPLAY_(_cnfgClc_newMAIN_);
+    result:= srcTree_fsFnk_ChangeFileExt(result, ext);
 end;
 
 {%endregion}
@@ -521,7 +503,19 @@ function tCopyRast_stage__ChangePaths._execute_makeResultROOT_(const src:tCopyRa
 var tmpItem:tCopyRast_stITEM;
     tmpName:string;
 begin
-    result:=inherited _execute_makeResultROOT_(src);
+    //result:=inherited _execute_makeResultROOT_(src);
+
+   _macross_reClc_;
+    result:=_owner_Builder.crt_ROOT(_clc_newName_ROOT_(nil));
+    CopyRastNODE_LINK_simple(src,result);
+
+    tmpItem:=_owner_Builder.set_BASE(result,_clc_newName_BASE_(nil));
+    CopyRastNODE_LINK_simple(_owner_Builder.fnd_BASE(src),tmpItem);
+
+    tmpItem:=_owner_Builder.set_MAIN(result,_clc_newName_MAIN_( srcTree_fsFnk_ExtractFileExt(_owner_Builder.fnd_MAIN(src).fsName) ));
+    CopyRastNODE_LINK_simple(_owner_Builder.fnd_MAIN(src),tmpItem);
+
+
    (*
     // переустановим НОВОЕ имя для ВСЕГО проекта
     tmpItem:=_targetROOT_GET_;
@@ -738,23 +732,35 @@ begin
     // заполним ЗАНОГО
    _macross_.Add(_cMacrosNAME_crOldNAME_+_cMacrosSMBL_equal_+_get_oldName_ROOT_(_sourceROOT_));
    _macross_.Add(_cMacrosNAME_crNewNAME_+_cMacrosSMBL_equal_+_clc_newName_ROOT_(_resultROOT_));
-  // _macross_.Add(_cMacrosNAME_crOldPATH_+_cMacrosSMBL_equal_+_get_oldName_ROOT_(_sourceROOT_));
+   _macross_.Add(_cMacrosNAME_crOldPATH_+_cMacrosSMBL_equal_+_get_oldName_BASE_(_owner_Builder.fnd_BASE(_sourceROOT_)));
   // _macross_.Add(_cMacrosNAME_crNewPATH_+_cMacrosSMBL_equal_+_clc_newName_ROOT_(_resultROOT_));
 end;
 
 //------------------------------------------------------------------------------
 
+function tCopyRast_stage__ChangePaths._macross_Present_(const srcString:string):boolean;
+begin
+   _regExpr_.ModifierI  :=TRUE;
+   _regExpr_.Expression :='(\$\(.*\))'; // шаблон поиска для поиска "макросов"
+   _regExpr_.InputString:=srcString;
+    //
+    result:=_regExpr_.Exec(1);
+end;
+
 function tCopyRast_stage__ChangePaths._macross_APPLAY_(var srcString:string; const mcrName,mcrValue:String):boolean;
+var tmpString:string;
 begin
     result:=FALSE;
     //---
    _regExpr_.ModifierI  :=TRUE;
-   _regExpr_.Expression :='(\$\('+mcrName+'\))'; // шаблон поиска
+   _regExpr_.Expression :='(\$\('+mcrName+'\))'; // шаблон поиска макроса с "ИМЕНЕМ"
    _regExpr_.InputString:=srcString;
     //---
+    ShowMessage('GOGOGO: '+srcString+' mcrName="'+mcrName+'" value="'+mcrValue+'"');
     while _regExpr_.Exec(1) do begin //< меняем пока меняется !!! МОЖЕМ ЗАЦИКЛИТЬСЯ
-        srcString:=_regExpr_.Replace(srcString,mcrValue,FALSE);
+        tmpString:=_regExpr_.Replace(srcString,mcrValue,FALSE);
         result   :=TRUE;
+        srcString:=tmpString;
        _regExpr_ .InputString:=srcString;
     end;
 end;
@@ -763,12 +769,25 @@ function tCopyRast_stage__ChangePaths._macross_APPLAY_(const srcString:string; c
 var chCount:integer;
     i      :integer;
 begin // прям ХЗ ... может через ШТАТНЫЕ Лазаруса сделать
-    chCount:=1;
-    while chCount>0 do begin //< меняем пока меняется !!! МОЖЕМ ЗАЦИКЛИТЬСЯ
-        chCount:=0;
-        for i:=0 to macrossList.Count-1 do begin
-            if _macross_APPLAY_(result, macrossList.Names[i],macrossList.Values[macrossList.Names[i]])
-            then inc(chCount);
+    result :=srcString;
+    if _macross_Present_(result) then begin
+        chCount:=1;
+        while chCount>0 do begin //< меняем пока меняется !!! МОЖЕМ ЗАЦИКЛИТЬСЯ
+            chCount:=0;
+            for i:=0 to macrossList.Count-1 do begin
+                if _macross_APPLAY_(result, macrossList.Names[i],macrossList.Values[macrossList.Names[i]])
+                then begin
+                    if _macross_Present_(result) then begin
+                        // ЕСТЬ смысл искать дальше!
+                        inc(chCount);
+                    end
+                    else begin
+                        // искать дальше БЕЗсмысленно ... макросов больше НЕТ
+                        chCount:=0;
+                        BREAK;
+                    end;
+                end;
+            end;
         end;
     end;
 end;
@@ -790,6 +809,7 @@ end;
 function tCopyRast_stage__ChangePaths._macross_APPLAY_Lazarus_ (const srcString:string):string;
 begin
     {todo: DO it!}
+    result:=srcString;
 end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

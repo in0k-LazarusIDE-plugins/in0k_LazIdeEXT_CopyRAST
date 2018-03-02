@@ -123,7 +123,8 @@ procedure CopyRastNODE_listUseInLeft (const rootRight:tSrcTree_ROOT; const value
 procedure CopyRastNODE_listUseInRight(const rootLeft :tSrcTree_ROOT; const value:tSrcTree_item; const LIST:tSrcTree_listITEMs);
 
 
-procedure CopyRastNODE_LINK(const leftSide,rightSide:tSrcTree_item);
+procedure CopyRastNODE_LINK_simple(const leftSide,rightSide:tSrcTree_item); {$ifOPT D-}inline;{$endIf}
+procedure CopyRastNODE_LINK       (const leftSide,rightSide:tSrcTree_item); {$ifOPT D-}inline;{$endIf}
 
 
 function  CopyRastNODE_presentInLeft(const rootLeft:tCopyRast_stROOT; const value:tCopyRast_stITEM):tCopyRast_stITEM;
@@ -439,6 +440,23 @@ begin
 end;
 
 //------------------------------------------------------------------------------
+
+// ПРОСТО
+procedure CopyRastNODE_LINK_simple(const leftSide,rightSide:tSrcTree_item);
+var lData:pCopyRastNODE_DATA;
+    rData:pCopyRastNODE_DATA;
+begin
+    {$ifOPT D+}
+    Assert(Assigned(leftSide));
+    Assert(IS_CopyRAST_stITEM(leftSide));
+    Assert(Assigned(rightSide));
+    Assert(IS_CopyRAST_stITEM(rightSide));
+    {$endIf}
+    lData:=CopyRAST_stITEM_DATA(leftSide);
+    rData:=CopyRAST_stITEM_DATA(rightSide);
+    lData^.sideRight:=rightSide;
+    rData^.sideLeft :=leftSide;
+end;
 
 procedure CopyRastNODE_LINK(const leftSide,rightSide:tSrcTree_item);
 var tmpRootLeft :tSrcTree_ROOT;
@@ -758,25 +776,17 @@ end;  *)
 {%region --- по НОДОВОЕ копирование дерева ----------}
 
 function _CR_SrcTree_Copy_item_(const source:tCopyRast_stITEM):tCopyRast_stITEM;
-var chld :tCopyRast_stITEM;
-    lData:pCopyRastNODE_DATA;
-    rData:pCopyRastNODE_DATA;
 begin // сам узел .. создаем, копируем данные, связываем
       {todo: проверки}
     result:=tCopyRast_stITEM(source.ClassType.Create);
     result.CopyData(source);
-    lData:=CopyRAST_stITEM_DATA(source);
-    rData:=CopyRAST_stITEM_DATA(result);
-    lData^.sideRight:=result;
-    rData^.sideLeft :=source;
+    CopyRastNODE_LINK_simple(source,result);
 end;
 
 //------------------------------------------------------------------------------
 
 function _CRST_CopyL2R_(const item:tCopyRast_stITEM):tCopyRast_stITEM; overload;
-var chld :tCopyRast_stITEM;
-    lData:pCopyRastNODE_DATA;
-    rData:pCopyRastNODE_DATA;
+var chld:tCopyRast_stITEM;
 begin
     // сам узел ..
     result:=_CR_SrcTree_Copy_item_(item);

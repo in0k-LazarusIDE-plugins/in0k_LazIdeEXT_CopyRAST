@@ -41,6 +41,7 @@ begin
    _stage_01_:=tCopyRast__stage_01_Handling.Create(self);//(_Builder_);
    _stage_02_:=tCopyRast_SrcTree_STAGE_L_R.Create(self);//tCopyRast_stage__JustCopying.Create(_Builder_);
    _stage_03_:=tCopyRast_stage__ChangePaths.Create(self);//tCopyRast_stage__ChangePaths.Create(_Builder_);
+   _stage_03_.Enabled:=TRUE;
    _stage_04_:=tCopyRast_SrcTree_STAGE_L_R.Create(self);//tCopyRast_stage__JustCopying.Create(_Builder_);
    _stage_05_:=tCopyRast_SrcTree_STAGE_L_R.Create(self);//tCopyRast_stage__JustCopying.Create(_Builder_);
 end;
