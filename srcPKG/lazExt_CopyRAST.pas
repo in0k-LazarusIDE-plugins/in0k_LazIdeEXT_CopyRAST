@@ -125,9 +125,9 @@ end;
 
 procedure tLazExt_CopyRAST._crt_IDEWnd_copyRast_Package_(Sender:TObject; aFormName:string; var AForm:TCustomForm; DoDisableAutoSizing:boolean);
 begin
-    if CompareText(aFormName,tWndCopyRAST_Package.ide_CoreName)=0 then begin
+  {  if CompareText(aFormName,tWndCopyRAST_Package.ide_CoreName)=0 then begin
         IDEWindowCreators.CreateForm(AForm,tWndCopyRAST_Package,DoDisableAutoSizing,Application);
-    end;
+    end; }
 end;
 
 procedure tLazExt_CopyRAST._ideCommand_copyRast_Package_onClick(Sender:TObject);

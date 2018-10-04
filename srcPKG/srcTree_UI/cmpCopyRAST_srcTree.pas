@@ -31,6 +31,10 @@ type
     function  IsCustomDrawn(Target:TCustomDrawTarget; Stage:TCustomDrawStage): Boolean; override;
     function  CustomDrawItem(Node:TTreeNode; State:TCustomDrawState; Stage:TCustomDrawStage; var PaintImages:Boolean):Boolean; override;
     procedure DoPaintNode(Node: TTreeNode); override;
+  protected
+    function  _displayRect_RIGHT_(const aNode:TTreeNode):tRect;
+    procedure _canvasTextOut_000_(const aCanvas:TCanvas; const aText:string; const aRect:tRect);
+    procedure _canvasTextOut_l2r_(const aCanvas:TCanvas; const aText:string; var   aRect:tRect);
   public
     procedure Select_4Right(const item:tSrcTree_item);
     procedure Select_4Left (const item:tSrcTree_item);
@@ -169,6 +173,35 @@ begin
             items[i].Expanded:=TRUE;
         end;
     end;
+end;
+
+//------------------------------------------------------------------------------
+
+function tCmpCopyRAST_srcTree._displayRect_RIGHT_(const aNode:TTreeNode):tRect;
+begin
+    result:=Rect(0,0,0,0);
+    if Assigned(aNode) then begin
+        result:=aNode.DisplayRect(TRUE);
+        result.Left :=result.Right;
+        result.Right:=self.ClientWidth;
+    end;
+end;
+
+//------------------------------------------------------------------------------
+
+procedure tCmpCopyRAST_srcTree._canvasTextOut_000_(const aCanvas:TCanvas; const aText:string; const aRect:tRect);
+var y:integer;
+begin {todo: пооптимизировать как-то надо, наверное}
+    y:=aRect.Top+(aRect.Bottom-aRect.Top-aCanvas.TextHeight(aText)) div 2;
+    aCanvas.TextOut(aRect.Left,y,aText);
+end;
+
+procedure tCmpCopyRAST_srcTree._canvasTextOut_l2r_(const aCanvas:TCanvas; const aText:string; var aRect:tRect);
+var y:integer;
+begin {todo: пооптимизировать как-то надо, наверное}
+    y:=aRect.Top+(aRect.Bottom-aRect.Top-aCanvas.TextHeight(aText)) div 2;
+    aCanvas.TextOut(aRect.Left,y,aText);
+    aRect.Left:=aCanvas.TextWidth(aText)+aRect.Left;
 end;
 
 end.

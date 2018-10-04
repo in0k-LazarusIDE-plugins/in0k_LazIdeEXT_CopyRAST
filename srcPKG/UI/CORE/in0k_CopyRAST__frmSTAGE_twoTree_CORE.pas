@@ -14,7 +14,7 @@ uses
   lazExt_CopyRAST__xmlConfig,
 
   in0k_CopyRAST__frmSTAGE_CORE,
-  cmpCopyRAST_srcTree;
+  in0k_CopyRAST__cmpSTAGE_Tree;
 
 type
 
@@ -27,13 +27,13 @@ type
   protected
     function _SplitterLR_defPosition_:integer;
   protected
-   _treeL_:tCmpCopyRAST_srcTree;
-    function  _treeL_TYPE_:tCmpCopyRAST_srcTree_TYPE;   virtual;
+   _treeL_:tCmpCopyRAST_stageTree;
+    function  _treeL_TYPE_:tCmpCopyRAST_stageTree_TYPE; virtual;
     procedure _treeL_SelectionChanged_(Sender:TObject); virtual;
     procedure _treeL_CRT_;
   protected
-   _treeR_:tCmpCopyRAST_srcTree;
-    function  _treeR_TYPE_:tCmpCopyRAST_srcTree_TYPE;   virtual;
+   _treeR_:tCmpCopyRAST_stageTree;
+    function  _treeR_TYPE_:tCmpCopyRAST_stageTree_TYPE; virtual;
     procedure _treeR_SelectionChanged_(Sender:TObject); virtual;
     procedure _treeR_CRT_;
   protected
@@ -110,6 +110,8 @@ end;
 procedure TfrmCopyRAST_STAGE_L_R._STAGE_onSet_(const value:tCopyRast_STAGE);
 begin
     //inherited;
+   _treeL_.CopyRast_STAGE:=value;
+   _treeR_.CopyRast_STAGE:=value;
     //---
     if Assigned(_STAGE_) then
     with tCopyRast_SrcTree_STAGE_L_R(value) do begin
@@ -127,6 +129,7 @@ end;
 
 //------------------------------------------------------------------------------
 
+// установить объект для РЕДАКТИРОВАНИЯ
 procedure TfrmCopyRAST_STAGE_L_R._editItem_SET_(const value:tSrcTree_item);
 begin
 
@@ -134,9 +137,9 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TfrmCopyRAST_STAGE_L_R._treeL_TYPE_:tCmpCopyRAST_srcTree_TYPE;
+function TfrmCopyRAST_STAGE_L_R._treeL_TYPE_:tCmpCopyRAST_stageTree_TYPE;
 begin
-    result:=tCmpCopyRAST_srcTree;
+    result:=tCmpCopyRAST_stageTree;
 end;
 
 procedure TfrmCopyRAST_STAGE_L_R._treeL_CRT_;
@@ -144,6 +147,7 @@ begin
    _treeL_:=_treeL_TYPE_.Create(Self);
     with _treeL_ do begin
         Parent:=Self;
+        Stage :=_STAGE_;
         //
         with AnchorSide[akLeft] do begin
             Control:=Self;
@@ -169,9 +173,9 @@ end;
 
 //------------------------------------------------------------------------------
 
-function TfrmCopyRAST_STAGE_L_R._treeR_TYPE_:tCmpCopyRAST_srcTree_TYPE;
+function TfrmCopyRAST_STAGE_L_R._treeR_TYPE_:tCmpCopyRAST_stageTree_TYPE;
 begin
-    result:=tCmpCopyRAST_srcTree;
+    result:=tCmpCopyRAST_stageTree;
 end;
 
 procedure TfrmCopyRAST_STAGE_L_R._treeR_CRT_;
@@ -179,6 +183,7 @@ begin
    _treeR_:=_treeR_TYPE_.Create(Self);
     with _treeR_ do begin
         Parent:=Self;
+        Stage :=_STAGE_;
         //
         with AnchorSide[akLeft] do begin
             Control:=Splitter_LR;

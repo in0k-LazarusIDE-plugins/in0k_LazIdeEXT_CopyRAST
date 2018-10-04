@@ -9,6 +9,9 @@ uses
   StdCtrls, ComCtrls,
 
 
+  in0k_CopyRAST__cmpSTAGE_Tree,
+  in0k_CopyRAST__STAGE_03__cmpLTREE,
+
   lazExt_CopyRAST__xmlConfig,
   in0k_CopyRAST__frmSTAGE_twoTree_CORE,
 
@@ -37,6 +40,12 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FrameConstrainedResize(Sender: TObject; var MinWidth, MinHeight, MaxWidth, MaxHeight: TConstraintSize);
+  private
+    function _stageMY_:tCopyRast_stage__ChangePaths; inline;
+  protected
+    function  _treeL_TYPE_:tCmpCopyRAST_stageTree_TYPE; override;
+
+
   protected
     //procedure _ctrl_Enabled_SET_(const value:boolean); override;
     //procedure _ctrl_validate_;                         virtual; {$ifOpt D-}abstract;{$endIf}
@@ -83,6 +92,20 @@ begin
     frmCopyRAST_cie_ReNamesCustomer1.ItemCNFG_OnChange:=@_onChange_customer_;
     frmCopyRAST_cie_ReNamesTemplate1.ItemCNFG_OnChange:=@_onChange_template_;
     frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=NIL;
+end;
+
+//------------------------------------------------------------------------------
+
+function TfrmApprovedFILEs2NAMEs._stageMY_:tCopyRast_stage__ChangePaths;
+begin
+    result:=tCopyRast_stage__ChangePaths(_STAGE_);
+end;
+
+//------------------------------------------------------------------------------
+
+function TfrmApprovedFILEs2NAMEs._treeL_TYPE_:tCmpCopyRAST_stageTree_TYPE;
+begin
+    result:=tCmpCopyRAST_srcTree_Stage03_cmpLTREE;
 end;
 
 //------------------------------------------------------------------------------

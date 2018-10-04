@@ -10,22 +10,22 @@ uses
   Classes,
   Graphics,
   ComCtrls,
-    in0k_lazIdeSRC_srcTree_CORE_item,
+  in0k_lazIdeSRC_srcTree_CORE_item,
 
   in0k_CopyRAST_srcTree_ITEMs,
   in0k_CopyRAST_srcTreeNode_DATA,
-  cmpCopyRAST_srcTree;
+  in0k_CopyRAST__cmpSTAGE_Tree;
 
 
 type
 
- tCmpCopyRAST_srcTree_Stage1_result=class(tCmpCopyRAST_srcTree)
+ tCmpCopyRAST_srcTree_Stage1_result=class(tCmpCopyRAST_stageTree)
   protected
    _rootSRC_:tCopyRast_stROOT;
     procedure _rootSRC_set_(const value:tCopyRast_stROOT);
   protected
     procedure _CDI_countAddedFiles(const Node:TTreeNode; const count:integer);
-    function  CustomDrawItem(Node:TTreeNode; State:TCustomDrawState; Stage:TCustomDrawStage; var PaintImages:Boolean):Boolean; override;
+    function  CustomDrawItem(Node:TTreeNode; State:TCustomDrawState; aStage:TCustomDrawStage; var PaintImages:Boolean):Boolean; override;
   public
     property RootSRC:tCopyRast_stROOT write _rootSRC_set_;
   end;
@@ -67,22 +67,31 @@ begin
     tmpFSTL:=Canvas.Font.Style;
     //
     Canvas.Brush.Color:=self.Color;
-    Canvas.Font.Color:=in0k_ext4ColorTheme_asGreen;
+    //Canvas.Font.Color:=in0k_ext4ColorTheme_asGreen;
     Canvas.Font.Style:=tmpFSTL+[fsBold];
+
+    //---
+
+
+    //self.Expand();
+
+    if nsExpanded in Node.States
+    then Canvas.Font.Color:=clGrayText
+    else Canvas.Font.Color:=in0k_ext4ColorTheme_asGreen;
+
     //---
     str(count,tmpText);
     tmpText:='+'+tmpText;
     //---
     tmpRect:=node.DisplayRect(true);
-    tmpRect.Left:=tmpRect.Right;//+4; {todo: как-то в константу переделать}
-    tmpRect.Top :=tmpRect.Top+(tmpRect.Bottom-tmpRect.Top-Canvas.TextHeight(tmpText)) div 2;
+    tmpRect.Left:=tmpRect.Right;
     //---
-    Canvas.TextOut(tmpRect.Left,tmpRect.Top,tmpText);
+   _canvasTextOut_000_(Canvas,tmpText,tmpRect);
     //
     Canvas.Font.Style:=tmpFSTL;
 end;
 
-function tCmpCopyRAST_srcTree_Stage1_result.CustomDrawItem(Node:TTreeNode; State:TCustomDrawState; Stage:TCustomDrawStage; var PaintImages:Boolean):Boolean;
+function tCmpCopyRAST_srcTree_Stage1_result.CustomDrawItem(Node:TTreeNode; State:TCustomDrawState; aStage:TCustomDrawStage; var PaintImages:Boolean):Boolean;
 var tmpNode:tSrcTree_item;
     tmpData:pCopyRastNODE_DATA;
 
@@ -91,7 +100,7 @@ var tmpNode:tSrcTree_item;
 
 begin
     result:=inherited;
-    if (Stage=cdPrePaint) and result then begin
+    if (aStage=cdPrePaint) and result then begin
         tmpNode:=tSrcTree_item(Node.Data);
         if Assigned(tmpNode) and IS_CopyRast_stITEM(tmpNode)
         then begin
@@ -100,7 +109,7 @@ begin
             then Canvas.Font.Color:=in0k_ext4ColorTheme_clHotLight;
         end;
     end;
-    if (Stage=cdPostPaint)and result then begin
+    if (aStage=cdPostPaint)and result then begin
         tmpNode:=tSrcTree_item(Node.Data);
         tmpCNTs:=0;
         //if _show_unReNamed_FLDR_ then tmpCNTs:=tmpCNTs+ CopyRAST_Item_notReNamedChild_FLDR(tmpNode);

@@ -8,9 +8,9 @@ uses
 
   in0k_CopyRAST__frmSTAGE_twoTree_CORE,
   in0k_CopyRAST__frmSTAGE_LMR_CORE,
+  in0k_CopyRAST__cmpSTAGE_Tree,
 
   in0k_CopyRAST_srcTree_ITEMs,
-  cmpCopyRAST_srcTree,
   in0k_CopyRAST_STAGEs_CORE,
   in0k_CopyRAST__stage_01_Handling,
   in0k_CopyRAST__stage_01__frm_cmpResult;
@@ -20,7 +20,7 @@ type
   protected
     procedure _onLRootChange_(const aStage:tCopyRast_STAGE; const aRoot:tCopyRast_stROOT); override;
   protected
-    function  _treeR_TYPE_:tCmpCopyRAST_srcTree_TYPE; override;
+    function  _treeR_TYPE_:tCmpCopyRAST_stageTree_TYPE; override;
   protected
     procedure _STAGE_onSet_(const value:tCopyRast_STAGE); override;
   end;
@@ -29,7 +29,7 @@ implementation
 
 {$R *.lfm}
 
-function  TfrmCopyRAST__STAGE_01_Handling._treeR_TYPE_:tCmpCopyRAST_srcTree_TYPE;
+function  TfrmCopyRAST__STAGE_01_Handling._treeR_TYPE_:tCmpCopyRAST_stageTree_TYPE;
 begin
     result:=tCmpCopyRAST_srcTree_Stage1_result;
 end;

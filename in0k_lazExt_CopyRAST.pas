@@ -69,7 +69,8 @@ uses
   in0k_CopyRAST__frmSTAGE_01_Handling, in0k_CopyRAST__frmSTAGE_04_Copying, 
   in0k_CopyRAST__frmSTAGE_05_PostProcessing, in0k_CopyRAST__frmSTAGE_LMR_CORE, 
   in0k_lazarusIdeSRC_MacrosLIST, in0k_lazarusIdeSRC_ideMacrosCODE, 
-  in0k_CopyRAST__stage_01__frm_cmpResult, LazarusPackageIntf;
+  in0k_CopyRAST__stage_01__frm_cmpResult, in0k_CopyRAST__STAGE_03__cmpLTREE, 
+  in0k_CopyRAST__cmpSTAGE_Tree, in0k_CopyRAST__wndCORE_00, LazarusPackageIntf;
 
 implementation
 

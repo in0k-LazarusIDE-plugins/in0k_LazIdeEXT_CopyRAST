@@ -1,7 +1,7 @@
 inherited frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
-  Height = 720
+  Height = 718
   Width = 670
-  ClientHeight = 720
+  ClientHeight = 718
   ClientWidth = 670
   Constraints.MinHeight = 1
   Constraints.MinWidth = 1
@@ -19,12 +19,12 @@ inherited frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
     AnchorSideTop.Control = Owner
     AnchorSideBottom.Control = Splitter_TB
     AnchorSideBottom.Side = asrTop
-    Height = 362
+    Height = 360
   end
   object pnlPRP: TPanel[3]
     Left = 0
     Height = 353
-    Top = 367
+    Top = 365
     Width = 670
     Align = alBottom
     BevelOuter = bvNone
@@ -122,7 +122,7 @@ inherited frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 362
+    Top = 360
     Width = 670
     Align = alBottom
     ResizeAnchor = akBottom

@@ -10,11 +10,11 @@
       <SearchPaths>
         <IncludeFiles Value="srcPKG"/>
         <Libraries Value="srcPKG"/>
-        <OtherUnitFiles Value="srcPKG;srcPKG\srcTree;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcPKG\OperationNODEs\Processing_ProjPack;srcPKG\xmlConfig;srcPKG\srcTree_UI;srcPKG\Stages\CORE;srcPKG\Stages;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm;srcExt\in0k-lazarusIdeSRC-Macros;srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcExt\in0k-lazarusIdeSRC-SourceTREE;srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;srcExt\in0k-ext4ColorTheme;srcPKG\srcTree\Handlers\reNames;srcPKG\srcTree\Handlers;srcPKG\UI;srcPKG\UI\CORE"/>
+        <OtherUnitFiles Value="srcPKG;srcPKG\srcTree;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcPKG\OperationNODEs\Processing_ProjPack;srcPKG\xmlConfig;srcPKG\srcTree_UI;srcPKG\Stages\CORE;srcPKG\Stages;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm;srcExt\in0k-lazarusIdeSRC-Macros;srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcExt\in0k-lazarusIdeSRC-SourceTREE;srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;srcExt\in0k-ext4ColorTheme;srcPKG\srcTree\Handlers\reNames;srcPKG\srcTree\Handlers;srcPKG\UI;srcPKG\UI\CORE;srcPKG\UI\Stages\Stage03"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="109">
+    <Files Count="112">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -379,7 +379,7 @@
         <ResourceBaseClass Value="Frame"/>
       </Item90>
       <Item91>
-        <Filename Value="srcPKG\UI\in0k_CopyRAST__STAGE_03__frmRename.pas"/>
+        <Filename Value="srcPKG\UI\Stages\Stage03\in0k_CopyRAST__STAGE_03__frmRename.pas"/>
         <UnitName Value="in0k_CopyRAST__STAGE_03__frmRename"/>
         <ResourceBaseClass Value="Frame"/>
       </Item91>
@@ -456,6 +456,18 @@
         <Filename Value="srcPKG\UI\in0k_CopyRAST__stage_01__frm_cmpResult.pas"/>
         <UnitName Value="in0k_CopyRAST__stage_01__frm_cmpResult"/>
       </Item109>
+      <Item110>
+        <Filename Value="srcPKG\UI\Stages\Stage03\in0k_CopyRAST__STAGE_03__cmpLTREE.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_03__cmpLTREE"/>
+      </Item110>
+      <Item111>
+        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__cmpSTAGE_Tree.pas"/>
+        <UnitName Value="in0k_CopyRAST__cmpSTAGE_Tree"/>
+      </Item111>
+      <Item112>
+        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__wndCORE_00.pas"/>
+        <UnitName Value="in0k_CopyRAST__wndCORE_00"/>
+      </Item112>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>
