@@ -27,6 +27,7 @@ function WndCopyRAST_SHOW(const ideObject:tObject; const ideWindow:tCustomForm):
 implementation
 
 function WndCopyRAST_FIND(const ideObject:tObject; const ideWindow:tCustomForm):TCustomForm;
+var i:integer;
 begin
     result:=nil;
     // ищем, может она УЖЕ создана
@@ -71,7 +72,7 @@ begin
         if TObject(ideObject) is TIDEPackage then begin
             {$ifDef _localDBG_}ShowMessage('WndCopyRAST_SHOW: tWndCopyRAST_Package.Create befo');{$endIf}
             //result:=tWndCopyRAST_Package.Create(Application,ideObject);
-            result:=tWndCopyRAST_Package.Create(Application);//,ideObject);
+            result:=tWndCopyRAST_Package.Create(Application,ideObject);
               {$ifDef _localDBG_}ShowMessage('WndCopyRAST_SHOW: tWndCopyRAST_Package.Create afte');{$endIf}
         end
        else begin

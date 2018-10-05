@@ -33,6 +33,7 @@ type
 implementation
 
 
+// расчитать кол-во ДОБАВЛЕННЫХ файлов (считаем для ПАПОК)
 function _calc_Item_notInLeftRoot_FILE_(const leftRoot:tCopyRast_stROOT; const item:tSrcTree_item):integer;
 var tmpItem:tCopyRast_stITEM;
 begin
@@ -76,8 +77,8 @@ begin
     //self.Expand();
 
     if nsExpanded in Node.States
-    then Canvas.Font.Color:=clGrayText
-    else Canvas.Font.Color:=in0k_ext4ColorTheme_asGreen;
+    then Canvas.Font.Color:=in0k_ext4ColorTheme_clGrayText
+    else Canvas.Font.Color:=in0k_ext4ColorTheme_clHotLight;
 
     //---
     str(count,tmpText);

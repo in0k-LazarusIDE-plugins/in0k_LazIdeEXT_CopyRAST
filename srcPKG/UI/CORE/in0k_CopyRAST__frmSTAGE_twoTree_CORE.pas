@@ -79,20 +79,20 @@ end;
 
 procedure TfrmCopyRAST_STAGE_L_R._ctrl_eventSet_onChange_;
 begin
-    with _treeL_ do begin
+    if Assigned(_treeL_) then with _treeL_ do begin
         OnSelectionChanged:=@_treeL_SelectionChanged_;
     end;
-    with _treeR_ do begin
+    if Assigned(_treeR_) then with _treeR_ do begin
         OnSelectionChanged:=@_treeR_SelectionChanged_;
     end;
 end;
 
 procedure TfrmCopyRAST_STAGE_L_R._ctrl_eventClr_onChange_;
 begin
-    with _treeL_ do begin
+    if Assigned(_treeL_) then with _treeL_ do begin
         OnSelectionChanged:=nil;
     end;
-    with _treeR_ do begin
+    if Assigned(_treeR_) then with _treeR_ do begin
         OnSelectionChanged:=nil;
     end;
 end;
@@ -166,7 +166,6 @@ begin
             Side   :=asrBottom;
         end;
         Anchors:=[akTop, akLeft, akRight, akBottom];
-        //
     end;
 end;
 
@@ -182,7 +181,7 @@ procedure TfrmCopyRAST_STAGE_L_R._treeR_CRT_;
 begin
    _treeR_:=_treeR_TYPE_.Create(Self);
     with _treeR_ do begin
-        Parent:=Self;
+        Parent:= Self;
         Stage :=_STAGE_;
         //
         with AnchorSide[akLeft] do begin

@@ -104,20 +104,20 @@ type
 
   strict private
    _stageImgIDX_bbb_:integer;
-    //---
    _stageImgIDX_DIS_:integer;
    _stageImgIDX_ENB_:integer;
    _stageImgIDX_WRK_:integer;
-    //---
    _stageImgIDX_eOk_:integer;
    _stageImgIDX_eER_:integer;
   private
-    function _getImageIDX_bbb_:integer;
-    function _getImageIDX_DIS_:integer;
-    function _getImageIDX_ENB_:integer;
-    function _getImageIDX_WRK_:integer;
-    function _getImageIDX_eEr_:integer;
-    function _getImageIDX_eOk_:integer;
+    procedure _stageImgIDX_xxx__cln_;
+    function  _getImageIDX_XXX__GET(var value:integer; const valName:string):integer;
+    function  _getImageIDX_bbb_:integer;
+    function  _getImageIDX_DIS_:integer;
+    function  _getImageIDX_ENB_:integer;
+    function  _getImageIDX_WRK_:integer;
+    function  _getImageIDX_eEr_:integer;
+    function  _getImageIDX_eOk_:integer;
   private
     function _wndName_calc_:string;
     function _wndCptn_calc_:string;
@@ -170,33 +170,29 @@ implementation
 constructor tWndCopyRAST_CORE.Create(const AOwner:TComponent; const ideObject:tObject);
 begin
     inherited Create(AOwner);
-//   _parentOBJ_:=ideObject;
-//   _parentFRM_:=nil;
+   _stageImgIDX_xxx__cln_;
+
+   _parentOBJ_:=ideObject;
+   _parentFRM_:=nil;
     //
-//   _cpRastObj_:=_copyRastObj_CRT_;
+   _cpRastObj_:=_copyRastObj_CRT_;
 {   _cpRastObj_.onCLEAN:=@_STAGES_onCLEAN_;
    _cpRastObj_.onSTAGE:=@_STAGES_onSTAGE_;
     }//
- //   Self.Name   :=_wndName_calc_;
- //   Self.Caption:=_wndCptn_calc_;
+    Self.Name   :=_wndName_calc_;
+    Self.Caption:=_wndCptn_calc_;
     //
-//   _stageImgIDX_bbb_:=-1;
-//   _stageImgIDX_DIS_:=-1;
-//   _stageImgIDX_ENB_:=-1;
-//   _stageImgIDX_WRK_:=-1;
- //  _stageImgIDX_eER_:=-1;
- //  _stageImgIDX_eOk_:=-1;
     //
-    {frmCopyRAST__STAGE_00.STAGE:=_cpRastObj_.Stage_0;
+    frmCopyRAST__STAGE_00.STAGE:=_cpRastObj_.Stage_0;
     frmCopyRAST__STAGE_01.STAGE:=_cpRastObj_.Stage_1;
     frmCopyRAST__STAGE_02.STAGE:=_cpRastObj_.Stage_2;
     frmCopyRAST__STAGE_03.STAGE:=_cpRastObj_.Stage_3;
     frmCopyRAST__STAGE_04.STAGE:=_cpRastObj_.Stage_4;
     frmCopyRAST__STAGE_05.STAGE:=_cpRastObj_.Stage_5;
-    //}
-   // PageControl1.ActivePageIndex:=0;
-   // PageControl1.Images:=IDEImages.Images_16;
-   //_stages_reIMAGE_;
+    //
+    PageControl1.ActivePageIndex:=0;
+    PageControl1.Images:=IDEImages.Images_16;
+   _stages_reIMAGE_;
     //
    //_view_stage0_files_:=tCmpCopyRAST_srcTree.Create(self);
    //_view_stage0_files_.Parent:=TabSheet_Stage_0;
@@ -242,8 +238,8 @@ end;
 procedure tWndCopyRAST_CORE.PageControl1Changing(Sender: TObject; var AllowChange: Boolean);
 var nxtPage:integer;
 begin
- //   with TPageControl(Sender) do nxtPage:=IndexOfPageAt(ScreenToClient(Mouse.CursorPos));
- //   AllowChange:=_pages_Enabled_(nxtPage);
+    with TPageControl(Sender) do nxtPage:=IndexOfPageAt(ScreenToClient(Mouse.CursorPos));
+    AllowChange:=_pages_Enabled_(nxtPage);
    { if _pages_Enabled_();
 
 
@@ -254,13 +250,13 @@ begin
 
    _pages_LST_:=TPageControl(Sender).PageIndex;
     TPageControl(Sender).WindowProc:=;
-   Sender.beglo  }
+   Sender.beglo}
 end;
 
 procedure tWndCopyRAST_CORE.PageControl1Change(Sender: TObject);
 var tmpStage:integer;
 begin
-   { if _pages_Is_STAGE_(PageControl1.PageIndex) then begin
+    if _pages_Is_STAGE_(PageControl1.PageIndex) then begin
         tmpStage:=_pages_getSTAGE_(PageControl1.PageIndex);
         if _cpRastObj_.STAGE_IDX+1<tmpStage then begin
             PageControl1.PageIndex:=_pages_LST_;
@@ -269,7 +265,7 @@ begin
         if (_cpRastObj_.STAGE_IDX+1=tmpStage)and(not _cpRastObj_.STAGE_END) then begin
             PageControl1.PageIndex:=_pages_LST_;
         end
-    end; }
+    end;
 end;
 
 //------------------------------------------------------------------------------
@@ -283,22 +279,22 @@ end;
 
 procedure tWndCopyRAST_CORE.TabSheet_Stage_0Show(Sender: TObject);
 begin
-  //  if (_cpRastObj_.STAGE_IDX=0)and(not _cpRastObj_.STAGE_END) then begin
-  //     _cpRastObj_.DoSTAGE(0);
-  //  end;
+    if (_cpRastObj_.STAGE_IDX=0)and(not _cpRastObj_.STAGE_END) then begin
+       _cpRastObj_.DoSTAGE(0);
+    end;
 end;
 
 procedure tWndCopyRAST_CORE.TabSheet_Stage_xShow(Sender: TObject);
 var tmpStageIndex:integer;
 begin
-  {  tmpStageIndex:=_pages_getSTAGE_(TTabSheet(Sender).PageIndex);
+    tmpStageIndex:=_pages_getSTAGE_(TTabSheet(Sender).PageIndex);
     //
     if ((_cpRastObj_.STAGE_IDX=tmpStageIndex-1)and(    _cpRastObj_.STAGE_END))
     OR ((_cpRastObj_.STAGE_IDX=tmpStageIndex  )and(not _cpRastObj_.STAGE_END))
     then begin
        _cpRastObj_.DoSTAGE(tmpStageIndex);
     end;
-    caption:=inttostr(tmpStageIndex)+sender.ClassName; }
+    caption:=inttostr(tmpStageIndex)+sender.ClassName;
 end;
 
 //------------------------------------------------------------------------------
@@ -399,7 +395,7 @@ end;
 
 function tWndCopyRAST_CORE._wndName_calc_:string;
 begin
-   { if Assigned(_parentOBJ_) then begin
+    if Assigned(_parentOBJ_) then begin
        if _parentOBJ_ is TLazProject
        then result:=ide_Name4OBJ(TLazProject(_parentOBJ_))
       else
@@ -409,12 +405,12 @@ begin
             result:=ide_CoreName+_cTxt_PDTCHRK_+_parentOBJ_.ClassName;
         end;
     end
-    else result:=ide_CoreName; }
+    else result:=ide_CoreName;
 end;
 
 function tWndCopyRAST_CORE._wndCptn_calc_:string;
 begin
-  {  result:=_cCoreUsrCPTN_;
+    result:=_cCoreUsrCPTN_;
     if Assigned(_parentOBJ_) then begin
         result:=result+_cTxt_Probel1_;
         if _parentOBJ_ is TLazProject then begin
@@ -437,19 +433,19 @@ begin
        else begin
             result:=result+_parentOBJ_.ClassName;
         end;
-    end;  }
+    end;
 end;
 
 //------------------------------------------------------------------------------
 
 procedure tWndCopyRAST_CORE._CNFG_LOAD_;
 begin
-  // _cpRastObj_.Configs_LOAD;
+   _cpRastObj_.Configs_LOAD;
 end;
 
 procedure tWndCopyRAST_CORE._CNFG_Save_;
 begin
-  // _cpRastObj_.Configs_SAVE;
+   _cpRastObj_.Configs_SAVE;
 end;
 
 //------------------------------------------------------------------------------
@@ -457,7 +453,7 @@ end;
 procedure tWndCopyRAST_CORE._stages_reIMAGE_;
 var i:integer;
 begin
- {   PageControl1.Pages[0].ImageIndex:=_getImageIDX_bbb_;
+    PageControl1.Pages[0].ImageIndex:=_getImageIDX_bbb_;
     //--
     PageControl1.Pages[PageControl1.PageCount-1].ImageIndex:=_getImageIDX_eEr_;
     {todo}
@@ -482,17 +478,17 @@ begin
         // про ОСТАЛЬНЫЕ
         for i:=_cpRastObj_.STAGE_IDX+2 to PageControl1.PageCount-3
         do PageControl1.Pages[i+1].ImageIndex:=_getImageIDX_DIS_;
-    end; }
+    end;
 end;
 
 procedure tWndCopyRAST_CORE._STAGES_onCLEAN_(const Sender:tObject; const stageIndex:integer);
 begin
-//   _stages_reIMAGE_;
+   _stages_reIMAGE_;
 end;
 
 procedure tWndCopyRAST_CORE._STAGES_onSTAGE_(const Sender:tObject; const stageIndex:integer);
 begin
-//   _stages_reIMAGE_;
+   _stages_reIMAGE_;
 end;
 
 //------------------------------------------------------------------------------
@@ -521,14 +517,14 @@ end;
 
 function tWndCopyRAST_CORE._stage_is_LOCK_(const stageIdx:integer):boolean;
 begin
-{    result:=TRUE;
+    result:=TRUE;
     if not Assigned(_cpRastObj_) then exit;
     //
     if stageIdx<=_cpRastObj_.STAGE_IDX then result:=false
     else begin
         if _cpRastObj_.STAGE_IDX+1<stageIdx then result:=TRUE
         else result:=not _cpRastObj_.STAGE_END;
-    end;}
+    end;
 end;
 
 //------------------------------------------------------------------------------
@@ -561,10 +557,10 @@ end;
 
 function tWndCopyRAST_CORE._pages_Enabled_(const tabIndx:integer):boolean;
 begin
-{    if not _pages_Is_STAGE_(tabIndx)
+    if not _pages_Is_STAGE_(tabIndx)
     then result:=TRUE
     else result:=not _stage_is_LOCK_(_pages_getSTAGE_(tabIndx));
-}end;
+end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -591,11 +587,24 @@ end;
 
 //------------------------------------------------------------------------------
 
+{%region --- про картинки для вкладок -----------------------------------}
+
+procedure tWndCopyRAST_CORE._stageImgIDX_xxx__cln_;
+begin
+   _stageImgIDX_bbb_:=-1;
+   _stageImgIDX_DIS_:=-1;
+   _stageImgIDX_ENB_:=-1;
+   _stageImgIDX_WRK_:=-1;
+   _stageImgIDX_eER_:=-1;
+   _stageImgIDX_eOk_:=-1;
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // загрузка картинки и получение её индекса
 function _do_getIdxImj4IdeImages_(const fName:string):integer;
 begin
-{    try
+    try
       {$if (01080000<=lcl_fullversion)}
           result:=IDEImages.LoadImage(fName,16);
       {$else}
@@ -604,7 +613,13 @@ begin
     except
       result:=-1;
     end;
-}end;
+end;
+
+function tWndCopyRAST_CORE._getImageIDX_XXX__GET(var value:integer; const valName:string):integer;
+begin
+    if value<0 then value:=_do_getIdxImj4IdeImages_(valName);
+    result:=value;
+end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -620,39 +635,35 @@ const
 
 function tWndCopyRAST_CORE._getImageIDX_bbb_:integer;
 begin
-{    if _stageImgIDX_bbb_<0 then _stageImgIDX_bbb_:=_do_getIdxImj4IdeImages_(_cImgName_BBB_);
-    result:=_stageImgIDX_bbb_;
-}end;
+    result:=_getImageIDX_XXX__GET(_stageImgIDX_bbb_,_cImgName_BBB_);
+end;
 
 function tWndCopyRAST_CORE._getImageIDX_DIS_:integer;
 begin
-{    if _stageImgIDX_DIS_<0 then _stageImgIDX_DIS_:=_do_getIdxImj4IdeImages_(_cImgName_DIS_);
-    result:=_stageImgIDX_DIS_;
-}end;
+    result:=_getImageIDX_XXX__GET(_stageImgIDX_DIS_,_cImgName_DIS_);
+end;
 
 function tWndCopyRAST_CORE._getImageIDX_ENB_:integer;
 begin
-{    if _stageImgIDX_ENB_<0 then _stageImgIDX_ENB_:=_do_getIdxImj4IdeImages_(_cImgName_ENB_);
-    result:=_stageImgIDX_ENB_;
-}end;
+    result:=_getImageIDX_XXX__GET(_stageImgIDX_ENB_,_cImgName_ENB_);
+end;
 
 function tWndCopyRAST_CORE._getImageIDX_WRK_:integer;
 begin
-{    if _stageImgIDX_WRK_<0 then _stageImgIDX_WRK_:=_do_getIdxImj4IdeImages_(_cImgName_WRK_);
-    result:=_stageImgIDX_WRK_;
-}end;
+    result:=_getImageIDX_XXX__GET(_stageImgIDX_WRK_,_cImgName_WRK_);
+end;
 
 function tWndCopyRAST_CORE._getImageIDX_eEr_:integer;
 begin
-{    if _stageImgIDX_eER_<0 then _stageImgIDX_eER_:=_do_getIdxImj4IdeImages_(_cImgName_eER_);
-    result:=_stageImgIDX_eER_;
-}end;
+    result:=_getImageIDX_XXX__GET(_stageImgIDX_eER_,_cImgName_eER_);
+end;
 
 function tWndCopyRAST_CORE._getImageIDX_eOk_:integer;
 begin
-{    if _stageImgIDX_eOk_<0 then _stageImgIDX_eOk_:=_do_getIdxImj4IdeImages_(_cImgName_eOk_);
-    result:=_stageImgIDX_eOk_;
-}end;
+    result:=_getImageIDX_XXX__GET(_stageImgIDX_eOk_,_cImgName_eOk_);
+end;
+
+{%endregion}
 
 //------------------------------------------------------------------------------
 

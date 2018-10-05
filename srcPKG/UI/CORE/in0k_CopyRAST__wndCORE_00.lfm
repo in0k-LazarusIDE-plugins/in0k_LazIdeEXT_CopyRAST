@@ -4,5 +4,6 @@ object Form4: TForm4
   Top = 128
   Width = 320
   Caption = 'Form4'
-  LCLVersion = '1.6.4.0'
+  OnClose = FormClose
+  LCLVersion = '2.0.0.1'
 end

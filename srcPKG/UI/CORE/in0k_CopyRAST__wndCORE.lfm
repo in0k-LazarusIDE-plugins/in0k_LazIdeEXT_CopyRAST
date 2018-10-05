@@ -8,15 +8,15 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
   ClientWidth = 829
   OnClose = FormClose
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '2.0.0.1'
   object PageControl1: TPageControl
     Left = 0
     Height = 582
     Top = 0
     Width = 829
-    ActivePage = TabSheet_Stage_0
+    ActivePage = TabSheet_Stage_1
     Align = alClient
-    TabIndex = 1
+    TabIndex = 2
     TabOrder = 0
     OnChange = PageControl1Change
     OnChanging = PageControl1Changing
@@ -88,8 +88,8 @@ object wndCopyRAST_CORE: TwndCopyRAST_CORE
     end
     object TabSheet_Stage_1: TTabSheet
       Caption = 'File Handling'
-      ClientHeight = 1108
-      ClientWidth = 1642
+      ClientHeight = 554
+      ClientWidth = 821
       OnShow = TabSheet_Stage_xShow
       inline frmCopyRAST__STAGE_01: TfrmCopyRAST__STAGE_01_Handling
         Height = 554

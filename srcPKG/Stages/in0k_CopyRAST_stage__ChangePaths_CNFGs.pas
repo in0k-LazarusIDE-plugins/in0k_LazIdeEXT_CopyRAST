@@ -34,6 +34,9 @@ type //=========================================================================
  tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER=class(tCopyRAST_srcTree_4Handler_CNFGs)
   protected
     function _CNFG_CRT_:tCopyRAST_srcTree_4Handler_CNFGsNode; override;
+  public
+    function NameCustom(const path:string):boolean;
+    function PathCustom(const path:string):boolean;
   end;
 
 type //=========================================================================
@@ -150,6 +153,26 @@ end;
 function tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER._CNFG_CRT_:tCopyRAST_srcTree_4Handler_CNFGsNode;
 begin
     result:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node.Create;
+end;
+
+//------------------------------------------------------------------------------
+
+function tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER.NameCustom(const path:string):boolean;
+var i:integer;
+begin
+    result:=false;
+    if _LIST_.Find(path,i) then begin
+        result:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node(_LIST_.Objects[i]).NameCustom;
+    end
+end;
+
+function tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER.PathCustom(const path:string):boolean;
+var i:integer;
+begin
+    result:=false;
+    if _LIST_.Find(path,i) then begin
+        result:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node(_LIST_.Objects[i]).PathCustom;
+    end
 end;
 
 {%endregion}

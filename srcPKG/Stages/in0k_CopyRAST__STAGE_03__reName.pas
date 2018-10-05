@@ -145,6 +145,8 @@ type
   public
     procedure CNFG_customer_SET(const item:tSrcTree_item; const CNFG:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
     function  CNFG_customer_GET(const item:tCopyRast_stITEM):tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
+    function  CNFG_customer_NameCustom(const item:tCopyRast_stITEM):boolean;
+    function  CNFG_customer_PathCustom(const item:tCopyRast_stITEM):boolean;
     procedure CNFG_template_SET(const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
     function  CNFG_template_GET(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
   public
@@ -1070,6 +1072,29 @@ begin
     except
     ShowMessage('66666666666666677777777777777777777777777');
     end;
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+function tCopyRast_stage__ChangePaths.CNFG_customer_NameCustom(const item:tCopyRast_stITEM):boolean;
+begin
+    result:=false;
+    if _item_4_cnfg_customer_ROOT_(item) then begin
+        if Assigned(_cnfg_customer_ROOT_) then result:=_cnfg_customer_ROOT_.NameCustom;
+    end
+    else
+    if (item is tSrcTree_fsFILE) then begin
+        if Assigned(_cnfg_customer_FILE_) then result:=_cnfg_customer_FILE_.NameCustom(tSrcTree_fsFILE(item).fsBase);
+    end
+    else
+    if (item is tSrcTree_fsFLDR) then begin
+        if Assigned(_cnfg_customer_FLDR_) then result:=_cnfg_customer_FLDR_.NameCustom(tSrcTree_fsFLDR(item).fsBase);
+    end
+end;
+
+function tCopyRast_stage__ChangePaths.CNFG_customer_PathCustom(const item:tCopyRast_stITEM):boolean;
+begin
+    result:=false;
 end;
 
 //------------------------------------------------------------------------------
