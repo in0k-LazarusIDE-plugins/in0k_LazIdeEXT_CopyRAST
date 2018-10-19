@@ -143,12 +143,13 @@ type
     function  _template_APPLAY_LIST_(const srcItem:tSrcTree_item; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; var outName:string):integer;
 
   public
-    procedure CNFG_customer_SET(const item:tSrcTree_item; const CNFG:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
-    function  CNFG_customer_GET(const item:tCopyRast_stITEM):tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
+    procedure CNFG_customer_SET       (const item:tSrcTree_item; const CNFG:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
+    function  CNFG_customer_GET       (const item:tCopyRast_stITEM):tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
     function  CNFG_customer_NameCustom(const item:tCopyRast_stITEM):boolean;
     function  CNFG_customer_PathCustom(const item:tCopyRast_stITEM):boolean;
-    procedure CNFG_template_SET(const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
-    function  CNFG_template_GET(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+    procedure CNFG_template_SET       (const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+    function  CNFG_template_GET       (const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+    function  CNFG_template_count     (const item:tSrcTree_item):integer;
   public
     (*function  Validate_FLDR(const value:string):boolean;
     function  Validate_FILE(const value:string):boolean;   *)
@@ -1076,6 +1077,7 @@ end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+// используется СОБСТВЕННОЕ название
 function tCopyRast_stage__ChangePaths.CNFG_customer_NameCustom(const item:tCopyRast_stITEM):boolean;
 begin
     result:=false;
@@ -1092,9 +1094,21 @@ begin
     end
 end;
 
+// используется СОБСТВЕННОЕ путь
 function tCopyRast_stage__ChangePaths.CNFG_customer_PathCustom(const item:tCopyRast_stITEM):boolean;
 begin
     result:=false;
+    if _item_4_cnfg_customer_ROOT_(item) then begin
+        if Assigned(_cnfg_customer_ROOT_) then result:=_cnfg_customer_ROOT_.PathCustom;
+    end
+    else
+    if (item is tSrcTree_fsFILE) then begin
+        if Assigned(_cnfg_customer_FILE_) then result:=_cnfg_customer_FILE_.PathCustom(tSrcTree_fsFILE(item).fsBase);
+    end
+    else
+    if (item is tSrcTree_fsFLDR) then begin
+        if Assigned(_cnfg_customer_FLDR_) then result:=_cnfg_customer_FLDR_.PathCustom(tSrcTree_fsFLDR(item).fsBase);
+    end
 end;
 
 //------------------------------------------------------------------------------
@@ -1189,6 +1203,17 @@ begin
    else begin
         result:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(_cnfg_template_LAER_.CNFG_GET(_tSrcTree_item_fsNodeFLDR_(item).fsBase));
     end; }
+end;
+
+function tCopyRast_stage__ChangePaths.CNFG_template_count(const item:tSrcTree_item):integer;
+var itmList:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
+begin
+    if not Assigned(item) then EXIT(0);
+    //------------------------------
+    // посик ЛИЧНОГО списка
+    itmList:=_template_GET_link_(item);
+    if Assigned(itmList) then result:=itmList.Count
+    else result:=0;
 end;
 
 

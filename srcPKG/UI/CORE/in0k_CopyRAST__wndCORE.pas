@@ -176,6 +176,7 @@ begin
    _parentFRM_:=nil;
     //
    _cpRastObj_:=_copyRastObj_CRT_;
+   _CNFG_LOAD_;
 {   _cpRastObj_.onCLEAN:=@_STAGES_onCLEAN_;
    _cpRastObj_.onSTAGE:=@_STAGES_onSTAGE_;
     }//
@@ -322,13 +323,13 @@ end;
 
 procedure tWndCopyRAST_CORE.a_wnd_CANSELExecute(Sender: TObject);
 begin
-//    Close;
+    Close;
 end;
 
 procedure tWndCopyRAST_CORE.a_wnd_OKExecute(Sender: TObject);
 begin
-//   _CNFG_Save_;
-//    Close;
+   _CNFG_Save_;
+    Close;
 end;
 
 procedure tWndCopyRAST_CORE.Button5Click(Sender: TObject);

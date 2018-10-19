@@ -78,6 +78,7 @@ inherited frmCopyRAST_cie_ReNamesTemplate: TfrmCopyRAST_cie_ReNamesTemplate
       Top = 0
       Width = 32
       Caption = 'use'
+      OnClick = BitBtn5Click
       TabOrder = 4
     end
   end

@@ -32,14 +32,19 @@ type
     function  CustomDrawItem(Node:TTreeNode; State:TCustomDrawState; Stage:TCustomDrawStage; var PaintImages:Boolean):Boolean; override;
     procedure DoPaintNode(Node: TTreeNode); override;
   protected
-    function  _displayRect_RIGHT_(const aNode:TTreeNode):tRect;
-    procedure _canvasTextOut_000_(const aCanvas:TCanvas; const aText:string; const aRect:tRect);
-    procedure _canvasTextOut_l2r_(const aCanvas:TCanvas; const aText:string; var   aRect:tRect);
+   _fontDef_:TFont;
+    procedure _canvasFont_saveDEF_(const aCanvas:TCanvas);
+    procedure _canvasFont_reStore_(const aCanvas:TCanvas);
+  protected
+    function  _displayRect_RIGHT_ (const aNode:TTreeNode):tRect;
+    procedure _canvasTextOut_000_ (const aCanvas:TCanvas; const aText:string; const aRect:tRect);
+    procedure _canvasTextOut_l2r_ (const aCanvas:TCanvas; const aText:string; var   aRect:tRect);
   public
     procedure Select_4Right(const item:tSrcTree_item);
     procedure Select_4Left (const item:tSrcTree_item);
   public
     constructor Create(AnOwner: TComponent); override;
+    destructor DESTROY; override;
   public
     procedure Expand_MainNODEs;
   end;
@@ -50,9 +55,16 @@ implementation
 constructor tCmpCopyRAST_srcTree.Create(AnOwner:TComponent);
 begin
     inherited Create(AnOwner);
+   _fontDef_:=nil;
    _lftSide_mustNotNIL_:=false;
    _rhtSide_mustNotNIL_:=false;
     self.Options:=self.Options-[tvoThemedDraw]+[tvoReadOnly];
+end;
+
+destructor tCmpCopyRAST_srcTree.DESTROY;
+begin
+    inherited DESTROY;
+   _fontDef_.FREE;
 end;
 
 //------------------------------------------------------------------------------
@@ -189,6 +201,19 @@ end;
 
 //------------------------------------------------------------------------------
 
+procedure tCmpCopyRAST_srcTree._canvasFont_saveDEF_(const aCanvas:TCanvas);
+begin
+    if not assigned(_fontDef_) then _fontDef_:=TFont.Create;
+   _fontDef_.Assign(aCanvas.Font);
+end;
+
+procedure tCmpCopyRAST_srcTree._canvasFont_reStore_(const aCanvas:TCanvas);
+begin
+    aCanvas.Font.Assign(_fontDef_);
+end;
+
+//------------------------------------------------------------------------------
+
 procedure tCmpCopyRAST_srcTree._canvasTextOut_000_(const aCanvas:TCanvas; const aText:string; const aRect:tRect);
 var y:integer;
 begin {todo: пооптимизировать как-то надо, наверное}
@@ -196,12 +221,13 @@ begin {todo: пооптимизировать как-то надо, наверн
     aCanvas.TextOut(aRect.Left,y,aText);
 end;
 
+// выводим текст и СДВИГАЕМ левю границу прямоугольника на ширину ВЫВЕДЕННОГО
 procedure tCmpCopyRAST_srcTree._canvasTextOut_l2r_(const aCanvas:TCanvas; const aText:string; var aRect:tRect);
 var y:integer;
 begin {todo: пооптимизировать как-то надо, наверное}
     y:=aRect.Top+(aRect.Bottom-aRect.Top-aCanvas.TextHeight(aText)) div 2;
     aCanvas.TextOut(aRect.Left,y,aText);
-    aRect.Left:=aCanvas.TextWidth(aText)+aRect.Left;
+    aRect.Left:=aCanvas.TextWidth(aText)+aRect.Left+1;
 end;
 
 end.

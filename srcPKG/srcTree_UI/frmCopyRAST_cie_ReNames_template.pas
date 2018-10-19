@@ -42,6 +42,7 @@ type
     procedure a_moveUPUpdate(Sender: TObject);
     procedure a_newCNFGExecute(Sender: TObject);
     procedure a_newCNFGUpdate(Sender: TObject);
+    procedure BitBtn5Click(Sender: TObject);
     procedure FrameConstrainedResize(Sender: TObject; var MinWidth, MinHeight,
       MaxWidth, MaxHeight: TConstraintSize);
   protected
@@ -184,7 +185,7 @@ end;
 procedure TfrmCopyRAST_cie_ReNamesTemplate._ctrl_eventSet_onChange_;
 begin
     cntrl_Template.OnSelectItem:=@_cntrl_Templates_onSelectItem_;
- {   cntrl_nameCST.OnChange   :=@_ctrl_xxxxCST_onChange_;
+   { cntrl_nameCST.OnChange   :=@_ctrl_xxxxCST_onChange_;
     cntrl_nameCST.OnClick    :=@_ctrl_nameCST_onClick_;
     cntrl_pathCST.OnChange   :=@_ctrl_xxxxCST_onChange_;
     cntrl_pathCST.OnClick    :=@_ctrl_pathCST_onClick_;
@@ -195,13 +196,13 @@ end;
 procedure TfrmCopyRAST_cie_ReNamesTemplate._ctrl_eventClr_onChange_;
 begin
     cntrl_Template.OnSelectItem:=nil;//@_cntrl_Templates_onSelectItem_;
-
-  {  cntrl_nameCST.OnChange:=nil;
+    {
+    cntrl_nameCST.OnChange:=nil;
     cntrl_nameCST.OnClick :=nil;
     cntrl_pathCST.OnChange:=nil;
     cntrl_pathCST.OnClick :=nil;
     cntrl_nameStated.OnChange:=nil;
-    cntrl_pathStated.OnChange:=nil;   }
+    cntrl_pathStated.OnChange:=nil; }
 end;
 
 //-----------------------------------------------------------------[ validate ]-
@@ -276,6 +277,11 @@ end;
 procedure TfrmCopyRAST_cie_ReNamesTemplate.a_newCNFGUpdate(Sender: TObject);
 begin
     tAction(sender).Enabled:=cntrl_Template.new_Cnfg_CreateCAN;
+end;
+
+procedure TfrmCopyRAST_cie_ReNamesTemplate.BitBtn5Click(Sender: TObject);
+begin
+
 end;
 
 

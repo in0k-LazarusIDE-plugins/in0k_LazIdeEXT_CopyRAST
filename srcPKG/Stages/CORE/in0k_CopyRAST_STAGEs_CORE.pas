@@ -635,23 +635,23 @@ end;}
 procedure tCopyRAST_STAGEs_CORE.Configs_LOAD;
 var xmlCNFG:tLazExt_CopyRAST_CONFIG;
 begin
-(*    xmlCNFG:=_CNFG_create_xml_OBJ_(_CNFG_inSideInIDE_);
+    xmlCNFG:=_CNFG_create_xml_OBJ_(_CNFG_inSideInIDE_);
     //
     //CheckBoxThemed1.Checked:=CRxC_BASE__SettingsEXCLUDE(cnf);
     //
-  (* _stage_01_.CNFGs_LOAD(xmlCNFG);
+   _stage_01_.CNFGs_LOAD(xmlCNFG);
    _stage_02_.CNFGs_LOAD(xmlCNFG);
    _stage_03_.CNFGs_LOAD(xmlCNFG);
    _stage_04_.CNFGs_LOAD(xmlCNFG);
-   _stage_05_.CNFGs_LOAD(xmlCNFG); *)
+   _stage_05_.CNFGs_LOAD(xmlCNFG);
     //
-    xmlCNFG.FREE;*)
+    xmlCNFG.FREE;
 end;
 
 procedure tCopyRAST_STAGEs_CORE.Configs_SAVE;
 var xmlCNFG:tLazExt_CopyRAST_CONFIG;
 begin
-(*    //--- сначала пытаемся очистить в СТАРЫХ местах
+    //--- сначала пытаемся очистить в СТАРЫХ местах
     {todo: разбираться с МЕСТОМ хранения настроек}
     (*if inIde then begin
         // чистим кеши LAZARUS`a
@@ -665,20 +665,17 @@ begin
         if Assigned(tmp) then tmp.DeletePath(cLazExt_CopyRAST__xmlConfig_SECTION);
     end;*)
     //--- получаем ЭКЗЕМПЛЯР
-
-
-
     xmlCNFG:=_CNFG_create_xml_OBJ_(_CNFG_inSideInIDE_);
     //
     //CheckBoxThemed1.Checked:=CRxC_BASE__SettingsEXCLUDE(cnf);
     //
-  (* _stage_01_.CNFGs_SAVE(xmlCNFG);
+   _stage_01_.CNFGs_SAVE(xmlCNFG);
    _stage_02_.CNFGs_SAVE(xmlCNFG);
    _stage_03_.CNFGs_SAVE(xmlCNFG);
    _stage_04_.CNFGs_SAVE(xmlCNFG);
-   _stage_05_.CNFGs_SAVE(xmlCNFG); *)
+   _stage_05_.CNFGs_SAVE(xmlCNFG);
     //
-    xmlCNFG.FREE;  *)
+    xmlCNFG.FREE;
 end;
 
 //------------------------------------------------------------------------------

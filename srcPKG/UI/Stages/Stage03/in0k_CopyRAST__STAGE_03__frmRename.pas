@@ -40,6 +40,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FrameConstrainedResize(Sender: TObject; var MinWidth, MinHeight, MaxWidth, MaxHeight: TConstraintSize);
+    procedure frmCopyRAST_cie_ReNamesTemplate1Click(Sender: TObject);
   private
     function _stageMY_:tCopyRast_stage__ChangePaths; inline;
   protected
@@ -54,7 +55,7 @@ type
   private
    _cnfg_template_:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
     procedure _cnfg_template_SET_(const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
-  private
+  protected
    _editItem_:tSrcTree_item;
     procedure _editItem_SET_(const value:tSrcTree_item); override;
   private
@@ -148,7 +149,7 @@ begin
        _editItem_:=value;
         frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_ITM:=nil;
         frmCopyRAST_cie_ReNamesCustomer1.ItemCNFG:=tCopyRast_stage__ChangePaths(_STAGE_).CNFG_customer_GET(_editItem_);
-        //frmCopyRAST_cie_ReNamesTemplate1.ItemCNFG:=tCopyRast_stage__ChangePaths(_STAGE_).CNFG_template_GET(_editItem_);
+        frmCopyRAST_cie_ReNamesTemplate1.ItemCNFG:=tCopyRast_stage__ChangePaths(_STAGE_).CNFG_template_GET(_editItem_);
         frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_ITM:=_editItem_;
     end
     else begin
@@ -169,9 +170,9 @@ end;
 
 procedure TfrmApprovedFILEs2NAMEs._onChange_template_(const Sender:tObject; const itemCnfg:pointer);
 begin
-  (*   if Assigned(_editItem_) then begin
+    if Assigned(_editItem_) then begin
        tCopyRast_stage__ChangePaths(_STAGE_).CNFG_template_SET(_editItem_,tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(itemCnfg));
-    end; *)
+    end;
 end;
 
 {procedure TfrmApprovedFILEs2NAMEs._editItem_onCHG_template;
@@ -229,6 +230,12 @@ begin
     //---
     //frmCopyRAST_cie_ReNamesCustomer1
     pnlPRP.Constraints.MinHeight:=(frmCopyRAST_cie_ReNamesCustomer1.Constraints.MinHeight + frmCopyRAST_cie_ReNamesTemplate1.Constraints.MinHeight);
+
+end;
+
+procedure TfrmApprovedFILEs2NAMEs.frmCopyRAST_cie_ReNamesTemplate1Click(
+  Sender: TObject);
+begin
 
 end;
 

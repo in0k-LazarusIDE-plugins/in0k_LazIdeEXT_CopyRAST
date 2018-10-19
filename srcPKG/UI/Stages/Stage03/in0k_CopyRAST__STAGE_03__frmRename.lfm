@@ -56,6 +56,7 @@ inherited frmApprovedFILEs2NAMEs: TfrmApprovedFILEs2NAMEs
       Align = alClient
       ClientHeight = 305
       ClientWidth = 670
+      OnClick = frmCopyRAST_cie_ReNamesTemplate1Click
       TabOrder = 1
       DesignLeft = 468
       DesignTop = 400
