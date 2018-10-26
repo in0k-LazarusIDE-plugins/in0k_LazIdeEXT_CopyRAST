@@ -20,6 +20,8 @@ uses
   in0k_CopyRAST_srcTree_ITEMs,
   in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
   //
+  //
+
 //  in0k_CopyRAST_srcTree_Stage,
   lazExt_CopyRAST__xmlConfig,
   srcTree_builder_CORE;
@@ -76,7 +78,13 @@ type
     function EXECUTE:boolean;
   end;
 
- tCopyRast_SrcTree_STAGE_L_R=class(tCopyRast_STAGE)
+ tCopyRast_STAGE_=class(tCopyRast_STAGE)
+  public
+    //function EXECUTE(const srcROOT:tCopyRast_stROOT):boolean; virtual;
+  end;
+
+
+ tCopyRast_SrcTree_STAGE_L_R=class(tCopyRast_STAGE_)
   protected
    _enabled_:boolean;
   protected //< над чем работаем
@@ -188,7 +196,7 @@ type
     property onCLEAN:mCopyRAST_STAGEs_onCLEAN read _mOn_Clear_ write _mOn_Clear_;
     property onSTAGE:mCopyRAST_STAGEs_onSTAGE read _mOn_Stage_ write _mOn_Stage_;
   public
-    property Stage_0:tCopyRast_SrcTree_STAGE_00 read _stage_00_;
+    property Stage_0:tCopyRast_SrcTree_STAGE_00  read _stage_00_;
     property Stage_1:tCopyRast_SrcTree_STAGE_L_R read _stage_01_;
     property Stage_2:tCopyRast_SrcTree_STAGE_L_R read _stage_02_;
     property Stage_3:tCopyRast_SrcTree_STAGE_L_R read _stage_03_;
@@ -200,6 +208,7 @@ type
   end;
 
 implementation
+uses in0k_CopyRAST__STAGE_05__editFiles;
 
 constructor tCopyRast_STAGE.Create(const STAGEs:tCopyRAST_STAGEs_CORE);
 begin
@@ -256,8 +265,6 @@ procedure tCopyRast_STAGE.DoCLEAN(const full:boolean=true);
 begin
    _result_CLR_;
 end;
-
-
 
 //------------------------------------------------------------------------------
 
@@ -324,6 +331,18 @@ begin
     tmpRes:=_creater_.MAKE_SourceTREE(_owner_Builder,_owner_Ide_OBJ);
    _resultROOT_SET_(tmpRes);
 end;
+
+
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
+{function tCopyRast_STAGE_CORE.EXECUTE(const srcROOT:tCopyRast_stROOT):boolean;
+begin
+
+end;}
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
@@ -605,7 +624,7 @@ begin
       2:_stage_02_.EXECUTE(_stage_01_.RootRESULT);
       3:_stage_03_.EXECUTE(_stage_02_.RootRESULT);
       4:_stage_04_.EXECUTE(_stage_03_.RootRESULT);
-      5:_stage_05_.EXECUTE(_stage_04_.RootRESULT);
+      5:tCopyRast_STAGE_05__editFiles(_stage_05_).EXECUTE(_stage_04_.RootSOURCE,_stage_04_.RootRESULT);
     end;
 end;
 
@@ -751,15 +770,15 @@ begin
     if inIde and inEXT then begin
       _CNFG_inSideInIDE_:=TRUE;
     end
-   else
+    else
     if inIde then begin
       _CNFG_inSideInIDE_:=TRUE;
     end
-   else
+    else
     if inEXT then begin
       _CNFG_inSideInIDE_:=FALSE;
     end
-   else begin
+    else begin
       _CNFG_inSideInIDE_:=TRUE;
     end;
 end;

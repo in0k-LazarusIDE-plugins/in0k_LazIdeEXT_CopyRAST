@@ -12,7 +12,7 @@ uses
 
   in0k_CopyRAST_srcTree_ITEMs,
   in0k_CopyRAST_STAGEs_CORE,
-  in0k_CopyRAST__stage_01_Handling,
+  in0k_CopyRAST__STAGE_01__Handling,
   in0k_CopyRAST__stage_01__frm_cmpResult;
 
 type

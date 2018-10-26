@@ -3,14 +3,26 @@
   <CopyRAST SettingsEXCLUDE="False"/>
   <approvedFILEs2NAMEs>
     <Customers>
-      <FILEs count="2">
-        <item0 Path="srcEXT\in0k-lazarusIdeSRC-Macros\in0k_lazarusIdeSRC_MacrosLIST.pas">
-          <nameStated Value="ASD"/>
+      <FLDRs count="2">
+        <item0 Path="srcPKG">
+          <nameStated Value="fhfdgh"/>
+          <pathStated Value="dfghfdgh fdgh"/>
         </item0>
-        <item1 Path="srcEXT\in0k-lazarusIdeSRC-SourceTREE\FNKs\in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND.pas">
-          <pathStated Value="fgn"/>
+        <item1 Path="srcPKG\Nodes">
+          <nameStated Value="cvhc"/>
+          <pathStated Value="dgsdfg"/>
         </item1>
-      </FILEs>
+      </FLDRs>
     </Customers>
+    <Templates count="1">
+      <item0 count="1" Path="srcEXT">
+        <item0>
+          <template Value="in0k"/>
+          <exchange Value="qwer"/>
+          <_Use4FLDR_ Value="True"/>
+          <_use_Last_ Value="True"/>
+        </item0>
+      </item0>
+    </Templates>
   </approvedFILEs2NAMEs>
 </CONFIG>

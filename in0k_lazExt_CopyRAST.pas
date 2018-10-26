@@ -4,6 +4,7 @@
 
 unit in0k_lazExt_CopyRAST;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
@@ -24,7 +25,7 @@ uses
   lazExt_CopyRAST_processingNODE, lazExt_CopyRAST_processingMCHN, 
   prcNode_clearTargetDir, prcNode_createTargetDir, prcNode_copyFile, 
   prcNode_PSF_updateUnit, prcNode_PSF_updateUses, prcNode_XML_updateLPK, 
-  prcNode_core_srcEdit, prcNode_core_xmlEdit, prcNode_XML_updateLPK_v4, 
+  prcNode_core_srcEdit, prcNode_XML_updateLPK_v4, prcNode_core_xmlEdit, 
   prcNode_XML_CompilerOptions_SearchPaths, prcNode_XML_Files, 
   prcNode_PSF_updateInclude, in0k_lazIdeSRC_srcTree_CORE_itemFileSystem, 
   in0k_lazExt_CopyRAST_cmpTree, srcTree_builder_CORE, 
@@ -54,23 +55,27 @@ uses
   in0k_lazIdeSRC_srcTree_FNK_fsFLDR_GET, 
   in0k_lazIdeSRC_srcTree_FNK_fsFILE_ADD, 
   in0k_lazIdeSRC_srcTree_FNK_fsFILE_GET, cmpCopyRAST_srcTree_approvedFiles, 
-  cmpCopyRAST_srcTree_approvedNAMEs, srcTree_handler4build_CORE, 
+  srcTree_handler4build_CORE, cmpCopyRAST_srcTree_approvedNAMEs, 
   cmpCopyRAST_srcTree, lazExt_CopyRAST__xmlConfig, 
   lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs, 
   in0k_lazIdeSRC_srcTree_itemsList, in0k_ext4ColorTheme, 
-  in0k_CopyRAST__STAGE_03__reName, in0k_CopyRAST_stage__ChangePaths_CNFGs, 
+  in0k_CopyRAST__STAGE_03__reName, in0k_CopyRAST__STAGE_03_configs, 
   CopyRAST_srcTree_4Handler_CNFGs, frmCopyRAST_EDIT, 
   in0k_CopyRAST__frmSTAGE_CORE, in0k_CopyRAST__STAGE_03__frmRename, 
   in0k_CopyRAST__frmSTAGE_02_Revision, in0k_CopyRAST__frmSTAGE_twoTree_CORE, 
-  in0k_CopyRAST__stage_01_Handling, in0k_CopyRAST_STAGEs_CORE, 
-  in0k_CopyRAST_STAGEs, in0k_CopyRAST__wndCORE, in0k_CopyRAST__wndProject, 
+  in0k_CopyRAST__STAGE_01__Handling, in0k_CopyRAST_STAGEs_CORE, 
+  in0k_CopyRAST__STAGEs, in0k_CopyRAST__wndCORE, in0k_CopyRAST__wndProject, 
   in0k_CopyRAST__wndPackage, in0k_CopyRAST__wnd_SHOW, 
   in0k_CopyRAST_Stage_CORE, in0k_CopyRAST__frmSTAGE_00_CreateTree, 
   in0k_CopyRAST__frmSTAGE_01_Handling, in0k_CopyRAST__frmSTAGE_04_Copying, 
   in0k_CopyRAST__frmSTAGE_05_PostProcessing, in0k_CopyRAST__frmSTAGE_LMR_CORE, 
   in0k_lazarusIdeSRC_MacrosLIST, in0k_lazarusIdeSRC_ideMacrosCODE, 
   in0k_CopyRAST__stage_01__frm_cmpResult, in0k_CopyRAST__STAGE_03__cmpLTREE, 
-  in0k_CopyRAST__cmpSTAGE_Tree, in0k_CopyRAST__wndCORE_00, LazarusPackageIntf;
+  in0k_CopyRAST__cmpSTAGE_Tree, in0k_CopyRAST__STAGE_04__copyFiles, 
+  in0k_CopyRAST__wndCORE_00, in0k_CopyRAST__STAGE_03__cmpRTREE, 
+  in0k_CopyRAST__STAGE_04_configs, lazExt_CopyRAST_fileSystemFNKs, 
+  in0k_CopyRAST__STAGE_05__editFiles, 
+  in0k_CopyRAST__STAGE_05_editFiles_Handler, LazarusPackageIntf;
 
 implementation
 

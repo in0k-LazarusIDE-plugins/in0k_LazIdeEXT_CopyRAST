@@ -194,7 +194,7 @@ begin
     result:=Rect(0,0,0,0);
     if Assigned(aNode) then begin
         result:=aNode.DisplayRect(TRUE);
-        result.Left :=result.Right;
+        result.Left :=result.Right+1;
         result.Right:=self.ClientWidth;
     end;
 end;

@@ -18,7 +18,7 @@ uses
 
   cmpCopyRAST_srcTree, //frmCopyRAST_srcTree_approvedFILEs2NAMEs,
 
-  in0k_CopyRAST_STAGEs, in0k_CopyRAST__frmSTAGE_twoTree_CORE,
+  in0k_CopyRAST__STAGEs, in0k_CopyRAST__frmSTAGE_twoTree_CORE,
   in0k_CopyRAST__frmSTAGE_00_CreateTree, in0k_CopyRAST__frmSTAGE_02_Revision,
   in0k_CopyRAST__frmSTAGE_01_Handling,
   in0k_CopyRAST__frmSTAGE_04_Copying, in0k_CopyRAST__frmSTAGE_05_PostProcessing,

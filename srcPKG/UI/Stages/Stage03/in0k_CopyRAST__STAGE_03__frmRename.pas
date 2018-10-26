@@ -11,6 +11,7 @@ uses
 
   in0k_CopyRAST__cmpSTAGE_Tree,
   in0k_CopyRAST__STAGE_03__cmpLTREE,
+  in0k_CopyRAST__STAGE_03__cmpRTREE,
 
   lazExt_CopyRAST__xmlConfig,
   in0k_CopyRAST__frmSTAGE_twoTree_CORE,
@@ -26,7 +27,7 @@ uses
   cmpCopyRAST_srcTree_approvedNAMEs,
   frmCopyRAST_cie_ReNames_customer, frmCopyRAST_cie_ReNames_template,
   in0k_CopyRAST__STAGE_03__reName,
-  in0k_CopyRAST_stage__ChangePaths_CNFGs;
+  in0k_CopyRAST__STAGE_03_configs;
 
 type
 
@@ -45,8 +46,7 @@ type
     function _stageMY_:tCopyRast_stage__ChangePaths; inline;
   protected
     function  _treeL_TYPE_:tCmpCopyRAST_stageTree_TYPE; override;
-
-
+    function  _treeR_TYPE_:tCmpCopyRAST_stageTree_TYPE; override;
   protected
     //procedure _ctrl_Enabled_SET_(const value:boolean); override;
     //procedure _ctrl_validate_;                         virtual; {$ifOpt D-}abstract;{$endIf}
@@ -63,7 +63,7 @@ type
     procedure _onChange_template_(const Sender:tObject; const itemCnfg:pointer);
   private
     //_HNDLR_:tCopyRast_stage__ChangePaths;
-    //procedure _STAGE_set_(const value:tCopyRast_STAGE); override;
+    //procedure _STAGE_set_(const value:tCopyRast_STAGE_CORE); override;
   public
     constructor Create(AOwner:TComponent); override;
     destructor DESTROY; override;
@@ -109,6 +109,11 @@ begin
     result:=tCmpCopyRAST_srcTree_Stage03_cmpLTREE;
 end;
 
+function TfrmApprovedFILEs2NAMEs._treeR_TYPE_:tCmpCopyRAST_stageTree_TYPE;
+begin
+    result:=tCmpCopyRAST_srcTree_Stage03_cmpRTREE;
+end;
+
 //------------------------------------------------------------------------------
 
 {procedure TfrmApprovedFILEs2NAMEs._ctrl_Enabled_SET_(const value:boolean);
@@ -128,7 +133,7 @@ end;}
 
 //------------------------------------------------------------------------------
 
-(*procedure TfrmApprovedFILEs2NAMEs._STAGE_set_(const value:tCopyRast_STAGE);
+(*procedure TfrmApprovedFILEs2NAMEs._STAGE_set_(const value:tCopyRast_STAGE_CORE);
 begin
    (*
     frmCopyRAST_cie_ReNamesTemplate1.TemplateAPPLAY_FNK:=nil;//@(_HNDLR_.Template_APPLAY);

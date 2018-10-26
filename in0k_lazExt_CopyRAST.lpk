@@ -13,8 +13,13 @@
         <OtherUnitFiles Value="srcPKG;srcPKG\srcTree;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcPKG\OperationNODEs\Processing_ProjPack;srcPKG\xmlConfig;srcPKG\srcTree_UI;srcPKG\Stages\CORE;srcPKG\Stages;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm;srcExt\in0k-lazarusIdeSRC-Macros;srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcExt\in0k-lazarusIdeSRC-SourceTREE;srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;srcExt\in0k-ext4ColorTheme;srcPKG\srcTree\Handlers\reNames;srcPKG\srcTree\Handlers;srcPKG\UI;srcPKG\UI\CORE;srcPKG\UI\Stages\Stage03"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
+      <Linking>
+        <Debugging>
+          <UseHeaptrc Value="True"/>
+        </Debugging>
+      </Linking>
     </CompilerOptions>
-    <Files Count="112">
+    <Files Count="118">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -161,12 +166,12 @@
         <UnitName Value="prcNode_core_srcEdit"/>
       </Item36>
       <Item37>
-        <Filename Value="srcPKG\OperationNODEs\prcNode_core_xmlEdit.pas"/>
-        <UnitName Value="prcNode_core_xmlEdit"/>
-      </Item37>
-      <Item38>
         <Filename Value="srcPKG\OperationNODEs\prcNode_XML_updateLPK_v4.pas"/>
         <UnitName Value="prcNode_XML_updateLPK_v4"/>
+      </Item37>
+      <Item38>
+        <Filename Value="srcPKG\OperationNODEs\prcNode_core_xmlEdit.pas"/>
+        <UnitName Value="prcNode_core_xmlEdit"/>
       </Item38>
       <Item39>
         <Filename Value="srcPKG\OperationNODEs\Processing_ProjPack\prcNode_XML_CompilerOptions_SearchPaths.pas"/>
@@ -329,12 +334,12 @@
         <UnitName Value="cmpCopyRAST_srcTree_approvedFiles"/>
       </Item78>
       <Item79>
-        <Filename Value="srcPKG\srcTree_UI\cmpCopyRAST_srcTree_approvedNAMEs.pas"/>
-        <UnitName Value="cmpCopyRAST_srcTree_approvedNAMEs"/>
-      </Item79>
-      <Item80>
         <Filename Value="srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build\srcTree_handler4build_CORE.pas"/>
         <UnitName Value="srcTree_handler4build_CORE"/>
+      </Item79>
+      <Item80>
+        <Filename Value="srcPKG\srcTree_UI\cmpCopyRAST_srcTree_approvedNAMEs.pas"/>
+        <UnitName Value="cmpCopyRAST_srcTree_approvedNAMEs"/>
       </Item80>
       <Item81>
         <Filename Value="srcPKG\srcTree_UI\cmpCopyRAST_srcTree.pas"/>
@@ -361,8 +366,8 @@
         <UnitName Value="in0k_CopyRAST__STAGE_03__reName"/>
       </Item86>
       <Item87>
-        <Filename Value="srcPKG\Stages\in0k_CopyRAST_stage__ChangePaths_CNFGs.pas"/>
-        <UnitName Value="in0k_CopyRAST_stage__ChangePaths_CNFGs"/>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_03_configs.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_03_configs"/>
       </Item87>
       <Item88>
         <Filename Value="srcPKG\srcTree\Handlers\CopyRAST_srcTree_4Handler_CNFGs.pas"/>
@@ -393,16 +398,16 @@
         <UnitName Value="in0k_CopyRAST__frmSTAGE_twoTree_CORE"/>
       </Item93>
       <Item94>
-        <Filename Value="srcPKG\Stages\in0k_CopyRAST__stage_01_Handling.pas"/>
-        <UnitName Value="in0k_CopyRAST__stage_01_Handling"/>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_01__Handling.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_01__Handling"/>
       </Item94>
       <Item95>
         <Filename Value="srcPKG\Stages\CORE\in0k_CopyRAST_STAGEs_CORE.pas"/>
         <UnitName Value="in0k_CopyRAST_STAGEs_CORE"/>
       </Item95>
       <Item96>
-        <Filename Value="srcPKG\Stages\in0k_CopyRAST_STAGEs.pas"/>
-        <UnitName Value="in0k_CopyRAST_STAGEs"/>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGEs.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGEs"/>
       </Item96>
       <Item97>
         <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__wndCORE.pas"/>
@@ -465,9 +470,33 @@
         <UnitName Value="in0k_CopyRAST__cmpSTAGE_Tree"/>
       </Item111>
       <Item112>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_04__copyFiles.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_04__copyFiles"/>
+      </Item112>
+      <Item113>
         <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__wndCORE_00.pas"/>
         <UnitName Value="in0k_CopyRAST__wndCORE_00"/>
-      </Item112>
+      </Item113>
+      <Item114>
+        <Filename Value="srcPKG\UI\Stages\Stage03\in0k_CopyRAST__STAGE_03__cmpRTREE.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_03__cmpRTREE"/>
+      </Item114>
+      <Item115>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_04_configs.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_04_configs"/>
+      </Item115>
+      <Item116>
+        <Filename Value="srcPKG\lazExt_CopyRAST_fileSystemFNKs.pas"/>
+        <UnitName Value="lazExt_CopyRAST_fileSystemFNKs"/>
+      </Item116>
+      <Item117>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05__editFiles.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_05__editFiles"/>
+      </Item117>
+      <Item118>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05_editFiles_Handler.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_05_editFiles_Handler"/>
+      </Item118>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

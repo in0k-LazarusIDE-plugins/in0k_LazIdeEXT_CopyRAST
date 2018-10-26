@@ -8,7 +8,7 @@ uses
   in0k_CopyRAST__wndCORE,
   in0k_CopyRAST__wndCORE_00,
 
-  in0k_CopyRAST_STAGEs,
+  in0k_CopyRAST__STAGEs,
 
   Classes, SysUtils, FileUtil, CheckBoxThemed, Forms,
   Controls, Graphics, Dialogs, ComCtrls, StdCtrls;

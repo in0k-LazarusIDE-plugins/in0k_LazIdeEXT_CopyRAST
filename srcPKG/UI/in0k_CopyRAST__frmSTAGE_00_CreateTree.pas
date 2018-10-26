@@ -21,6 +21,11 @@ type
     procedure _tree_CRT_;
     procedure _treeROOT_onChange_(const aStage:tCopyRast_STAGE; const aRoot:tCopyRast_stROOT);
   protected
+    procedure _ctrl_Enabled_SET_(const value:boolean); override;
+    procedure _ctrl_validate_;                         override;
+    procedure _ctrl_eventSet_onChange_;                override;
+    procedure _ctrl_eventClr_onChange_;                override;
+  protected
     procedure _STAGE_onSet_(const value:tCopyRast_STAGE); override;
     procedure _STAGE_onCLR_;                              override;
   public
@@ -93,6 +98,29 @@ begin
    _STAGE_.RootRESULT_onChange:=@_treeROOT_onChange_;
    _treeROOT_onChange_(_STAGE_,STAGE.RootRESULT);
 end;
+
+//------------------------------------------------------------------------------
+
+procedure tFrmCopyRAST__STAGE_00_CreateTree._ctrl_Enabled_SET_(const value:boolean);
+begin
+   _tree_.Enabled:=value;
+end;
+
+procedure tFrmCopyRAST__STAGE_00_CreateTree._ctrl_validate_;
+begin
+    //
+end;
+
+procedure tFrmCopyRAST__STAGE_00_CreateTree._ctrl_eventSet_onChange_;
+begin
+   // _tree_.Enabled:=value;
+end;
+
+procedure tFrmCopyRAST__STAGE_00_CreateTree._ctrl_eventClr_onChange_;
+begin
+   //_tree_.Enabled:=value;
+end;
+
 
 end.
 

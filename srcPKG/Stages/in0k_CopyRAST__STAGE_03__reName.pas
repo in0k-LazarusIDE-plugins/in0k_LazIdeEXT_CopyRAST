@@ -37,7 +37,7 @@ srcTree_handler4build_CORE,
 
 
   in0k_CopyRAST_srcTree_ITEMs,
-  in0k_CopyRAST_stage__ChangePaths_CNFGs,
+  in0k_CopyRAST__STAGE_03_configs,
   lazExt_CopyRAST__xmlConfig,
   lazExt_CopyRAST__xmlConfig_approvedFILEs2NAMEs,
 
@@ -142,7 +142,7 @@ type
     //function  _template_APPLAY_LIST_(const srcName:string;        const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; out outName:string):integer; overload;
     function  _template_APPLAY_LIST_(const srcItem:tSrcTree_item; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; var outName:string):integer;
 
-  public
+  public // для ЛЕВОГО дерева
     procedure CNFG_customer_SET       (const item:tSrcTree_item; const CNFG:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node);
     function  CNFG_customer_GET       (const item:tCopyRast_stITEM):tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node;
     function  CNFG_customer_NameCustom(const item:tCopyRast_stITEM):boolean;
@@ -150,6 +150,9 @@ type
     procedure CNFG_template_SET       (const item:tSrcTree_item; const value:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
     function  CNFG_template_GET       (const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
     function  CNFG_template_count     (const item:tSrcTree_item):integer;
+  public // для ПРАВОГО дерева
+    function  RSLT_wasReNamed         (const item:tCopyRast_stITEM):boolean;
+
   public
     (*function  Validate_FLDR(const value:string):boolean;
     function  Validate_FILE(const value:string):boolean;   *)
@@ -691,32 +694,19 @@ end;*)
 procedure tCopyRast_stage__ChangePaths._CNFGs_INIT_;
 begin
     inherited;
-    //
-    ShowMessage(self.ClassName+' ._CNFGs_INIT_');
-    //
    _cnfg_customer_ROOT_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node.Create;
    _cnfg_customer_FLDR_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER.Create;
    _cnfg_customer_FILE_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER.Create;
-    //
    _cnfg_template_ROOT_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
    _cnfg_template_LAER_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR.Create;
-    //
-    //_cnfg_customer_ROOT_.NameStated:=_macross_getNullName_ROOT_;
-    //_cnfg_customer_ROOT_.NameCustom:= true;
-    //_cnfg_customer_ROOT_.PathStated:=_macross_getNullName_BASE_;
-    //_cnfg_customer_ROOT_.PathCustom:= true;
 end;
 
 procedure tCopyRast_stage__ChangePaths._CNFGs_FREE_;
 begin
     inherited;
-    //
-    ShowMessage(self.ClassName+' ._CNFGs_FREE_');
-    //
    _cnfg_customer_ROOT_.FREE;
    _cnfg_customer_FLDR_.FREE;
    _cnfg_customer_FILE_.FREE;
-    //
    _cnfg_template_ROOT_.FREE;
    _cnfg_template_LAER_.FREE;
 end;
@@ -726,13 +716,9 @@ end;
 procedure tCopyRast_stage__ChangePaths._CNFGs_LOAD_(const Configs:tLazExt_CopyRAST_CONFIG);
 begin
     inherited;
-    //
-    ShowMessage(self.ClassName+' ._CNFGs_LOAD_');
-    //
     CRxC_aF2N__customerROOT__Load(Configs,'',_cnfg_customer_ROOT_);
     CRxC_aF2N__customerFLDR__Load(Configs,'',_cnfg_customer_FLDR_);
     CRxC_aF2N__customerFILE__Load(Configs,'',_cnfg_customer_FILE_);
-    //
     CRxC_aF2N__templateROOT__Load(Configs,'',_cnfg_template_ROOT_);
     CRxC_aF2N__templateLAIR__Load(Configs,'',_cnfg_template_LAER_);
 end;
@@ -740,13 +726,9 @@ end;
 procedure tCopyRast_stage__ChangePaths._CNFGs_SAVE_(const Configs:tLazExt_CopyRAST_CONFIG);
 begin
     inherited;
-    //
-    ShowMessage(self.ClassName+' ._CNFGs_SAVE_');
-    //
     CRxC_aF2N__customerROOT__Save(Configs,'',_cnfg_customer_ROOT_);
     CRxC_aF2N__customerFLDR__Save(Configs,'',_cnfg_customer_FLDR_);
     CRxC_aF2N__customerFILE__Save(Configs,'',_cnfg_customer_FILE_);
-    //
     CRxC_aF2N__templateROOT__Save(Configs,'',_cnfg_template_ROOT_);
     CRxC_aF2N__templateLAIR__Save(Configs,'',_cnfg_template_LAER_);
 end;
@@ -1205,6 +1187,7 @@ begin
     end; }
 end;
 
+// Кол-во шаблонов указанных в ЭТОМ узле
 function tCopyRast_stage__ChangePaths.CNFG_template_count(const item:tSrcTree_item):integer;
 var itmList:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
 begin
@@ -1217,6 +1200,18 @@ begin
 end;
 
 
+//==============================================================================
+
+function tCopyRast_stage__ChangePaths.RSLT_wasReNamed(const item:tCopyRast_stITEM):boolean;
+var temp:tSrcTree_item;
+begin
+    if not Assigned(item) then EXIT(false);
+    //-------------------------------------
+    temp:=CopyRAST_stITEM_DATA(item)^.sideLeft;
+    if Assigned(temp)
+    then result:=temp.ItemNAME<>item.ItemNAME
+    else result:=TRUE;
+end;
 
 (*
 

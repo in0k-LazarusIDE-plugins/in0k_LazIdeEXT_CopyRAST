@@ -9,7 +9,7 @@ uses
 
   in0k_CopyRAST_srcTree_ITEMs,
   in0k_CopyRAST_STAGEs_CORE,
-  in0k_CopyRAST_STAGEs,
+  in0k_CopyRAST__STAGEs,
   in0k_lazIdeSRC_srcTree_CORE_item,
   lazExt_CopyRAST__xmlConfig,
 

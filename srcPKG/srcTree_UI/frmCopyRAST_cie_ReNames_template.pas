@@ -8,7 +8,7 @@ uses
 
     in0k_lazIdeSRC_srcTree_CORE_item,
 
-  in0k_CopyRAST_stage__ChangePaths_CNFGs,
+  in0k_CopyRAST__STAGE_03_configs,
   cmpCopyRAST_srcTree_nameTemplates, frmCopyRAST_cie_ReNames_tmpltRule,
     ComCtrls,
 
@@ -151,14 +151,14 @@ begin
     cntrl_Template.Templates:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(item);
     frmCopyRAST_cie_ReNamesTmpltRULE1.ItemCNFG:=NIL;
 
-    with tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(item) do begin
-        {cntrl_nameStated.Text:=NameStated;
+    {with tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(item) do begin
+        cntrl_nameStated.Text:=NameStated;
         cntrl_nameCST.Checked:=NameCustom;
         cntrl_nameCST.Tag    :=0;
         cntrl_pathStated.Text:=PathStated;
         cntrl_pathCST.Checked:=PathCustom;
-        cntrl_pathCST.Tag    :=0;}
-    end;
+        cntrl_pathCST.Tag    :=0;
+    end;}
 end;
 
 procedure TfrmCopyRAST_cie_ReNamesTemplate._cnfg_ctrl2itm_(const item:pointer);
@@ -185,24 +185,24 @@ end;
 procedure TfrmCopyRAST_cie_ReNamesTemplate._ctrl_eventSet_onChange_;
 begin
     cntrl_Template.OnSelectItem:=@_cntrl_Templates_onSelectItem_;
-   { cntrl_nameCST.OnChange   :=@_ctrl_xxxxCST_onChange_;
+    {cntrl_nameCST.OnChange   :=@_ctrl_xxxxCST_onChange_;
     cntrl_nameCST.OnClick    :=@_ctrl_nameCST_onClick_;
     cntrl_pathCST.OnChange   :=@_ctrl_xxxxCST_onChange_;
     cntrl_pathCST.OnClick    :=@_ctrl_pathCST_onClick_;
     cntrl_nameStated.OnChange:=@_ctrl_xxxxNEW_onChange_;
-    cntrl_pathStated.OnChange:=@_ctrl_xxxxNEW_onChange_;   }
+    cntrl_pathStated.OnChange:=@_ctrl_xxxxNEW_onChange_;}
 end;
 
 procedure TfrmCopyRAST_cie_ReNamesTemplate._ctrl_eventClr_onChange_;
 begin
     cntrl_Template.OnSelectItem:=nil;//@_cntrl_Templates_onSelectItem_;
-    {
-    cntrl_nameCST.OnChange:=nil;
+
+    {cntrl_nameCST.OnChange:=nil;
     cntrl_nameCST.OnClick :=nil;
     cntrl_pathCST.OnChange:=nil;
     cntrl_pathCST.OnClick :=nil;
     cntrl_nameStated.OnChange:=nil;
-    cntrl_pathStated.OnChange:=nil; }
+    cntrl_pathStated.OnChange:=nil;}
 end;
 
 //-----------------------------------------------------------------[ validate ]-

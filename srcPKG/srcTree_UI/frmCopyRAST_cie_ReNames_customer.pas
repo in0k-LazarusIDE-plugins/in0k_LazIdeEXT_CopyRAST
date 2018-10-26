@@ -5,7 +5,7 @@ unit frmCopyRAST_cie_ReNames_customer;
 interface
 
 uses
-  in0k_CopyRAST_stage__ChangePaths_CNFGs,
+  in0k_CopyRAST__STAGE_03_configs,
   frmCopyRAST_CnfgItem_EDIT, Classes, SysUtils, FileUtil, CheckBoxThemed, Forms,
   Controls, Graphics, Dialogs, StdCtrls;
 

@@ -12,6 +12,7 @@ uses
   in0k_lazIdeSRC_srcTree_item_Globals,
 
   in0k_lazIdeSRC_srcTree_FNK_rootFILE_FND,
+  in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
 
   in0k_CopyRAST_srcTreeNode_DATA;
 
@@ -104,16 +105,41 @@ function IS_CopyRAST_stMAIN  (const value:tCopyRast_stITEM):boolean; overload; {
 function IS_CopyRAST_stMAIN  (const value:tObject         ):boolean; overload; {$ifOPT D-}inline;{$endIf}
 function IS_CopyRAST_stMAIN  (const value:pointer         ):boolean; overload; {$ifOPT D-}inline;{$endIf}
 
+
+
+
+
 function CopyRAST_stITEM_DATA(const value:tCopyRast_stITEM):pCopyRastNODE_DATA; overload; {$ifOPT D-}inline;{$endIf}
 function CopyRAST_stITEM_DATA(const value:tObject         ):pCopyRastNODE_DATA; overload; {$ifOPT D-}inline;{$endIf}
 function CopyRAST_stITEM_DATA(const value:pointer         ):pCopyRastNODE_DATA; overload; {$ifOPT D-}inline;{$endIf}
 
+//function CopyRASTstItem__ROOT(const item:tCopyRast_stITEM):tCopyRast_stROOT; overload; {$ifOPT D-}inline;{$endIf}
+//function CopyRASTstItem__ROOT(const item:tObject         ):tCopyRast_stROOT; overload; {$ifOPT D-}inline;{$endIf}
+//function CopyRASTstItem__ROOT(const item:pointer         ):tCopyRast_stROOT; overload; {$ifOPT D-}inline;{$endIf}
+
+
+
+
+function CopyRAST_stITEM__LFT(const value:tCopyRast_stITEM):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
+function CopyRAST_stITEM__LFT(const value:tObject         ):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
+function CopyRAST_stITEM__LFT(const value:pointer         ):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
+
+function CopyRAST_stITEM__RHT(const value:tCopyRast_stITEM):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
+function CopyRAST_stITEM__RHT(const value:tObject         ):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
+function CopyRAST_stITEM__RHT(const value:pointer         ):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
+
+function CopyRAST_stITEM__findInLFT(const lftRoot:tCopyRast_stROOT; const item:tCopyRast_stITEM):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
+function CopyRAST_stITEM__findInLFT(const lftRoot:tCopyRast_stROOT; const item:tObject         ):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
+function CopyRAST_stITEM__findInLFT(const lftRoot:tCopyRast_stROOT; const item:pointer         ):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
+
+
+
 
 function CopyRastNODE_ROOT(const value:tSrcTree_item):tSrcTree_ROOT;
+function CopyRastNODE_BASE(const value:tSrcTree_item):tCopyRast_stBASE;
 
-
-
-
+function CopyRastNODE_IS_NOT_SOURCE(const value:tCopyRast_stITEM):boolean;
+function CopyRastNODE_GET_SOURCE(const value:tCopyRast_stITEM):tCopyRast_stITEM;
 
 
 function  CopyRastNODE_useInLeft (const rootRight:tSrcTree_ROOT; const value:tSrcTree_item):tSrcTree_item;
@@ -291,27 +317,114 @@ begin
 end;
 
 function CopyRAST_stITEM_DATA(const value:pointer):pCopyRastNODE_DATA;
-begin
-    {$ifOPT D+}
-    Assert(Assigned(value));
-    {$endIf}
+begin{$ifOPT D+} Assert(Assigned(value)); {$endIf}
     result:=CopyRAST_stITEM_DATA(TObject(value));
 end;
 
 //==============================================================================
 
+function CopyRAST_stITEM__LFT(const value:tCopyRast_stITEM):tCopyRast_stITEM;
+begin{$ifOPT D+} Assert(Assigned(value)); {$endIf}
+    result:=tCopyRast_stITEM(pointer(CopyRAST_stITEM_DATA(value)));
+    if Assigned(result) then result:=pCopyRastNODE_DATA(result)^.sideLeft;
+end;
 
+function CopyRAST_stITEM__LFT(const value:tObject):tCopyRast_stITEM;
+begin{$ifOPT D+} Assert(Assigned(value)); {$endIf}
+    result:=CopyRAST_stITEM__LFT(value);
+end;
+
+function CopyRAST_stITEM__LFT(const value:pointer):tCopyRast_stITEM;
+begin{$ifOPT D+} Assert(Assigned(value)); {$endIf}
+    result:=CopyRAST_stITEM__LFT(value);
+end;
+
+//------------------------------------------------------------------------------
+
+function CopyRAST_stITEM__RHT(const value:tCopyRast_stITEM):tCopyRast_stITEM;
+begin{$ifOPT D+} Assert(Assigned(value)); {$endIf}
+    result:=tCopyRast_stITEM(pointer(CopyRAST_stITEM_DATA(value)));
+    if Assigned(result) then result:=pCopyRastNODE_DATA(result)^.sideRight;
+end;
+
+function CopyRAST_stITEM__RHT(const value:tObject):tCopyRast_stITEM;
+begin{$ifOPT D+} Assert(Assigned(value)); {$endIf}
+    result:=CopyRAST_stITEM__RHT(value);
+end;
+
+function CopyRAST_stITEM__RHT(const value:pointer):tCopyRast_stITEM;
+begin{$ifOPT D+} Assert(Assigned(value)); {$endIf}
+    result:=CopyRAST_stITEM__RHT(value);
+end;
+
+//------------------------------------------------------------------------------
+// найти объект СЛЕВА с указаным lftRoot
+
+function CopyRAST_stITEM__findInLFT(const lftRoot:tCopyRast_stROOT; const item:tCopyRast_stITEM):tCopyRast_stITEM;
+begin{$ifOPT D+}
+        Assert(Assigned(lftRoot));
+        Assert(Assigned(item));
+     {$endIf}
+    //----------
+    result:=item;
+    while Assigned(result) do begin
+        if CopyRastNODE_ROOT(result)=lftRoot then BREAK;
+    end;
+end;
+
+function CopyRAST_stITEM__findInLFT(const lftRoot:tCopyRast_stROOT; const item:tObject):tCopyRast_stITEM;
+begin{$ifOPT D+}
+        Assert(Assigned(lftRoot));
+        Assert(Assigned(item));
+     {$endIf}
+    //----------
+    result:=CopyRAST_stITEM__findInLFT(lftRoot,tCopyRast_stITEM(item));
+end;
+
+function CopyRAST_stITEM__findInLFT(const lftRoot:tCopyRast_stROOT; const item:pointer):tCopyRast_stITEM;
+begin{$ifOPT D+}
+        Assert(Assigned(lftRoot));
+        Assert(Assigned(item));
+     {$endIf}
+    //----------
+    result:=CopyRAST_stITEM__findInLFT(lftRoot,tCopyRast_stITEM(item));
+end;
+
+//==============================================================================
+
+function CopyRastNODE_IS_NOT_SOURCE(const value:tCopyRast_stITEM):boolean;
+begin {todo: ОБЯЗАТЕЛЬНО}
+    result:=true;
+end;
+
+function CopyRastNODE_GET_SOURCE(const value:tCopyRast_stITEM):tCopyRast_stITEM;
+var tmp:tCopyRast_stITEM;
+begin
+    result:=value;
+    tmp:=CopyRAST_stITEM__LFT(result);
+    while Assigned(tmp) do begin
+        result:=tmp;
+        tmp:=CopyRAST_stITEM__LFT(result);
+    end;
+end;
+
+//==============================================================================
 
 function CopyRastNODE_ROOT(const value:tSrcTree_item):tSrcTree_ROOT;
-begin
-    {$ifOPT D+}
-    Assert(Assigned(value));
-    {$endIf}
+begin {$ifOPT D+} Assert(Assigned(value)); {$endIf}
     result:=tSrcTree_ROOT(value);
     while Assigned(result) do begin
         if tObject(result) is tSrcTree_ROOT then EXIT;
         result:=tSrcTree_ROOT(tSrcTree_item(result).ItemPRNT);
     end;
+end;
+
+function CopyRastNODE_BASE(const value:tSrcTree_item):tCopyRast_stBASE;
+begin {$ifOPT D+} Assert(Assigned(value)); {$endIf}
+    result:=tCopyRast_stBASE(tSrcTree_item(CopyRastNODE_ROOT(value)));
+    if Assigned(result)
+    then result:=tCopyRast_stBASE(SrcTree_fndBaseDIR(result))
+    else result:=nil;
 end;
 
 //------------------------------------------------------------------------------

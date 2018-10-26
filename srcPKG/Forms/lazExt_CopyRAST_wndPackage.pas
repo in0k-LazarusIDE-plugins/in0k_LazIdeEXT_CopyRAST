@@ -27,7 +27,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}
         srcTree_FNC,
      lazExt_CopyRAST_StrConsts,
      lazExt_CopyRAST_node, lazExt_CopyRAST_node_Folder, lazExt_CopyRAST_node_File,
-        in0k_CopyRAST_STAGEs,
+        in0k_CopyRAST__STAGEs,
         in0k_lazIdeSRC_CopyRAST_srcTree,
 
   PackageIntf,

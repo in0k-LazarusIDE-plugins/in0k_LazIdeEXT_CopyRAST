@@ -21,7 +21,7 @@ uses {$ifDef in0k_lazExt_CopyRAST_wndCORE___DebugLOG}in0k_lazIdeSRC_DEBUG,{$endI
      srcTree_FNC,
      in0k_lazIdeSRC_srcTree_item_Globals,
 
-     in0k_CopyRAST_STAGEs,
+     in0k_CopyRAST__STAGEs,
     lazExt_CopyRAST_node_ROOT,
     lazExt_CopyRAST_node_ROOT_package,
 
@@ -473,7 +473,7 @@ begin
 end;
 
 
-
+end.
 
 
 

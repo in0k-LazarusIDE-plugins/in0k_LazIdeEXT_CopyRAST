@@ -17,35 +17,33 @@ uses
 
 type
  tCmpCopyRAST_srcTree_Stage03_cmpLTREE=class(tCmpCopyRAST_stageTree)
-  protected
+  protected //< функции расчета кол-ва элементов в подДеревьях
     function _calcCount_SELF_FileNames_(const item:tSrcTree_item):integer;
     function _calcCount_ChldsFileNames_(const item:tSrcTree_item):integer;
     function _calcCount_SELF_PathNames_(const item:tSrcTree_item):integer;
     function _calcCount_ChldsPathNames_(const item:tSrcTree_item):integer;
     function _calcCount_SELF_Templates_(const item:tSrcTree_item):integer;
     function _calcCount_ChldsTemplates_(const item:tSrcTree_item):integer;
-  protected
-    procedure _node_have_csFile_(const node:TTreeNode; out ruleHave,ruleOn:boolean);
-  protected
+  protected //< рисование доп.Инфы
     procedure _CDI_customFileNames_(var aRect:TRect; const node:TTreeNode; const item:tSrcTree_item);
     procedure _CDI_customPathNames_(var aRect:TRect; const node:TTreeNode; const item:tSrcTree_item);
     procedure _CDI_customTemplates_(var aRect:TRect; const node:TTreeNode; const item:tSrcTree_item);
-  protected
+  protected //< рисование УЗЛА
     function CustomDrawItem(Node:TTreeNode; State:TCustomDrawState; aStage:TCustomDrawStage; var PaintImages:Boolean):Boolean; override;
   end;
 
 
 implementation
 
-// олучить указатель на STAGE СВОЕГО типа
-function _STAGE_(const cmp:tCmpCopyRAST_srcTree_Stage03_cmpLTREE):tCopyRast_stage__ChangePaths; //inline;
+// получить указатель на STAGE СВОЕГО типа
+function _STAGE_(const cmp:tCmpCopyRAST_srcTree_Stage03_cmpLTREE):tCopyRast_stage__ChangePaths; {$ifOpt D-}inline;{$endIf}
 begin
     result:=nil;
     if Assigned(cmp.CopyRast_STAGE) and (cmp.CopyRast_STAGE is tCopyRast_stage__ChangePaths)
     then result:=tCopyRast_stage__ChangePaths(cmp.CopyRast_STAGE);
 end;
 
-function _STAGE_isEMPTY_(const cmp:tCmpCopyRAST_srcTree_Stage03_cmpLTREE):boolean; //inline;
+function _STAGE_isEMPTY_(const cmp:tCmpCopyRAST_srcTree_Stage03_cmpLTREE):boolean; {$ifOpt D-}inline;{$endIf}
 begin
     result:=not Assigned(_STAGE_(cmp));
 end;
@@ -118,12 +116,6 @@ begin {todo: УЙТИ от рекурсии}
 end;
 
 //==============================================================================
-
-
-procedure tCmpCopyRAST_srcTree_Stage03_cmpLTREE._node_have_csFile_(const node:TTreeNode; out ruleHave,ruleOn:boolean);
-begin
-    //in0k_CopyRAST_srcTreeNode_DATA
-end;
 
 procedure tCmpCopyRAST_srcTree_Stage03_cmpLTREE._CDI_customFileNames_(var aRect:TRect; const node:TTreeNode; const item:tSrcTree_item);
 var cHimSelf:integer;
@@ -225,6 +217,7 @@ begin
     end;
 end;
 
+//==============================================================================
 
 function tCmpCopyRAST_srcTree_Stage03_cmpLTREE.CustomDrawItem(Node:TTreeNode; State:TCustomDrawState; aStage:TCustomDrawStage; var PaintImages:Boolean):Boolean;
 var tmpItem:tSrcTree_item;
@@ -236,41 +229,17 @@ begin
     //--------------------------------------
     if (aStage=cdPostPaint) then begin
         tmpItem:=tSrcTree_item(Node.Data);
-        {if Assigned(tmpItem) and IS_CopyRast_stITEM(tmpItem) then begin
-            tmpData:=CopyRAST_stITEM_DATA(tmpItem);
-
-        end;}
         tmpRect:=_displayRect_RIGHT_(Node);
-        //Self._canvasTextOut_l2r_(Canvas,_STAGE_(self).ClassName,tmpRect);
+        //
         Canvas.Brush.Color:=self.Color;
        _canvasFont_saveDEF_(Canvas);
+        // доп ИНФА
        _CDI_customFileNames_(tmpRect,Node, tmpItem);
        _CDI_customPathNames_(tmpRect,Node, tmpItem);
        _CDI_customTemplates_(tmpRect,Node, tmpItem);
-       _canvasFont_reStore_(Canvas);
-
-        //if _calcCount_SELF_NameCustom_(tmpItem)>0
-        //then Self._canvasTextOut_l2r_(Canvas,'F',tmpRect);
-        //if _calcCount_SELF_PathCustom_(tmpItem)>0
-        //then Self._canvasTextOut_l2r_(Canvas,'D',tmpRect);
-    end;
-
-
-{    if (aStage=cdPostPaint) then begin {and (_lftSide_mustNotNIL_ or _rhtSide_mustNotNIL_) and result then begin
-        tmpItem:=tSrcTree_item(Node.Data);
-        if Assigned(tmpItem) and IS_CopyRast_stITEM(tmpItem) then begin
-            tmpData:=CopyRAST_stITEM_DATA(tmpItem);
-            if _lftSide_mustNotNIL_ and not Assigned(tmpData^.sideLeft)
-            then Canvas.Font.Color:=clGrayText//color_Red//clGray
-           else
-            if _rhtSide_mustNotNIL_ and not Assigned(tmpData^.sideRight)
-            then Canvas.Font.Color:=clGrayText//color_Red//clGray
-        end;}
-        tmpRect      :=_displayRect_RIGHT_(Node);
         //
-        Self._canvasTextOut_l2r_(Canvas,_STAGE_(self).ClassName,tmpRect);
-        Self._canvasTextOut_l2r_(Canvas,'bcd',tmpRect);
-    end;  }
+       _canvasFont_reStore_(Canvas);
+    end;
 end;
 
 end.

@@ -20,7 +20,6 @@ type
     procedure _ctrl_validate_;                         virtual; {$ifOpt D-}abstract;{$endIf}
     procedure _ctrl_eventSet_onChange_;                virtual; {$ifOpt D-}abstract;{$endIf}
     procedure _ctrl_eventClr_onChange_;                virtual; {$ifOpt D-}abstract;{$endIf}
-
   protected
     procedure Constraints_reSet;
   public
@@ -72,7 +71,6 @@ begin
     else _ctrl_eventSet_onChange_;
 end;
 
-
 //------------------------------------------------------------------------------
 
 {$ifOpt D+}
@@ -84,12 +82,15 @@ end;
 
 //------------------------------------------------------------------------------
 
+// проверить данные устанвленные в контролы
 {$ifOpt D+}
 procedure tFrmCopyRastEDIT._ctrl_validate_;
 begin
     Assert(FALSE,'method "'+ClassName+'._cnfg_validate_" is not implemented');
 end;
 {$endIf}
+
+//------------------------------------------------------------------------------
 
 // УСТАНОВИТЬ события onChange для контролов
 {$ifOpt D+}

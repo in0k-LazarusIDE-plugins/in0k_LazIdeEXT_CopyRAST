@@ -5,7 +5,7 @@ unit frmCopyRAST_cie_ReNames_tmpltRule;
 interface
 
 uses
-  in0k_CopyRAST_stage__ChangePaths_CNFGs,
+  in0k_CopyRAST__STAGE_03_configs,
 
     Classes, SysUtils, FileUtil, CheckBoxThemed, Forms, Controls, Graphics,
     Dialogs, StdCtrls, frmCopyRAST_CnfgItem_EDIT;

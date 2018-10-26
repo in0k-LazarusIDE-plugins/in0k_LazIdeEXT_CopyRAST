@@ -1,4 +1,4 @@
-unit in0k_CopyRAST_STAGEs;
+unit in0k_CopyRAST__STAGEs;
 
 {$mode objfpc}{$H+}
 
@@ -8,8 +8,10 @@ uses
   srcTree_builder_CORE,
   in0k_CopyRAST_STAGEs_CORE,
 
-  in0k_CopyRAST__stage_01_Handling,
+  in0k_CopyRAST__STAGE_01__Handling,
   in0k_CopyRAST__STAGE_03__reName,
+  in0k_CopyRAST__STAGE_04__copyFiles,
+  in0k_CopyRAST__STAGE_05__editFiles,
 
   in0k_lazIdeSRC_CopyRAST_srcTree;
 
@@ -22,7 +24,6 @@ type
 
 
  tCopyRAST_STAGEs_4Package=class(tCopyRAST_STAGEs)
-
   protected
     function _builder_TYPE_:tSrcTree_Builder_TYPE; override;
     function _creater_TYPE_:tSrcTree_Creater_TYPE; override;
@@ -38,12 +39,14 @@ implementation
 procedure tCopyRAST_STAGEs._stages_CRT_;
 begin
     inherited;
-   _stage_01_:=tCopyRast__stage_01_Handling.Create(self);//(_Builder_);
-   _stage_02_:=tCopyRast_SrcTree_STAGE_L_R.Create(self);//tCopyRast_stage__JustCopying.Create(_Builder_);
-   _stage_03_:=tCopyRast_stage__ChangePaths.Create(self);//tCopyRast_stage__ChangePaths.Create(_Builder_);
+   _stage_01_:=tCopyRast__stage_01_Handling.Create(self);
+   _stage_02_:=tCopyRast_SrcTree_STAGE_L_R.Create(self);
+   _stage_03_:=tCopyRast_stage__ChangePaths.Create(self);
    _stage_03_.Enabled:=TRUE;
-   _stage_04_:=tCopyRast_SrcTree_STAGE_L_R.Create(self);//tCopyRast_stage__JustCopying.Create(_Builder_);
-   _stage_05_:=tCopyRast_SrcTree_STAGE_L_R.Create(self);//tCopyRast_stage__JustCopying.Create(_Builder_);
+   _stage_04_:=tCopyRast_stage__copyFiles.Create(self);
+   _stage_04_.Enabled:=TRUE;
+   _stage_05_:=tCopyRast_STAGE_05__editFiles.Create(self);
+   _stage_05_.Enabled:=TRUE;
 end;
 
 
