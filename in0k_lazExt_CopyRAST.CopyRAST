@@ -6,11 +6,15 @@
       <FLDRs count="2">
         <item0 Path="srcPKG">
           <nameStated Value="fhfdgh"/>
+          <nameCustom Value="False"/>
           <pathStated Value="dfghfdgh fdgh"/>
+          <pathCustom Value="False"/>
         </item0>
         <item1 Path="srcPKG\Nodes">
           <nameStated Value="cvhc"/>
+          <nameCustom Value="False"/>
           <pathStated Value="dgsdfg"/>
+          <pathCustom Value="False"/>
         </item1>
       </FLDRs>
     </Customers>
@@ -19,7 +23,6 @@
         <item0>
           <template Value="in0k"/>
           <exchange Value="qwer"/>
-          <_Use4FLDR_ Value="True"/>
           <_use_Last_ Value="True"/>
         </item0>
       </item0>

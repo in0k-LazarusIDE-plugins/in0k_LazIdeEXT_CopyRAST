@@ -138,6 +138,7 @@ type
     function  _template_GET_link_(const item:tSrcTree_item):tCopyRAST_HandlerCNFGs_ReNAMEs_template_List;
     procedure _template_MakeLIST_(const item:tSrcTree_item; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; const ENABLED_only:boolean; const asParent,asEnable:boolean);
   protected
+    function  _template_APPLAY_RULE_4item_(const srcItem:tSrcTree_item; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule):boolean;
     function  _template_APPLAY_RULE_(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer;
     //function  _template_APPLAY_LIST_(const srcName:string;        const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; out outName:string):integer; overload;
     function  _template_APPLAY_LIST_(const srcItem:tSrcTree_item; const list:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; var outName:string):integer;
@@ -1272,19 +1273,29 @@ const
   c_notFound=2;
 
 
+function tCopyRast_stage__ChangePaths._template_APPLAY_RULE_4item_(const srcItem:tSrcTree_item; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule):boolean;
+begin
+    if srcItem is tCopyRastNODE_FLDR then result:=rule.Use4FLDR
+   else
+    if srcItem is tCopyRastNODE_FILE then result:=rule.Use4FILE;
+
+
+
+end;
+
 function tCopyRast_stage__ChangePaths._template_APPLAY_RULE_(const srcItem:tSrcTree_item; const srcName:string; const rule:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule; out outName:string):integer;
 var tmpTemplate:string;
     tmpExchange:string;
 begin
     outName:=srcName;
     result :=c_NoNEED;
-    //---
+    //--- парвило НЕ работает
     if not rule.Enabled then EXIT;
-    //---
+    //--- к этим оно НЕ применимо
     if IS_CopyRAST_stROOT(srcItem) then EXIT;
     if IS_CopyRAST_stBASE(srcItem) then EXIT;
     if IS_CopyRAST_stMAIN(srcItem) then EXIT;
-    //
+    //--- для НАС оно НЕ включено
     if (srcItem is tCopyRastNODE_FILE)and(not rule.Use4FILE) then EXIT;
     if (srcItem is tCopyRastNODE_FLDR)and(not rule.Use4FLDR) then EXIT;
     //---
@@ -1292,7 +1303,8 @@ begin
     tmpExchange:=_macross_APPLAY_(rule.Exchange);
 
 
-    if rule.RegExUSE then begin
+    if rule.RegExUSE
+    then begin
         {todo: делать МАКРОСЫ}
        _regExpr_.InputString:=srcName;
        _regExpr_.Expression :=tmpTemplate; // шаблон поиска

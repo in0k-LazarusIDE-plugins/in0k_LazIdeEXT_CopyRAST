@@ -75,7 +75,9 @@ uses
   in0k_CopyRAST__wndCORE_00, in0k_CopyRAST__STAGE_03__cmpRTREE, 
   in0k_CopyRAST__STAGE_04_configs, lazExt_CopyRAST_fileSystemFNKs, 
   in0k_CopyRAST__STAGE_05__editFiles, 
-  in0k_CopyRAST__STAGE_05_editFiles_Handler, LazarusPackageIntf;
+  in0k_CopyRAST__STAGE_05_editFiles_Handler, 
+  in0k_CopyRAST__STAGE_05_editFiles_Handler_updateUses, 
+  in0k_CopyRAST__STAGE_05_editFiles_Handler_LpiFILE, LazarusPackageIntf;
 
 implementation
 

@@ -39,7 +39,6 @@ type
    _objNode_:tCopyRAST_node;
   protected
    _untList_:TStrings;
-
   protected
     function _find_UsesSection_AFTER_(const AFTER:string; out UsesStart,UsesEnd:integer):boolean;
     function _find_UsesSection_AFTE_BEFO_(const AFTE,BEFO:string; out UsesStart,UsesEnd:integer):boolean;

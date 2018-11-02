@@ -624,7 +624,7 @@ begin
       2:_stage_02_.EXECUTE(_stage_01_.RootRESULT);
       3:_stage_03_.EXECUTE(_stage_02_.RootRESULT);
       4:_stage_04_.EXECUTE(_stage_03_.RootRESULT);
-      5:tCopyRast_STAGE_05__editFiles(_stage_05_).EXECUTE(_stage_04_.RootSOURCE,_stage_04_.RootRESULT);
+      5: tCopyRast_STAGE_05__editFiles(_stage_05_).EXECUTE(_stage_03_.RootSOURCE,_stage_04_.RootRESULT);
     end;
 end;
 

@@ -8,6 +8,7 @@ uses
   Dialogs,
 
   srcTree_handler_CORE,
+  in0k_lazIdeSRC_srcTree_CORE_item,
 
   in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
 
@@ -124,17 +125,26 @@ _tSTAGE04_itmHandler__copyFiles_=class(tSrcTree_itmHandler)
     function  Processing:boolean; override; // ВЫПОЛНИТЬ обработку
   end;
 
+
+function _file4COPY_(const item:tSrcTree_item):boolean;
+begin
+    result:=FALSE
+          or(item is tCopyRastNODE_FILE)
+          or(item is tCopyRastNODE_Main4Package)
+          or(item is tCopyRastNODE_Main4Project)
+            ;
+end;
+
 function _tSTAGE04_itmHandler__copyFiles_.Processing:boolean;
 var str:string;
     src:string;
     tmp:tCopyRast_stITEM;
 begin
     result:=true;
-    if ( prcssdITEM is tCopyRastNODE_FILE) and
-       (_is_NOT_SOURCE_(prcssdITEM))
+    if _file4COPY_(prcssdITEM) and _is_NOT_SOURCE_(prcssdITEM)
     then begin
         tmp:=CopyRAST_stITEM__LFT(prcssdITEM);
-        if Assigned(tmp) and (tmp is tCopyRastNODE_FILE) then begin
+        if Assigned(tmp) and _file4COPY_(tmp) then begin
             src:=tCopyRastNODE_FILE(tmp).fsPath;
             str:=tCopyRastNODE_FILE(prcssdITEM).fsPath;
             //

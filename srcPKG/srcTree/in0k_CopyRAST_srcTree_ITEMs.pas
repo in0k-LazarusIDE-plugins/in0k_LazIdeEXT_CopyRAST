@@ -14,6 +14,8 @@ uses
   in0k_lazIdeSRC_srcTree_FNK_rootFILE_FND,
   in0k_lazIdeSRC_srcTree_FNK_baseDIR_FND,
 
+  in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
+
   in0k_CopyRAST_srcTreeNode_DATA;
 
 type
@@ -21,6 +23,7 @@ type
  tCopyRast_stITEM=tSrcTree_item;
  tCopyRast_stROOT=tSrcTree_ROOT;
  tCopyRast_stMAIN=tSrcTree_MAIN;
+ tCopyRast_stFILE=tSrcTree_fsFILE;
 
 type
 
@@ -132,6 +135,9 @@ function CopyRAST_stITEM__findInLFT(const lftRoot:tCopyRast_stROOT; const item:t
 function CopyRAST_stITEM__findInLFT(const lftRoot:tCopyRast_stROOT; const item:tObject         ):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
 function CopyRAST_stITEM__findInLFT(const lftRoot:tCopyRast_stROOT; const item:pointer         ):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
 
+function CopyRAST_stITEM__findInRGT(const rgtRoot:tCopyRast_stROOT; const item:tCopyRast_stITEM):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
+function CopyRAST_stITEM__findInRGT(const rgtRoot:tCopyRast_stROOT; const item:tObject         ):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
+function CopyRAST_stITEM__findInRGT(const rgtRoot:tCopyRast_stROOT; const item:pointer         ):tCopyRast_stITEM; overload; {$ifOPT D-}inline;{$endIf}
 
 
 
@@ -165,6 +171,11 @@ procedure CopyRastNODE_CopyData_BASE(const source,target:tCopyRast_stBASE);
 //procedure CopyRastNODE_CopyData_MAIN(const source,target:tCopyRastNODE_MAIN);
 procedure CopyRastNODE_CopyData_FLDR(const source,target:tCopyRastNODE_FLDR);
 procedure CopyRastNODE_CopyData_FILE(const source,target:tCopyRastNODE_FILE);
+
+
+function  CopyRastNODE_findItemUnit (const source:tCopyRast_stITEM; const unitName:string):tCopyRastNODE_FILE;
+function  CopyRastNODE_findItemPath (const source:tCopyRast_stITEM; const unitPath:string):tCopyRastNODE_FILE;
+
 
 
 type
@@ -369,6 +380,7 @@ begin{$ifOPT D+}
     result:=item;
     while Assigned(result) do begin
         if CopyRastNODE_ROOT(result)=lftRoot then BREAK;
+        result:=CopyRAST_stITEM__LFT(result);
     end;
 end;
 
@@ -389,6 +401,41 @@ begin{$ifOPT D+}
     //----------
     result:=CopyRAST_stITEM__findInLFT(lftRoot,tCopyRast_stITEM(item));
 end;
+
+//------------------------------------------------------------------------------
+// найти объект СЛЕВА с указаным lftRoot
+
+function CopyRAST_stITEM__findInRGT(const rgtRoot:tCopyRast_stROOT; const item:tCopyRast_stITEM):tCopyRast_stITEM;
+begin{$ifOPT D+}
+        Assert(Assigned(rgtRoot));
+        Assert(Assigned(item));
+     {$endIf}
+    //----------
+    result:=item;
+    while Assigned(result) do begin
+        if CopyRastNODE_ROOT(result)=rgtRoot then BREAK;
+        result:=CopyRAST_stITEM__RHT(result);
+    end;
+end;
+
+function CopyRAST_stITEM__findInRGT(const rgtRoot:tCopyRast_stROOT; const item:tObject):tCopyRast_stITEM;
+begin{$ifOPT D+}
+        Assert(Assigned(rgtRoot));
+        Assert(Assigned(item));
+     {$endIf}
+    //----------
+    result:=CopyRAST_stITEM__findInRGT(rgtRoot,tCopyRast_stITEM(item));
+end;
+
+function CopyRAST_stITEM__findInRGT(const rgtRoot:tCopyRast_stROOT; const item:pointer):tCopyRast_stITEM;
+begin{$ifOPT D+}
+        Assert(Assigned(rgtRoot));
+        Assert(Assigned(item));
+     {$endIf}
+    //----------
+    result:=CopyRAST_stITEM__findInRGT(rgtRoot,tCopyRast_stITEM(item));
+end;
+
 
 //==============================================================================
 
@@ -412,11 +459,13 @@ end;
 
 function CopyRastNODE_ROOT(const value:tSrcTree_item):tSrcTree_ROOT;
 begin {$ifOPT D+} Assert(Assigned(value)); {$endIf}
+    result:=in0k_lazIdeSRC_srcTree_FNK_rootFILE_FND.SrcTree_fndRootFILE(value);
+{
     result:=tSrcTree_ROOT(value);
     while Assigned(result) do begin
         if tObject(result) is tSrcTree_ROOT then EXIT;
         result:=tSrcTree_ROOT(tSrcTree_item(result).ItemPRNT);
-    end;
+    end;}
 end;
 
 function CopyRastNODE_BASE(const value:tSrcTree_item):tCopyRast_stBASE;
@@ -991,6 +1040,58 @@ begin
         result :=itmData^.sideLeft;
         if Assigned(result) and (SrcTree_fndRootFILE(result)=rootLeft)
         then BREAK;
+    end;
+end;
+
+//------------------------------------------------------------------------------
+
+function  CopyRastNODE_findItemUnit (const source:tCopyRast_stITEM; const unitName:string):tCopyRastNODE_FILE;
+var tmp:TObject;
+    s:string;
+begin
+    result:=nil;
+    tmp:=TObject(source.ItemCHLD);
+    while Assigned(tmp) do begin
+        // проверяем ребенка
+        if (tmp is tSrcTree_fsFILE) then begin
+            s:=lowercase(srcTree_fsFnk_ExtractFileNameOnly(tSrcTree_fsFILE(tmp).ItemNAME));
+            if s=unitName then begin
+                result:=tCopyRastNODE_FILE(tmp);
+                BREAK;
+            end;
+        end;
+        // поисчем ВНУТРИ ребенка
+        result:=CopyRastNODE_findItemUnit(tCopyRast_stITEM(tmp),unitName);
+        if Assigned(result) then begin
+            BREAK;
+        end;
+        //-->
+        tmp:=tSrcTree_item(tmp).ItemNEXT;
+    end;
+end;
+
+function  CopyRastNODE_findItemPath (const source:tCopyRast_stITEM; const unitPath:string):tCopyRastNODE_FILE;
+var tmp:TObject;
+    s:string;
+begin
+    result:=nil;
+    tmp:=TObject(source.ItemCHLD);
+    while Assigned(tmp) do begin
+        // проверяем ребенка
+        if (tmp is tSrcTree_fsFILE) then begin
+            s:=lowercase(tSrcTree_fsFILE(tmp).fsBase);
+            if s=unitPath then begin
+                result:=tCopyRastNODE_FILE(tmp);
+                BREAK;
+            end;
+        end;
+        // поисчем ВНУТРИ ребенка
+        result:=CopyRastNODE_findItemPath(tCopyRast_stITEM(tmp),unitPath);
+        if Assigned(result) then begin
+            BREAK;
+        end;
+        //-->
+        tmp:=tSrcTree_item(tmp).ItemNEXT;
     end;
 end;
 
