@@ -15,6 +15,7 @@ uses
   Laz2_XMLCfg,
 
   lazExt_CopyRAST_TEXTs,
+  in0k_lazIdeSRC_srcTree_CORE_fileSystem_FNK,
 
 
   in0k_CopyRAST_srcTree_ITEMs,
@@ -30,7 +31,10 @@ _tSTAGE05_itmHandler_=class(tSrcTree_itmHandler_fsFile2CodeBUF)
    _codeTool_:TCodeTool;
     function _do4EDIT_:boolean;
     function _doCLOSE_:boolean;
+  protected
+    function CleanPos_in_CodeBuff(const CleanPos:integer):boolean;
   end;
+
 
 _tSTAGE05_lpiHandler_=class(tSrcTree_itmHandler_fsFile_XMLConfig)
   protected
@@ -46,7 +50,8 @@ function STAGE_05__editFiles(const sourceRoot,targetRoot:tCopyRast_stROOT):boole
 
 implementation
 uses in0k_CopyRAST__STAGE_05_editFiles_Handler_updateUses,
-     in0k_CopyRAST__STAGE_05_editFiles_Handler_LpiFILE;
+     in0k_CopyRAST__STAGE_05_editFiles_Handler_LpiFILE,
+     in0k_CopyRAST__STAGE_05_editFiles_Handler_includes;
 
 function _tSTAGE05_itmHandler_._do4EDIT_:boolean;
 begin
@@ -63,6 +68,10 @@ begin
     result:=_codeBUF_WRITE_(_codeBuff_);
 end;
 
+function _tSTAGE05_itmHandler_.CleanPos_in_CodeBuff(const CleanPos:integer):boolean;
+begin
+    with _codeBuff_ do result:=(1<=CleanPos)and(CleanPos<=SourceLength);
+end;
 
 //==============================================================================
 
@@ -97,6 +106,7 @@ _tSTAGE05_itmHandler__updateUnit_=class(_tSTAGE05_itmHandler_)
 function _tSTAGE05_itmHandler__updateUnit_.Processing:boolean;
 var srcNode:tCopyRast_stITEM;
     untName:string;
+    newName:string;
 begin
     result:=true;
     if (prcssdITEM is tCopyRastNODE_FILE) and
@@ -108,8 +118,9 @@ begin
             result:=_do4EDIT_;
             if result then begin
                 untName:=CodeToolBoss.GetSourceName(_codeBuff_,false);
+                newName:=srcTree_fsFnk_ExtractFileNameOnly(prcssdITEM.ItemNAME);
                 if untName<>'' then begin
-                    if CodeToolBoss.RenameSource(_codeBuff_,prcssdITEM.ItemNAME +CopyRAST_Text_comment_InlineReplace_PAS(untName))
+                    if CodeToolBoss.RenameSource(_codeBuff_,newName+CopyRAST_Text_comment_InlineReplace_PAS(untName))
                     then doEvent_onPASSED('RenameSource "'+untName+'"->"'+prcssdITEM.ItemNAME+'"')
                     else doEvent_on_ERROR('RenameSource "'+untName+'"->"'+prcssdITEM.ItemNAME+'"');
                 end;
@@ -135,6 +146,7 @@ procedure _tSTAGE05_prcHandler__updateUnit_._EXECUTE_;
 begin
     EXECUTE_4TREE(_tSTAGE05_itmHandler__updateUnit_);
     EXECUTE_4TREE(_tSTAGE05_itmHandler__updateUses_);
+    EXECUTE_4TREE(_tSTAGE05_itmHandler__includes_);
     EXECUTE_4TREE(_tSTAGE05_itmHandler__LpiFILE_);
     EXECUTE_4TREE(_tSTAGE05_itmHandler__LpiFILE_01_);
 end;

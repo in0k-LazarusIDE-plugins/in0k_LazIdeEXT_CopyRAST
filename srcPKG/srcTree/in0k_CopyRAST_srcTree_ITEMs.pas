@@ -175,6 +175,7 @@ procedure CopyRastNODE_CopyData_FILE(const source,target:tCopyRastNODE_FILE);
 
 function  CopyRastNODE_findItemUnit (const source:tCopyRast_stITEM; const unitName:string):tCopyRastNODE_FILE;
 function  CopyRastNODE_findItemPath (const source:tCopyRast_stITEM; const unitPath:string):tCopyRastNODE_FILE;
+function  CopyRastNODE_findItemINCL (const source:tCopyRast_stITEM; const unitName:string):tCopyRastNODE_FILE;
 
 
 
@@ -1062,6 +1063,31 @@ begin
         end;
         // поисчем ВНУТРИ ребенка
         result:=CopyRastNODE_findItemUnit(tCopyRast_stITEM(tmp),unitName);
+        if Assigned(result) then begin
+            BREAK;
+        end;
+        //-->
+        tmp:=tSrcTree_item(tmp).ItemNEXT;
+    end;
+end;
+
+function  CopyRastNODE_findItemINCL (const source:tCopyRast_stITEM; const unitName:string):tCopyRastNODE_FILE;
+var tmp:TObject;
+    s:string;
+begin
+    result:=nil;
+    tmp:=TObject(source.ItemCHLD);
+    while Assigned(tmp) do begin
+        // проверяем ребенка
+        if (tmp is tSrcTree_fsFILE) then begin
+            s:=lowercase({srcTree_fsFnk_ExtractFileNameOnly}(tSrcTree_fsFILE(tmp).ItemNAME));
+            if s=unitName then begin
+                result:=tCopyRastNODE_FILE(tmp);
+                BREAK;
+            end;
+        end;
+        // поисчем ВНУТРИ ребенка
+        result:=CopyRastNODE_findItemINCL(tCopyRast_stITEM(tmp),unitName);
         if Assigned(result) then begin
             BREAK;
         end;

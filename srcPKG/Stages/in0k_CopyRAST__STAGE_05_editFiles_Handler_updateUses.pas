@@ -128,13 +128,16 @@ begin
        else begin
             //{$ifdef _DEBUG_}DEBUG(AtomText+' '+inttostr(tmpStart)+' '+inttostr(result));{$endIf}
             //--- пытаемся её найти в списке НАШИХ файлов
-           _objName_:=lowercase(AtomText);
-           _objNode_:=CopyRastNODE_findItemUnit(_coreROOT_,_objName_);
+           _objName_:=AtomText;
+            {todo: БОЛЕЕ интелектуальный поиск, через "пути" _coreROOT_}
+           _objNode_:=CopyRastNODE_findItemUnit(_coreROOT_,lowercase(_objName_));
             //--- проверим признак успешного поиска ... и замена
             if Assigned(_objNode_) then begin //< нашлась ... надо заменять
+                {todo: проверка, что имя ИЗМЕНИЛОСЬ}
                 //
                _objNode_:=CopyRAST_stITEM__findInRGT(CopyRastNODE_ROOT(executed_Root),_objNode_);
                 newName:=srcTree_fsFnk_ExtractFileNameOnly(_objNode_.ItemNAME);
+                newName:=srcTree_fsFnk_ChangeFileExt(newName,'');
                 CodeToolBoss.SourceChangeCache.ReplaceEx(gtNone,gtNone, tmpStart, result,_codeBuff_, tmpStart, result,newName+CopyRAST_Text_comment_InlineReplace_PAS(_objName_));
                _untList_.Add(_objName_+'='+newName); //< сохраняем список, что именно изменили
                 doEvent_onPASSED('rePlace in Uses : "'+_objName_ +'"->"'+srcTree_fsFnk_ExtractFileNameOnly(_objNode_.ItemNAME)+'"');
@@ -218,15 +221,16 @@ end;
 //------------------------------------------------------------------------------
 
 function _tSTAGE05_itmHandler__updateUses_.Processing:boolean;
-var srcNode:tCopyRast_stITEM;
-    untName:string;
+//var srcNode:tCopyRast_stITEM;
+//    untName:string;
 begin
     result:=true;
     if (prcssdITEM is tCopyRastNODE_FILE) and
        (tCopyRastNODE_FILE(prcssdITEM).fileKIND in [pftUnit,pftVirtualUnit,pftMainUnit,pftInclude]) and {todo: проверить все это для INC файлов}
        (CopyRastNODE_IS_NOT_SOURCE(prcssdITEM))
     then begin
-        srcNode:=CopyRAST_stITEM__findInLFT(_coreROOT_,prcssdITEM);
+        //srcNode:=CopyRAST_stITEM__findInLFT(_coreROOT_,prcssdITEM);
+        {todo: test prcssdITEM is TARGET file and have srcFile}
         if true{Assigned(srcNode) and (srcNode.ItemNAME<>prcssdITEM.ItemNAME)} then begin
             result:=_do4EDIT_;
             if result then begin

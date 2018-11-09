@@ -77,7 +77,8 @@ uses
   in0k_CopyRAST__STAGE_05__editFiles, 
   in0k_CopyRAST__STAGE_05_editFiles_Handler, 
   in0k_CopyRAST__STAGE_05_editFiles_Handler_updateUses, 
-  in0k_CopyRAST__STAGE_05_editFiles_Handler_LpiFILE, LazarusPackageIntf;
+  in0k_CopyRAST__STAGE_05_editFiles_Handler_LpiFILE, 
+  in0k_CopyRAST__STAGE_05_editFiles_Handler_includes, LazarusPackageIntf;
 
 implementation
 

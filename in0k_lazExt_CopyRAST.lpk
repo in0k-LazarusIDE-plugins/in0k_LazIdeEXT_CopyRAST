@@ -19,7 +19,7 @@
         </Debugging>
       </Linking>
     </CompilerOptions>
-    <Files Count="120">
+    <Files Count="121">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -505,6 +505,10 @@
         <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05_editFiles_Handler_LpiFILE.pas"/>
         <UnitName Value="in0k_CopyRAST__STAGE_05_editFiles_Handler_LpiFILE"/>
       </Item120>
+      <Item121>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05_editFiles_Handler_includes.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_05_editFiles_Handler_includes"/>
+      </Item121>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

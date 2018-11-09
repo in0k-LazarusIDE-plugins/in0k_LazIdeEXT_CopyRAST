@@ -204,8 +204,6 @@ begin
             //-->
             ACleanPos:=FindNextIncludeDirective(CodeBuff.Source,ACleanPos,CodeTool.Scanner.NestedComments,FilenameStartPos,FilenameEndPos,CommentStart,CommentEnd);
 		end;
-
-
 	end;
 end;
 
