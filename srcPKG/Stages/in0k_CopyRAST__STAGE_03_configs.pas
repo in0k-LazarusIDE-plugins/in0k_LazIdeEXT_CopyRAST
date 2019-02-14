@@ -10,6 +10,38 @@ uses
   contnrs,
   Classes, SysUtils;
 
+
+
+type //=========================================================================
+
+ tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node=class(tCopyRAST_srcTree_4Handler_CNFGsNode)
+  protected
+   _macrosName_ :string; //< имя МАКРОСА
+   _macrosVALUE_:string; //< значение МАКРОСА
+  public
+    property macrosName :string  read _macrosName_  write _macrosName_;
+    property macrosValue:string  read _macrosVALUE_ write _macrosVALUE_;
+  public
+    constructor Create;
+    destructor DESTROY; override;
+  public
+    procedure COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode); override;
+    function needSAVE:boolean;                                         override;
+  end;
+
+ tCopyRAST_HandlerCNFGs_ReNAMEs_macros_List=class(tCopyRAST_srcTree_4Handler_CNFGsLAIR)
+  protected
+    function  _item_GET_(Index:Integer):tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node;
+    procedure _item_SET_(Index:Integer; value:tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node);
+  public
+    property Items[Index:integer]:tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node read _item_GET_ write _item_SET_;
+    function needSAVE:boolean; override;
+  public
+    constructor Create;
+    //procedure COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode); override;
+  end;
+
+
 type //=========================================================================
 
  tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node=class(tCopyRAST_srcTree_4Handler_CNFGsNode)
@@ -31,7 +63,7 @@ type //=========================================================================
     function needSAVE:boolean;                                         override;
   end;
 
- tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER=class(tCopyRAST_srcTree_4Handler_CNFGs)
+ tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAIR=class(tCopyRAST_srcTree_4Handler_CNFGs)
   protected
     function _CNFG_CRT_:tCopyRAST_srcTree_4Handler_CNFGsNode; override;
   public
@@ -109,6 +141,109 @@ type //=========================================================================
 
 implementation
 
+{%region --- macros ---------------------------------------------------}
+
+constructor tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node.Create;
+begin
+   _macrosName_ :='';
+   _macrosVALUE_:='';
+end;
+
+destructor tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node.DESTROY;
+begin
+    inherited;
+end;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+procedure tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node.COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode);
+begin
+    {$ifOpt D+}
+    Assert(Assigned(Source));
+    Assert(Source is tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node);
+    {$endIf}
+   _macrosName_ :=tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node(Source).macrosName;
+   _macrosVALUE_:=tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node(Source).macrosValue;
+end;
+
+function tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node.needSAVE:boolean;
+begin //?????????????
+    result:= NOT // ОТРИЦАЕМ состояние "НУЛИВОВГО состояния" (не заданного)
+             (
+                (_macrosName_='') OR (_macrosVALUE_='')
+             );
+end;
+
+//==============================================================================
+
+constructor tCopyRAST_HandlerCNFGs_ReNAMEs_macros_List.Create;
+begin
+    inherited;
+end;
+
+//------------------------------------------------------------------------------
+
+{procedure tCopyRAST_HandlerCNFGs_ReNAMEs_macros_List.COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode);
+var i:integer;
+  tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule;
+    b:boolean;
+begin // ВМЕСТО ВСЕХ родительских, ДОЛЖНЫ записать только ОДНУ метку
+    {$ifOpt D+}
+    Assert(Assigned(_LAIR_));
+    Assert(Assigned(Source));
+    Assert(Source is tCopyRAST_HandlerCNFGs_ReNAMEs_template_List);
+    {$endIf}
+   _LAIR_.Clear;
+    b:=true;
+    for i:=0 to tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(Source)._LAIR_CNT_-1 do begin
+        tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(Source)._item_GET_(i);
+        if tmp.isInherited then begin
+            if b then begin
+                // ВМЕСТО ПЕРВОЙ встреченой вставляем ОДНУ метку
+                tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_prnt.Create;
+                b:=FALSE;
+            end
+            else tmp:=nil
+        end
+        else begin
+            tmp:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_rule(tmp.ClassType.Create);
+            tmp.COPY(tCopyRAST_HandlerCNFGs_ReNAMEs_template_List(Source)._item_GET_(i));
+        end;
+        if Assigned(tmp) then _item_ADD_(tmp);
+    end;
+end;}
+
+//------------------------------------------------------------------------------
+
+function tCopyRAST_HandlerCNFGs_ReNAMEs_macros_List._item_GET_(Index:Integer):tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node;
+begin
+    result:=tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node(inherited _item_GET_(Index));
+end;
+
+procedure tCopyRAST_HandlerCNFGs_ReNAMEs_macros_List._item_SET_(Index:Integer; value:tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node);
+begin
+    inherited _item_SET_(Index,value);
+end;
+
+//------------------------------------------------------------------------------
+
+function tCopyRAST_HandlerCNFGs_ReNAMEs_macros_List.needSAVE:boolean;
+var i:integer;
+  tmp:tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node;
+begin
+    result:=false;
+    for i:=0 to _LAIR_CNT_-1 do begin
+        if Items[i].needSAVE then begin
+            result:=true;
+            Break;
+        end;
+    end;
+end;
+
+{%endregion}
+
+
+
 {%region --- customer ---------------------------------------------------}
 
 constructor tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node.Create;
@@ -150,14 +285,14 @@ end;
 
 //==============================================================================
 
-function tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER._CNFG_CRT_:tCopyRAST_srcTree_4Handler_CNFGsNode;
+function tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAIR._CNFG_CRT_:tCopyRAST_srcTree_4Handler_CNFGsNode;
 begin
     result:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node.Create;
 end;
 
 //------------------------------------------------------------------------------
 
-function tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER.NameCustom(const path:string):boolean;
+function tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAIR.NameCustom(const path:string):boolean;
 var i:integer;
 begin
     result:=false;
@@ -166,7 +301,7 @@ begin
     end
 end;
 
-function tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER.PathCustom(const path:string):boolean;
+function tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAIR.PathCustom(const path:string):boolean;
 var i:integer;
 begin
     result:=false;

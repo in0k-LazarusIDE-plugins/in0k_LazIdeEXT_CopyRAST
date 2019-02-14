@@ -11,7 +11,7 @@ type
 
  tCopyRAST_srcTree_4Handler_CNFGsNode=class
   public
-    procedure COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode); virtual; {$ifOpt D-}abstruct;{$endIf}
+    procedure COPY(const Source:tCopyRAST_srcTree_4Handler_CNFGsNode); virtual; {$ifOpt D-}abstract;{$endIf}
     function needSAVE:boolean; virtual;
   end;
 
@@ -42,7 +42,7 @@ type
    _LIST_:TStringList;
     procedure _LIST_CLR_;
     function  _LIST_CNT_:integer;
-    function  _CNFG_CRT_:tCopyRAST_srcTree_4Handler_CNFGsNode; virtual; {$ifOpt D-}abstruct;{$endIf}
+    function  _CNFG_CRT_:tCopyRAST_srcTree_4Handler_CNFGsNode; virtual; {$ifOpt D-}abstract;{$endIf}
   public
     constructor Create;
     destructor DESTROY; override;

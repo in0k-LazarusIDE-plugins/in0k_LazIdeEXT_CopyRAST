@@ -157,6 +157,7 @@ begin
     {$else} //< способ по умолчанию
         {$WARNING 'NOT Tested in this LazarusIDE version'}
         tmp:=Sender;
+        tmp:=TIDEMenuCommand(sender).MenuItem;
     {$endif}
     {%endregion}
     srcMain:= PackageEditingInterface.GetPackageOfEditorItem(tmp);

@@ -2,6 +2,16 @@
 <CONFIG>
   <CopyRAST SettingsEXCLUDE="False"/>
   <approvedFILEs2NAMEs>
+    <Macross count="2">
+        <item0>
+	  <macrosName Value="asd"/>	
+	  <macrosValue Value="asdasd"/>	
+        </item0>
+        <item1>
+	  <macrosName Value="qwe"/>	
+	  <macrosValue Value="qweqwe"/>	
+        </item1>
+    </Macross>
     <Customers>
       <FLDRs count="2">
         <item0 Path="srcPKG">

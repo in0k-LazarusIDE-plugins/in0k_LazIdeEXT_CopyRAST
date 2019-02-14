@@ -77,10 +77,11 @@ type
     function  _macross_APPLAY_(const srcString:string):string;
   private   //< наша конфигурация
    _cnfg_customer_ROOT_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node; //< собственные названия для ROOT
-   _cnfg_customer_FILE_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER; //< собственные названия для ФАЙЛОВ
-   _cnfg_customer_FLDR_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER; //< собственные названия для ПАПОК
+   _cnfg_customer_FILE_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAIR; //< собственные названия для ФАЙЛОВ
+   _cnfg_customer_FLDR_:tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAIR; //< собственные названия для ПАПОК
    _cnfg_template_ROOT_:tCopyRAST_HandlerCNFGs_ReNAMEs_template_List; //< шаблоны для ROOT
    _cnfg_template_LAER_:tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR; //< шаблоны для ВСЕХ остальных
+   _cnfg_macross__LIST_:tCopyRAST_HandlerCNFGs_ReNAMEs_macros_List;   //< шаблоны для ROOT
   private
     function  _cnfgClc_newROOT_ {(const item:tCopyRast_stROOT)}:string;
     function  _cnfgClc_newBASE_ {(const item:tCopyRast_stBASE)}:string;
@@ -696,10 +697,12 @@ procedure tCopyRast_stage__ChangePaths._CNFGs_INIT_;
 begin
     inherited;
    _cnfg_customer_ROOT_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_node.Create;
-   _cnfg_customer_FLDR_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER.Create;
-   _cnfg_customer_FILE_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAER.Create;
+   _cnfg_customer_FLDR_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAIR.Create;
+   _cnfg_customer_FILE_:=tCopyRAST_HandlerCNFGs_ReNAMEs_customer_LAIR.Create;
    _cnfg_template_ROOT_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_List.Create;
    _cnfg_template_LAER_:=tCopyRAST_HandlerCNFGs_ReNAMEs_template_LAIR.Create;
+   _cnfg_macross__LIST_:=tCopyRAST_HandlerCNFGs_ReNAMEs_macros_List  .Create;
+
 end;
 
 procedure tCopyRast_stage__ChangePaths._CNFGs_FREE_;
@@ -710,6 +713,7 @@ begin
    _cnfg_customer_FILE_.FREE;
    _cnfg_template_ROOT_.FREE;
    _cnfg_template_LAER_.FREE;
+   _cnfg_macross__LIST_.FREE;
 end;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -722,6 +726,7 @@ begin
     CRxC_aF2N__customerFILE__Load(Configs,'',_cnfg_customer_FILE_);
     CRxC_aF2N__templateROOT__Load(Configs,'',_cnfg_template_ROOT_);
     CRxC_aF2N__templateLAIR__Load(Configs,'',_cnfg_template_LAER_);
+    CRxC_aF2N__macross_LIST__Load(Configs,'',_cnfg_macross__LIST_);
 end;
 
 procedure tCopyRast_stage__ChangePaths._CNFGs_SAVE_(const Configs:tLazExt_CopyRAST_CONFIG);
@@ -732,6 +737,7 @@ begin
     CRxC_aF2N__customerFILE__Save(Configs,'',_cnfg_customer_FILE_);
     CRxC_aF2N__templateROOT__Save(Configs,'',_cnfg_template_ROOT_);
     CRxC_aF2N__templateLAIR__Save(Configs,'',_cnfg_template_LAER_);
+    CRxC_aF2N__macross_LIST__Save(Configs,'',_cnfg_macross__LIST_);
 end;
 
 (*
@@ -831,13 +837,26 @@ const
 
 // переСоздаем список НАШИХ макросов
 procedure tCopyRast_stage__ChangePaths._macross_reClc_;
+var i:integer;
+    m:tCopyRAST_HandlerCNFGs_ReNAMEs_macros_node;
 begin
    _macross_.Clear;
     // заполним ЗАНОГО
    _macross_.Add(_cMacrosNAME_crOldNAME_+_cMacrosSMBL_equal_+_get_oldName_ROOT_(_sourceROOT_));
    _macross_.Add(_cMacrosNAME_crNewNAME_+_cMacrosSMBL_equal_+_clc_newName_ROOT_);
    _macross_.Add(_cMacrosNAME_crOldPATH_+_cMacrosSMBL_equal_+_get_oldName_BASE_(_owner_Builder.fnd_BASE(_sourceROOT_)));
-  // _macross_.Add(_cMacrosNAME_crNewPATH_+_cMacrosSMBL_equal_+_clc_newName_ROOT_(_resultROOT_));
+    //_macross_.Add(_cMacrosNAME_crNewPATH_+_cMacrosSMBL_equal_+_clc_newName_ROOT_(_resultROOT_));
+
+    // загрузим ПОЛЬЗОВАТЕЛЬСКИЕ
+    for i:=0 to _cnfg_macross__LIST_.Count-1 do begin
+        m:=_cnfg_macross__LIST_.Items[i];
+       _macross_.Add(m.macrosName+_cMacrosSMBL_equal_+m.macrosValue);
+    end;
+    {$ifDef _DEBUG_}
+    for i:=0 to _macross_.Count-1 do begin
+        DEBUG(self.ClassName+'.'+'_macross_reClc_',_macross_.Strings[i]);
+    end;
+    {$endIf}
 end;
 
 //------------------------------------------------------------------------------
