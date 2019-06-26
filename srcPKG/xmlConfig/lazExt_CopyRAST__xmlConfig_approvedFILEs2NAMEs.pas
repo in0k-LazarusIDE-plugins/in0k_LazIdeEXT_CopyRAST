@@ -391,7 +391,6 @@ begin
         macrosName :=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__mcrsItem_mcrsName_),'');
         macrosValue:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_aF2N__mcrsItem_mcrsValue),'');
     end;
-    ShowMessage('dfdddddddddddddddddddd');
 end;
 
 procedure CRxC_aF2N__macrosNode__Save(const CNF:tLazExt_CopyRAST_CONFIG; const Section:string; const node:tCopyRAST_srcTree_4Handler_CNFGsNode);

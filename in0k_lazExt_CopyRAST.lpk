@@ -10,7 +10,7 @@
       <SearchPaths>
         <IncludeFiles Value="srcPKG"/>
         <Libraries Value="srcPKG"/>
-        <OtherUnitFiles Value="srcPKG;srcPKG\srcTree;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcPKG\OperationNODEs\Processing_ProjPack;srcPKG\xmlConfig;srcPKG\srcTree_UI;srcPKG\Stages\CORE;srcPKG\Stages;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm;srcExt\in0k-lazarusIdeSRC-Macros;srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcExt\in0k-lazarusIdeSRC-SourceTREE;srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;srcExt\in0k-ext4ColorTheme;srcPKG\srcTree\Handlers\reNames;srcPKG\srcTree\Handlers;srcPKG\UI;srcPKG\UI\CORE;srcPKG\UI\Stages\Stage03"/>
+        <OtherUnitFiles Value="srcPKG;srcPKG\srcTree;srcPKG\Forms;srcPKG\Nodes;srcPKG\OperationNODEs;srcPKG\OperationNODEs\Processing_ProjPack;srcPKG\xmlConfig;srcPKG\srcTree_UI;srcPKG\Stages\CORE;srcPKG\Stages;srcPKG\Stages\stage_02;srcEXT\in0k-lazarusIdeSRC-wndDEBUG;srcEXT\in0k-lazarusIdeSRC-FuckUpForm;srcExt\in0k-lazarusIdeSRC-Macros;srcEXT\in0k-lazarusIdeSRC-ExpertCORE;srcExt\in0k-lazarusIdeSRC-SourceTREE;srcExt\in0k-lazarusIdeSRC-SourceTREE\textFunction;srcExt\in0k-lazarusIdeSRC-SourceTREE\CORE;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs;srcExt\in0k-lazarusIdeSRC-SourceTREE\FNKs1;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeBuilder;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler;srcExt\in0k-lazarusIdeSRC-SourceTREE\treeHandler4Build;srcExt\in0k-lazarusIdeSRC-SourceTREE-UI;srcExt\in0k-ext4ColorTheme;srcPKG\srcTree\Handlers\reNames;srcPKG\srcTree\Handlers;srcPKG\UI;srcPKG\UI\CORE;srcPKG\UI\Stages\Stage03"/>
         <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Linking>
@@ -20,7 +20,7 @@
         </Debugging>
       </Linking>
     </CompilerOptions>
-    <Files Count="121">
+    <Files Count="125">
       <Item1>
         <Filename Value="REG.pas"/>
         <HasRegisterProc Value="True"/>
@@ -390,126 +390,142 @@
         <ResourceBaseClass Value="Frame"/>
       </Item91>
       <Item92>
+        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__frmSTAGE_twoTree_CORE.pas"/>
+        <UnitName Value="in0k_CopyRAST__frmSTAGE_twoTree_CORE"/>
+      </Item92>
+      <Item93>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_01__Handling.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_01__Handling"/>
+      </Item93>
+      <Item94>
+        <Filename Value="srcPKG\Stages\CORE\in0k_CopyRAST_STAGEs_CORE.pas"/>
+        <UnitName Value="in0k_CopyRAST_STAGEs_CORE"/>
+      </Item94>
+      <Item95>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGEs.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGEs"/>
+      </Item95>
+      <Item96>
+        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__wndCORE.pas"/>
+        <UnitName Value="in0k_CopyRAST__wndCORE"/>
+      </Item96>
+      <Item97>
+        <Filename Value="srcPKG\UI\in0k_CopyRAST__wndProject.pas"/>
+        <UnitName Value="in0k_CopyRAST__wndProject"/>
+      </Item97>
+      <Item98>
+        <Filename Value="srcPKG\UI\in0k_CopyRAST__wndPackage.pas"/>
+        <UnitName Value="in0k_CopyRAST__wndPackage"/>
+      </Item98>
+      <Item99>
+        <Filename Value="srcPKG\UI\in0k_CopyRAST__wnd_SHOW.pas"/>
+        <UnitName Value="in0k_CopyRAST__wnd_SHOW"/>
+      </Item99>
+      <Item100>
+        <Filename Value="srcPKG\Stages\CORE\in0k_CopyRAST_Stage_CORE.pas"/>
+        <UnitName Value="in0k_CopyRAST_Stage_CORE"/>
+      </Item100>
+      <Item101>
+        <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE_00_CreateTree.pas"/>
+        <UnitName Value="in0k_CopyRAST__frmSTAGE_00_CreateTree"/>
+      </Item101>
+      <Item102>
+        <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE_01_Handling.pas"/>
+        <UnitName Value="in0k_CopyRAST__frmSTAGE_01_Handling"/>
+      </Item102>
+      <Item103>
+        <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE_04_Copying.pas"/>
+        <UnitName Value="in0k_CopyRAST__frmSTAGE_04_Copying"/>
+      </Item103>
+      <Item104>
+        <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE_05_PostProcessing.pas"/>
+        <UnitName Value="in0k_CopyRAST__frmSTAGE_05_PostProcessing"/>
+      </Item104>
+      <Item105>
+        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__frmSTAGE_LMR_CORE.pas"/>
+        <UnitName Value="in0k_CopyRAST__frmSTAGE_LMR_CORE"/>
+      </Item105>
+      <Item106>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-Macros\in0k_lazarusIdeSRC_MacrosLIST.pas"/>
+        <UnitName Value="in0k_lazarusIdeSRC_MacrosLIST"/>
+      </Item106>
+      <Item107>
+        <Filename Value="srcExt\in0k-lazarusIdeSRC-Macros\in0k_lazarusIdeSRC_ideMacrosCODE.pas"/>
+        <UnitName Value="in0k_lazarusIdeSRC_ideMacrosCODE"/>
+      </Item107>
+      <Item108>
+        <Filename Value="srcPKG\UI\in0k_CopyRAST__stage_01__frm_cmpResult.pas"/>
+        <UnitName Value="in0k_CopyRAST__stage_01__frm_cmpResult"/>
+      </Item108>
+      <Item109>
+        <Filename Value="srcPKG\UI\Stages\Stage03\in0k_CopyRAST__STAGE_03__cmpLTREE.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_03__cmpLTREE"/>
+      </Item109>
+      <Item110>
+        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__cmpSTAGE_Tree.pas"/>
+        <UnitName Value="in0k_CopyRAST__cmpSTAGE_Tree"/>
+      </Item110>
+      <Item111>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_04__copyFiles.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_04__copyFiles"/>
+      </Item111>
+      <Item112>
+        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__wndCORE_00.pas"/>
+        <UnitName Value="in0k_CopyRAST__wndCORE_00"/>
+      </Item112>
+      <Item113>
+        <Filename Value="srcPKG\UI\Stages\Stage03\in0k_CopyRAST__STAGE_03__cmpRTREE.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_03__cmpRTREE"/>
+      </Item113>
+      <Item114>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_04_configs.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_04_configs"/>
+      </Item114>
+      <Item115>
+        <Filename Value="srcPKG\lazExt_CopyRAST_fileSystemFNKs.pas"/>
+        <UnitName Value="lazExt_CopyRAST_fileSystemFNKs"/>
+      </Item115>
+      <Item116>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05__editFiles.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_05__editFiles"/>
+      </Item116>
+      <Item117>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05_editFiles_Handler.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_05_editFiles_Handler"/>
+      </Item117>
+      <Item118>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05_editFiles_Handler_updateUses.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_05_editFiles_Handler_updateUses"/>
+      </Item118>
+      <Item119>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05_editFiles_Handler_LpiFILE.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_05_editFiles_Handler_LpiFILE"/>
+      </Item119>
+      <Item120>
+        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05_editFiles_Handler_includes.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_05_editFiles_Handler_includes"/>
+      </Item120>
+      <Item121>
         <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE_02_Revision.pas"/>
         <UnitName Value="in0k_CopyRAST__frmSTAGE_02_Revision"/>
         <ResourceBaseClass Value="Frame"/>
-      </Item92>
-      <Item93>
-        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__frmSTAGE_twoTree_CORE.pas"/>
-        <UnitName Value="in0k_CopyRAST__frmSTAGE_twoTree_CORE"/>
-      </Item93>
-      <Item94>
-        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_01__Handling.pas"/>
-        <UnitName Value="in0k_CopyRAST__STAGE_01__Handling"/>
-      </Item94>
-      <Item95>
-        <Filename Value="srcPKG\Stages\CORE\in0k_CopyRAST_STAGEs_CORE.pas"/>
-        <UnitName Value="in0k_CopyRAST_STAGEs_CORE"/>
-      </Item95>
-      <Item96>
-        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGEs.pas"/>
-        <UnitName Value="in0k_CopyRAST__STAGEs"/>
-      </Item96>
-      <Item97>
-        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__wndCORE.pas"/>
-        <UnitName Value="in0k_CopyRAST__wndCORE"/>
-      </Item97>
-      <Item98>
-        <Filename Value="srcPKG\UI\in0k_CopyRAST__wndProject.pas"/>
-        <UnitName Value="in0k_CopyRAST__wndProject"/>
-      </Item98>
-      <Item99>
-        <Filename Value="srcPKG\UI\in0k_CopyRAST__wndPackage.pas"/>
-        <UnitName Value="in0k_CopyRAST__wndPackage"/>
-      </Item99>
-      <Item100>
-        <Filename Value="srcPKG\UI\in0k_CopyRAST__wnd_SHOW.pas"/>
-        <UnitName Value="in0k_CopyRAST__wnd_SHOW"/>
-      </Item100>
-      <Item101>
-        <Filename Value="srcPKG\Stages\CORE\in0k_CopyRAST_Stage_CORE.pas"/>
-        <UnitName Value="in0k_CopyRAST_Stage_CORE"/>
-      </Item101>
-      <Item102>
-        <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE_00_CreateTree.pas"/>
-        <UnitName Value="in0k_CopyRAST__frmSTAGE_00_CreateTree"/>
-      </Item102>
-      <Item103>
-        <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE_01_Handling.pas"/>
-        <UnitName Value="in0k_CopyRAST__frmSTAGE_01_Handling"/>
-      </Item103>
-      <Item104>
-        <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE_04_Copying.pas"/>
-        <UnitName Value="in0k_CopyRAST__frmSTAGE_04_Copying"/>
-      </Item104>
-      <Item105>
-        <Filename Value="srcPKG\UI\in0k_CopyRAST__frmSTAGE_05_PostProcessing.pas"/>
-        <UnitName Value="in0k_CopyRAST__frmSTAGE_05_PostProcessing"/>
-      </Item105>
-      <Item106>
-        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__frmSTAGE_LMR_CORE.pas"/>
-        <UnitName Value="in0k_CopyRAST__frmSTAGE_LMR_CORE"/>
-      </Item106>
-      <Item107>
-        <Filename Value="srcExt\in0k-lazarusIdeSRC-Macros\in0k_lazarusIdeSRC_MacrosLIST.pas"/>
-        <UnitName Value="in0k_lazarusIdeSRC_MacrosLIST"/>
-      </Item107>
-      <Item108>
-        <Filename Value="srcExt\in0k-lazarusIdeSRC-Macros\in0k_lazarusIdeSRC_ideMacrosCODE.pas"/>
-        <UnitName Value="in0k_lazarusIdeSRC_ideMacrosCODE"/>
-      </Item108>
-      <Item109>
-        <Filename Value="srcPKG\UI\in0k_CopyRAST__stage_01__frm_cmpResult.pas"/>
-        <UnitName Value="in0k_CopyRAST__stage_01__frm_cmpResult"/>
-      </Item109>
-      <Item110>
-        <Filename Value="srcPKG\UI\Stages\Stage03\in0k_CopyRAST__STAGE_03__cmpLTREE.pas"/>
-        <UnitName Value="in0k_CopyRAST__STAGE_03__cmpLTREE"/>
-      </Item110>
-      <Item111>
-        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__cmpSTAGE_Tree.pas"/>
-        <UnitName Value="in0k_CopyRAST__cmpSTAGE_Tree"/>
-      </Item111>
-      <Item112>
-        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_04__copyFiles.pas"/>
-        <UnitName Value="in0k_CopyRAST__STAGE_04__copyFiles"/>
-      </Item112>
-      <Item113>
-        <Filename Value="srcPKG\UI\CORE\in0k_CopyRAST__wndCORE_00.pas"/>
-        <UnitName Value="in0k_CopyRAST__wndCORE_00"/>
-      </Item113>
-      <Item114>
-        <Filename Value="srcPKG\UI\Stages\Stage03\in0k_CopyRAST__STAGE_03__cmpRTREE.pas"/>
-        <UnitName Value="in0k_CopyRAST__STAGE_03__cmpRTREE"/>
-      </Item114>
-      <Item115>
-        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_04_configs.pas"/>
-        <UnitName Value="in0k_CopyRAST__STAGE_04_configs"/>
-      </Item115>
-      <Item116>
-        <Filename Value="srcPKG\lazExt_CopyRAST_fileSystemFNKs.pas"/>
-        <UnitName Value="lazExt_CopyRAST_fileSystemFNKs"/>
-      </Item116>
-      <Item117>
-        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05__editFiles.pas"/>
-        <UnitName Value="in0k_CopyRAST__STAGE_05__editFiles"/>
-      </Item117>
-      <Item118>
-        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05_editFiles_Handler.pas"/>
-        <UnitName Value="in0k_CopyRAST__STAGE_05_editFiles_Handler"/>
-      </Item118>
-      <Item119>
-        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05_editFiles_Handler_updateUses.pas"/>
-        <UnitName Value="in0k_CopyRAST__STAGE_05_editFiles_Handler_updateUses"/>
-      </Item119>
-      <Item120>
-        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05_editFiles_Handler_LpiFILE.pas"/>
-        <UnitName Value="in0k_CopyRAST__STAGE_05_editFiles_Handler_LpiFILE"/>
-      </Item120>
-      <Item121>
-        <Filename Value="srcPKG\Stages\in0k_CopyRAST__STAGE_05_editFiles_Handler_includes.pas"/>
-        <UnitName Value="in0k_CopyRAST__STAGE_05_editFiles_Handler_includes"/>
       </Item121>
+      <Item122>
+        <Filename Value="srcPKG\Stages\stage_02\in0k_copyrast__stage_02__revision.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_02__Revision"/>
+      </Item122>
+      <Item123>
+        <Filename Value="srcPKG\Stages\stage_02\in0k_copyrast__stage_02__configs_fldrs.pas"/>
+        <UnitName Value="in0k_copyrast__stage_02__configs_FLDRs"/>
+      </Item123>
+      <Item124>
+        <Filename Value="srcPKG\Stages\stage_02\in0k_CopyRAST__STAGE_02__cnfg_FILEsAdd.pas"/>
+        <UnitName Value="in0k_CopyRAST__STAGE_02__cnfg_FILEsAdd"/>
+      </Item124>
+      <Item125>
+        <Filename Value="srcPKG\xmlConfig\lazExt_CopyRAST__xmlConfig__reVision__FILEs.pas"/>
+        <UnitName Value="lazExt_CopyRAST__xmlConfig__reVision__FILEs"/>
+      </Item125>
     </Files>
     <i18n>
       <EnableI18N Value="True"/>

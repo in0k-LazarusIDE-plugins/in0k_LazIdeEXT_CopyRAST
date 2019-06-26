@@ -9,6 +9,7 @@ uses
   in0k_CopyRAST_STAGEs_CORE,
 
   in0k_CopyRAST__STAGE_01__Handling,
+  in0k_CopyRAST__STAGE_02__Revision,
   in0k_CopyRAST__STAGE_03__reName,
   in0k_CopyRAST__STAGE_04__copyFiles,
   in0k_CopyRAST__STAGE_05__editFiles,
@@ -40,7 +41,7 @@ procedure tCopyRAST_STAGEs._stages_CRT_;
 begin
     inherited;
    _stage_01_:=tCopyRast__stage_01_Handling.Create(self);
-   _stage_02_:=tCopyRast_SrcTree_STAGE_L_R.Create(self);
+   _stage_02_:=tCopyRast__stage_02__Revision.Create(self);
    _stage_03_:=tCopyRast_stage__ChangePaths.Create(self);
    _stage_03_.Enabled:=TRUE;
    _stage_04_:=tCopyRast_stage__copyFiles.Create(self);
