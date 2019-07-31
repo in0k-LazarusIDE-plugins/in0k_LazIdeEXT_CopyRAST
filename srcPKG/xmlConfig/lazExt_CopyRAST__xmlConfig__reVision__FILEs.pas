@@ -36,7 +36,8 @@ procedure CRxC_rV_FInC__NODE__Load(const CNF:tLazExt_CopyRAST_CONFIG; const Sect
 begin
     node:=tCopyRAST_HandlerCNFGs_reVision__FILEsAdd_node.Create;
     with tCopyRAST_HandlerCNFGs_reVision__FILEsAdd_node(node) do begin
-        fileName:=CNF.GetValue( lERxC_8Value(Section,_cCRxC_rV_FInC__fileName_),'');
+        fileName:=CNF.GetValue( lERxC_sctn8Name(Section,_cCRxC_rV_FInC__fileName_),'');
+        //ShowMessage('dfdddddddddddddddddddd  '+lERxC_sctn8Name(Section,_cCRxC_rV_FInC__fileName_));
     end;
 end;
 
@@ -49,7 +50,7 @@ var tmp:tCopyRAST_HandlerCNFGs_reVision__FILEsAdd_List;
 begin // !!! через копирование !!! избавляемся от ДВОЙНЫХ меток РОДИТЕЛЬСКИХ ???
     tmp:=tCopyRAST_HandlerCNFGs_reVision__FILEsAdd_List.Create;
     lazExt_CopyRAST__ConfigLOAD(CNF,lERxC_sctn8Name(_cMainSection_,_cSection_inClude_),tCopyRAST_srcTree_4Handler_CNFGsLAIR(tmp),@CRxC_rV_FInC__NODE__Load);
-    ShowMessage('dfdddddddddddddddddddd  '+lERxC_sctn8Name(_cMainSection_,_cSection_inClude_)+'    '+ inttostr( tmp.Count));
+    //ShowMessage('dfdddddddddddddddddddd  '+lERxC_sctn8Name(_cMainSection_,_cSection_inClude_)+'    '+ inttostr( tmp.Count));
     List.COPY(tmp);
     tmp.FREE;
 end;

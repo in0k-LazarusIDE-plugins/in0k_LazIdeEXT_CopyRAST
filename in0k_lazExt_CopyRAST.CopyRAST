@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <CopyRAST SettingsEXCLUDE="False"/>
+  <reVision>
+    <include count="2">
+      <item0 fileName="test/test0.txt"/>
+      <item1 fileName="test/test1.txt"/>
+    </include>
+  </reVision>
   <approvedFILEs2NAMEs>
     <Macross count="2">
         <item0>
