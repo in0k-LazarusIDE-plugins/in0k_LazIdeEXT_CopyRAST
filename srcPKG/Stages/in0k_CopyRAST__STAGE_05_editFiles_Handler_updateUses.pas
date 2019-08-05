@@ -5,6 +5,9 @@ unit in0k_CopyRAST__STAGE_05_editFiles_Handler_updateUses;
 interface
 
 uses
+
+  Dialogs,
+
   PackageIntf,
   BasicCodeTools,
 
@@ -164,13 +167,17 @@ var tmpStart:integer;
 var AtomText:string;
     i       :integer;
 begin
+    ShowMessage('----------------------------------------'+inttostr(Start));
+
+    result:=Start;
     AtomText:=ReadNextPascalAtom(_codeBuff_.Source,result,tmpStart);
-    while result<_codeBuff_.SourceLength do begin
+    while tmpStart<_codeBuff_.SourceLength do begin
         AtomText:=lowercase(AtomText);
         //---
         i:=_untList_.IndexOfName(AtomText);
         if i>=0 then begin
-            //{$ifdef _DEBUG_}DEBUG('interfaceUses FIND in CODE '+' '+inttostr(tmpStart)+' '+inttostr(result));{$endIf}
+            ShowMessage('----------------------------------------'+inttostr(i)+'===');
+            {$ifdef _DEBUG_}DEBUG('interfaceUses FIND in CODE '+' '+inttostr(tmpStart)+' '+inttostr(result));{$endIf}
             if _nextAtom_Is_DOT_(result) then begin
                 CodeToolBoss.SourceChangeCache.ReplaceEx(gtNone,gtNone, tmpStart, result,_codeBuff_, tmpStart, result,_untList_.ValueFromIndex[i]+CopyRAST_Text_comment_InlineReplace_PAS(AtomText));
                 doEvent_onPASSED('rePlace in Code : "'+AtomText +'"->"'+srcTree_fsFnk_ExtractFileNameOnly(_untList_.ValueFromIndex[i])+'"');
@@ -206,8 +213,9 @@ begin
     else doEvent_onNoNeed('implementation Uses NOT found');
     //---
     if (_untList_.Count>0) then begin
+        doEvent_onPASSED('rePlace in Code : --------------');
         UsesStart:=SearchCodeInSource(_CodeBuff_.Source,'implementation',1,UsesEnd,false);
-        if UsesStart>=1 then begin
+        if UsesEnd>=1 then begin
      	   _replaceUnitsInCode_(UsesEnd);
 		end;
 	end

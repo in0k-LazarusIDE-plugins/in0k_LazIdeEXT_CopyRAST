@@ -65,9 +65,9 @@ begin
     //
 
     for i:=0 to _cnfg_FILEsADD_.Count-1 do begin
-        self._owner_Builder.add_FILE(self._resultROOT_, _cnfg_FILEsADD_.Items[i].fileName,pftBinary);
+        self._owner_Builder.add_FILE(self._resultROOT_, _cnfg_FILEsADD_.Items[i].fileName,pftUnit);
 
-
+            //PkgFileTypeIdentToType()
       ShowMessage(inttostr(i)+' '+'"'+_cnfg_FILEsADD_.Items[i].fileName+'"');
     end;
 end;
